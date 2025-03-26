@@ -22,6 +22,5 @@ jobs:
             cd /home/ubuntu/BE-Starbucks-Renewal
             git pull origin test
             ./gradlew clean build
-            kill -9 $(lsof -t -i:8080) || true
-#            sudo fuser -k -n tcp 8080 || true
+            fuser -k -n tcp 8080 || true
             nohup java -jar build/libs/*SNAPSHOT.jar > ./output.log 2>&1 &
