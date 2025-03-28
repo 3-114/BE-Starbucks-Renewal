@@ -6,6 +6,8 @@ import com.team114.starbucks.domain.member.dto.out.SignUpResponseDto;
 import com.team114.starbucks.domain.member.entity.Member;
 import com.team114.starbucks.domain.member.infrastructure.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,5 +37,12 @@ public class MemberServiceImpl implements MemberService {
     public void signIn(SignInRequestDto signInRequestDto) {
 
         Member member = memberRepository.findByEmail(signInRequestDto.getEmail());
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String memberUuid) {
+        return memberRepository.findByMemberUuid(memberUuid)
+                // Todo[1] : 예외처리 커스텀하기
+                .orElseThrow(() -> new IllegalArgumentException(memberUuid));
     }
 }
