@@ -11,3 +11,11 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
         show_sql: true
         format_sql: true
+
+  jwt:
+    secret:
+      key: 00C49vjBEiNEmODEZoDgkuQ/nNl6pNwDVrpNv9TqJJo=
+    token:
+      access-expire-time: 24 * 60 * 60 * 1000L # 24시간
+
+

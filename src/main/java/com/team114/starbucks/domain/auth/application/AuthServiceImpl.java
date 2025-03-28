@@ -5,6 +5,8 @@ import com.team114.starbucks.domain.auth.dto.out.SignUpResponseDto;
 import com.team114.starbucks.domain.member.entity.Member;
 import com.team114.starbucks.domain.member.infrastructure.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,5 +29,11 @@ public class AuthServiceImpl implements AuthService {
 
         // entity -> dto
         return SignUpResponseDto.from(member);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String memberUuid) {
+        return memberRepository.findByMemberUuid(memberUuid)
+                .orElseThrow(() -> new IllegalArgumentException(memberUuid));
     }
 }
