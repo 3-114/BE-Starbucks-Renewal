@@ -2,30 +2,36 @@ package domain.delivery.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Comment;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Builder
 public class Delivery {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String uuid;
+
+    @Comment("배송지 닉네임")
     @Column(length = 20)
     private String alias;
 
+    @Comment("받는 분")
     @Column(nullable = false, length = 20)
     private String name;
 
+    @Comment("우편번호")
     @Column(nullable = false, length = 5)
-    private String zipcode;
+    private String zoneCode;
 
+    @Comment("기본 주소")
     @Column(nullable = false, length = 100)
     private String mainAddress;
 
+    @Comment("상세 주소")
     @Column(nullable = false, length = 100)
     private String detailAddress;
 
@@ -41,4 +47,32 @@ public class Delivery {
     // 기본 배송지 여부
     @Column(nullable = false)
     private boolean defaultAddress;
+
+
+    @Builder
+    public Delivery (
+        Long id,
+        String uuid,
+        String alias,
+        String name,
+        String zoneCode,
+        String mainAddress,
+        String detailAddress,
+        String phoneNumber1,
+        String phoneNumber2,
+        String deliveryMemo,
+        boolean defaultAddress
+    ) {
+        this.id = id;
+        this.uuid = uuid;
+        this.alias = alias;
+        this.name = name;
+        this.zoneCode = zoneCode;
+        this.mainAddress = mainAddress;
+        this.detailAddress = detailAddress;
+        this.phoneNumber1 = phoneNumber1;
+        this.phoneNumber2 = phoneNumber2;
+        this.deliveryMemo = deliveryMemo;
+        this.defaultAddress = defaultAddress;
+    }
 }
