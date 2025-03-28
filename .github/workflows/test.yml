@@ -23,6 +23,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
+          envs: AWS_DB_URL,AWS_DB_USERNAME,AWS_DB_PASSWORD,AWS_DB_NAME
 #          script_stop: true
           script: |
             cd /home/ubuntu/BE-Starbucks-Renewal
