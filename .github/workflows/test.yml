@@ -30,10 +30,6 @@ jobs:
             git pull origin test
             chmod +x ./gradlew  # 실행 권한 추가
 
-            echo "🔍 AWS_DB_URL: ${AWS_DB_URL}"
-            echo "🔍 AWS_DB_USERNAME: ${AWS_DB_USERNAME}"
-            echo "✅ 환경변수 확인 완료"
-
             
             ./gradlew clean build -x test
             fuser -k -n tcp 8080 || true
