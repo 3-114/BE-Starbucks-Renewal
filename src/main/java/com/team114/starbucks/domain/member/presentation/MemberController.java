@@ -1,8 +1,10 @@
 package com.team114.starbucks.domain.member.presentation;
 
 import com.team114.starbucks.domain.member.application.MemberServiceImpl;
+import com.team114.starbucks.domain.member.dto.in.SignInRequestDto;
 import com.team114.starbucks.domain.member.dto.in.SignUpRequestDto;
 import com.team114.starbucks.domain.member.dto.out.SignUpResponseDto;
+import com.team114.starbucks.domain.member.vo.in.SignInRequestVo;
 import com.team114.starbucks.domain.member.vo.in.SignUpRequestVo;
 import com.team114.starbucks.domain.member.vo.out.SignUpResponseVo;
 import lombok.RequiredArgsConstructor;
@@ -35,4 +37,14 @@ public class MemberController {
         SignUpResponseDto result = memberService.signUp(SignUpRequestDto.from(signUpRequestVo));
         return result.toVo();
     }
+
+    @PostMapping("/auth-service/sign-in")
+    public Void signIn(
+            @RequestBody SignInRequestVo signInRequestVo
+    ) {
+        memberService.signIn(SignInRequestDto.from(signInRequestVo));
+
+        return null;
+    }
+
 }

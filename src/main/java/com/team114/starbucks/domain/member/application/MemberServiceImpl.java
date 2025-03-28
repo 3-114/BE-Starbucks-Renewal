@@ -1,5 +1,6 @@
 package com.team114.starbucks.domain.member.application;
 
+import com.team114.starbucks.domain.member.dto.in.SignInRequestDto;
 import com.team114.starbucks.domain.member.dto.in.SignUpRequestDto;
 import com.team114.starbucks.domain.member.dto.out.SignUpResponseDto;
 import com.team114.starbucks.domain.member.entity.Member;
@@ -27,5 +28,12 @@ public class MemberServiceImpl implements MemberService {
 
         // entity -> dto
         return SignUpResponseDto.from(member);
+    }
+
+    @Transactional
+    @Override
+    public void signIn(SignInRequestDto signInRequestDto) {
+
+        Member member = memberRepository.findByEmail(signInRequestDto.getEmail());
     }
 }
