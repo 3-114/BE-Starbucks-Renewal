@@ -35,11 +35,6 @@ jobs:
             echo "✅ 환경변수 확인 완료"
 
             
-            echo "spring.datasource.url=${AWS_DB_URL}" > src/main/resources/application-dev.yml
-            echo "spring.datasource.username=${AWS_DB_USERNAME}" >> src/main/resources/application-dev.yml
-            echo "spring.datasource.password=${AWS_DB_PASSWORD}" >> src/main/resources/application-dev.yml
-
-            
             ./gradlew clean build -x test
             fuser -k -n tcp 8080 || true
             nohup java -jar build/libs/*SNAPSHOT.jar > ./output.log 2>&1 &
