@@ -1,10 +1,10 @@
-package com.team114.starbucks.domain.member.presentation;
+package com.team114.starbucks.domain.auth.presentation;
 
-import com.team114.starbucks.domain.member.application.MemberServiceImpl;
-import com.team114.starbucks.domain.member.dto.in.SignUpRequestDto;
-import com.team114.starbucks.domain.member.dto.out.SignUpResponseDto;
-import com.team114.starbucks.domain.member.vo.in.SignUpRequestVo;
-import com.team114.starbucks.domain.member.vo.out.SignUpResponseVo;
+import com.team114.starbucks.domain.auth.application.AuthServiceImpl;
+import com.team114.starbucks.domain.auth.dto.in.SignUpRequestDto;
+import com.team114.starbucks.domain.auth.dto.out.SignUpResponseDto;
+import com.team114.starbucks.domain.auth.vo.in.SignUpRequestVo;
+import com.team114.starbucks.domain.auth.vo.out.SignUpResponseVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-public class MemberController {
+public class AuthController {
 
-    private final MemberServiceImpl memberService;
+    private final AuthServiceImpl memberService;
 
     /**
      * api/v1/member

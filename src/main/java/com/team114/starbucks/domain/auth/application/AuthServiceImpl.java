@@ -1,7 +1,7 @@
-package com.team114.starbucks.domain.member.application;
+package com.team114.starbucks.domain.auth.application;
 
-import com.team114.starbucks.domain.member.dto.in.SignUpRequestDto;
-import com.team114.starbucks.domain.member.dto.out.SignUpResponseDto;
+import com.team114.starbucks.domain.auth.dto.in.SignUpRequestDto;
+import com.team114.starbucks.domain.auth.dto.out.SignUpResponseDto;
 import com.team114.starbucks.domain.member.entity.Member;
 import com.team114.starbucks.domain.member.infrastructure.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class MemberServiceImpl implements MemberService {
+public class AuthServiceImpl implements AuthService {
 
     private final MemberRepository memberRepository;
 

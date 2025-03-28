@@ -1,8 +1,8 @@
-package com.team114.starbucks.domain.member.dto.in;
+package com.team114.starbucks.domain.auth.dto.in;
 
 import com.team114.starbucks.domain.member.entity.Member;
 import com.team114.starbucks.domain.member.enums.Gender;
-import com.team114.starbucks.domain.member.vo.in.SignUpRequestVo;
+import com.team114.starbucks.domain.auth.vo.in.SignUpRequestVo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

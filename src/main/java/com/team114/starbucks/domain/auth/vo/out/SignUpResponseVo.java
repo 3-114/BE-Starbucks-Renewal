@@ -1,6 +1,5 @@
-package com.team114.starbucks.domain.member.vo.out;
+package com.team114.starbucks.domain.auth.vo.out;
 
-import com.team114.starbucks.domain.member.enums.Gender;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

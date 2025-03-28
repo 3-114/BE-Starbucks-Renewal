@@ -1,7 +1,7 @@
-package com.team114.starbucks.domain.member.dto.out;
+package com.team114.starbucks.domain.auth.dto.out;
 
 import com.team114.starbucks.domain.member.entity.Member;
-import com.team114.starbucks.domain.member.vo.out.SignUpResponseVo;
+import com.team114.starbucks.domain.auth.vo.out.SignUpResponseVo;
 import lombok.Builder;
 import lombok.Getter;
 
