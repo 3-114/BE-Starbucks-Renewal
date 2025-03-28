@@ -1,4 +1,4 @@
-package domain.delivery.entity;
+package com.team114.starbucks.domain.delivery.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

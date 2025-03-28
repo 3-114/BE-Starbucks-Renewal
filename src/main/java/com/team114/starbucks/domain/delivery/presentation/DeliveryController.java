@@ -1,4 +1,4 @@
-package domain.delivery.presentation;
+package com.team114.starbucks.domain.delivery.presentation;
 
 public class DeliveryController {
 
