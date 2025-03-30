@@ -1,14 +1,15 @@
 package com.team114.starbucks.domain.auth.presentation;
 
+import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.auth.application.AuthServiceImpl;
 import com.team114.starbucks.domain.auth.dto.in.SignInRequestDto;
 import com.team114.starbucks.domain.auth.dto.in.SignUpRequestDto;
-import com.team114.starbucks.domain.auth.dto.out.SignUpResponseDto;
 import com.team114.starbucks.domain.auth.vo.in.SignInRequestVo;
 import com.team114.starbucks.domain.auth.vo.in.SignUpRequestVo;
 import com.team114.starbucks.domain.auth.vo.out.SignInResponseVo;
 import com.team114.starbucks.domain.auth.vo.out.SignUpResponseVo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,10 +33,11 @@ public class AuthController {
      * @param signUpRequestVo
      */
     @PostMapping("/auth-service/sign-up")
-    public SignUpResponseVo signUp(
+    public ResponseEntity<BaseResponseEntity<SignUpResponseVo>> signUp(
             @RequestBody SignUpRequestVo signUpRequestVo
     ) {
-        return memberService.signUp(SignUpRequestDto.from(signUpRequestVo)).toVo();
+        SignUpResponseVo result = memberService.signUp(SignUpRequestDto.from(signUpRequestVo)).toVo();
+        return ResponseEntity.ok(new BaseResponseEntity<>("회원가입에 성공하였습니다.", result));
     }
 
     /**
@@ -44,9 +46,10 @@ public class AuthController {
      * @Return signInResponseVo
      */
     @PostMapping("/auth-service/sign-in")
-    public SignInResponseVo signIn(
+    public ResponseEntity<BaseResponseEntity<SignInResponseVo>> signIn(
             @RequestBody SignInRequestVo signInRequestVo
     ) {
-        return memberService.signIn(SignInRequestDto.from(signInRequestVo)).toVo();
+        SignInResponseVo result = memberService.signIn(SignInRequestDto.from(signInRequestVo)).toVo();
+        return ResponseEntity.ok(new BaseResponseEntity<>("로그인에 성공하였습니다.", result));
     }
 }

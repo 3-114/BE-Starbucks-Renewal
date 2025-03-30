@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum UserRole {
 
-    ROLE_USER("유저")       // 유저
+    ROLE_USER("USER")       // 유저
     ;
 
     private final String userRole;

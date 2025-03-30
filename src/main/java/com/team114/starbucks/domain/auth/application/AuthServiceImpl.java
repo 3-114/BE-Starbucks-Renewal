@@ -1,6 +1,8 @@
 package com.team114.starbucks.domain.auth.application;
 
+import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.jwt.JwtTokenProvider;
+import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.auth.dto.in.SignInRequestDto;
 import com.team114.starbucks.domain.auth.dto.in.SignUpRequestDto;
 import com.team114.starbucks.domain.auth.dto.out.SignInResponseDto;
@@ -8,7 +10,6 @@ import com.team114.starbucks.domain.auth.dto.out.SignUpResponseDto;
 import com.team114.starbucks.domain.member.entity.Member;
 import com.team114.starbucks.domain.member.infrastructure.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,30 +32,38 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public SignUpResponseDto signUp(SignUpRequestDto signUpRequestDto) {
 
-        // 패스워드 암호화
-        String password = passwordEncoder.encode(signUpRequestDto.getPassword());
+        try {
+            // 패스워드 암호화
+            String password = passwordEncoder.encode(signUpRequestDto.getPassword());
 
-        // dto -> entity
-        Member member = signUpRequestDto.toEntity(password);
+            // dto -> entity
+            Member member = signUpRequestDto.toEntity(password);
 
-        // 레포지토리에 저장
-        memberRepository.save(member);
+            // 레포지토리에 저장
+            memberRepository.save(member);
 
-        // entity -> dto
-        return SignUpResponseDto.from(member);
+            // entity -> dto
+            return SignUpResponseDto.from(member);
+        } catch (Exception e) {
+            throw new BaseException(BaseResponseStatus.FAILED_TO_RESTORE);
+        }
     }
 
     @Transactional
     @Override
     public SignInResponseDto signIn(SignInRequestDto signInRequestDto) {
 
-        // todo[4] : 예외처리 커스터마이징
-        Member member = memberRepository.findByEmail(signInRequestDto.getEmail())
-                .orElseThrow(() -> new UsernameNotFoundException("아이디 또는 패스워드를 다시 확인하세요."));
+        try {
+            Member member = memberRepository.findByEmail(signInRequestDto.getEmail())
+                    .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_LOGIN));
 
-        String accessToken = createToken(authenticate(member, signInRequestDto.getPassword()));
+            String accessToken = createToken(authenticate(member, signInRequestDto.getPassword()));
 
-        return SignInResponseDto.from(member, accessToken);
+            return SignInResponseDto.from(member, accessToken);
+        } catch (Exception e) {
+            throw new BaseException(BaseResponseStatus.FAILED_TO_LOGIN);
+        }
+
     }
 
     // 토큰 생성

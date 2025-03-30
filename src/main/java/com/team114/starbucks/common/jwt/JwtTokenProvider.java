@@ -43,7 +43,6 @@ public class JwtTokenProvider {
         // 기본 만료 기한 : 30분
         Date expiration = new Date(now.getTime() + TOKEN_EXPIRE_TIME);
 
-        // todo[3] : Jwt 에 뭐 넣을지 고민해보기
         return BEARER_PREFIX +
                 Jwts.builder()
                 .signWith(getSignKey())
