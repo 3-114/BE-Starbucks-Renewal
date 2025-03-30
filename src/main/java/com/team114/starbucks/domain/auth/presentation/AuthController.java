@@ -1,9 +1,12 @@
 package com.team114.starbucks.domain.auth.presentation;
 
 import com.team114.starbucks.domain.auth.application.AuthServiceImpl;
+import com.team114.starbucks.domain.auth.dto.in.SignInRequestDto;
 import com.team114.starbucks.domain.auth.dto.in.SignUpRequestDto;
 import com.team114.starbucks.domain.auth.dto.out.SignUpResponseDto;
+import com.team114.starbucks.domain.auth.vo.in.SignInRequestVo;
 import com.team114.starbucks.domain.auth.vo.in.SignUpRequestVo;
+import com.team114.starbucks.domain.auth.vo.out.SignInResponseVo;
 import com.team114.starbucks.domain.auth.vo.out.SignUpResponseVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +35,18 @@ public class AuthController {
     public SignUpResponseVo signUp(
             @RequestBody SignUpRequestVo signUpRequestVo
     ) {
-        SignUpResponseDto result = memberService.signUp(SignUpRequestDto.from(signUpRequestVo));
-        return result.toVo();
+        return memberService.signUp(SignUpRequestDto.from(signUpRequestVo)).toVo();
+    }
+
+    /**
+     * 로그인
+     * @param signInRequestVo
+     * @Return signInResponseVo
+     */
+    @PostMapping("/auth-service/sign-in")
+    public SignInResponseVo signIn(
+            @RequestBody SignInRequestVo signInRequestVo
+    ) {
+        return memberService.signIn(SignInRequestDto.from(signInRequestVo)).toVo();
     }
 }

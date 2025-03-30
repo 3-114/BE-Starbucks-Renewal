@@ -1,5 +1,7 @@
 package com.team114.starbucks.common.config;
 
+import com.team114.starbucks.domain.auth.userDetails.CustomUserDetails;
+import com.team114.starbucks.domain.member.entity.Member;
 import com.team114.starbucks.domain.member.infrastructure.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +12,7 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -21,13 +24,14 @@ public class ApplicationConfig {
 
     private final MemberRepository memberRepository;
 
-    // 멤버 UUID 로 멤버(객체) 조회
+    // 멤버 UUID 로 CustomUserDetails 조회
     @Bean
     public UserDetailsService userDetailsService() {
         return uuid -> {
-            return memberRepository.findByMemberUuid(uuid).orElseThrow(
-                    () -> new IllegalArgumentException("해당 UUID를 가진 회원이 없습니다.")
-            );
+            Member member = memberRepository.findByMemberUuid(uuid)
+                    .orElseThrow(() -> new UsernameNotFoundException("해당 UUID 를 가진 회원이 없습니다."));
+
+            return new CustomUserDetails(member);
         };
     }
 

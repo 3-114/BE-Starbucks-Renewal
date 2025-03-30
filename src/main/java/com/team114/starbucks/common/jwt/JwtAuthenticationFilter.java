@@ -1,11 +1,12 @@
 package com.team114.starbucks.common.jwt;
 
-import com.team114.starbucks.domain.auth.application.AuthService;
+import com.team114.starbucks.domain.auth.userDetails.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,12 +16,13 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final AuthService memberService;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Override
     protected void doFilterInternal(
@@ -33,7 +35,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String uuid;
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+        // JWT 유효성 검사
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -41,8 +44,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         jwt = authHeader.substring(7);
         uuid = jwtTokenProvider.validateAndGetUserUuid(jwt);
 
+        // SecurityContextHolder 에 인증 정보 저장
         if(SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = memberService.loadUserByUsername(uuid);
+            UserDetails userDetails = customUserDetailsService.loadUserByUsername(uuid);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                     userDetails, null, userDetails.getAuthorities()
             );

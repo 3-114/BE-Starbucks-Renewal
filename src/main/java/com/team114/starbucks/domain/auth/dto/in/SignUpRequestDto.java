@@ -1,13 +1,15 @@
 package com.team114.starbucks.domain.auth.dto.in;
 
+import com.team114.starbucks.domain.auth.vo.in.SignUpRequestVo;
 import com.team114.starbucks.domain.member.entity.Member;
 import com.team114.starbucks.domain.member.enums.Gender;
-import com.team114.starbucks.domain.auth.vo.in.SignUpRequestVo;
+import com.team114.starbucks.domain.member.enums.UserRole;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.UUID;
 
 @NoArgsConstructor
 @Getter
@@ -54,9 +56,10 @@ public class SignUpRequestDto {
                 .build();
     }
 
-    public Member toEntity() {
+    public Member toEntity(String password) {
 
         return Member.builder()
+                .memberUuid(UUID.randomUUID().toString())
                 .email(email)
                 .name(name)
                 .nickname(nickname)
@@ -64,6 +67,7 @@ public class SignUpRequestDto {
                 .birthday(birthday)
                 .phoneNumber(phoneNumber)
                 .gender(gender)
+                .userRole(UserRole.ROLE_USER)
                 .build();
     }
 }

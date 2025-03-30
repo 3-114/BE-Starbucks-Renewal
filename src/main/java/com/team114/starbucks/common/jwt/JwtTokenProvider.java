@@ -18,6 +18,8 @@ import java.util.function.Function;
 public class JwtTokenProvider {
 
     private final Environment env;
+    private static final String BEARER_PREFIX = "Bearer ";
+    private static final long TOKEN_EXPIRE_TIME = 24 * 60 * 60 * 1000; // 24시간
 
     /**
      * 1. 액세스 토큰 생성
@@ -34,18 +36,21 @@ public class JwtTokenProvider {
      */
     public String generateAccessToken(Authentication authentication) {
 
+
         // Jwt 의 클레임 (Payload) 객체를 생성
         Claims claims = Jwts.claims().subject(authentication.getName()).build();
         Date now = new Date();
         // 기본 만료 기한 : 30분
-        Date expiration = new Date(now.getTime() + env.getProperty("spring.jwt.token.access-expire-time", Long.class, 30 * 60 * 1000L));
+        Date expiration = new Date(now.getTime() + TOKEN_EXPIRE_TIME);
 
         // todo[3] : Jwt 에 뭐 넣을지 고민해보기
-        return Jwts.builder()
+        return BEARER_PREFIX +
+                Jwts.builder()
                 .signWith(getSignKey())
-                .claims()
-                .issuedAt(expiration)
-                .and().compact();
+                .claims(claims)
+                .issuedAt(now)
+                .expiration(expiration)
+                .compact();
     }
 
     private Key getSignKey() {
@@ -92,6 +97,5 @@ public class JwtTokenProvider {
                 .parseSignedClaims(token)
                 .getPayload();
     }
-
 
 }
