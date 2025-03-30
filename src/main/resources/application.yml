@@ -3,6 +3,10 @@ spring:
   profiles:
     active: local
 
+logging:
+  level:
+    root: INFO
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -15,10 +19,3 @@ spring:
   jwt:
     secret:
       key: 00C49vjBEiNEmODEZoDgkuQ/nNl6pNwDVrpNv9TqJJo=
-
-
-logging:
-  level:
-    root: INFO
-
-

@@ -8,6 +8,7 @@ import com.team114.starbucks.domain.auth.vo.in.SignInRequestVo;
 import com.team114.starbucks.domain.auth.vo.in.SignUpRequestVo;
 import com.team114.starbucks.domain.auth.vo.out.SignInResponseVo;
 import com.team114.starbucks.domain.auth.vo.out.SignUpResponseVo;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,7 @@ public class AuthController {
      * 회원가입
      * @param signUpRequestVo
      */
+    @Operation(summary = "sign-up API", description = "회원가입 API 입니다.", tags = {"auth-service"})
     @PostMapping("/auth-service/sign-up")
     public ResponseEntity<BaseResponseEntity<SignUpResponseVo>> signUp(
             @RequestBody SignUpRequestVo signUpRequestVo
@@ -45,6 +47,7 @@ public class AuthController {
      * @param signInRequestVo
      * @Return signInResponseVo
      */
+    @Operation(summary = "sign-in API", description = "로그인 API 입니다.", tags = {"auth-service"})
     @PostMapping("/auth-service/sign-in")
     public ResponseEntity<BaseResponseEntity<SignInResponseVo>> signIn(
             @RequestBody SignInRequestVo signInRequestVo

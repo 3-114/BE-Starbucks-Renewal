@@ -1,5 +1,6 @@
 package com.team114.starbucks.common.config;
 
+import com.team114.starbucks.common.exception.BaseExceptionHandlerFilter;
 import com.team114.starbucks.common.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -48,9 +49,12 @@ public class SecurityConfig {
             .authorizeHttpRequests(
                     authorizeRequests -> authorizeRequests
                             .requestMatchers(
-                                    "/api/v1/**"
-                            )
-                            .permitAll()
+                                    "/api/v1/**",
+                                    "/swagger-ui/**",
+                                    "/swagger-ui.html",
+                                    "/v3/api-docs/**",
+                                    "/error"
+                            ).permitAll()
                             .anyRequest()
                             .authenticated()
             )
@@ -60,7 +64,7 @@ public class SecurityConfig {
                 )
                 .authenticationProvider(daoAuthenticationProvider)
                 .authenticationProvider(oAuthAuthenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class                              )
                 .addFilter(corsFilter());
         return http.build();
     }
