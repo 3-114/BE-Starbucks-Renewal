@@ -1,11 +1,10 @@
 package com.team114.starbucks.domain.product.application;
 
 
-import com.team114.starbucks.domain.product.dto.out.ProductResponseDto;
+import com.team114.starbucks.domain.product.dto.in.ProductPostReqDto;
+import com.team114.starbucks.domain.product.dto.out.ProductGetResDto;
 import com.team114.starbucks.domain.product.entity.Product;
 import com.team114.starbucks.domain.product.infrastructure.ProductRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,19 +19,46 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    @Transactional
-    public List<ProductResponseDto> getAllProducts() {
+
+    public List<ProductGetResDto> getAllProducts() {
 
         List<Product> productList = productRepository.findAll();
 
-        List<ProductResponseDto> responseList =  new ArrayList<>();
+        List<ProductGetResDto> responseList =  new ArrayList<>();
 
         for (Product product : productList) {
-            ProductResponseDto dto = ProductResponseDto.from(product);
+            ProductGetResDto dto = ProductGetResDto.from(product);
             responseList.add(dto);
         }
 
         return responseList;
+    }
+
+    public ProductGetResDto getProduct(Long id) {
+        Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
+
+        ProductGetResDto dto = ProductGetResDto.from(product);
+
+        return dto;
+
+    }
+
+    @Transactional(readOnly = false)
+    public ProductPostReqDto saveProduct(ProductPostReqDto productPostReqDto) {
+
+        //Product product = productPostReqDto.toEntity();
+
+        Product product = Product.builder()
+                .name(productPostReqDto.getName())
+                .price(productPostReqDto.getPrice())
+                .build();
+
+        productRepository.save(product);
+
+        return productPostReqDto;
+
+
+
     }
 
 

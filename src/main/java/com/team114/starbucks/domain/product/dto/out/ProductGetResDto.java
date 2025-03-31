@@ -3,14 +3,14 @@ package com.team114.starbucks.domain.product.dto.out;
 import com.team114.starbucks.domain.product.entity.Product;
 import com.team114.starbucks.domain.product.enums.Brand;
 import com.team114.starbucks.domain.product.enums.ProductStatus;
-import com.team114.starbucks.domain.product.vo.out.ProductResponseVo;
+import com.team114.starbucks.domain.product.vo.out.ProductGetResVo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ProductResponseDto {
+public class ProductGetResDto {
 
     private Long id;
     private String uuid;
@@ -23,7 +23,7 @@ public class ProductResponseDto {
     private Integer shippingFee;
 
     @Builder
-    public ProductResponseDto(
+    public ProductGetResDto(
             Long id,
             String uuid,
             Brand brand,
@@ -46,8 +46,8 @@ public class ProductResponseDto {
     }
 
 
-    public static ProductResponseDto from(Product product) {
-        return ProductResponseDto.builder()
+    public static ProductGetResDto from(Product product) {
+        return ProductGetResDto.builder()
                 .id(product.getId())
                 .uuid(product.getUuid())
                 .brand(product.getBrand())
@@ -61,8 +61,8 @@ public class ProductResponseDto {
     }
 
 
-    public ProductResponseVo toVo() {
-        return ProductResponseVo.builder()
+    public ProductGetResVo toVo() {
+        return ProductGetResVo.builder()
                 .id(id)
                 .uuid(uuid)
                 .brand(brand)
