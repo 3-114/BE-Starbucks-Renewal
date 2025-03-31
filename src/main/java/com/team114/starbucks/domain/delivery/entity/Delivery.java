@@ -1,11 +1,13 @@
 package com.team114.starbucks.domain.delivery.entity;
 
+import com.team114.starbucks.domain.delivery.dto.in.DeliveryRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Delivery {
 
@@ -51,17 +53,17 @@ public class Delivery {
 
     @Builder
     public Delivery (
-        Long id,
-        String uuid,
-        String alias,
-        String name,
-        String zoneCode,
-        String mainAddress,
-        String detailAddress,
-        String phoneNumber1,
-        String phoneNumber2,
-        String deliveryMemo,
-        boolean defaultAddress
+            Long id,
+            String uuid,
+            String alias,
+            String name,
+            String zoneCode,
+            String mainAddress,
+            String detailAddress,
+            String phoneNumber1,
+            String phoneNumber2,
+            String deliveryMemo,
+            boolean defaultAddress
     ) {
         this.id = id;
         this.uuid = uuid;
@@ -74,5 +76,20 @@ public class Delivery {
         this.phoneNumber2 = phoneNumber2;
         this.deliveryMemo = deliveryMemo;
         this.defaultAddress = defaultAddress;
+    }
+    public void updateFrom(DeliveryRequestDto dto) {
+        this.alias = dto.getAlias().getAlias();
+        this.name = String.valueOf(dto.getName());
+        this.zoneCode = dto.getAddress().getZoneCode();
+        this.mainAddress = dto.getAddress().getMainAddress();
+        this.detailAddress = dto.getAddress().getDetailAddress();
+        this.phoneNumber1 = dto.getPhoneNumbers().getPhoneNumber1();
+        this.phoneNumber2 = dto.getPhoneNumbers().getPhoneNumber2();
+        this.deliveryMemo = dto.getDeliveryMemo();
+        this.defaultAddress = dto.isDefaultAddress();
+    }
+
+    public void setAsDefault() {
+        this.defaultAddress = true;
     }
 }
