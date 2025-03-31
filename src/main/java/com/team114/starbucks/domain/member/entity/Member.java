@@ -48,7 +48,7 @@ public class Member extends BaseEntity {
     private Date birthday;
 
     @Comment("이메일")
-    @Column(unique = true)
+//    @Column(unique = true)
     private String email;
 
     @Comment("휴대폰 번호")

@@ -4,6 +4,7 @@ import com.team114.starbucks.domain.member.entity.Member;
 import com.team114.starbucks.domain.member.enums.UserRole;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Getter
+@ToString
 public class CustomUserDetails implements UserDetails {
 
     private final String memberUuid;
