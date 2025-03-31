@@ -48,6 +48,8 @@ public class Member extends BaseEntity {
     // 이메일
     private String email;
 
+    //asdfasfasdfasdf
+
     // 휴대폰 번호
     private String phoneNumber;
 
