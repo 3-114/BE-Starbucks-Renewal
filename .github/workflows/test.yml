@@ -8,6 +8,11 @@ on:
         - test
         - develop
 
+    pull_request:
+      types: [ closed ]
+      branches:
+        - develop
+
 jobs:
   Deploy:
     runs-on: ubuntu-latest
