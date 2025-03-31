@@ -77,9 +77,11 @@ public class Delivery {
         this.deliveryMemo = deliveryMemo;
         this.defaultAddress = defaultAddress;
     }
+
+    // 배송지 수정
     public void updateFrom(DeliveryRequestDto dto) {
         this.alias = dto.getAlias().getAlias();
-        this.name = String.valueOf(dto.getName());
+        this.name = dto.getName().getName();
         this.zoneCode = dto.getAddress().getZoneCode();
         this.mainAddress = dto.getAddress().getMainAddress();
         this.detailAddress = dto.getAddress().getDetailAddress();
@@ -89,6 +91,7 @@ public class Delivery {
         this.defaultAddress = dto.isDefaultAddress();
     }
 
+    // 기본 배송지 설정
     public void setAsDefault() {
         this.defaultAddress = true;
     }

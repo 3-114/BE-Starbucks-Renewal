@@ -22,6 +22,7 @@ public class DeliveryRequestDto {
     public Delivery toEntity(String uuid) {
         return Delivery.builder()
                 .uuid(uuid)
+                .name(name.getName())
                 .alias(alias.getAlias())
                 .zoneCode(address.getZoneCode())
                 .mainAddress(address.getMainAddress())

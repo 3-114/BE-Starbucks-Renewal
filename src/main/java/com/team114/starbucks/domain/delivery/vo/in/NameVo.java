@@ -1,13 +1,13 @@
 package com.team114.starbucks.domain.delivery.vo.in;
 
-import lombok.Getter;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
 public class NameVo {
 
-    private final String name;
+    private String name;
 
     public NameVo(String name) {
         if (name == null || name.trim().isEmpty()) {

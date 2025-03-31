@@ -3,6 +3,7 @@ package com.team114.starbucks.domain.delivery.dto.out;
 import com.team114.starbucks.domain.delivery.entity.Delivery;
 import com.team114.starbucks.domain.delivery.vo.out.AddressVo;
 import com.team114.starbucks.domain.delivery.vo.out.AliasVo;
+import com.team114.starbucks.domain.delivery.vo.out.NameVo;
 import com.team114.starbucks.domain.delivery.vo.out.PhoneNumberVo;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class DeliveryResponseDto {
         return DeliveryResponseDto.builder()
                 .id(delivery.getId())
                 .uuid(delivery.getUuid())
+                .name(delivery.getName())
                 .alias(AliasVo.builder().alias(delivery.getAlias()).build())
                 .address(AddressVo.builder()
                         .zoneCode(delivery.getZoneCode())
