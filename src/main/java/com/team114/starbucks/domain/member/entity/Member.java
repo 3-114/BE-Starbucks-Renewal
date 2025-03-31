@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,46 +22,48 @@ import java.util.List;
 @NoArgsConstructor
 public class Member extends BaseEntity {
 
-    // 회원 ID
+    @Comment("회원 ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 회원 UUID
+    @Comment("회원 UUID")
+    @Column(unique = true)
     private String memberUuid;
 
-    // 닉네임
+    @Comment("닉네임")
     private String nickname;
 
-    // 비밀번호
+    @Comment("비밀번호")
     private String password;
 
-    // 이름
+    @Comment("이름")
     private String name;
 
-    // 성별
+    @Comment("성별")
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    // 생년월일
+    @Comment("생년월일")
     private Date birthday;
 
-    // 이메일
+    @Comment("이메일")
+    @Column(unique = true)
     private String email;
 
-    // 휴대폰 번호
+    @Comment("휴대폰 번호")
     private String phoneNumber;
 
-    // 생성일자
+    @Comment("생성 일자")
     private LocalDateTime createdAt;
 
-    // 수정일자
+    @Comment("수정 일자")
     private LocalDateTime modifiedAt;
 
-    // 삭제 여부
+    @Comment("삭제 여부")
     private Boolean deleted;
 
-    // 유저 권한
+    @Comment("유저 권한")
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
@@ -94,5 +97,4 @@ public class Member extends BaseEntity {
         this.deleted = deleted;
         this.userRole = userRole;
     }
-
 }

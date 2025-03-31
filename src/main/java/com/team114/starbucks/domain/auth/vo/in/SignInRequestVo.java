@@ -8,10 +8,10 @@ import lombok.Getter;
 public class SignInRequestVo {
 
     @Email(message = "올바른 이메일 형식으로 입력해주세요.")
-    @NotBlank(message = "이메일을 입력해주세요.")
+    @NotBlank(message = "아이디 또는 패스워드를 다시 확인하세요.")
     private String email;
 
-
+    @NotBlank(message = "아이디 또는 패스워드를 다시 확인하세요.")
     private String password;
 
 }
