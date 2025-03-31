@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class AuthServiceImpl implements AuthService {
 
     private final MemberRepository memberRepository;
@@ -32,14 +31,13 @@ public class AuthServiceImpl implements AuthService {
     public SignUpResponseDto signUp(SignUpRequestDto signUpRequestDto) {
 
         try {
-            // 패스워드 암호화
-            String password = passwordEncoder.encode(signUpRequestDto.getPassword());
-
-            // dto -> entity
-            Member member = signUpRequestDto.toEntity(password);
 
             // 레포지토리에 저장
-            memberRepository.save(member);
+            Member member = memberRepository.save(
+                    signUpRequestDto.toEntity(
+                            passwordEncoder.encode(signUpRequestDto.getPassword())
+                    )
+            );
 
             // entity -> dto
             return SignUpResponseDto.from(member);
@@ -56,13 +54,10 @@ public class AuthServiceImpl implements AuthService {
             Member member = memberRepository.findByEmail(signInRequestDto.getEmail())
                     .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_LOGIN));
 
-            String accessToken = createToken(authenticate(member, signInRequestDto.getPassword()));
-
-            return SignInResponseDto.from(member, accessToken);
+            return SignInResponseDto.from(member, createToken(authenticate(member, signInRequestDto.getPassword())));
         } catch (Exception e) {
             throw new BaseException(BaseResponseStatus.FAILED_TO_LOGIN);
         }
-
     }
 
     // 토큰 생성
