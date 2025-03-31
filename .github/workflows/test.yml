@@ -13,6 +13,12 @@ on:
       branches:
         - develop
 
+env: 
+    AWS_DB_URL: ${{ secrets.AWS_DB_URL }}
+    AWS_DB_USERNAME: ${{ secrets.AWS_DB_USERNAME }}
+    AWS_DB_PASSWORD: ${{ secrets.AWS_DB_PASSWORD }}
+    AWS_DB_NAME: ${{ secrets.AWS_DB_NAME }}
+
 jobs:
   Deploy:
     runs-on: ubuntu-latest
@@ -23,10 +29,14 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
+          envs: AWS_DB_URL,AWS_DB_USERNAME,AWS_DB_PASSWORD,AWS_DB_NAME
 #          script_stop: true
           script: |
             cd /home/ubuntu/BE-Starbucks-Renewal
             git pull origin test
-            ./gradlew clean build
+            chmod +x ./gradlew  # 실행 권한 추가
+
+            
+            ./gradlew clean build -x test
             fuser -k -n tcp 8080 || true
             nohup java -jar build/libs/*SNAPSHOT.jar > ./output.log 2>&1 &
