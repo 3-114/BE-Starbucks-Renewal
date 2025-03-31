@@ -1,0 +1,21 @@
+spring:
+
+  profiles:
+    active: local
+
+logging:
+  level:
+    root: INFO
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: true
+        format_sql: true
+
+  jwt:
+    secret:
+      key: 00C49vjBEiNEmODEZoDgkuQ/nNl6pNwDVrpNv9TqJJo=
