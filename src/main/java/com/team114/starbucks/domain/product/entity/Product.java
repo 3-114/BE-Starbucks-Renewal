@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class Product {
-
     // 상품 ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,4 +77,5 @@ public class Product {
         this.optionFlag = optionFlag;
         this.shippingFee = shippingFee;
     }
+
 }
