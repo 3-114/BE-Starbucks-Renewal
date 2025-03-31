@@ -7,9 +7,14 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,7 +27,7 @@ public class Member extends BaseEntity {
     private Long id;
 
     // 회원 UUID
-    private String uuid;
+    private String memberUuid;
 
     // 닉네임
     private String nickname;
@@ -56,12 +61,13 @@ public class Member extends BaseEntity {
     private Boolean deleted;
 
     // 유저 권한
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
     @Builder
     public Member(
             Long id,
-            String uuid,
+            String memberUuid,
             String nickname,
             String password,
             String name,
@@ -75,7 +81,7 @@ public class Member extends BaseEntity {
             UserRole userRole
     ) {
         this.id = id;
-        this.uuid = uuid;
+        this.memberUuid = memberUuid;
         this.nickname = nickname;
         this.password = password;
         this.name = name;
@@ -88,4 +94,5 @@ public class Member extends BaseEntity {
         this.deleted = deleted;
         this.userRole = userRole;
     }
+
 }

@@ -1,4 +1,4 @@
-package com.team114.starbucks.domain.member.vo.in;
+package com.team114.starbucks.domain.auth.vo.in;
 
 import com.team114.starbucks.domain.member.enums.Gender;
 import lombok.Getter;
