@@ -6,6 +6,12 @@ on:
     push:
         branches:
         - test
+        - develop
+
+    pull_request:
+      types: [ closed ]
+      branches:
+        - develop
 
 jobs:
   Deploy:
