@@ -12,6 +12,7 @@ on:
       types: [ closed ]
       branches:
         - develop
+        - test
 
 env: 
     AWS_DB_URL: ${{ secrets.AWS_DB_URL }}
