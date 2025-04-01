@@ -4,8 +4,6 @@ import com.team114.starbucks.domain.auth.dto.in.SignInRequestDto;
 import com.team114.starbucks.domain.auth.dto.in.SignUpRequestDto;
 import com.team114.starbucks.domain.auth.dto.out.SignInResponseDto;
 import com.team114.starbucks.domain.auth.dto.out.SignUpResponseDto;
-import com.team114.starbucks.domain.auth.vo.out.SignInResponseVo;
-import org.springframework.security.core.userdetails.UserDetails;
 
 public interface AuthService {
 

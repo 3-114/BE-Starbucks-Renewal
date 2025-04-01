@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/auth-service")
 public class AuthController {
 
     private final AuthServiceImpl memberService;
@@ -34,12 +34,12 @@ public class AuthController {
      * @param signUpRequestVo
      */
     @Operation(summary = "sign-up API", description = "회원가입 API 입니다.", tags = {"auth-service"})
-    @PostMapping("/auth-service/sign-up")
-    public ResponseEntity<BaseResponseEntity<SignUpResponseVo>> signUp(
+    @PostMapping("/sign-up")
+    public BaseResponseEntity<SignUpResponseVo> signUp(
             @RequestBody SignUpRequestVo signUpRequestVo
     ) {
         SignUpResponseVo result = memberService.signUp(SignUpRequestDto.from(signUpRequestVo)).toVo();
-        return ResponseEntity.ok(new BaseResponseEntity<>("회원가입에 성공하였습니다.", result));
+        return new BaseResponseEntity<>("회원가입에 성공하였습니다.", result);
     }
 
     /**
@@ -48,11 +48,11 @@ public class AuthController {
      * @Return signInResponseVo
      */
     @Operation(summary = "sign-in API", description = "로그인 API 입니다.", tags = {"auth-service"})
-    @PostMapping("/auth-service/sign-in")
-    public ResponseEntity<BaseResponseEntity<SignInResponseVo>> signIn(
+    @PostMapping("/sign-in")
+    public BaseResponseEntity<SignInResponseVo> signIn(
             @RequestBody SignInRequestVo signInRequestVo
     ) {
         SignInResponseVo result = memberService.signIn(SignInRequestDto.from(signInRequestVo)).toVo();
-        return ResponseEntity.ok(new BaseResponseEntity<>("로그인에 성공하였습니다.", result));
+        return new BaseResponseEntity<>("로그인에 성공하였습니다.", result);
     }
 }

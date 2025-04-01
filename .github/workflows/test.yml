@@ -12,12 +12,17 @@ on:
       types: [ closed ]
       branches:
         - develop
+        - test
 
 env: 
     AWS_DB_URL: ${{ secrets.AWS_DB_URL }}
     AWS_DB_USERNAME: ${{ secrets.AWS_DB_USERNAME }}
     AWS_DB_PASSWORD: ${{ secrets.AWS_DB_PASSWORD }}
     AWS_DB_NAME: ${{ secrets.AWS_DB_NAME }}
+
+    merge:
+        branches:
+        - test
 
 jobs:
   Deploy:
