@@ -16,6 +16,8 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+
+// Soft Delete
 @SQLDelete(sql = "UPDATE delivery SET deleted = true WHERE id = ?")
 @Where(clause = "deleted = false")
 public class Delivery extends BaseEntity {
@@ -62,20 +64,29 @@ public class Delivery extends BaseEntity {
     @Column(nullable = false)
     private boolean defaultAddress;
 
+    // Client가 삭제 요청한 컬럼
     @Builder.Default
     @Column(nullable = false)
     private Boolean deleted = false;
 
+    // 현재 사용 중인 주소인지
     @Builder.Default
     @Column(nullable = false)
     private boolean active = true;
 
+    // 사용자가 배송지를 삭제했을 때
     public void markAsDeleted() {
         this.deleted = true;
     }
 
+    // 기존 배송지를 비활성화에서 기본 배송지를 바꿀 때
     public void deactivate() {
         this.active = false;
+    }
+
+    // 현재 배송지를 기본 배송지로 설정할 때
+    public void activateAsDefault() {
+        this.defaultAddress = true;
     }
 
     @Builder
@@ -110,10 +121,4 @@ public class Delivery extends BaseEntity {
         this.deleted = deleted;
         this.active = active;
     }
-
-    // Delivery 엔티티
-    public void activateAsDefault() {
-        this.defaultAddress = true;
-    }
 }
-

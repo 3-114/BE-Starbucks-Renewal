@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+// 클라이언트 -> 서버
 public class DeliveryRequestDto {
 
     private AliasVo alias;

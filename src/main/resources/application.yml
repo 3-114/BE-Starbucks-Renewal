@@ -20,3 +20,11 @@ spring:
         default_batch_fetch_size: 1000 #??? ??
 
   #    show_sql: true
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    tags-sorter: alpha

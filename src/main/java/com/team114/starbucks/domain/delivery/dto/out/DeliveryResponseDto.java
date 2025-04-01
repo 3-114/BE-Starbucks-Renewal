@@ -10,6 +10,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
+// 서버 -> 클라이언트
 public class DeliveryResponseDto {
 
     private Long id;

@@ -20,6 +20,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Override
     @Transactional
     public void createDelivery(DeliveryRequestDto dto, String memberUuid) {
+        // UUID 생성해서 새로운 배송지 식별자 부여
         Delivery delivery = dto.toEntity(UUID.randomUUID().toString(), memberUuid);
         deliveryRepository.save(delivery);
     }
