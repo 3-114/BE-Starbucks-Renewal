@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/auth-service")
 public class AuthController {
 
     private final AuthServiceImpl memberService;
@@ -34,7 +34,7 @@ public class AuthController {
      * @param signUpRequestVo
      */
     @Operation(summary = "sign-up API", description = "회원가입 API 입니다.", tags = {"auth-service"})
-    @PostMapping("/auth-service/sign-up")
+    @PostMapping("/sign-up")
     public ResponseEntity<BaseResponseEntity<SignUpResponseVo>> signUp(
             @RequestBody SignUpRequestVo signUpRequestVo
     ) {
@@ -48,7 +48,7 @@ public class AuthController {
      * @Return signInResponseVo
      */
     @Operation(summary = "sign-in API", description = "로그인 API 입니다.", tags = {"auth-service"})
-    @PostMapping("/auth-service/sign-in")
+    @PostMapping("/sign-in")
     public ResponseEntity<BaseResponseEntity<SignInResponseVo>> signIn(
             @RequestBody SignInRequestVo signInRequestVo
     ) {
