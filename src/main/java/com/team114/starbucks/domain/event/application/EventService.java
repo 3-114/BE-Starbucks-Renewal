@@ -21,7 +21,10 @@ public class EventService {
 //        List<Event> allEvent = eventRepository.findAll();
 //        List<EventResponseVo> allEventVo;
 
+//        List<Event> EventList = eventRepository.findAll();
+
         List<Event> EventList = eventRepository.findAll();
+        System.out.println("🔍 DB에서 가져온 Event 개수: " + EventList.size());
 
         List<EventResponseDto> responseDtoList = new ArrayList<>();
 
