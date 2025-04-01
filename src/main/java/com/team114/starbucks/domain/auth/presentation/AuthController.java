@@ -35,11 +35,11 @@ public class AuthController {
      */
     @Operation(summary = "sign-up API", description = "회원가입 API 입니다.", tags = {"auth-service"})
     @PostMapping("/sign-up")
-    public ResponseEntity<BaseResponseEntity<SignUpResponseVo>> signUp(
+    public BaseResponseEntity<SignUpResponseVo> signUp(
             @RequestBody SignUpRequestVo signUpRequestVo
     ) {
         SignUpResponseVo result = memberService.signUp(SignUpRequestDto.from(signUpRequestVo)).toVo();
-        return ResponseEntity.ok(new BaseResponseEntity<>("회원가입에 성공하였습니다.", result));
+        return new BaseResponseEntity<>("회원가입에 성공하였습니다.", result);
     }
 
     /**
@@ -49,10 +49,10 @@ public class AuthController {
      */
     @Operation(summary = "sign-in API", description = "로그인 API 입니다.", tags = {"auth-service"})
     @PostMapping("/sign-in")
-    public ResponseEntity<BaseResponseEntity<SignInResponseVo>> signIn(
+    public BaseResponseEntity<SignInResponseVo> signIn(
             @RequestBody SignInRequestVo signInRequestVo
     ) {
         SignInResponseVo result = memberService.signIn(SignInRequestDto.from(signInRequestVo)).toVo();
-        return ResponseEntity.ok(new BaseResponseEntity<>("로그인에 성공하였습니다.", result));
+        return new BaseResponseEntity<>("로그인에 성공하였습니다.", result);
     }
 }
