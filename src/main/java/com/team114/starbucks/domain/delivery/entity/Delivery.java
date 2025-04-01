@@ -1,21 +1,34 @@
 package com.team114.starbucks.domain.delivery.entity;
 
 import com.team114.starbucks.domain.delivery.dto.in.DeliveryRequestDto;
+
+import com.team114.starbucks.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
+import java.util.UUID;
 
 @Entity
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Delivery {
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@SQLDelete(sql = "UPDATE delivery SET deleted = true WHERE id = ?")
+@Where(clause = "deleted = false")
+public class Delivery extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String uuid;
+    @Column(nullable = false, unique = true)
+    private String memberUuid;
+
+    @Column(nullable = false)
+    private String deliveryUuid;
 
     @Comment("배송지 닉네임")
     @Column(length = 20)
@@ -23,7 +36,7 @@ public class Delivery {
 
     @Comment("받는 분")
     @Column(nullable = false, length = 20)
-    private String name;
+    private String recipient;
 
     @Comment("우편번호")
     @Column(nullable = false, length = 5)
@@ -37,38 +50,56 @@ public class Delivery {
     @Column(nullable = false, length = 100)
     private String detailAddress;
 
-    @Column(nullable = false, length = 11)
+    @Column(nullable = false, length = 20)
     private String phoneNumber1;
 
-    @Column(length = 11)
+    @Column(length = 20)
     private String phoneNumber2;
 
     @Column(length = 30)
     private String deliveryMemo;
 
-    // 기본 배송지 여부
     @Column(nullable = false)
     private boolean defaultAddress;
 
+    @Builder.Default
+    @Column(nullable = false)
+    private Boolean deleted = false;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean active = true;
+
+    public void markAsDeleted() {
+        this.deleted = true;
+    }
+
+    public void deactivate() {
+        this.active = false;
+    }
 
     @Builder
-    public Delivery (
+    public Delivery(
             Long id,
-            String uuid,
+            String deliveryUuid,
+            String memberUuid,
             String alias,
-            String name,
+            String recipient,
             String zoneCode,
             String mainAddress,
             String detailAddress,
             String phoneNumber1,
             String phoneNumber2,
             String deliveryMemo,
-            boolean defaultAddress
+            boolean defaultAddress,
+            boolean deleted,
+            boolean active
     ) {
         this.id = id;
-        this.uuid = uuid;
+        this.deliveryUuid = deliveryUuid;
+        this.memberUuid = memberUuid;
         this.alias = alias;
-        this.name = name;
+        this.recipient = recipient;
         this.zoneCode = zoneCode;
         this.mainAddress = mainAddress;
         this.detailAddress = detailAddress;
@@ -76,23 +107,13 @@ public class Delivery {
         this.phoneNumber2 = phoneNumber2;
         this.deliveryMemo = deliveryMemo;
         this.defaultAddress = defaultAddress;
+        this.deleted = deleted;
+        this.active = active;
     }
 
-    // 배송지 수정
-    public void updateFrom(DeliveryRequestDto dto) {
-        this.alias = dto.getAlias().getAlias();
-        this.name = dto.getName().getName();
-        this.zoneCode = dto.getAddress().getZoneCode();
-        this.mainAddress = dto.getAddress().getMainAddress();
-        this.detailAddress = dto.getAddress().getDetailAddress();
-        this.phoneNumber1 = dto.getPhoneNumbers().getPhoneNumber1();
-        this.phoneNumber2 = dto.getPhoneNumbers().getPhoneNumber2();
-        this.deliveryMemo = dto.getDeliveryMemo();
-        this.defaultAddress = dto.isDefaultAddress();
-    }
-
-    // 기본 배송지 설정
-    public void setAsDefault() {
+    // Delivery 엔티티
+    public void activateAsDefault() {
         this.defaultAddress = true;
     }
 }
+

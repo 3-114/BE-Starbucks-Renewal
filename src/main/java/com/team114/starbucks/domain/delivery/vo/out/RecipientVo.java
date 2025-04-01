@@ -7,19 +7,19 @@ import lombok.Getter;
 @Getter
 @Builder
 @EqualsAndHashCode
-public class NameVo {
+public class RecipientVo {
 
-    private final String name;
+    private final String recipient;
 
-    public NameVo(String name) {
-        if (name == null || name.trim().isEmpty()) {
+    public RecipientVo(String recipient) {
+        if (recipient == null || recipient.trim().isEmpty()) {
             throw new IllegalArgumentException("이름은 필수입니다.");
         }
 
-        if (name.length() > 20) {
+        if (recipient.length() > 20) {
             throw new IllegalArgumentException("이름은 20자 이하로 입력해주세요.");
         }
 
-        this.name = name;
+        this.recipient = recipient;
     }
 }

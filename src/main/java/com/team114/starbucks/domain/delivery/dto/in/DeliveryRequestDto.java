@@ -1,9 +1,9 @@
 package com.team114.starbucks.domain.delivery.dto.in;
 
-import com.team114.starbucks.domain.delivery.vo.in.NameVo;
 import com.team114.starbucks.domain.delivery.entity.Delivery;
 import com.team114.starbucks.domain.delivery.vo.in.AddressVo;
 import com.team114.starbucks.domain.delivery.vo.in.AliasVo;
+import com.team114.starbucks.domain.delivery.vo.in.RecipientVo;
 import com.team114.starbucks.domain.delivery.vo.in.PhoneNumberVo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,17 +13,18 @@ import lombok.NoArgsConstructor;
 public class DeliveryRequestDto {
 
     private AliasVo alias;
+    private RecipientVo recipient;
     private AddressVo address;
     private PhoneNumberVo phoneNumbers;
     private String deliveryMemo;
     private boolean defaultAddress;
-    private NameVo name;
 
-    public Delivery toEntity(String uuid) {
+    public Delivery toEntity(String deliveryUuid, String memberUuid) {
         return Delivery.builder()
-                .uuid(uuid)
-                .name(name.getName())
+                .deliveryUuid(deliveryUuid)
+                .memberUuid(memberUuid)
                 .alias(alias.getAlias())
+                .recipient(recipient.getRecipient())
                 .zoneCode(address.getZoneCode())
                 .mainAddress(address.getMainAddress())
                 .detailAddress(address.getDetailAddress())
@@ -31,6 +32,7 @@ public class DeliveryRequestDto {
                 .phoneNumber2(phoneNumbers.getPhoneNumber2())
                 .deliveryMemo(deliveryMemo)
                 .defaultAddress(defaultAddress)
+                .active(true)
                 .build();
     }
 }

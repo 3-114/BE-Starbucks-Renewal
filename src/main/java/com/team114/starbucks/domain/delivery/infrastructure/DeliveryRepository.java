@@ -2,12 +2,18 @@ package com.team114.starbucks.domain.delivery.infrastructure;
 
 import com.team114.starbucks.domain.delivery.entity.Delivery;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
 
-    @Modifying
-    @Query("UPDATE Delivery d SET d.defaultAddress = false WHERE d.defaultAddress = true")
-    void clearDefaultDelivery();
+    // 특정 회원의 배송지 전체 조회
+    List<Delivery> findAllByMemberUuid(String memberUuid);
+
+    // 배송지 UUID로 단일 조회 (soft delete가 적용되어 있으므로 deleted = false 조건 자동 포함)
+    Optional<Delivery> findByDeliveryUuid(String deliveryUuid);
+
+    // 특정 회원의 기본 배송지 조회
+    Optional<Delivery> findByMemberUuidAndDefaultAddressIsTrue(String memberUuid);
 }

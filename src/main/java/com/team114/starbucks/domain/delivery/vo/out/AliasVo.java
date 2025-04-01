@@ -9,4 +9,8 @@ import lombok.Getter;
 @EqualsAndHashCode
 public class AliasVo {
     private final String alias;
+
+    public AliasVo(String alias) {
+        this.alias = alias;
+    }
 }
