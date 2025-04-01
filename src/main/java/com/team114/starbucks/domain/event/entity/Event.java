@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -28,14 +28,14 @@ public class Event {
 
     // 시작 날짜
     @Column(name = "startDate", nullable = true)
-    private Date startDate;
+    private LocalDate startDate;
 
     // 종료 날짜
     @Column(name = "endDate", nullable = true)
-    private Date endDate;
+    private LocalDate endDate;
 
     @Builder
-    public Event(Long id, String eventUuid, String eventName, Date startDate, Date endDate) {
+    public Event(Long id, String eventUuid, String eventName, LocalDate startDate, LocalDate endDate) {
         this.id = id;
         this.eventUuid = eventUuid;
         this.eventName = eventName;
