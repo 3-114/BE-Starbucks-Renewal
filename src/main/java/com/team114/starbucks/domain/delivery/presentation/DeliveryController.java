@@ -5,10 +5,11 @@ import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.delivery.dto.in.DeliveryRequestDto;
 import com.team114.starbucks.domain.delivery.dto.out.DeliveryResponseDto;
 import com.team114.starbucks.domain.delivery.application.DeliveryService;
+import com.team114.starbucks.domain.delivery.vo.in.DeliveryRequestVo;
+import com.team114.starbucks.domain.delivery.vo.out.DeliveryResponseVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,52 +22,61 @@ public class DeliveryController {
 
     private final DeliveryService deliveryService;
 
-    // 배송지 목록 조회
-    @Operation(summary = "배송지 목록 조회", description = "회원 UUID로 해당 회원의 모든 배송지를 조회합니다.")
-    @GetMapping("/{memberUuid}")
-    public ResponseEntity<BaseResponseEntity<List<DeliveryResponseDto>>> getDeliveriesByMember(
+    // 배송지 생성
+    @Operation(summary = "배송지 등록", description = "배송지를 등록합니다.", tags = {"delivery"})
+    @PostMapping("/{memberUuid}")
+    public BaseResponseEntity<DeliveryResponseVo> createDelivery(
+            @RequestBody DeliveryRequestVo deliveryRequestVo,
             @PathVariable String memberUuid) {
-        List<DeliveryResponseDto> response = deliveryService.getDeliveriesByMemberUuid(memberUuid);
-        return ResponseEntity.ok(new BaseResponseEntity<>("배송지 목록 조회 성공", response));
+
+        DeliveryResponseDto result = deliveryService.
+                createDelivery(DeliveryRequestDto.from(memberUuid, deliveryRequestVo), memberUuid);
+        return new BaseResponseEntity<>("배송지가 등록되었습니다.", result.toVo());
     }
 
-    // 배송지 생성
-    @Operation(summary = "배송지 등록", description = "회원 UUID와 배송지 정보를 받아 새로운 배송지를 등록합니다.")
-    @PostMapping("/{memberUuid}")
-    public ResponseEntity<BaseResponseEntity<Void>> createDelivery(
-            @RequestBody DeliveryRequestDto requestDto,
+    // 배송지 목록 조회
+    @Operation(summary = "배송지 목록 조회", description = "회원의 전체 배송지를 조회합니다.", tags = {"delivery"})
+    @GetMapping("/{memberUuid}")
+    public BaseResponseEntity<List<DeliveryResponseDto>> getDeliveriesByMember(
             @PathVariable String memberUuid) {
-        deliveryService.createDelivery(requestDto, memberUuid);
-        return ResponseEntity.ok(new BaseResponseEntity<>("배송지 등록 성공"));
+
+        List<DeliveryResponseDto> result = deliveryService.getDeliveriesByMemberUuid(memberUuid);
+        return new BaseResponseEntity<>("배송지 목록 조회 성공", result);
     }
 
     // 배송지 수정
-    @Operation(summary = "배송지 수정", description = "기존 배송지를 비활성화하고 새 배송지를 생성합니다.")
+    @Operation(summary = "배송지 수정", description = "기존 배송지를 비활성화하고 새 배송지를 생성합니다.", tags = {"delivery"})
     @PutMapping("/{memberUuid}/{deliveryUuid}")
-    public ResponseEntity<BaseResponseEntity<Void>> updateDelivery(
+    public BaseResponseEntity<DeliveryResponseVo> updateDelivery(
             @PathVariable String deliveryUuid,
-            @RequestBody DeliveryRequestDto requestDto,
-            @PathVariable String memberUuid) {
-        deliveryService.updateDelivery(deliveryUuid, requestDto, memberUuid);
-        return ResponseEntity.ok(new BaseResponseEntity<>("배송지 수정 성공"));
+            @PathVariable String memberUuid,
+            @RequestBody DeliveryRequestVo deliveryRequestVo) {
+
+        DeliveryResponseDto result = deliveryService.updateDelivery(
+                deliveryUuid,
+                DeliveryRequestDto.from(memberUuid, deliveryRequestVo), memberUuid);
+
+        return new BaseResponseEntity<>("배송지가 수정되었습니다.", result.toVo());
     }
 
     // 배송지 삭제
-    @Operation(summary = "배송지 삭제", description = "배송지를 soft delete 방식으로 삭제 처리합니다.")
+    @Operation(summary = "배송지 삭제", description = "배송지를 삭제합니다.", tags = {"delivery"})
     @DeleteMapping("/{deliveryUuid}")
-    public ResponseEntity<BaseResponseEntity<Void>> deleteDelivery(@PathVariable String deliveryUuid) {
-        deliveryService.deleteDelivery(deliveryUuid);
-        return ResponseEntity.ok(new BaseResponseEntity<>("배송지 삭제 성공"));
+    public BaseResponseEntity<DeliveryResponseVo> deleteDelivery(
+            @PathVariable String deliveryUuid) {
+
+        DeliveryResponseDto result = deliveryService.deleteDelivery(deliveryUuid);
+        return new BaseResponseEntity<>("배송지가 삭제되었습니다.", result.toVo());
     }
 
     // 기본 배송지 설정
-    @Operation(summary = "기본 배송지 설정", description = "기존 기본 배송지를 해제하고 해당 배송지를 기본 배송지로 설정합니다.")
-    @PutMapping("defalut/{memberUuid}/{deliveryUuid}")
-    public ResponseEntity<BaseResponseEntity<Void>> setDefaultDelivery(
+    @Operation(summary = "기본 배송지 설정", description = "기존 기본 배송지를 해제하고 해당 배송지를 기본 배송지로 설정합니다.", tags = {"delivery"})
+    @PutMapping("/default/{memberUuid}/{deliveryUuid}")
+    public BaseResponseEntity<DeliveryResponseVo> setDefaultDelivery(
             @PathVariable String memberUuid,
             @PathVariable String deliveryUuid) {
 
-        deliveryService.setDefaultDelivery(deliveryUuid, memberUuid);
-        return ResponseEntity.ok(new BaseResponseEntity<>(BaseResponseStatus.SUCCESS));
+        DeliveryResponseDto result = deliveryService.setDefaultDelivery(deliveryUuid, memberUuid);
+        return new BaseResponseEntity<>("기본 배송지가 설정되었습니다.", result.toVo());
     }
 }

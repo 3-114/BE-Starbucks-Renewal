@@ -19,10 +19,11 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Override
     @Transactional
-    public void createDelivery(DeliveryRequestDto dto, String memberUuid) {
+    public DeliveryResponseDto createDelivery(DeliveryRequestDto dto, String memberUuid) {
         // UUID 생성해서 새로운 배송지 식별자 부여
         Delivery delivery = dto.toEntity(UUID.randomUUID().toString(), memberUuid);
-        deliveryRepository.save(delivery);
+        Delivery savedDelivery = deliveryRepository.save(delivery);
+        return DeliveryResponseDto.fromEntity(savedDelivery);
     }
 
     @Override
@@ -43,33 +44,40 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Override
     @Transactional
-    public void updateDelivery(String oldDeliveryUuid, DeliveryRequestDto dto, String memberUuid) {
-        Delivery oldDelivery = deliveryRepository.findByDeliveryUuid(oldDeliveryUuid)
+    public DeliveryResponseDto updateDelivery(String deliveryUuid, DeliveryRequestDto dto, String memberUuid) {
+        Delivery oldDelivery = deliveryRepository.findByDeliveryUuid(deliveryUuid)
                 .orElseThrow(() -> new IllegalArgumentException("기존 배송지를 찾을 수 없습니다."));
 
         oldDelivery.deactivate(); // 기존 배송지 비활성화
 
-        Delivery newDelivery = dto.toEntity(UUID.randomUUID().toString(), memberUuid);
-        deliveryRepository.save(newDelivery);
+        Delivery newDelivery = dto.toEntity(deliveryUuid, memberUuid);
+        Delivery savedDelivery = deliveryRepository.save(newDelivery); // 저장된 객체 반환
+
+        return DeliveryResponseDto.fromEntity(savedDelivery); // 반환
     }
 
     @Override
     @Transactional
-    public void deleteDelivery(String deliveryUuid) {
+    public DeliveryResponseDto deleteDelivery(String deliveryUuid) {
         Delivery delivery = deliveryRepository.findByDeliveryUuid(deliveryUuid)
                 .orElseThrow(() -> new IllegalArgumentException("배송지를 찾을 수 없습니다."));
-        deliveryRepository.delete(delivery); // soft delete 적용
+
+        deliveryRepository.delete(delivery); // soft delete 방식이어야 정상 작동함
+
+        return DeliveryResponseDto.fromEntity(delivery); // 삭제 전의 배송지 정보 반환
     }
 
     @Override
     @Transactional
-    public void setDefaultDelivery(String deliveryUuid, String memberUuid) {
+    public DeliveryResponseDto setDefaultDelivery(String deliveryUuid, String memberUuid) {
         deliveryRepository.findByMemberUuidAndDefaultAddressIsTrue(memberUuid)
-                .ifPresent(Delivery::deactivate);
+                .ifPresent(Delivery::deactivate); // 기존 기본 배송지 비활성화
 
         Delivery newDefault = deliveryRepository.findByDeliveryUuid(deliveryUuid)
                 .orElseThrow(() -> new IllegalArgumentException("배송지를 찾을 수 없습니다."));
 
-        newDefault.activateAsDefault();
+        newDefault.activateAsDefault(); // 새로운 배송지를 기본으로 설정
+
+        return DeliveryResponseDto.fromEntity(newDefault); // 변경된 배송지 반환
     }
 }
