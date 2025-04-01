@@ -10,24 +10,26 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EventResponseDto {
 
+    private Long id;
     private String eventName;
 
     @Builder
-    public EventResponseDto(
-            String name
-    ) {
-        this.eventName = name;
+    public EventResponseDto(Long id, String eventName) {
+        this.id = id;
+        this.eventName = eventName;
     }
 
     public static EventResponseDto from(Event event) {
         return EventResponseDto.builder()
-                .name(event.getEventName())
+                .id(event.getId())
+                .eventName(event.getEventName())
                 .build();
     }
 
 
     public EventResponseVo toVo() {
         return EventResponseVo.builder()
+                .id(id)
                 .eventName(eventName)
                 .build();
 
