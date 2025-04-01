@@ -1,15 +1,11 @@
 package com.team114.starbucks.domain.delivery.entity;
 
-import com.team114.starbucks.domain.delivery.dto.in.DeliveryRequestDto;
-
 import com.team114.starbucks.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-
-import java.util.UUID;
 
 @Entity
 @Getter
