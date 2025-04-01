@@ -1,5 +1,6 @@
 package com.team114.starbucks.domain.event.presentation;
 
+import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.event.application.EventService;
 import com.team114.starbucks.domain.event.dto.EventResponseDto;
 import com.team114.starbucks.domain.event.vo.EventResponseVo;
@@ -19,7 +20,7 @@ public class EventController {
     private final EventService eventService;
 
     @GetMapping
-    public List<EventResponseVo> getAllEventName() {
+    public BaseResponseEntity<List<EventResponseVo>> getAllEventName() {
 
         List<EventResponseDto> dtoList = eventService.getAllEventName();
 
@@ -30,7 +31,7 @@ public class EventController {
             voList.add(eventResponseVo);
         }
 
-        return voList;
+        return new BaseResponseEntity<>("기획전 조회에 성공하였습니다.", voList);
 
 
 
