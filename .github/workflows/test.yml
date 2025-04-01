@@ -12,6 +12,7 @@ on:
       types: [ closed ]
       branches:
         - develop
+        - test
 
 jobs:
   Deploy:
