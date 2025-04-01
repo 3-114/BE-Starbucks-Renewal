@@ -13,11 +13,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/events")
 public class EventController {
 
     private final EventService eventService;
 
-    @GetMapping("/test")
+    @GetMapping
     public List<EventResponseVo> getAllEventName() {
 
         List<EventResponseDto> dtoList = eventService.getAllEventName();
