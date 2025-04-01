@@ -7,6 +7,10 @@ on:
         branches:
         - test
 
+    merge:
+        branches:
+        - test
+
 jobs:
   Deploy:
     runs-on: ubuntu-latest

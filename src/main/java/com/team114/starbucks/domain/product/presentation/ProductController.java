@@ -47,23 +47,22 @@ public class ProductController {
 
     @GetMapping("/products/{id}")
     public BaseResponseEntity<ProductGetResVo> getProduct(@PathVariable Long id) {
-        ProductGetResDto result = productService.getProduct(id);
+        ProductGetResDto product = productService.getProduct(id);
 
-        return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 조회 성공", 200, result.toVo());
+        return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 조회 성공", 200, product.toVo());
     }
 
     @PostMapping("/products")
     public BaseResponseEntity<ProductPostReqDto> saveProduct(@RequestBody ProductPostReqVo productPostReqVo) {
         ProductPostReqDto productPostReqDto = ProductPostReqDto.from(productPostReqVo);
 
-        ProductPostReqDto result = productService.saveProduct(productPostReqDto);
+        ProductPostReqDto product = productService.saveProduct(productPostReqDto);
 
-        return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 등록 성공", 200, result);
-
-
-
+        return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 등록 성공", 200, product);
 
     }
+
+
 
 
 

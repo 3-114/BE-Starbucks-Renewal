@@ -48,15 +48,21 @@ public class ProductService {
 
         //Product product = productPostReqDto.toEntity();
 
+
+        if (productRepository.existsByName(productPostReqDto.getName())) {
+            throw new IllegalArgumentException("이미 존재하는 상품입니다.");
+        }
+
         Product product = Product.builder()
                 .name(productPostReqDto.getName())
                 .price(productPostReqDto.getPrice())
                 .build();
 
+
+
         productRepository.save(product);
 
         return productPostReqDto;
-
 
 
     }
