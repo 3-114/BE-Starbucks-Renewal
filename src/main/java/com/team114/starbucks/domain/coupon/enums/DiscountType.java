@@ -11,8 +11,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum DiscountType {
 
-    DISCOUNT_TYPE_PRICE("정액 할인"),       // 남성
-    DISCOUNT_TYPE_PERCENT("정률 할인")      // 여성
+    DISCOUNT_TYPE_PRICE("정액 할인"),
+    DISCOUNT_TYPE_PERCENT("정률 할인")
     ;
 
     private final String discountType;
