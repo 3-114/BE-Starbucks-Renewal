@@ -53,7 +53,7 @@ jobs:
             echo ">>> EC2 환경변수 확인"
             echo "DB_NAME: $AWS_DB_NAME"
 
-  #         ✅ 환경변수를 다시 export 해줌 (session 내 변수 → subprocess로 전달)
+
             export AWS_DB_URL=$AWS_DB_URL
             export AWS_DB_USERNAME=$AWS_DB_USERNAME
             export AWS_DB_PASSWORD=$AWS_DB_PASSWORD
