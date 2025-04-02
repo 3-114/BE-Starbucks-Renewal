@@ -40,7 +40,7 @@ jobs:
 #          script_stop: true
           script: |
             cd /home/ubuntu/BE-Starbucks-Renewal
-            git pull origin test
+            git pull origin develop
             chmod +x ./gradlew  # 실행 권한 추가
 
             
