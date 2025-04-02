@@ -6,13 +6,15 @@ on:
     push:
         branches:
         - test
-        - develop
+        - developq
+        - cicd
 
     pull_request:
       types: [ closed ]
       branches:
         - develop
         - test
+        - cicd
 
 
 
