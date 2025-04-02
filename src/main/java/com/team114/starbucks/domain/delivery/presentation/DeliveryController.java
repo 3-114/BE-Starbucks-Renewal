@@ -35,6 +35,7 @@ public class DeliveryController {
     }
 
     // 배송지 생성 api
+    // 배송지 수정 api
 
     // 배송지 목록 조회
     @Operation(summary = "배송지 목록 조회", description = "회원의 전체 배송지를 조회합니다.", tags = {"delivery"})
