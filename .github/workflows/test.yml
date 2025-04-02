@@ -6,7 +6,7 @@ on:
     push:
         branches:
         - test
-        - developq
+        - develop
         - cicd
 
     pull_request:
@@ -28,6 +28,7 @@ jobs:
       AWS_DB_USERNAME: ${{ secrets.AWS_DB_USERNAME }}
       AWS_DB_PASSWORD: ${{ secrets.AWS_DB_PASSWORD }}
       AWS_DB_NAME: ${{ secrets.AWS_DB_NAME }}
+
       LOCAL_DB_NAME: ${{ secrets.LOCAL_DB_NAME }}
       LOCAL_DB_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
       LOCAL_DB_PORT: ${{ secrets.LOCAL_DB_PORT }}
@@ -41,14 +42,21 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          envs: AWS_DB_URL,AWS_DB_USERNAME,AWS_DB_PASSWORD,AWS_DB_NAME
+          envs: AWS_DB_URL,AWS_DB_USERNAME,AWS_DB_PASSWORD,AWS_DB_NAME,LOCAL_DB_NAME,LOCAL_DB_PASSWORD,LOCAL_DB_PORT,LOCAL_DB_USERNAME
 #          script_stop: true
           script: |
             cd /home/ubuntu/BE-Starbucks-Renewal
-            git pull origin develop
+            git pull origin cicd
             chmod +x ./gradlew  # 실행 권한 추가
-
-            
             ./gradlew clean build -x test
+            
+            echo ">>> EC2 환경변수 확인"
+            echo "DB_NAME: $AWS_DB_NAME"
+
+  #         ✅ 환경변수를 다시 export 해줌 (session 내 변수 → subprocess로 전달)
+            export AWS_DB_URL=$AWS_DB_URL
+            export AWS_DB_USERNAME=$AWS_DB_USERNAME
+            export AWS_DB_PASSWORD=$AWS_DB_PASSWORD
+            export AWS_DB_NAME=$AWS_DB_NAME
             fuser -k -n tcp 8080 || true
             nohup java -jar build/libs/*SNAPSHOT.jar > ./output.log 2>&1 &
