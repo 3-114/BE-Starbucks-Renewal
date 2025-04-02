@@ -9,13 +9,12 @@ import lombok.Getter;
 @Builder
 public class ProductGetResVo {
     private Long id;
-    private String uuid;
+    private String productUuid;
     private Brand brand;
-    private String name;
-    private Integer price;
+    private String productName;
+    private Integer productPrice;
     private String description;
     private ProductStatus productStatus;
-    private Boolean optionFlag; //?
     private Integer shippingFee;
 
 }

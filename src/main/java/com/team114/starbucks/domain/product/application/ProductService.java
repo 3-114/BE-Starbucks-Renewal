@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +36,8 @@ public class ProductService {
     }
 
     public ProductGetResDto getProduct(Long id) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
 
         ProductGetResDto dto = ProductGetResDto.from(product);
 
@@ -48,16 +50,19 @@ public class ProductService {
 
         //Product product = productPostReqDto.toEntity();
 
-
-        if (productRepository.existsByName(productPostReqDto.getName())) {
+        if (productRepository.existsByName(productPostReqDto.getProductName())) {
             throw new IllegalArgumentException("이미 존재하는 상품입니다.");
         }
 
         Product product = Product.builder()
-                .name(productPostReqDto.getName())
-                .price(productPostReqDto.getPrice())
+                .productUuid(UUID.randomUUID().toString()) // ✅ UUID 자동 생성
+                .productName(productPostReqDto.getProductName())
+                .productPrice(productPostReqDto.getProductPrice())
+                .brand(productPostReqDto.getBrand()) // brand도 들어간다면 추가
+                .description(productPostReqDto.getDescription()) // 필요 시 추가
+                .productStatus(productPostReqDto.getProductStatus()) // 필요 시 추가
+                .shippingFee(productPostReqDto.getShippingFee()) // 필요 시 추가
                 .build();
-
 
 
         productRepository.save(product);
