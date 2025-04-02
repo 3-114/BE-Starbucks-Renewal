@@ -50,7 +50,7 @@ public class ProductService {
 
         //Product product = productPostReqDto.toEntity();
 
-        if (productRepository.existsByName(productPostReqDto.getProductName())) {
+        if (productRepository.existsByProductName(productPostReqDto.getProductName())) {
             throw new IllegalArgumentException("이미 존재하는 상품입니다.");
         }
 
