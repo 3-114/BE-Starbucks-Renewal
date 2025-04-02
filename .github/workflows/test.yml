@@ -7,28 +7,26 @@ on:
         branches:
         - test
         - develop
-        - feature/event
 
     pull_request:
       types: [ closed ]
       branches:
         - develop
         - test
-        - feature/event
 
-env: 
-    AWS_DB_URL: ${{ secrets.AWS_DB_URL }}
-    AWS_DB_USERNAME: ${{ secrets.AWS_DB_USERNAME }}
-    AWS_DB_PASSWORD: ${{ secrets.AWS_DB_PASSWORD }}
-    AWS_DB_NAME: ${{ secrets.AWS_DB_NAME }}
 
-    merge:
-        branches:
-        - test
 
 jobs:
   Deploy:
+    if: github.event.pull_request.merged == true || github.event_name == 'push'
     runs-on: ubuntu-latest
+
+    env:
+      AWS_DB_URL: ${{ secrets.AWS_DB_URL }}
+      AWS_DB_USERNAME: ${{ secrets.AWS_DB_USERNAME }}
+      AWS_DB_PASSWORD: ${{ secrets.AWS_DB_PASSWORD }}
+      AWS_DB_NAME: ${{ secrets.AWS_DB_NAME }}
+
     steps:
       - name: SSH로 EC2에 접속하기
         uses: appleboy/ssh-action@v1
