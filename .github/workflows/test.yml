@@ -28,6 +28,11 @@ jobs:
       AWS_DB_USERNAME: ${{ secrets.AWS_DB_USERNAME }}
       AWS_DB_PASSWORD: ${{ secrets.AWS_DB_PASSWORD }}
       AWS_DB_NAME: ${{ secrets.AWS_DB_NAME }}
+      LOCAL_DB_NAME: ${{ secrets.LOCAL_DB_NAME }}
+      LOCAL_DB_PASSWORD: ${{ secrets.LOCAL_DB_PASSWORD }}
+      LOCAL_DB_PORT: ${{ secrets.LOCAL_DB_PORT }}
+      LOCAL_DB_USERNAME: ${{ secrets.LOCAL_DB_USERNAME }}
+
 
     steps:
       - name: SSH로 EC2에 접속하기
