@@ -15,7 +15,7 @@ public enum BaseResponseStatus {
     SUCCESS(HttpStatus.OK, true, 200, "요청에 성공하였습니다."),
 
     /**
-     * 400 : security 에러
+     * 400 : client 에러
      */
     WRONG_JWT_TOKEN(HttpStatus.UNAUTHORIZED, false, 401, "다시 로그인 해주세요"),
     NO_SIGN_IN(HttpStatus.UNAUTHORIZED, false, 402, "로그인을 먼저 진행해주세요"),
@@ -23,6 +23,11 @@ public enum BaseResponseStatus {
     DISABLED_USER(HttpStatus.FORBIDDEN, false, 404, "비활성화된 계정입니다. 계정을 복구하시겠습니까?"),
     FAILED_TO_RESTORE(HttpStatus.INTERNAL_SERVER_ERROR, false, 405, "계정 복구에 실패했습니다. 관리자에게 문의해주세요."),
     NO_EXIST_OAUTH(HttpStatus.NOT_FOUND, false, 406, "소셜 로그인 정보가 존재하지 않습니다."),
+    NO_EXIST_VALUE(HttpStatus.NOT_FOUND, false, 407, "해당 정보가 존재하지 않습니다."),
+
+    /**
+     * 500 : server 에러
+     */
 
     /**
      * 900: 기타 에러
