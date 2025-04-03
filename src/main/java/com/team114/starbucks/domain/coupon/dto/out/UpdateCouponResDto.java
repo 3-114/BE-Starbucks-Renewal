@@ -1,13 +1,13 @@
-package com.team114.starbucks.domain.coupon.dto.in;
+package com.team114.starbucks.domain.coupon.dto.out;
 
 import com.team114.starbucks.domain.coupon.entity.Coupon;
 import com.team114.starbucks.domain.coupon.enums.DiscountType;
-import com.team114.starbucks.domain.coupon.vo.in.CreateCouponReqVo;
+import com.team114.starbucks.domain.coupon.vo.out.UpdateCouponResVo;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class CreateCouponReqDto {
+public class UpdateCouponResDto {
 
     private String couponName;
     private String couponDescription;
@@ -17,7 +17,7 @@ public class CreateCouponReqDto {
     private Integer maxDiscountPrice;
 
     @Builder
-    public CreateCouponReqDto(
+    public UpdateCouponResDto(
             String couponName,
             String couponDescription,
             DiscountType discountType,
@@ -33,29 +33,25 @@ public class CreateCouponReqDto {
         this.maxDiscountPrice = maxDiscountPrice;
     }
 
-    // dto <- vo
-    public static CreateCouponReqDto from(
-            CreateCouponReqVo createCouponReqVo
-    ) {
-        return CreateCouponReqDto.builder()
-                .couponName(createCouponReqVo.getCouponName())
-                .couponDescription(createCouponReqVo.getCouponDescription())
-                .discountType(createCouponReqVo.getDiscountType())
-                .discountValue(createCouponReqVo.getDiscountValue())
-                .minOrderPrice(createCouponReqVo.getMinOrderPrice())
-                .maxDiscountPrice(createCouponReqVo.getMaxDiscountPrice())
+    // dto <- entity (정적 팩토리 메서드)
+    public static UpdateCouponResDto from(Coupon coupon) {
+
+        return UpdateCouponResDto.builder()
+                .couponName(coupon.getName())
+                .couponDescription(coupon.getDescription())
+                .discountType(coupon.getDiscountType())
+                .discountValue(coupon.getDiscountValue())
+                .minOrderPrice(coupon.getMinOrderPrice())
+                .maxDiscountPrice(coupon.getMaxDiscountPrice())
                 .build();
     }
 
-    // dto
-    //
-    // -> entity
-    public Coupon toEntity(String couponUuid) {
+    // dto -> vo
+    public UpdateCouponResVo toVo() {
 
-        return Coupon.builder()
-                .couponUuid(couponUuid)
-                .name(couponName)
-                .description(couponDescription)
+        return UpdateCouponResVo.builder()
+                .couponName(couponName)
+                .couponDescription(couponDescription)
                 .discountType(discountType)
                 .discountValue(discountValue)
                 .minOrderPrice(minOrderPrice)

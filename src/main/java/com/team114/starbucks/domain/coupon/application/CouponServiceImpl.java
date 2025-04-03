@@ -3,11 +3,14 @@ package com.team114.starbucks.domain.coupon.application;
 import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.coupon.dto.in.CreateCouponReqDto;
+import com.team114.starbucks.domain.coupon.dto.in.UpdateCouponReqDto;
 import com.team114.starbucks.domain.coupon.dto.out.CreateCouponResDto;
 import com.team114.starbucks.domain.coupon.dto.out.GetAllCouponsResDto;
 import com.team114.starbucks.domain.coupon.dto.out.GetCouponResDto;
+import com.team114.starbucks.domain.coupon.dto.out.UpdateCouponResDto;
 import com.team114.starbucks.domain.coupon.entity.Coupon;
 import com.team114.starbucks.domain.coupon.infrastructure.CouponRepository;
+import com.team114.starbucks.domain.coupon.vo.out.UpdateCouponResVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -109,5 +112,38 @@ public class CouponServiceImpl implements CouponService {
 
         // entity -> dto
         return GetCouponResDto.from(coupon);
+    }
+
+    /**
+     * 4. 쿠폰 정보 변경 (수정할 값만 변경, PUT 방식)
+     * @param couponUuid, updateCouponReqDto
+     * @return updateCouponResDto
+     * @throws
+     */
+    @Override
+    public UpdateCouponResDto updateCoupon(String couponUuid, UpdateCouponReqDto updateCouponReqDto) {
+
+        // [1] uuid 로 coupon 조회
+        Coupon coupon = couponRepository.findByCouponUuid(couponUuid).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
+        );
+
+        // [2] 새로운 쿠폰 객체 생성 (삼항 연산자 사용)
+        Coupon updatedCoupon = Coupon.builder()
+                .id(coupon.getId())
+                .couponUuid(coupon.getCouponUuid())
+                .name(updateCouponReqDto.getCouponName() == null ? coupon.getName() : updateCouponReqDto.getCouponName())
+                .description(updateCouponReqDto.getCouponDescription() == null ? coupon.getDescription() : updateCouponReqDto.getCouponDescription())
+                .discountType(updateCouponReqDto.getDiscountType() == null ? coupon.getDiscountType() : updateCouponReqDto.getDiscountType())
+                .discountValue(updateCouponReqDto.getDiscountValue() == null ? coupon.getDiscountValue() : updateCouponReqDto.getDiscountValue())
+                .minOrderPrice(updateCouponReqDto.getMinOrderPrice() == null ? coupon.getMinOrderPrice() : updateCouponReqDto.getMinOrderPrice())
+                .maxDiscountPrice(updateCouponReqDto.getMaxDiscountPrice() == null ? coupon.getMaxDiscountPrice() : updateCouponReqDto.getMaxDiscountPrice())
+                .build();
+
+        // [3] 업데이트된 coupon 으로 저장 (save)
+        couponRepository.save(updatedCoupon);
+
+        // [4] dto <- entity
+        return UpdateCouponResDto.from(coupon);
     }
 }

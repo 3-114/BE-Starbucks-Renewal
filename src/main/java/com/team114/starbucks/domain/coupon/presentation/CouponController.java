@@ -3,11 +3,14 @@ package com.team114.starbucks.domain.coupon.presentation;
 import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.coupon.application.CouponService;
 import com.team114.starbucks.domain.coupon.dto.in.CreateCouponReqDto;
+import com.team114.starbucks.domain.coupon.dto.in.UpdateCouponReqDto;
 import com.team114.starbucks.domain.coupon.dto.out.GetAllCouponsResDto;
 import com.team114.starbucks.domain.coupon.vo.in.CreateCouponReqVo;
+import com.team114.starbucks.domain.coupon.vo.in.UpdateCouponReqVo;
 import com.team114.starbucks.domain.coupon.vo.out.CreateCouponResVo;
 import com.team114.starbucks.domain.coupon.vo.out.GetAllCouponsResVo;
 import com.team114.starbucks.domain.coupon.vo.out.GetCouponResVo;
+import com.team114.starbucks.domain.coupon.vo.out.UpdateCouponResVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +28,7 @@ public class CouponController {
      * 1. 쿠폰 생성
      * 2. 쿠폰 전체 조회
      * 3. 쿠폰 UUID -> 단건 조회
+     * 4. 쿠폰 정보 변경
      */
 
     /**
@@ -91,4 +95,21 @@ public class CouponController {
         return new BaseResponseEntity<>("쿠폰 단건 조회에 성공하였습니다.", result);
     }
 
+    /**
+     * 4. 쿠폰 정보 변경
+     * @param updateCouponReqVo
+     * @return updateCouponResVo
+     * @throws
+     */
+    @PutMapping("/{couponUuid}")
+    public BaseResponseEntity<UpdateCouponResVo> updateCoupon(
+            @PathVariable String couponUuid,
+            @RequestBody UpdateCouponReqVo updateCouponReqVo
+    ) {
+        UpdateCouponResVo result = couponService.updateCoupon(
+                couponUuid,
+                UpdateCouponReqDto.from(updateCouponReqVo)
+        ).toVo();
+        return new BaseResponseEntity<>("쿠폰 정보를 변경하였습니다.", result);
+    }
 }

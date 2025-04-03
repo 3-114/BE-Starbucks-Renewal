@@ -1,6 +1,8 @@
 package com.team114.starbucks.domain.coupon.entity;
 
 import com.team114.starbucks.common.entity.BaseEntity;
+import com.team114.starbucks.domain.coupon.dto.in.UpdateCouponReqDto;
+import com.team114.starbucks.domain.coupon.enums.CouponStatus;
 import com.team114.starbucks.domain.coupon.enums.DiscountType;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -26,6 +28,8 @@ public class Coupon extends BaseEntity {
     private String name;
 
     // 쿠폰 설명
+    @Lob // Large Object
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     // 할인 방식 (정액 할인, 정률 할인)
