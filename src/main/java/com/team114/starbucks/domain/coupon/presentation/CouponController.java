@@ -11,9 +11,7 @@ import com.team114.starbucks.domain.coupon.vo.out.GetCouponResVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor

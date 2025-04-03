@@ -26,6 +26,7 @@ public class CouponServiceImpl implements CouponService {
      * api/v1/coupon
      * 1. 쿠폰 생성
      * 2. 쿠폰 전체 조회
+     * 3. 쿠폰 단건 조회 (uuid 로 조회)
      */
 
     /**
@@ -93,6 +94,12 @@ public class CouponServiceImpl implements CouponService {
 
     }
 
+    /**
+     * 3. 쿠폰 단건 조회 (uuid 로 조회)
+     * @param
+     * @return GetCouponResDto
+     * @throws
+     */
     @Override
     public GetCouponResDto findCouponByUuid(String couponUuid) {
 
