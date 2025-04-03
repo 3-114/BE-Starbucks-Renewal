@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -14,37 +14,32 @@ public class Event {
 
     // 이벤트 Id
     @Id
+//    @Column(name = "event_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     // 이벤트 UUID
-    @Column(nullable = false, length = 50)
+    @Column(name = "eventUuid", nullable = true)
     private String eventUuid;
 
     // 이벤트 명
-    @Column(nullable = false, length = 50)
+    @Column(name = "eventName", nullable = true)
     private String eventName;
 
     // 시작 날짜
-    @Column(nullable = false)
-    private LocalDate startDate;
+    @Column(name = "startDate", nullable = true)
+    private Date startDate;
 
     // 종료 날짜
-    @Column(nullable = false)
-    private LocalDate endDate;
-
-    //진행 여부
-    @Column(nullable = false)
-    private Boolean isActive;
+    @Column(name = "endDate", nullable = true)
+    private Date endDate;
 
     @Builder
-
-    public Event(Long id, String eventUuid, String eventName, LocalDate startDate, LocalDate endDate, Boolean isActive) {
+    public Event(Long id, String eventUuid, String eventName, Date startDate, Date endDate) {
         this.id = id;
         this.eventUuid = eventUuid;
         this.eventName = eventName;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.isActive = isActive;
     }
 }

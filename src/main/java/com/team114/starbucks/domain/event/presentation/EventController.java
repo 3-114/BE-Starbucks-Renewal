@@ -1,7 +1,7 @@
 package com.team114.starbucks.domain.event.presentation;
 
 import com.team114.starbucks.common.response.BaseResponseEntity;
-import com.team114.starbucks.domain.event.application.EventServiceimpl;
+import com.team114.starbucks.domain.event.application.EventService;
 import com.team114.starbucks.domain.event.dto.EventResponseDto;
 import com.team114.starbucks.domain.event.vo.EventResponseVo;
 import lombok.RequiredArgsConstructor;
@@ -14,15 +14,15 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/event")
+@RequestMapping("/api/v1/events")
 public class EventController {
 
-    private final EventServiceimpl eventService;
+    private final EventService eventService;
 
-    @GetMapping("/nav")
+    @GetMapping
     public BaseResponseEntity<List<EventResponseVo>> getAllEventName() {
 
-        List<EventResponseDto> dtoList = eventService.findAllActiveEvents();
+        List<EventResponseDto> dtoList = eventService.getAllEventName();
 
         List<EventResponseVo> voList = new ArrayList<>();
 
@@ -32,6 +32,7 @@ public class EventController {
         }
 
         return new BaseResponseEntity<>("기획전 조회에 성공하였습니다.", voList);
+
 
 
     }

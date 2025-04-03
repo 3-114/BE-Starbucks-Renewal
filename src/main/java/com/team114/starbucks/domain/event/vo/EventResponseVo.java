@@ -5,12 +5,10 @@ import lombok.Getter;
 
 @Getter
 public class EventResponseVo {
-    private String eventUuid;
     private String eventName;
 
     @Builder
-    public EventResponseVo(String eventUuid, String eventName) {
-        this.eventUuid = eventUuid;
+    public EventResponseVo(String eventName) {
         this.eventName = eventName;
     }
 }

@@ -8,12 +8,13 @@ import lombok.Getter;
 public class ProductPostReqVo {
 
     private Long id;
-    private String productUuid;
+    private String uuid;
     private Brand brand;
-    private String productName;
-    private Integer productPrice;
+    private String name;
+    private Integer price;
     private String description;
     private ProductStatus productStatus;
+    private Boolean optionFlag; //?
     private Integer shippingFee;
 
 
