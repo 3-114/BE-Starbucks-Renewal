@@ -1,20 +1,18 @@
----
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
+## 📄 이슈 내용
+<!--- 기능에 대한 요약 설명을 작성해 주세요. -->
 
----
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+## 📝 상세 내용
+<!--- 기능 추가와 관련된 상세 내용을 작성해 주세요. -->
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+## ✅ 체크리스트
+<!--- 기능 추가와 관련된 체크리스트를 작성해주세요. -->
+- [ ] TODO A
+- [ ] TODO B
+- [ ] TODO C
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+
+## 👥 담당자
+<!--- 이 작업을 맡을 사람(또는 팀)을 명시해주세요. -->
+- 담당자: @
