@@ -33,6 +33,7 @@ public class CreateCouponReqDto {
         this.maxDiscountPrice = maxDiscountPrice;
     }
 
+    // dto <- vo
     public static CreateCouponReqDto from(
             CreateCouponReqVo createCouponReqVo
     ) {
@@ -46,6 +47,7 @@ public class CreateCouponReqDto {
                 .build();
     }
 
+    // dto -> entity
     public Coupon toEntity(String couponUuid) {
 
         return Coupon.builder()

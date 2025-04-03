@@ -3,13 +3,16 @@ package com.team114.starbucks.domain.coupon.presentation;
 import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.coupon.application.CouponService;
 import com.team114.starbucks.domain.coupon.dto.in.CreateCouponReqDto;
+import com.team114.starbucks.domain.coupon.dto.out.GetAllCouponsResDto;
 import com.team114.starbucks.domain.coupon.vo.in.CreateCouponReqVo;
 import com.team114.starbucks.domain.coupon.vo.out.CreateCouponResVo;
+import com.team114.starbucks.domain.coupon.vo.out.GetAllCouponsResVo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +24,7 @@ public class CouponController {
     /**
      * api/v1/coupon
      * 1. 쿠폰 생성
+     * 2. 쿠폰 전체 조회
      */
 
     /**
@@ -35,6 +39,42 @@ public class CouponController {
     ) {
         CreateCouponResVo result = couponService.saveCoupon(CreateCouponReqDto.from(createCouponReqVo)).toVo();
         return new BaseResponseEntity<>("쿠폰이 생성되었습니다.", result);
+    }
+
+    /**
+     * 2. 쿠폰 전체 조회
+     * @param
+     * @return createCouponResVo
+     * @throws
+     */
+    @GetMapping
+    public BaseResponseEntity<List<GetAllCouponsResVo>> getAllCoupons() {
+
+        // [ Stream, Method Reference 사용 ]
+        List<GetAllCouponsResVo> result = couponService.findAllCoupons()
+                .stream().map(GetAllCouponsResDto::toVo).toList();
+
+        return new BaseResponseEntity<>("쿠폰 전체 조회에 성공하였습니다.", result);
+
+        /**
+         *         [ dto -> vo (반복문 사용) ]
+         *
+         *          List<GetAllCouponsResDto> dtolist = couponService.findAllCoupons();
+         *
+         *         List<GetAllCouponsResVo> voList = new ArrayList<>();
+         *         for (GetAllCouponsResDto getAllCouponsResDto : dtolist) {
+         *             voList.add(getAllCouponsResDto.toVo());
+         *         }
+         *         return new BaseResponseEntity<>("쿠폰 전체 조회에 성공하였습니다.", voList);
+         */
+        /**
+         *         [ Stream, Method Reference 사용 ]
+         *         List<GetAllCouponsResVo> result = couponService.findAllCoupons()
+         *                 .stream().map(GetAllCouponsResDto::toVo).toList();
+         *
+         *         return new BaseResponseEntity<>("쿠폰 전체 조회에 성공하였습니다.", result);
+         */
+
     }
 
 }

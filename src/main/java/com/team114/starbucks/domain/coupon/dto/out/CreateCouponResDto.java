@@ -36,6 +36,7 @@ public class CreateCouponResDto {
         this.maxDiscountPrice = maxDiscountPrice;
     }
 
+    // dto <- entity (정적  팩토리 메서드)
     public static CreateCouponResDto from(Coupon coupon) {
 
         return CreateCouponResDto.builder()
@@ -49,6 +50,7 @@ public class CreateCouponResDto {
                 .build();
     }
 
+    // dto -> vo
     public CreateCouponResVo toVo() {
 
         return CreateCouponResVo.builder()
