@@ -5,6 +5,7 @@ import com.team114.starbucks.domain.delivery.dto.out.DeliveryResponseDto;
 import com.team114.starbucks.domain.delivery.entity.Delivery;
 import com.team114.starbucks.domain.delivery.infrastructure.DeliveryRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +21,11 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Override
     @Transactional
     public DeliveryResponseDto createDelivery(DeliveryRequestDto dto, String memberUuid) {
-        // UUID 생성해서 새로운 배송지 식별자 부여
-        Delivery delivery = dto.toEntity(UUID.randomUUID().toString(), memberUuid);
-        Delivery savedDelivery = deliveryRepository.save(delivery);
+
+        Delivery savedDelivery = deliveryRepository.save(
+                dto.toEntity(UUID.randomUUID().toString(), memberUuid)
+        );
+
         return DeliveryResponseDto.fromEntity(savedDelivery);
     }
 
@@ -35,22 +38,21 @@ public class DeliveryServiceImpl implements DeliveryService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public DeliveryResponseDto getDeliveryByUuid(String deliveryUuid) {
-        Delivery delivery = deliveryRepository.findByDeliveryUuid(deliveryUuid)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 배송지입니다."));
-        return DeliveryResponseDto.fromEntity(delivery);
-    }
-
-    @Override
     @Transactional
     public DeliveryResponseDto updateDelivery(String deliveryUuid, DeliveryRequestDto dto, String memberUuid) {
+        // 1. 기존 배송지 찾고 비활성화 처리
         Delivery oldDelivery = deliveryRepository.findByDeliveryUuid(deliveryUuid)
                 .orElseThrow(() -> new IllegalArgumentException("기존 배송지를 찾을 수 없습니다."));
 
-        oldDelivery.deactivate(); // 기존 배송지 비활성화
+        oldDelivery.deactivate(); // active = false, deleted = false
 
-        Delivery newDelivery = dto.toEntity(deliveryUuid, memberUuid);
+        // 2. 새로운 배송지가 기본 배송지인 경우 기존 기본 배송지도 비활성화
+        if (Boolean.TRUE.equals(dto.getDefaultAddress())) {
+            deliveryRepository.findByMemberUuidAndDefaultAddressIsTrue(memberUuid)
+                    .ifPresent(Delivery::deactivate);
+        }
+
+        Delivery newDelivery = dto.toEntity(UUID.randomUUID().toString(), memberUuid);
         Delivery savedDelivery = deliveryRepository.save(newDelivery); // 저장된 객체 반환
 
         return DeliveryResponseDto.fromEntity(savedDelivery); // 반환
@@ -62,7 +64,7 @@ public class DeliveryServiceImpl implements DeliveryService {
         Delivery delivery = deliveryRepository.findByDeliveryUuid(deliveryUuid)
                 .orElseThrow(() -> new IllegalArgumentException("배송지를 찾을 수 없습니다."));
 
-        deliveryRepository.delete(delivery); // soft delete 방식이어야 정상 작동함
+        deliveryRepository.delete(delivery);
 
         return DeliveryResponseDto.fromEntity(delivery); // 삭제 전의 배송지 정보 반환
     }
