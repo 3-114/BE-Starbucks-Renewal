@@ -13,9 +13,6 @@ public interface DeliveryService {
     // 특정 회원의 모든 배송지 조회
     List<DeliveryResponseDto> getDeliveriesByMemberUuid(String memberUuid);
 
-    // 배송지 단건 조회
-    DeliveryResponseDto getDeliveryByUuid(String deliveryUuid);
-
     // 기존 배송지를 비활성화하고 새 row 생성 (이력 보존)
     DeliveryResponseDto updateDelivery(String oldDeliveryUuid, DeliveryRequestDto requestDto, String memberUuid);
 

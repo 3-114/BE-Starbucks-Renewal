@@ -1,7 +1,8 @@
 package com.team114.starbucks.domain.delivery.dto.in;
 
 import com.team114.starbucks.domain.delivery.entity.Delivery;
-import com.team114.starbucks.domain.delivery.vo.in.DeliveryRequestVo;
+import com.team114.starbucks.domain.delivery.vo.in.DeliveryCreateRequestVo;
+import com.team114.starbucks.domain.delivery.vo.in.DeliveryUpdateRequestVo;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -20,10 +21,16 @@ public class DeliveryRequestDto {
     private final Boolean defaultAddress;
 
     @Builder
-    public DeliveryRequestDto(String memberUuid, String alias, String recipient,
-                              String zoneCode, String mainAddress, String detailAddress,
-                              String phoneNumber1, String phoneNumber2,
-                              String deliveryMemo, Boolean defaultAddress) {
+    public DeliveryRequestDto(String memberUuid,
+                              String alias,
+                              String recipient,
+                              String zoneCode,
+                              String mainAddress,
+                              String detailAddress,
+                              String phoneNumber1,
+                              String phoneNumber2,
+                              String deliveryMemo,
+                              Boolean defaultAddress) {
         this.memberUuid = memberUuid;
         this.alias = alias;
         this.recipient = recipient;
@@ -36,7 +43,22 @@ public class DeliveryRequestDto {
         this.defaultAddress = defaultAddress;
     }
 
-    public static DeliveryRequestDto from(String memberUuid, DeliveryRequestVo vo) {
+    public static DeliveryRequestDto fromCreate(DeliveryCreateRequestVo vo, String memberUuid) {
+        return DeliveryRequestDto.builder()
+                .memberUuid(memberUuid)
+                .alias(vo.getAlias())
+                .recipient(vo.getRecipient())
+                .zoneCode(vo.getZoneCode())
+                .mainAddress(vo.getMainAddress())
+                .detailAddress(vo.getDetailAddress())
+                .phoneNumber1(vo.getPhoneNumber1())
+                .phoneNumber2(vo.getPhoneNumber2())
+                .deliveryMemo(vo.getDeliveryMemo())
+                .defaultAddress(vo.isDefaultAddress())
+                .build();
+    }
+
+    public static DeliveryRequestDto fromUpdate(String memberUuid, DeliveryUpdateRequestVo vo) {
         return DeliveryRequestDto.builder()
                 .memberUuid(memberUuid)
                 .alias(vo.getAlias())
@@ -65,6 +87,7 @@ public class DeliveryRequestDto {
                 .deliveryMemo(deliveryMemo)
                 .defaultAddress(defaultAddress)
                 .deleted(false)
+                .active(true)
                 .build();
     }
 }
