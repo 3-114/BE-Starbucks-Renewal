@@ -7,12 +7,14 @@ on:
         branches:
         - test
         - develop
+        - feature/event
 
     pull_request:
       types: [ closed ]
       branches:
         - develop
         - test
+        - feature/event
 
 env: 
     AWS_DB_URL: ${{ secrets.AWS_DB_URL }}
