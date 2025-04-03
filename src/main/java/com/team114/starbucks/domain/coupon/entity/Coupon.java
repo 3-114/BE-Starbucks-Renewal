@@ -20,7 +20,7 @@ public class Coupon extends BaseEntity {
     private Long id;
 
     // 쿠폰 UUID
-    private String CouponUuid;
+    private String couponUuid;
 
     // 쿠폰명
     private String name;
@@ -61,7 +61,7 @@ public class Coupon extends BaseEntity {
             LocalDateTime updatedAt
     ) {
         this.id = id;
-        CouponUuid = couponUuid;
+        this.couponUuid = couponUuid;
         this.name = name;
         this.description = description;
         this.discountType = discountType;

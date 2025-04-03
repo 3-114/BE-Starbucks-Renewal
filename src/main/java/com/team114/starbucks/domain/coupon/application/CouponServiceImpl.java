@@ -5,13 +5,13 @@ import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.coupon.dto.in.CreateCouponReqDto;
 import com.team114.starbucks.domain.coupon.dto.out.CreateCouponResDto;
 import com.team114.starbucks.domain.coupon.dto.out.GetAllCouponsResDto;
+import com.team114.starbucks.domain.coupon.dto.out.GetCouponResDto;
 import com.team114.starbucks.domain.coupon.entity.Coupon;
 import com.team114.starbucks.domain.coupon.infrastructure.CouponRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -91,5 +91,16 @@ public class CouponServiceImpl implements CouponService {
          *         return couponRepository.findAll().stream().map(GetAllCouponsResDto::from).toList();
          */
 
+    }
+
+    @Override
+    public GetCouponResDto findCouponByUuid(String couponUuid) {
+
+        // uuid 로 coupon 조회
+        Coupon coupon = couponRepository.findByCouponUuid(couponUuid)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
+
+        // entity -> dto
+        return GetCouponResDto.from(coupon);
     }
 }

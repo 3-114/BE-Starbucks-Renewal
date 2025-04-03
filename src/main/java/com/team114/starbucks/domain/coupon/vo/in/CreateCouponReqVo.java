@@ -7,6 +7,8 @@ import lombok.Getter;
 public class CreateCouponReqVo {
 
     /**
+     * [ Validation ]
+     *
      * @NotNull : null 불가, 빈 문자열 허용, 공백 문자열 허용
      * @NotEmpty : null 불가, 빈 문자열 불가, 공백 문자열 허용
      * @NotBlank : null 불가, 빈 문자열 불가, 공백 문자열 불가

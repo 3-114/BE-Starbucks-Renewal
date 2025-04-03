@@ -3,6 +3,7 @@ package com.team114.starbucks.domain.coupon.application;
 import com.team114.starbucks.domain.coupon.dto.in.CreateCouponReqDto;
 import com.team114.starbucks.domain.coupon.dto.out.CreateCouponResDto;
 import com.team114.starbucks.domain.coupon.dto.out.GetAllCouponsResDto;
+import com.team114.starbucks.domain.coupon.dto.out.GetCouponResDto;
 import com.team114.starbucks.domain.coupon.vo.out.GetAllCouponsResVo;
 
 import java.util.List;
@@ -30,4 +31,12 @@ public interface CouponService {
      * @throws
      */
     List<GetAllCouponsResDto> findAllCoupons();
+
+    /**
+     * 3. 쿠폰 UUID -> 단건 조회
+     * @param
+     * @return getCouponResDto
+     * @throws
+     */
+    GetCouponResDto findCouponByUuid(String couponUuid);
 }

@@ -7,6 +7,7 @@ import com.team114.starbucks.domain.coupon.dto.out.GetAllCouponsResDto;
 import com.team114.starbucks.domain.coupon.vo.in.CreateCouponReqVo;
 import com.team114.starbucks.domain.coupon.vo.out.CreateCouponResVo;
 import com.team114.starbucks.domain.coupon.vo.out.GetAllCouponsResVo;
+import com.team114.starbucks.domain.coupon.vo.out.GetCouponResVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ public class CouponController {
      * api/v1/coupon
      * 1. 쿠폰 생성
      * 2. 쿠폰 전체 조회
+     * 3. 쿠폰 UUID -> 단건 조회
      */
 
     /**
@@ -75,6 +77,20 @@ public class CouponController {
          *         return new BaseResponseEntity<>("쿠폰 전체 조회에 성공하였습니다.", result);
          */
 
+    }
+
+    /**
+     * 3. 쿠폰 UUID -> 단건 조회
+     * @param
+     * @return getCouponResVo
+     * @throws
+     */
+    @GetMapping("/{couponUuid}")
+    public BaseResponseEntity<GetCouponResVo> getCoupon(
+            @PathVariable String couponUuid
+    ) {
+        GetCouponResVo result = couponService.findCouponByUuid(couponUuid).toVo();
+        return new BaseResponseEntity<>("쿠폰 단건 조회에 성공하였습니다.", result);
     }
 
 }
