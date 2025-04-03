@@ -29,6 +29,7 @@ public class CouponController {
      * 2. 쿠폰 전체 조회
      * 3. 쿠폰 UUID -> 단건 조회
      * 4. 쿠폰 정보 변경
+     * 5. 쿠폰 삭제
      */
 
     /**
@@ -111,5 +112,19 @@ public class CouponController {
                 UpdateCouponReqDto.from(updateCouponReqVo)
         ).toVo();
         return new BaseResponseEntity<>("쿠폰 정보를 변경하였습니다.", result);
+    }
+
+    /**
+     * 5. 쿠폰 삭제
+     * @param couponUuid
+     * @return
+     * @throws
+     */
+    @DeleteMapping("/{couponUuid}")
+    public BaseResponseEntity<Void> deleteCoupon(
+            @PathVariable String couponUuid
+    ) {
+        couponService.deleteCoupon(couponUuid);
+        return new BaseResponseEntity<>("쿠폰이 삭제되었습니다.", null);
     }
 }

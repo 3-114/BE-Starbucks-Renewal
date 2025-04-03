@@ -120,6 +120,7 @@ public class CouponServiceImpl implements CouponService {
      * @return updateCouponResDto
      * @throws
      */
+    @Transactional
     @Override
     public UpdateCouponResDto updateCoupon(String couponUuid, UpdateCouponReqDto updateCouponReqDto) {
 
@@ -145,5 +146,22 @@ public class CouponServiceImpl implements CouponService {
 
         // [4] dto <- entity
         return UpdateCouponResDto.from(coupon);
+    }
+
+    /**
+     * 5. 쿠폰 삭제
+     * @param couponUuid
+     * @return
+     * @throws
+     */
+    @Transactional
+    @Override
+    public Void deleteCoupon(String couponUuid) {
+
+        // [1] uuid 로 coupon 조회 후 삭제
+        couponRepository.deleteByCouponUuid(couponUuid).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
+        );
+        return null;
     }
 }

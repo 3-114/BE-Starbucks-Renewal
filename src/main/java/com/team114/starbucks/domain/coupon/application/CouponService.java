@@ -18,6 +18,7 @@ public interface CouponService {
      * 2. 쿠폰 전체 조회
      * 3. 쿠폰 UUID -> 단건 조회
      * 4. 쿠폰 정보 변경
+     * 5. 쿠폰 삭제
      */
 
     /**
@@ -51,4 +52,12 @@ public interface CouponService {
      * @throws
      */
     UpdateCouponResDto updateCoupon(String couponUuid, UpdateCouponReqDto updateCouponReqDto);
+
+    /**
+     * 5. 쿠폰 삭제
+     * @param couponUuid
+     * @return
+     * @throws
+     */
+    Void deleteCoupon(String couponUuid);
 }
