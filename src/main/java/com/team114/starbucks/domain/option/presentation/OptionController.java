@@ -31,7 +31,7 @@ public class OptionController {
     }
 
     @Operation(summary = "옵션 전체 조회", description = "전체 옵션을 조회합니다.")
-    @GetMapping
+    @GetMapping("/all")
     public BaseResponseEntity<List<OptionResponseVo>> getAllOptions() {
         List<OptionResponseVo> result = optionService.findAllOptions()
                 .stream().map(OptionResponseDto::toVo).toList();
