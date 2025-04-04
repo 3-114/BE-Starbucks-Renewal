@@ -11,6 +11,8 @@ import lombok.Getter;
 @Getter
 public class GetProductResponseDto {
 
+
+    private String productUuid;
     private String productName;
     private Brand brand;
     private Integer productPrice;
@@ -20,6 +22,7 @@ public class GetProductResponseDto {
 
     @Builder
     public GetProductResponseDto(
+            String productUuid,
             String productName,
             Brand brand,
             Integer productPrice,
@@ -27,6 +30,7 @@ public class GetProductResponseDto {
             Integer shippingFee,
             ProductStatus productStatus
     ) {
+        this.productUuid = productUuid;
         this.productName = productName;
         this.brand = brand;
         this.productPrice = productPrice;
@@ -39,6 +43,7 @@ public class GetProductResponseDto {
     public static GetProductResponseDto from(Product product) {
 
         return GetProductResponseDto.builder()
+                .productUuid(product.getProductUuid())
                 .productName(product.getProductName())
                 .brand(product.getBrand())
                 .productPrice(product.getProductPrice())
@@ -51,6 +56,7 @@ public class GetProductResponseDto {
     // dto -> vo
     public GetProductResponseVo toVo() {
         return GetProductResponseVo.builder()
+                .productUuid(productUuid)
                 .productName(productName)
                 .brand(brand)
                 .productPrice(productPrice)
