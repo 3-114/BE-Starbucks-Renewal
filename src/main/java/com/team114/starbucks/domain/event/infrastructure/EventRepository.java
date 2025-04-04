@@ -11,4 +11,5 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     //List <이벤트> findbyBooelan값 isTrue
     List<Event> findByIsActiveTrue();
 
+
 }

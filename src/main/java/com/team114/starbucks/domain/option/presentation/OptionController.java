@@ -1,6 +1,6 @@
 package com.team114.starbucks.domain.option.presentation;
 
-import com.team114.starbucks.common.entity.BaseResponseEntity;
+import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.option.application.OptionService;
 import com.team114.starbucks.domain.option.dto.out.OptionResponseDto;
 import com.team114.starbucks.domain.option.vo.out.OptionResponseVo;
