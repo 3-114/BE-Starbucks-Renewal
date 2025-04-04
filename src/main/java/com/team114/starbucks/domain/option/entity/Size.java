@@ -1,25 +1,31 @@
 package com.team114.starbucks.domain.option.entity;
 
-import com.team114.starbucks.domain.option.eunms.Capacity;
+import com.team114.starbucks.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
-@AllArgsConstructor
-public class Size {
+public class Size extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long sizeId;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(nullable = false, length = 50)
     private String sizeName;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Capacity capacity;
+    @Column(nullable = false, length = 20)
+    private String capacity;
+
+    @Builder
+    public Size(Long sizeId,
+                String sizeName,
+                String capacity
+    ) {
+        this.sizeId = sizeId;
+        this.sizeName = sizeName;
+        this.capacity = capacity;
+    }
 }
