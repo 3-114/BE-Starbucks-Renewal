@@ -1,9 +1,11 @@
 package com.team114.starbucks.domain.product.application;
 
 import com.team114.starbucks.domain.product.dto.in.CreateProductRequestDto;
+import com.team114.starbucks.domain.product.dto.in.UpdateProductRequestDto;
 import com.team114.starbucks.domain.product.dto.out.CreateProductResponseDto;
 import com.team114.starbucks.domain.product.dto.out.GetByIdResponseDto;
 import com.team114.starbucks.domain.product.dto.out.GetProductResponseDto;
+import com.team114.starbucks.domain.product.dto.out.UpdateProductResponseDto;
 
 import java.util.List;
 
@@ -14,4 +16,9 @@ public interface ProductService {
     List<GetProductResponseDto> findAllProducts();
 
     CreateProductResponseDto saveProduct(CreateProductRequestDto createProductRequestDto);
+
+    UpdateProductResponseDto updateProduct(String productUuid, UpdateProductRequestDto updateProductRequestDto);
+
+    Void deleteProduct(String productUuid);
+
 }
