@@ -3,76 +3,61 @@ package com.team114.starbucks.domain.product.dto.out;
 import com.team114.starbucks.domain.product.entity.Product;
 import com.team114.starbucks.domain.product.enums.Brand;
 import com.team114.starbucks.domain.product.enums.ProductStatus;
-import com.team114.starbucks.domain.product.vo.out.ProductGetResVo;
+import com.team114.starbucks.domain.product.vo.out.CreateProductResponseVo;
+import com.team114.starbucks.domain.product.vo.out.GetProductResponseVo;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
-public class ProductGetResDto {
+public class GetProductResponseDto {
 
-    private Long id;
-    private String productUuid;
-    private Brand brand;
     private String productName;
+    private Brand brand;
     private Integer productPrice;
     private String description;
-    private ProductStatus productStatus;
     private Integer shippingFee;
+    private ProductStatus productStatus;
 
     @Builder
-    public ProductGetResDto(
-            Long id,
-            String productUuid,
-            Brand brand,
+    public GetProductResponseDto(
             String productName,
+            Brand brand,
             Integer productPrice,
             String description,
-            ProductStatus productStatus,
-            Boolean optionFlag,
-            Integer shippingFee
+            Integer shippingFee,
+            ProductStatus productStatus
     ) {
-        this.id = id;
-        this.productUuid = productUuid;
-        this.brand = brand;
         this.productName = productName;
+        this.brand = brand;
         this.productPrice = productPrice;
         this.description = description;
-        this.productStatus = productStatus;
         this.shippingFee = shippingFee;
+        this.productStatus = productStatus;
     }
 
+    // dto <- entity 정적 팩토리 메서드
+    public static GetProductResponseDto from(Product product) {
 
-    public static ProductGetResDto from(Product product) {
-        return ProductGetResDto.builder()
-                .id(product.getId())
-                .productUuid(product.getProductUuid())
-                .brand(product.getBrand())
+        return GetProductResponseDto.builder()
                 .productName(product.getProductName())
+                .brand(product.getBrand())
                 .productPrice(product.getProductPrice())
                 .description(product.getDescription())
-                .productStatus(product.getProductStatus())
                 .shippingFee(product.getShippingFee())
+                .productStatus(product.getProductStatus())
                 .build();
     }
 
-
-    public ProductGetResVo toVo() {
-        return ProductGetResVo.builder()
-                .id(id)
-                .productUuid(productUuid)
-                .brand(brand)
+    // dto -> vo
+    public GetProductResponseVo toVo() {
+        return GetProductResponseVo.builder()
                 .productName(productName)
+                .brand(brand)
                 .productPrice(productPrice)
                 .description(description)
-                .productStatus(productStatus)
                 .shippingFee(shippingFee)
+                .productStatus(productStatus)
                 .build();
     }
-
-
-
-
 
 }

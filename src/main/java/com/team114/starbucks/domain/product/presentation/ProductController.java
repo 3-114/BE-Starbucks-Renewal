@@ -3,10 +3,14 @@ package com.team114.starbucks.domain.product.presentation;
 
 import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.product.application.ProductService;
-import com.team114.starbucks.domain.product.dto.in.ProductPostReqDto;
-import com.team114.starbucks.domain.product.dto.out.ProductGetResDto;
-import com.team114.starbucks.domain.product.vo.in.ProductPostReqVo;
-import com.team114.starbucks.domain.product.vo.out.ProductGetResVo;
+import com.team114.starbucks.domain.product.dto.in.CreateProductRequestDto;
+import com.team114.starbucks.domain.product.dto.out.CreateProductResponseDto;
+import com.team114.starbucks.domain.product.dto.out.GetByIdResponseDto;
+import com.team114.starbucks.domain.product.dto.out.GetProductResponseDto;
+import com.team114.starbucks.domain.product.vo.in.CreateProductRequestVo;
+import com.team114.starbucks.domain.product.vo.out.CreateProductResponseVo;
+import com.team114.starbucks.domain.product.vo.out.GetByIdResponseVo;
+import com.team114.starbucks.domain.product.vo.out.GetProductResponseVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,48 +21,50 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/products")
 public class ProductController {
 
     private final ProductService productService;
 
-    /**
-     * api/v1/products
-     * 1. 상품 조회
-     * 2. 상품 등록
-     * 3. 상품 수정
-     * 4. 상품 삭제
-     */
+    @GetMapping
+    public BaseResponseEntity<List<GetProductResponseVo>> getAllProducts() {
 
+        List<GetProductResponseDto> dtolist = productService.findAllProducts();
 
-    @GetMapping("/products")
-    public List<ProductGetResVo> getAllProducts() {
+        List<GetProductResponseVo> voList = new ArrayList<>();
 
-        List<ProductGetResDto> result = productService.getAllProducts();
-
-        List<ProductGetResVo> responseList = new ArrayList<>();
-
-        for (ProductGetResDto dto : result) {
-            responseList.add(dto.toVo());
+        for (GetProductResponseDto getProductResponseDto : dtolist) {
+            voList.add(getProductResponseDto.toVo());
         }
 
-        return responseList;
+        return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 조회 성공", 200, voList);
+
+
     }
 
-    @GetMapping("/products/{id}")
-    public BaseResponseEntity<ProductGetResVo> getProduct(@PathVariable Long id) {
-        ProductGetResDto product = productService.getProduct(id);
+    @GetMapping("/{productUuid}")
+    public BaseResponseEntity<GetByIdResponseVo> getProduct(
+            @PathVariable String productUuid
+    ) {
+        GetByIdResponseDto dto = productService.findProductByUuid(productUuid);
 
-        return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 조회 성공", 200, product.toVo());
+        GetByIdResponseVo vo = dto.toVo();
+
+        return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 단건 조회 성공", 200, vo);
+
+
+
     }
 
-    @PostMapping("/products")
-    public BaseResponseEntity<ProductPostReqDto> saveProduct(@RequestBody ProductPostReqVo productPostReqVo) {
-        ProductPostReqDto productPostReqDto = ProductPostReqDto.from(productPostReqVo);
+    @PostMapping
+    public BaseResponseEntity<CreateProductResponseVo> saveProduct(@RequestBody CreateProductRequestVo createProductReqVo) {
+        CreateProductRequestDto productPostReqDto = CreateProductRequestDto.from(createProductReqVo);
 
-        ProductPostReqDto product = productService.saveProduct(productPostReqDto);
+        CreateProductResponseDto product = productService.saveProduct(productPostReqDto);
 
-        return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 등록 성공", 200, product);
+        CreateProductResponseVo result = product.toVo();
+
+        return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 등록 성공", 200, result);
 
     }
 
