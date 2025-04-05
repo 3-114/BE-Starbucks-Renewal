@@ -6,6 +6,8 @@ import com.team114.starbucks.domain.coupon.vo.in.CreateCouponReqVo;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class CreateCouponReqDto {
 
@@ -15,6 +17,7 @@ public class CreateCouponReqDto {
     private Integer discountValue;
     private Integer minOrderPrice;
     private Integer maxDiscountPrice;
+    private Long validDays;
 
     @Builder
     public CreateCouponReqDto(
@@ -23,7 +26,8 @@ public class CreateCouponReqDto {
             DiscountType discountType,
             Integer discountValue,
             Integer minOrderPrice,
-            Integer maxDiscountPrice
+            Integer maxDiscountPrice,
+            Long validDays
     ) {
         this.couponName = couponName;
         this.couponDescription = couponDescription;
@@ -31,7 +35,9 @@ public class CreateCouponReqDto {
         this.discountValue = discountValue;
         this.minOrderPrice = minOrderPrice;
         this.maxDiscountPrice = maxDiscountPrice;
+        this.validDays = validDays;
     }
+
 
     // dto <- vo
     public static CreateCouponReqDto from(
@@ -44,12 +50,11 @@ public class CreateCouponReqDto {
                 .discountValue(createCouponReqVo.getDiscountValue())
                 .minOrderPrice(createCouponReqVo.getMinOrderPrice())
                 .maxDiscountPrice(createCouponReqVo.getMaxDiscountPrice())
+                .validDays(createCouponReqVo.getValidDays())
                 .build();
     }
 
-    // dto
-    //
-    // -> entity
+    // dto -> entity
     public Coupon toEntity(String couponUuid) {
 
         return Coupon.builder()
@@ -60,6 +65,7 @@ public class CreateCouponReqDto {
                 .discountValue(discountValue)
                 .minOrderPrice(minOrderPrice)
                 .maxDiscountPrice(maxDiscountPrice)
+                .validDays(validDays)
                 .build();
     }
 }
