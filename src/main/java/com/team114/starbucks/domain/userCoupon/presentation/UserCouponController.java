@@ -28,7 +28,8 @@ public class UserCouponController {
      */
     @PostMapping("/issue")
     public BaseResponseEntity<Void> issueCoupon(
-            @RequestHeader("Member-Uuid") String memberUuid,    // member UUID
+            // X- 접두사로 커스텀 헤더임을 명시적으로 표시
+            @RequestHeader("X-Member-UUID") String memberUuid,    // member UUID
             @RequestBody IssueCouponReqVo issueCouponReqVo      // Coupon UUID
     ) {
         userCouponService.issueCoupon(memberUuid, IssueCouponReqDto.from(issueCouponReqVo));

@@ -34,6 +34,7 @@ public class UserCouponServiceImpl implements UserCouponService {
      * @return
      * @throws
      */
+    @Transactional
     @Override
     public Void issueCoupon(String memberUuid, IssueCouponReqDto issueCouponReqDto) {
 
