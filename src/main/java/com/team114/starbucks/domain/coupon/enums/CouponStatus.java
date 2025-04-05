@@ -12,7 +12,8 @@ import lombok.RequiredArgsConstructor;
 public enum CouponStatus {
 
     COUPON_BEFORE_ISSUE("발행 예정"),
-    COUPON_ISSUED("발행 완료")
+    COUPON_ISSUED("발행 완료"),
+    COUPON_USED("사용 완료")
     ;
 
     private final String couponStatus;
