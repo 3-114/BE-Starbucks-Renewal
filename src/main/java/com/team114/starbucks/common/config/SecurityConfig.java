@@ -63,7 +63,7 @@ public class SecurityConfig {
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authenticationProvider(daoAuthenticationProvider)
-                .authenticationProvider(oAuthAuthenticationProvider)
+                .authenticationProvider(oAuthAuthenticationProvider) // TODO : 콤마로 한번에 추가해도 됨
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class                              )
                 .addFilter(corsFilter());
         return http.build();

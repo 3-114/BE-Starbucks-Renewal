@@ -6,6 +6,8 @@ import com.team114.starbucks.domain.coupon.vo.out.CreateCouponResVo;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class CreateCouponResDto {
 
@@ -16,6 +18,8 @@ public class CreateCouponResDto {
     private Integer discountValue;
     private Integer minOrderPrice;
     private Integer maxDiscountPrice;
+    private Long validDays;
+    private LocalDateTime createdAt;
 
     @Builder
     public CreateCouponResDto(
@@ -25,7 +29,9 @@ public class CreateCouponResDto {
             DiscountType discountType,
             Integer discountValue,
             Integer minOrderPrice,
-            Integer maxDiscountPrice
+            Integer maxDiscountPrice,
+            Long validDays,
+            LocalDateTime createdAt
     ) {
         this.couponUuid = couponUuid;
         this.couponName = couponName;
@@ -34,6 +40,8 @@ public class CreateCouponResDto {
         this.discountValue = discountValue;
         this.minOrderPrice = minOrderPrice;
         this.maxDiscountPrice = maxDiscountPrice;
+        this.validDays = validDays;
+        this.createdAt = createdAt;
     }
 
     // dto <- entity (정적  팩토리 메서드)
@@ -47,6 +55,8 @@ public class CreateCouponResDto {
                 .discountValue(coupon.getDiscountValue())
                 .minOrderPrice(coupon.getMinOrderPrice())
                 .maxDiscountPrice(coupon.getMaxDiscountPrice())
+                .validDays(coupon.getValidDays())
+                .createdAt(coupon.getCreatedAt())
                 .build();
     }
 
@@ -61,6 +71,8 @@ public class CreateCouponResDto {
                 .discountValue(discountValue)
                 .minOrderPrice(minOrderPrice)
                 .maxDiscountPrice(maxDiscountPrice)
+                .validDays(validDays)
+                .createdAt(createdAt)
                 .build();
     }
 }

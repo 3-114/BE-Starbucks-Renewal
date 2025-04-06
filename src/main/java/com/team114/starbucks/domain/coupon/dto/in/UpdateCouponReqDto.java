@@ -14,6 +14,7 @@ public class UpdateCouponReqDto {
     private Integer discountValue;
     private Integer minOrderPrice;
     private Integer maxDiscountPrice;
+    private Long validDays;
 
     @Builder
     public UpdateCouponReqDto(
@@ -22,7 +23,8 @@ public class UpdateCouponReqDto {
             DiscountType discountType,
             Integer discountValue,
             Integer minOrderPrice,
-            Integer maxDiscountPrice
+            Integer maxDiscountPrice,
+            Long validDays
     ) {
         this.couponName = couponName;
         this.couponDescription = couponDescription;
@@ -30,6 +32,7 @@ public class UpdateCouponReqDto {
         this.discountValue = discountValue;
         this.minOrderPrice = minOrderPrice;
         this.maxDiscountPrice = maxDiscountPrice;
+        this.validDays = validDays;
     }
 
     // dto <- vo
@@ -43,6 +46,7 @@ public class UpdateCouponReqDto {
                 .discountValue(updateCouponReqVo.getDiscountValue())
                 .minOrderPrice(updateCouponReqVo.getMinOrderPrice())
                 .maxDiscountPrice(updateCouponReqVo.getMaxDiscountPrice())
+                .validDays(updateCouponReqVo.getValidDays())
                 .build();
     }
 }

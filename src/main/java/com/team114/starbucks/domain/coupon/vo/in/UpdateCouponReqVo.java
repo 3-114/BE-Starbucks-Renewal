@@ -26,6 +26,7 @@ public class UpdateCouponReqVo {
     private Integer discountValue;
     private Integer minOrderPrice;
     private Integer maxDiscountPrice;
+    private Long validDays;
 
     @Builder
     public UpdateCouponReqVo(
@@ -34,7 +35,8 @@ public class UpdateCouponReqVo {
             DiscountType discountType,
             Integer discountValue,
             Integer minOrderPrice,
-            Integer maxDiscountPrice
+            Integer maxDiscountPrice,
+            Long validDays
     ) {
         this.couponName = couponName;
         this.couponDescription = couponDescription;
@@ -42,5 +44,6 @@ public class UpdateCouponReqVo {
         this.discountValue = discountValue;
         this.minOrderPrice = minOrderPrice;
         this.maxDiscountPrice = maxDiscountPrice;
+        this.validDays = validDays;
     }
 }

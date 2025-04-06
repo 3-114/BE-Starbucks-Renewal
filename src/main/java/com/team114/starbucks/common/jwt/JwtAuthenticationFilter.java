@@ -37,14 +37,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // JWT 유효성 검사
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response); // 다음 필터(CORS 필터)로 넘긴다.
             return;
         }
 
         jwt = authHeader.substring(7);
         uuid = jwtTokenProvider.validateAndGetUserUuid(jwt);
 
-        // SecurityContextHolder 에 인증 정보 저장
+        /**
+         *          [ 아래 조건문이 있는 이유 ]
+         *          SecurityContextHolder 에 인증 정보 저장
+         *          유저는 토큰만 발급받은 상태
+         *          서버는 패스워드를 알 수 가 없음
+         *          우리가 발급한 토큰을 가진 사람은 우리 회원이 맞다고, 판단하고 감
+         *          됐으니까 다음 단계로 넘어 가도 됨.
+         */
         if(SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = customUserDetailsService.loadUserByUsername(uuid);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(

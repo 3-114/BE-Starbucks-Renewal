@@ -16,6 +16,7 @@ public class GetCouponResDto {
     private Integer discountValue;
     private Integer minOrderPrice;
     private Integer maxDiscountPrice;
+    private Long validDays;
 
     @Builder
     public GetCouponResDto(
@@ -25,7 +26,8 @@ public class GetCouponResDto {
             DiscountType discountType,
             Integer discountValue,
             Integer minOrderPrice,
-            Integer maxDiscountPrice
+            Integer maxDiscountPrice,
+            Long validDays
     ) {
         this.couponUuid = couponUuid;
         this.couponName = couponName;
@@ -34,6 +36,7 @@ public class GetCouponResDto {
         this.discountValue = discountValue;
         this.minOrderPrice = minOrderPrice;
         this.maxDiscountPrice = maxDiscountPrice;
+        this.validDays = validDays;
     }
 
     public static GetCouponResDto from(Coupon coupon) {
@@ -46,6 +49,7 @@ public class GetCouponResDto {
                 .discountValue(coupon.getDiscountValue())
                 .minOrderPrice(coupon.getMinOrderPrice())
                 .maxDiscountPrice(coupon.getMaxDiscountPrice())
+                .validDays(coupon.getValidDays())
                 .build();
     }
 
@@ -59,6 +63,7 @@ public class GetCouponResDto {
                 .discountValue(discountValue)
                 .minOrderPrice(minOrderPrice)
                 .maxDiscountPrice(maxDiscountPrice)
+                .validDays(validDays)
                 .build();
     }
 }

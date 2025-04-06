@@ -1,10 +1,10 @@
-package com.team114.starbucks.domain.coupon.vo.in;
+package com.team114.starbucks.domain.memberCoupon.vo.in;
 
-import com.team114.starbucks.domain.coupon.enums.DiscountType;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class CreateCouponReqVo {
+public class ConsumeCouponReqVo {
 
     /**
      * [ Validation ]
@@ -19,12 +19,10 @@ public class CreateCouponReqVo {
      * @Pattern : 패턴 지정
      */
 
-    private String couponName;
-    private String couponDescription;
-    private DiscountType discountType;
-    private Integer discountValue;
-    private Integer minOrderPrice;
-    private Integer maxDiscountPrice;
-    private Long validDays;
+    private String couponUuid;
 
+    @Builder
+    public ConsumeCouponReqVo(String couponUuid) {
+        this.couponUuid = couponUuid;
+    }
 }
