@@ -1,6 +1,8 @@
 package com.team114.starbucks.domain.option.entity;
 
 import com.team114.starbucks.common.entity.BaseEntity;
+import com.team114.starbucks.domain.color.entity.Color;
+import com.team114.starbucks.domain.size.entity.Size;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
