@@ -149,7 +149,7 @@ public class MemberCouponServiceImpl implements MemberCouponService {
                         pageable
                 ).map(MyCouponResDto::from);
             }
-            // [5] 기간 만료된 쿠폰 조회
+            // [4] 기간 만료된 쿠폰 조회
             case MY_COUPON_EXPIRED -> {
                 return memberCouponRepository.findByMemberUuidAndCouponStatus(
                         memberUuid,
@@ -157,7 +157,7 @@ public class MemberCouponServiceImpl implements MemberCouponService {
                         pageable
                 ).map(MyCouponResDto::from);
             }
-            // [6] 사용 불가능한 쿠폰 조회
+            // [5] 사용 불가능한 쿠폰 조회
             case MY_COUPON_NOT_AVAILABLE -> {
                 return memberCouponRepository.findByMemberUuidAndCouponStatusIn(
                         memberUuid,
@@ -165,7 +165,7 @@ public class MemberCouponServiceImpl implements MemberCouponService {
                         pageable
                 ).map(MyCouponResDto::from);
             }
-            // [7] 유효하지 않은 ENUM 값이 넘어올 때 예외 처리
+            // [6] 유효하지 않은 ENUM 값이 넘어올 때 예외 처리
             default -> throw new BaseException(BaseResponseStatus.FAILED_TO_FIND);
         }
     }
