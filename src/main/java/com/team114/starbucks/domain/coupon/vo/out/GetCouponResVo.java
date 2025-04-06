@@ -14,6 +14,7 @@ public class GetCouponResVo {
     private Integer discountValue;
     private Integer minOrderPrice;
     private Integer maxDiscountPrice;
+    private Long validDays;
 
     @Builder
     public GetCouponResVo(
@@ -23,7 +24,8 @@ public class GetCouponResVo {
             DiscountType discountType,
             Integer discountValue,
             Integer minOrderPrice,
-            Integer maxDiscountPrice
+            Integer maxDiscountPrice,
+            Long validDays
     ) {
         this.couponUuid = couponUuid;
         this.couponName = couponName;
@@ -32,5 +34,6 @@ public class GetCouponResVo {
         this.discountValue = discountValue;
         this.minOrderPrice = minOrderPrice;
         this.maxDiscountPrice = maxDiscountPrice;
+        this.validDays = validDays;
     }
 }

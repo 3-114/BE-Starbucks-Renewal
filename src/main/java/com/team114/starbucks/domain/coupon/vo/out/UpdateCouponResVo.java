@@ -4,6 +4,8 @@ import com.team114.starbucks.domain.coupon.enums.DiscountType;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class UpdateCouponResVo {
 
@@ -13,6 +15,7 @@ public class UpdateCouponResVo {
     private Integer discountValue;
     private Integer minOrderPrice;
     private Integer maxDiscountPrice;
+    private Long validDays;
 
     @Builder
     public UpdateCouponResVo(
@@ -21,7 +24,8 @@ public class UpdateCouponResVo {
             DiscountType discountType,
             Integer discountValue,
             Integer minOrderPrice,
-            Integer maxDiscountPrice
+            Integer maxDiscountPrice,
+            Long validDays
     ) {
         this.couponName = couponName;
         this.couponDescription = couponDescription;
@@ -29,5 +33,6 @@ public class UpdateCouponResVo {
         this.discountValue = discountValue;
         this.minOrderPrice = minOrderPrice;
         this.maxDiscountPrice = maxDiscountPrice;
+        this.validDays = validDays;
     }
 }
