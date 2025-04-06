@@ -1,7 +1,7 @@
 package com.team114.starbucks.domain.memberCoupon.application;
 
 import com.team114.starbucks.domain.memberCoupon.dto.in.IssueCouponReqDto;
-import com.team114.starbucks.domain.memberCoupon.dto.in.UseCouponReqDto;
+import com.team114.starbucks.domain.memberCoupon.dto.in.ConsumeCouponReqDto;
 
 public interface MemberCouponService {
 
@@ -25,5 +25,5 @@ public interface MemberCouponService {
      * @return
      * @throws
      */
-    Void useCoupon(String memberUuid, UseCouponReqDto useCouponReqDto);
+    Void consumeCoupon(String memberUuid, ConsumeCouponReqDto useCouponReqDto);
 }

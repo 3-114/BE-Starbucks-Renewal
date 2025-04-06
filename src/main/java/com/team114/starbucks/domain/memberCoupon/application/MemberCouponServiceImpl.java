@@ -6,7 +6,7 @@ import com.team114.starbucks.domain.coupon.entity.Coupon;
 import com.team114.starbucks.domain.memberCoupon.enums.CouponStatus;
 import com.team114.starbucks.domain.coupon.infrastructure.CouponRepository;
 import com.team114.starbucks.domain.memberCoupon.dto.in.IssueCouponReqDto;
-import com.team114.starbucks.domain.memberCoupon.dto.in.UseCouponReqDto;
+import com.team114.starbucks.domain.memberCoupon.dto.in.ConsumeCouponReqDto;
 import com.team114.starbucks.domain.memberCoupon.entity.MemberCoupon;
 import com.team114.starbucks.domain.memberCoupon.infrastructure.MemberCouponRepository;
 import lombok.RequiredArgsConstructor;
@@ -72,7 +72,7 @@ public class MemberCouponServiceImpl implements MemberCouponService {
      */
     @Transactional
     @Override
-    public Void useCoupon(String memberUuid, UseCouponReqDto useCouponReqDto) {
+    public Void consumeCoupon(String memberUuid, ConsumeCouponReqDto useCouponReqDto) {
 
         // TODO : 유효성 검사 - 본인 쿠폰인지 확인 (memberUuid 사용)
         // TODO : 유효성 검사 - 쿠폰 만료 기간이 지났는지 확인 (coupon 사용)

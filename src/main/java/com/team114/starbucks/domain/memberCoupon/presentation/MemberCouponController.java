@@ -3,9 +3,9 @@ package com.team114.starbucks.domain.memberCoupon.presentation;
 import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.memberCoupon.application.MemberCouponService;
 import com.team114.starbucks.domain.memberCoupon.dto.in.IssueCouponReqDto;
-import com.team114.starbucks.domain.memberCoupon.dto.in.UseCouponReqDto;
+import com.team114.starbucks.domain.memberCoupon.dto.in.ConsumeCouponReqDto;
 import com.team114.starbucks.domain.memberCoupon.vo.in.IssueCouponReqVo;
-import com.team114.starbucks.domain.memberCoupon.vo.in.UseCouponReqVo;
+import com.team114.starbucks.domain.memberCoupon.vo.in.ConsumeCouponReqVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,13 +44,13 @@ public class MemberCouponController {
      * @return
      * @throws
      */
-    @PutMapping("/use")
-    public BaseResponseEntity<Void> useCoupon(
+    @PutMapping("/consume")
+    public BaseResponseEntity<Void> consumeCoupon(
             // X- 접두사로 커스텀 헤더임을 명시적으로 표시
             @RequestHeader("X-Member-UUID") String memberUuid,    // member UUID
-            @RequestBody UseCouponReqVo useCouponReqVo            // Coupon UUID
+            @RequestBody ConsumeCouponReqVo useCouponReqVo            // Coupon UUID
     ) {
-        userCouponService.useCoupon(memberUuid, UseCouponReqDto.from(useCouponReqVo));
+        userCouponService.consumeCoupon(memberUuid, ConsumeCouponReqDto.from(useCouponReqVo));
         return new BaseResponseEntity<>("쿠폰이 사용 되었습니다.");
     }
 }
