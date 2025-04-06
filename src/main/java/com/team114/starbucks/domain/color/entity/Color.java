@@ -1,10 +1,8 @@
-package com.team114.starbucks.domain.option.entity;
+package com.team114.starbucks.domain.color.entity;
 
 import com.team114.starbucks.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
