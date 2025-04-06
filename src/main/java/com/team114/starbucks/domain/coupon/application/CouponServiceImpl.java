@@ -139,13 +139,14 @@ public class CouponServiceImpl implements CouponService {
                 .discountValue(updateCouponReqDto.getDiscountValue() == null ? coupon.getDiscountValue() : updateCouponReqDto.getDiscountValue())
                 .minOrderPrice(updateCouponReqDto.getMinOrderPrice() == null ? coupon.getMinOrderPrice() : updateCouponReqDto.getMinOrderPrice())
                 .maxDiscountPrice(updateCouponReqDto.getMaxDiscountPrice() == null ? coupon.getMaxDiscountPrice() : updateCouponReqDto.getMaxDiscountPrice())
+                .validDays(updateCouponReqDto.getValidDays() == null ? coupon.getValidDays() : updateCouponReqDto.getValidDays())
                 .build();
 
         // [3] 업데이트된 coupon 으로 저장 (save)
         couponRepository.save(updatedCoupon);
 
         // [4] dto <- entity
-        return UpdateCouponResDto.from(coupon);
+        return UpdateCouponResDto.from(updatedCoupon);
     }
 
     /**
