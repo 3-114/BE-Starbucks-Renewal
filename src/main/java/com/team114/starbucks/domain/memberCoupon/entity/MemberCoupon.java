@@ -1,8 +1,8 @@
-package com.team114.starbucks.domain.userCoupon.entity;
+package com.team114.starbucks.domain.memberCoupon.entity;
 
 import com.team114.starbucks.common.entity.BaseEntity;
 import com.team114.starbucks.domain.coupon.entity.Coupon;
-import com.team114.starbucks.domain.coupon.enums.CouponStatus;
+import com.team114.starbucks.domain.memberCoupon.enums.CouponStatus;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor
-public class UserCoupon extends BaseEntity {
+public class MemberCoupon extends BaseEntity {
 
     // 유저 쿠폰 ID
     @Id
@@ -38,6 +38,9 @@ public class UserCoupon extends BaseEntity {
     // 발행 일시
     private LocalDateTime issuedAt;
 
+    // 만료 일시
+    private LocalDateTime expiredAt;
+
     // 사용 여부
     private Boolean used;
 
@@ -45,13 +48,14 @@ public class UserCoupon extends BaseEntity {
     private LocalDateTime usedAt;
 
     @Builder
-    public UserCoupon(
+    public MemberCoupon(
             Long id,
             Coupon coupon,
             String memberUuid,
             CouponStatus couponStatus,
             Boolean issued,
             LocalDateTime issuedAt,
+            LocalDateTime expiredAt,
             Boolean used,
             LocalDateTime usedAt
     ) {
@@ -61,6 +65,7 @@ public class UserCoupon extends BaseEntity {
         this.couponStatus = couponStatus;
         this.issued = issued;
         this.issuedAt = issuedAt;
+        this.expiredAt = expiredAt;
         this.used = used;
         this.usedAt = usedAt;
     }

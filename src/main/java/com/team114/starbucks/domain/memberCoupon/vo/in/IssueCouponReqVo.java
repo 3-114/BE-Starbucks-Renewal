@@ -1,4 +1,4 @@
-package com.team114.starbucks.domain.userCoupon.vo.in;
+package com.team114.starbucks.domain.memberCoupon.vo.in;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -25,6 +25,4 @@ public class IssueCouponReqVo {
     public IssueCouponReqVo(String couponUuid) {
         this.couponUuid = couponUuid;
     }
-
-
 }
