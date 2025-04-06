@@ -97,7 +97,8 @@ public enum BaseResponseStatus {
      * 6000: gpt-api error
      */
     // Media
-    NO_EXIST_MEDIA(HttpStatus.NOT_FOUND, false, 6001, "존재하지 않는 미디어입니다");
+    NO_EXIST_MEDIA(HttpStatus.NOT_FOUND, false, 6001, "존재하지 않는 미디어입니다")
+    ;
 
     private final HttpStatusCode httpStatusCode;
     private final boolean isSuccess;

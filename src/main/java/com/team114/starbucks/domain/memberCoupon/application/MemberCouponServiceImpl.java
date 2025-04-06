@@ -3,17 +3,22 @@ package com.team114.starbucks.domain.memberCoupon.application;
 import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.coupon.entity.Coupon;
+import com.team114.starbucks.domain.memberCoupon.dto.out.MyCouponResDto;
 import com.team114.starbucks.domain.memberCoupon.enums.CouponStatus;
 import com.team114.starbucks.domain.coupon.infrastructure.CouponRepository;
 import com.team114.starbucks.domain.memberCoupon.dto.in.IssueCouponReqDto;
 import com.team114.starbucks.domain.memberCoupon.dto.in.ConsumeCouponReqDto;
 import com.team114.starbucks.domain.memberCoupon.entity.MemberCoupon;
+import com.team114.starbucks.domain.memberCoupon.enums.CouponViewFilter;
 import com.team114.starbucks.domain.memberCoupon.infrastructure.MemberCouponRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,11 +27,13 @@ public class MemberCouponServiceImpl implements MemberCouponService {
 
     private final MemberCouponRepository userCouponRepository;
     private final CouponRepository couponRepository;
+    private final MemberCouponRepository memberCouponRepository;
 
     /**
      * /api/v1/my-coupons
      * 1. 쿠폰 받기 (쿠폰 발행하기)
      * 2. 쿠폰 사용하기
+     * 3. 내 쿠폰 조회
      */
 
     /**
@@ -50,7 +57,7 @@ public class MemberCouponServiceImpl implements MemberCouponService {
         MemberCoupon memberCoupon = MemberCoupon.builder()
                 .coupon(coupon)
                 .memberUuid(memberUuid)
-                .couponStatus(CouponStatus.COUPON_ISSUED)
+                .couponStatus(CouponStatus.COUPON_AVAILABLE)
                 .issued(true)
                 .issuedAt(issuedAt)
                 .expiredAt(issuedAt.plusDays(coupon.getValidDays()))
@@ -102,5 +109,64 @@ public class MemberCouponServiceImpl implements MemberCouponService {
         userCouponRepository.save(usedMemberCoupon);
 
         return null;
+    }
+
+    /**
+     * 3. 내 쿠폰 조회
+     * @param memberUuid, status, pageable
+     * @return Page<MyCouponResDto>
+     * @throws
+     */
+    @Transactional(readOnly = true)
+    @Override
+    public Page<MyCouponResDto> getMyCoupons(
+            String memberUuid,
+            CouponViewFilter status,
+            Pageable pageable
+    ) {
+        // param 에 따른 switch 문 사용 -> stream, method 참조 사용
+        switch(status) {
+            // [1] 내 쿠폰 전체 조회
+            case MY_COUPON_ALL -> {
+                return memberCouponRepository.findAllByMemberUuid(
+                        memberUuid,
+                        pageable
+                ).map(MyCouponResDto::from);
+            }
+            // [2] 사용 가능한 쿠폰 조회
+            case MY_COUPON_AVAILABLE -> {
+                return memberCouponRepository.findByMemberUuidAndCouponStatus(
+                        memberUuid,
+                        CouponStatus.COUPON_AVAILABLE,
+                        pageable
+                ).map(MyCouponResDto::from);
+            }
+            // [3] 사용 완료된 쿠폰 조회
+            case MY_COUPON_USED -> {
+                return memberCouponRepository.findByMemberUuidAndCouponStatus(
+                        memberUuid,
+                        CouponStatus.COUPON_USED,
+                        pageable
+                ).map(MyCouponResDto::from);
+            }
+            // [5] 기간 만료된 쿠폰 조회
+            case MY_COUPON_EXPIRED -> {
+                return memberCouponRepository.findByMemberUuidAndCouponStatus(
+                        memberUuid,
+                        CouponStatus.COUPON_EXPIRED,
+                        pageable
+                ).map(MyCouponResDto::from);
+            }
+            // [6] 사용 불가능한 쿠폰 조회
+            case MY_COUPON_NOT_AVAILABLE -> {
+                return memberCouponRepository.findByMemberUuidAndCouponStatusIn(
+                        memberUuid,
+                        List.of(CouponStatus.COUPON_USED, CouponStatus.COUPON_EXPIRED),
+                        pageable
+                ).map(MyCouponResDto::from);
+            }
+            // [7] 유효하지 않은 ENUM 값이 넘어올 때 예외 처리
+            default -> throw new BaseException(BaseResponseStatus.FAILED_TO_FIND);
+        }
     }
 }
