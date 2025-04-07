@@ -38,7 +38,6 @@ public class Event {
     private Boolean isActive;
 
     @Builder
-
     public Event(Long id, String eventUuid, String eventName, LocalDate startDate, LocalDate endDate, Boolean isActive) {
         this.id = id;
         this.eventUuid = eventUuid;

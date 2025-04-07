@@ -1,4 +1,4 @@
-package com.team114.starbucks.domain.coupon.enums;
+package com.team114.starbucks.domain.memberCoupon.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -11,8 +11,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum CouponStatus {
 
-    COUPON_BEFORE_ISSUE("발행 예정"),
-    COUPON_ISSUED("발행 완료")
+    COUPON_AVAILABLE("사용 가능"),
+    COUPON_USED("사용 완료"),
+    COUPON_EXPIRED("기간 만료")
     ;
 
     private final String couponStatus;

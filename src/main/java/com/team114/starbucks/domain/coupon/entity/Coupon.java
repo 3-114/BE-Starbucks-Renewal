@@ -1,8 +1,6 @@
 package com.team114.starbucks.domain.coupon.entity;
 
 import com.team114.starbucks.common.entity.BaseEntity;
-import com.team114.starbucks.domain.coupon.dto.in.UpdateCouponReqDto;
-import com.team114.starbucks.domain.coupon.enums.CouponStatus;
 import com.team114.starbucks.domain.coupon.enums.DiscountType;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -45,11 +43,8 @@ public class Coupon extends BaseEntity {
     // 최대 할인 금액
     private Integer maxDiscountPrice;
 
-    // 쿠폰 생성일
-    private LocalDateTime createdAt;
-
-    // 쿠폰 수정일
-    private LocalDateTime updatedAt;
+    // 쿠폰 유효 기간
+    private Long validDays;
 
     @Builder
     public Coupon(
@@ -61,8 +56,7 @@ public class Coupon extends BaseEntity {
             Integer discountValue,
             Integer minOrderPrice,
             Integer maxDiscountPrice,
-            LocalDateTime createdAt,
-            LocalDateTime updatedAt
+            Long validDays
     ) {
         this.id = id;
         this.couponUuid = couponUuid;
@@ -72,7 +66,6 @@ public class Coupon extends BaseEntity {
         this.discountValue = discountValue;
         this.minOrderPrice = minOrderPrice;
         this.maxDiscountPrice = maxDiscountPrice;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.validDays = validDays;
     }
 }

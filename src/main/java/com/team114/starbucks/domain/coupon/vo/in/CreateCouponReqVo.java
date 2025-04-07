@@ -25,5 +25,6 @@ public class CreateCouponReqVo {
     private Integer discountValue;
     private Integer minOrderPrice;
     private Integer maxDiscountPrice;
+    private Long validDays;
 
 }
