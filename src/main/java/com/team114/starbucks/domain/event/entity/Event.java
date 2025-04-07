@@ -46,4 +46,6 @@ public class Event {
         this.endDate = endDate;
         this.isActive = isActive;
     }
+
+
 }

@@ -5,11 +5,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
     //List <이벤트> findbyBooelan값 isTrue
     List<Event> findByIsActiveTrue();
 
+    Optional<Event> findByEventUuid(String eventUuid);
 
+    Optional<Void> deleteByEventUuid(String eventUuid);
 }
