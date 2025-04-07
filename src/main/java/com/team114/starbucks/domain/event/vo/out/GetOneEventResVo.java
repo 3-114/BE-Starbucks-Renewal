@@ -1,4 +1,4 @@
-package com.team114.starbucks.domain.event.vo.in;
+package com.team114.starbucks.domain.event.vo.out;
 
 import lombok.Builder;
 import lombok.Getter;

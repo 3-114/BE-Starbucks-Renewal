@@ -1,7 +1,7 @@
 package com.team114.starbucks.domain.event.dto.out;
 
 import com.team114.starbucks.domain.event.entity.Event;
-import com.team114.starbucks.domain.event.vo.in.GetOneEventResVo;
+import com.team114.starbucks.domain.event.vo.out.GetOneEventResVo;
 import lombok.Builder;
 import lombok.Getter;
 
