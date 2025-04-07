@@ -1,8 +1,20 @@
 package com.team114.starbucks.domain.cart.application;
 
 import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
+import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface CartService {
+
+    /**
+     * /api/v1/cart
+     * 1. 장바구니 항목 추가
+     * 2. 장바구니 항목 전체 조회
+     * 3. 장바구니 항목 수량 추가
+     * 4. 장바구니 항목 수량 감소
+     * 5. 장바구니 항목 삭제
+     */
 
     /**
      * 1. 장바구니 항목 생성
@@ -12,4 +24,6 @@ public interface CartService {
      * @return
      */
     Void addCartItem(String memberUuid, String productUuid, Long optionId, AddCartItemReqDto addCartItemReqDto);
+
+    Page<GetAllCartItemsResDto> getAllCartItems(String memberUuid, Pageable pageable);
 }

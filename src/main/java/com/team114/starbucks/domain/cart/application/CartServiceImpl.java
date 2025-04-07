@@ -3,6 +3,7 @@ package com.team114.starbucks.domain.cart.application;
 import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
+import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
 import com.team114.starbucks.domain.cart.entity.Cart;
 import com.team114.starbucks.domain.cart.infrastructure.CartRepository;
 import com.team114.starbucks.domain.option.entity.Option;
@@ -11,6 +12,8 @@ import com.team114.starbucks.domain.product.entity.Product;
 import com.team114.starbucks.domain.product.enums.ProductStatus;
 import com.team114.starbucks.domain.product.infrastructure.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +25,15 @@ public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final OptionRepository optionRepository;
     private final ProductRepository productRepository;
+
+    /**
+     * /api/v1/cart
+     * 1. 장바구니 항목 추가
+     * 2. 장바구니 항목 전체 조회
+     * 3. 장바구니 항목 수량 추가
+     * 4. 장바구니 항목 수량 감소
+     * 5. 장바구니 항목 삭제
+     */
 
     /**
      * 1. 장바구니 항목 추가
@@ -100,5 +112,13 @@ public class CartServiceImpl implements CartService {
         cartRepository.save(cart);
 
         return null;
+    }
+
+
+    @Override
+    public Page<GetAllCartItemsResDto> getAllCartItems(String memberUuid, Pageable pageable) {
+
+        return cartRepository.findCartItems(memberUuid, pageable)
+
     }
 }
