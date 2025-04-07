@@ -3,76 +3,61 @@ package com.team114.starbucks.domain.product.dto.out;
 import com.team114.starbucks.domain.product.entity.Product;
 import com.team114.starbucks.domain.product.enums.Brand;
 import com.team114.starbucks.domain.product.enums.ProductStatus;
-import com.team114.starbucks.domain.product.vo.out.ProductGetResVo;
+import com.team114.starbucks.domain.product.vo.out.UpdateProductResponseVo;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
-public class ProductGetResDto {
+public class UpdateProductResponseDto {
 
-    private Long id;
+
     private String productUuid;
-    private Brand brand;
     private String productName;
+    private Brand brand;
     private Integer productPrice;
     private String description;
-    private ProductStatus productStatus;
     private Integer shippingFee;
+    private ProductStatus productStatus;
 
     @Builder
-    public ProductGetResDto(
-            Long id,
-            String productUuid,
-            Brand brand,
-            String productName,
-            Integer productPrice,
-            String description,
-            ProductStatus productStatus,
-            Boolean optionFlag,
-            Integer shippingFee
-    ) {
-        this.id = id;
+    public UpdateProductResponseDto(
+            String productUuid, String productName, Brand brand, Integer productPrice, String description, Integer shippingFee, ProductStatus productStatus) {
         this.productUuid = productUuid;
-        this.brand = brand;
         this.productName = productName;
+        this.brand = brand;
         this.productPrice = productPrice;
         this.description = description;
-        this.productStatus = productStatus;
         this.shippingFee = shippingFee;
+        this.productStatus = productStatus;
     }
 
+    // dto <- entity
+    public static UpdateProductResponseDto from(Product product) {
 
-    public static ProductGetResDto from(Product product) {
-        return ProductGetResDto.builder()
-                .id(product.getId())
+        return UpdateProductResponseDto.builder()
                 .productUuid(product.getProductUuid())
-                .brand(product.getBrand())
                 .productName(product.getProductName())
+                .brand(product.getBrand())
                 .productPrice(product.getProductPrice())
                 .description(product.getDescription())
-                .productStatus(product.getProductStatus())
                 .shippingFee(product.getShippingFee())
+                .productStatus(product.getProductStatus())
                 .build();
+
     }
 
-
-    public ProductGetResVo toVo() {
-        return ProductGetResVo.builder()
-                .id(id)
+    // vo <- dto
+    public UpdateProductResponseVo toVo() {
+        return UpdateProductResponseVo.builder()
                 .productUuid(productUuid)
-                .brand(brand)
                 .productName(productName)
+                .brand(brand)
                 .productPrice(productPrice)
                 .description(description)
-                .productStatus(productStatus)
                 .shippingFee(shippingFee)
+                .productStatus(productStatus)
                 .build();
     }
-
-
-
 
 
 }
