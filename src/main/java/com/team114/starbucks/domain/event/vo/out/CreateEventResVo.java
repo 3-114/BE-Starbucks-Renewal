@@ -14,4 +14,16 @@ public class CreateEventResVo {
         this.eventName = eventName;
         this.eventUuid = eventUuid;
     }
+
+    @Getter
+    public static class EventResponseVo {
+        private String eventUuid;
+        private String eventName;
+
+        @Builder
+        public EventResponseVo(String eventUuid, String eventName) {
+            this.eventUuid = eventUuid;
+            this.eventName = eventName;
+        }
+    }
 }
