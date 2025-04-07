@@ -16,16 +16,21 @@ public class Size extends BaseEntity {
     @Column(nullable = false, length = 50)
     private String sizeName;
 
+    @Column(nullable = false)
+    private String sizeCode;
+
     @Column(nullable = false, length = 20)
-    private String capacity;
+    private String sizeDescription;
 
     @Builder
     public Size(Long sizeId,
                 String sizeName,
-                String capacity
+                String sizeCode,
+                String sizeDescription
     ) {
         this.sizeId = sizeId;
         this.sizeName = sizeName;
-        this.capacity = capacity;
+        this.sizeCode = sizeCode;
+        this.sizeDescription = sizeDescription;
     }
 }
