@@ -1,6 +1,9 @@
 package com.team114.starbucks.domain.maincategory.application;
 
+import com.team114.starbucks.common.exception.BaseException;
+import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.maincategory.dto.out.GetAllMainCategoryResDto;
+import com.team114.starbucks.domain.maincategory.dto.out.GetOneMainCategoryResDto;
 import com.team114.starbucks.domain.maincategory.entity.MainCategory;
 import com.team114.starbucks.domain.maincategory.infrastructure.MainCategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +33,14 @@ public class MainCategoryServiceimpl implements MainCategoryService {
         }
 
         return mainCategoryResDtoList;
+    }
+
+    @Override
+    public GetOneMainCategoryResDto getOneMainCategory(String mainCategoryUuid) {
+        MainCategory mainCategory = mainCategoryRepository.findByMainCategoryUuid(mainCategoryUuid).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
+        );
+        // entity -> dto
+        return GetOneMainCategoryResDto.from(mainCategory);
     }
 }

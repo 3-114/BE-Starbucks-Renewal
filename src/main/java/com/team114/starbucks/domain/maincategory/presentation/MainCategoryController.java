@@ -1,8 +1,11 @@
 package com.team114.starbucks.domain.maincategory.presentation;
 
+import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.maincategory.application.MainCategoryService;
 import com.team114.starbucks.domain.maincategory.dto.out.GetAllMainCategoryResDto;
+import com.team114.starbucks.domain.maincategory.dto.out.GetOneMainCategoryResDto;
 import com.team114.starbucks.domain.maincategory.vo.out.GetAllMainCategoryResVo;
+import com.team114.starbucks.domain.maincategory.vo.out.GetOneMainCategoryResVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +32,7 @@ public class MainCategoryController {
 
     // 2. 메인 카테고리 전체 조회
     @GetMapping
-    public List<GetAllMainCategoryResVo> getAllMainCategory() {
+    public BaseResponseEntity<List<GetAllMainCategoryResVo>> getAllMainCategory() {
         List<GetAllMainCategoryResDto> allMainCategoryResDtoslist = mainCategoryService.getAllMainCategory();
 
         List<GetAllMainCategoryResVo> getAllMainCategoryResVoList = new ArrayList<>();
@@ -38,10 +41,18 @@ public class MainCategoryController {
             GetAllMainCategoryResVo getAllMainCategoryResVo = mainCategoryResDto.toVo();
             getAllMainCategoryResVoList.add(getAllMainCategoryResVo);
         }
-        return getAllMainCategoryResVoList;
+        return new BaseResponseEntity<>(("메인 카테고리 전체 조회에 성공했습니다"), getAllMainCategoryResVoList);
     }
 
-
+    // 3. 메인 카테고리 단건 조회
+    @GetMapping("/{mainCategoryUuid}")
+    public BaseResponseEntity<GetOneMainCategoryResVo> getOneMainCategory(
+            @PathVariable String mainCategoryUuid
+    ) {
+        GetOneMainCategoryResDto getOneMainCategoryResDto = mainCategoryService.getOneMainCategory(mainCategoryUuid);
+        GetOneMainCategoryResVo getOneMainCategoryResVo = getOneMainCategoryResDto.toVo();
+        return new BaseResponseEntity<>(("메인 카테고리 단건 조회에 성공했습니다. "), getOneMainCategoryResVo);
+    }
 
 }
 
