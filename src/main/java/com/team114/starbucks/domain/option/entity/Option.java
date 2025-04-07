@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "product_option")
 public class Option extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
