@@ -5,15 +5,13 @@ name: Deploy to AWS EC2
 on:
     push:
         branches:
-        - test
-        - develop
+#        - develop
         - cicd
 
     pull_request:
       types: [ closed ]
       branches:
-        - develop
-        - test
+#        - develop
         - cicd
 
 
