@@ -1,6 +1,6 @@
-package com.team114.starbucks.domain.memberCoupon.dto.in;
+package com.team114.starbucks.domain.membercoupon.dto.in;
 
-import com.team114.starbucks.domain.memberCoupon.vo.in.IssueCouponReqVo;
+import com.team114.starbucks.domain.membercoupon.vo.in.IssueCouponReqVo;
 import lombok.Builder;
 import lombok.Getter;
 

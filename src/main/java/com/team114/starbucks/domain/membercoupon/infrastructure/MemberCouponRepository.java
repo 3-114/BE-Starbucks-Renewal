@@ -1,11 +1,9 @@
-package com.team114.starbucks.domain.memberCoupon.infrastructure;
+package com.team114.starbucks.domain.membercoupon.infrastructure;
 
-import com.team114.starbucks.domain.memberCoupon.dto.out.MyCouponResDto;
-import com.team114.starbucks.domain.memberCoupon.entity.MemberCoupon;
-import com.team114.starbucks.domain.memberCoupon.enums.CouponStatus;
+import com.team114.starbucks.domain.membercoupon.entity.MemberCoupon;
+import com.team114.starbucks.domain.membercoupon.enums.CouponStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Range;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Collection;

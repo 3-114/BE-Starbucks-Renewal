@@ -1,8 +1,8 @@
-package com.team114.starbucks.domain.memberCoupon.entity;
+package com.team114.starbucks.domain.membercoupon.entity;
 
 import com.team114.starbucks.common.entity.BaseEntity;
 import com.team114.starbucks.domain.coupon.entity.Coupon;
-import com.team114.starbucks.domain.memberCoupon.enums.CouponStatus;
+import com.team114.starbucks.domain.membercoupon.enums.CouponStatus;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

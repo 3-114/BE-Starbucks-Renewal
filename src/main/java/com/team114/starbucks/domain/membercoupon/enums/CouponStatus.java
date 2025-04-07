@@ -1,4 +1,4 @@
-package com.team114.starbucks.domain.memberCoupon.enums;
+package com.team114.starbucks.domain.membercoupon.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

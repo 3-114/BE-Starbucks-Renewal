@@ -1,14 +1,14 @@
-package com.team114.starbucks.domain.memberCoupon.presentation;
+package com.team114.starbucks.domain.membercoupon.presentation;
 
 import com.team114.starbucks.common.response.BaseResponseEntity;
-import com.team114.starbucks.domain.memberCoupon.application.MemberCouponService;
-import com.team114.starbucks.domain.memberCoupon.dto.in.IssueCouponReqDto;
-import com.team114.starbucks.domain.memberCoupon.dto.in.ConsumeCouponReqDto;
-import com.team114.starbucks.domain.memberCoupon.dto.out.MyCouponResDto;
-import com.team114.starbucks.domain.memberCoupon.enums.CouponViewFilter;
-import com.team114.starbucks.domain.memberCoupon.vo.in.IssueCouponReqVo;
-import com.team114.starbucks.domain.memberCoupon.vo.in.ConsumeCouponReqVo;
-import com.team114.starbucks.domain.memberCoupon.vo.out.MyCouponResVo;
+import com.team114.starbucks.domain.membercoupon.application.MemberCouponService;
+import com.team114.starbucks.domain.membercoupon.dto.in.IssueCouponReqDto;
+import com.team114.starbucks.domain.membercoupon.dto.in.ConsumeCouponReqDto;
+import com.team114.starbucks.domain.membercoupon.dto.out.MyCouponResDto;
+import com.team114.starbucks.domain.membercoupon.enums.CouponViewFilter;
+import com.team114.starbucks.domain.membercoupon.vo.in.IssueCouponReqVo;
+import com.team114.starbucks.domain.membercoupon.vo.in.ConsumeCouponReqVo;
+import com.team114.starbucks.domain.membercoupon.vo.out.MyCouponResVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

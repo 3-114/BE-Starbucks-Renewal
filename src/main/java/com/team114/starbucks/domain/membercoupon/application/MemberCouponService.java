@@ -1,9 +1,9 @@
-package com.team114.starbucks.domain.memberCoupon.application;
+package com.team114.starbucks.domain.membercoupon.application;
 
-import com.team114.starbucks.domain.memberCoupon.dto.in.IssueCouponReqDto;
-import com.team114.starbucks.domain.memberCoupon.dto.in.ConsumeCouponReqDto;
-import com.team114.starbucks.domain.memberCoupon.dto.out.MyCouponResDto;
-import com.team114.starbucks.domain.memberCoupon.enums.CouponViewFilter;
+import com.team114.starbucks.domain.membercoupon.dto.in.IssueCouponReqDto;
+import com.team114.starbucks.domain.membercoupon.dto.in.ConsumeCouponReqDto;
+import com.team114.starbucks.domain.membercoupon.dto.out.MyCouponResDto;
+import com.team114.starbucks.domain.membercoupon.enums.CouponViewFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

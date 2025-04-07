@@ -1,4 +1,4 @@
-package com.team114.starbucks.domain.memberCoupon.vo.in;
+package com.team114.starbucks.domain.membercoupon.vo.in;
 
 import lombok.Builder;
 import lombok.Getter;

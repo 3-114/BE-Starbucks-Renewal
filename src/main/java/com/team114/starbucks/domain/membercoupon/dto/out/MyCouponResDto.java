@@ -1,12 +1,11 @@
-package com.team114.starbucks.domain.memberCoupon.dto.out;
+package com.team114.starbucks.domain.membercoupon.dto.out;
 
 import com.team114.starbucks.domain.coupon.enums.DiscountType;
-import com.team114.starbucks.domain.memberCoupon.entity.MemberCoupon;
-import com.team114.starbucks.domain.memberCoupon.enums.CouponStatus;
-import com.team114.starbucks.domain.memberCoupon.vo.out.MyCouponResVo;
+import com.team114.starbucks.domain.membercoupon.entity.MemberCoupon;
+import com.team114.starbucks.domain.membercoupon.enums.CouponStatus;
+import com.team114.starbucks.domain.membercoupon.vo.out.MyCouponResVo;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 

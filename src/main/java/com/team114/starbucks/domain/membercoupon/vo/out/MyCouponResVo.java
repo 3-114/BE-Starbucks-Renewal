@@ -1,7 +1,7 @@
-package com.team114.starbucks.domain.memberCoupon.vo.out;
+package com.team114.starbucks.domain.membercoupon.vo.out;
 
 import com.team114.starbucks.domain.coupon.enums.DiscountType;
-import com.team114.starbucks.domain.memberCoupon.enums.CouponStatus;
+import com.team114.starbucks.domain.membercoupon.enums.CouponStatus;
 import lombok.Builder;
 import lombok.Getter;
 
