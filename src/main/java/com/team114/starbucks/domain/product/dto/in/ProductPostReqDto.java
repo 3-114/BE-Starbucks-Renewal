@@ -14,48 +14,44 @@ import lombok.NoArgsConstructor;
 public class ProductPostReqDto {
 
     private Long id;
-    private String uuid;
+    private String productUuid;
     private Brand brand;
-    private String name;
-    private Integer price;
+    private String productName;
+    private Integer productPrice;
     private String description;
     private ProductStatus productStatus;
-    private Boolean optionFlag; //?
     private Integer shippingFee;
 
     @Builder
     public ProductPostReqDto(
             Long id,
-            String uuid,
+            String productUuid,
             Brand brand,
-            String name,
-            Integer price,
+            String productName,
+            Integer productPrice,
             String description,
             ProductStatus productStatus,
-            Boolean optionFlag,
             Integer shippingFee
     ) {
         this.id = id;
-        this.uuid = uuid;
+        this.productUuid = productUuid;
         this.brand = brand;
-        this.name = name;
-        this.price = price;
+        this.productName = productName;
+        this.productPrice = productPrice;
         this.description = description;
         this.productStatus = productStatus;
-        this.optionFlag = optionFlag;
         this.shippingFee = shippingFee;
     }
 
     public static ProductPostReqDto from(ProductPostReqVo productPostReqVo) {
         return ProductPostReqDto.builder()
                 .id(productPostReqVo.getId())
-                .uuid(productPostReqVo.getUuid())
+                .productUuid(productPostReqVo.getProductUuid())
                 .brand(productPostReqVo.getBrand())
-                .name(productPostReqVo.getName())
-                .price(productPostReqVo.getPrice())
+                .productName(productPostReqVo.getProductName())
+                .productPrice(productPostReqVo.getProductPrice())
                 .description(productPostReqVo.getDescription())
                 .productStatus(productPostReqVo.getProductStatus())
-                .optionFlag(productPostReqVo.getOptionFlag())
                 .shippingFee(productPostReqVo.getShippingFee())
                 .build();
 
@@ -64,13 +60,12 @@ public class ProductPostReqDto {
     public Product toEntity() {
         return Product.builder()
                 .id(id)
-                .uuid(uuid)
+                .productUuid(productUuid)
                 .brand(brand)
-                .name(name)
-                .price(price)
+                .productName(productName)
+                .productPrice(productPrice)
                 .description(description)
                 .productStatus(productStatus)
-                .optionFlag(optionFlag)
                 .shippingFee(shippingFee)
                 .build();
     }

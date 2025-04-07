@@ -1,7 +1,7 @@
 package com.team114.starbucks.domain.product.presentation;
 
 
-import com.team114.starbucks.common.entity.BaseResponseEntity;
+import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.product.application.ProductService;
 import com.team114.starbucks.domain.product.dto.in.ProductPostReqDto;
 import com.team114.starbucks.domain.product.dto.out.ProductGetResDto;

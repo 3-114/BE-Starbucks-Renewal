@@ -1,11 +1,9 @@
 package com.team114.starbucks.domain.product.entity;
 
+import com.team114.starbucks.common.entity.BaseEntity;
 import com.team114.starbucks.domain.product.enums.Brand;
 import com.team114.starbucks.domain.product.enums.ProductStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,66 +13,65 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Product {
+public class Product extends BaseEntity {
     // 상품 ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     // 상품 UUID
-    private String uuid;
+    @Column(nullable = false, unique = true)
+    private String productUuid;
 
     // 브랜드명
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Brand brand;
 
     // 상품명
-    private String name;
+    @Column(nullable = false)
+    private String productName;
 
     // 가격
-    private Integer price;
+    @Column(nullable = false)
+    private Integer productPrice;
 
     // 상품 상세내역
+    @Column(nullable = false, length = 100)
     private String description;
-
-    // 상품 등록일
-    private LocalDateTime createdAt;
 
     // 상품 만료기한
     private LocalDateTime expiredAt;
 
     // 상품 상태
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private ProductStatus productStatus;
 
-    // 옵션 여부
-    private Boolean optionFlag;
-
     // 기본 배송료
+    @Column(nullable = false)
     private Integer shippingFee;
 
     @Builder
     public Product(
             Long id,
-            String uuid,
+            String productUuid,
             Brand brand,
-            String name,
-            Integer price,
+            String productName,
+            Integer productPrice,
             String description,
-            LocalDateTime createdAt,
             LocalDateTime expiredAt,
             ProductStatus productStatus,
-            Boolean optionFlag,
             Integer shippingFee
     ) {
         this.id = id;
-        this.uuid = uuid;
+        this.productUuid = productUuid;
         this.brand = brand;
-        this.name = name;
-        this.price = price;
+        this.productName = productName;
+        this.productPrice = productPrice;
         this.description = description;
-        this.createdAt = createdAt;
         this.expiredAt = expiredAt;
         this.productStatus = productStatus;
-        this.optionFlag = optionFlag;
         this.shippingFee = shippingFee;
     }
 

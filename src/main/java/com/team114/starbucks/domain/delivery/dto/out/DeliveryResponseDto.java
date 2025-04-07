@@ -20,10 +20,16 @@ public class DeliveryResponseDto {
     private boolean defaultAddress;
 
     @Builder
-    public DeliveryResponseDto(String deliveryUuid, String alias, String recipient,
-                               String zoneCode, String mainAddress, String detailAddress,
-                               String phoneNumber1, String phoneNumber2,
-                               String deliveryMemo, boolean defaultAddress) {
+    public DeliveryResponseDto(String deliveryUuid,
+                               String alias,
+                               String recipient,
+                               String zoneCode,
+                               String mainAddress,
+                               String detailAddress,
+                               String phoneNumber1,
+                               String phoneNumber2,
+                               String deliveryMemo,
+                               boolean defaultAddress) {
         this.deliveryUuid = deliveryUuid;
         this.alias = alias;
         this.recipient = recipient;
@@ -67,4 +73,5 @@ public class DeliveryResponseDto {
                 .defaultAddress(this.defaultAddress)
                 .build();
     }
+
 }

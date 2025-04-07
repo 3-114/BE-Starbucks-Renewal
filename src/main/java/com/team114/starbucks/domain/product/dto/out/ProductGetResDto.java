@@ -13,35 +13,33 @@ import lombok.NoArgsConstructor;
 public class ProductGetResDto {
 
     private Long id;
-    private String uuid;
+    private String productUuid;
     private Brand brand;
-    private String name;
-    private Integer price;
+    private String productName;
+    private Integer productPrice;
     private String description;
     private ProductStatus productStatus;
-    private Boolean optionFlag; //?
     private Integer shippingFee;
 
     @Builder
     public ProductGetResDto(
             Long id,
-            String uuid,
+            String productUuid,
             Brand brand,
-            String name,
-            Integer price,
+            String productName,
+            Integer productPrice,
             String description,
             ProductStatus productStatus,
             Boolean optionFlag,
             Integer shippingFee
     ) {
         this.id = id;
-        this.uuid = uuid;
+        this.productUuid = productUuid;
         this.brand = brand;
-        this.name = name;
-        this.price = price;
+        this.productName = productName;
+        this.productPrice = productPrice;
         this.description = description;
         this.productStatus = productStatus;
-        this.optionFlag = optionFlag;
         this.shippingFee = shippingFee;
     }
 
@@ -49,13 +47,12 @@ public class ProductGetResDto {
     public static ProductGetResDto from(Product product) {
         return ProductGetResDto.builder()
                 .id(product.getId())
-                .uuid(product.getUuid())
+                .productUuid(product.getProductUuid())
                 .brand(product.getBrand())
-                .name(product.getName())
-                .price(product.getPrice())
+                .productName(product.getProductName())
+                .productPrice(product.getProductPrice())
                 .description(product.getDescription())
                 .productStatus(product.getProductStatus())
-                .optionFlag(product.getOptionFlag())
                 .shippingFee(product.getShippingFee())
                 .build();
     }
@@ -64,13 +61,12 @@ public class ProductGetResDto {
     public ProductGetResVo toVo() {
         return ProductGetResVo.builder()
                 .id(id)
-                .uuid(uuid)
+                .productUuid(productUuid)
                 .brand(brand)
-                .name(name)
-                .price(price)
+                .productName(productName)
+                .productPrice(productPrice)
                 .description(description)
                 .productStatus(productStatus)
-                .optionFlag(optionFlag)
                 .shippingFee(shippingFee)
                 .build();
     }
