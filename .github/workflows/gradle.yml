@@ -56,6 +56,8 @@ jobs:
           envs: ECR_REGISTRY,ECR_REPOSITORY,IMAGE_TAG,AWS_DB_URL,AWS_DB_NAME,AWS_DB_USERNAME,AWS_DB_PASSWORD
           script: |
             echo "▶ ECR에서 이미지 Pull 후 Docker 컨테이너로 실행"
+            echo "AWS_DB_URL: $AWS_DB_URL"
+            printenv AWS_DB_URL
 
             # AWS CLI 로그인
             aws ecr get-login-password --region ap-northeast-2 \
@@ -82,5 +84,5 @@ jobs:
 
       - name: Delete old ECR images (keep latest 3)
         run: |
-          chmod +x .github/scripts/delete-old-ecr-images.sh
-          github/scripts/delete-old-ecr-images.sh
+          chmod +x .github/scripts/delete_ecr.sh
+          github/scripts/delete_ecr.sh
