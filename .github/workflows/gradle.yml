@@ -74,10 +74,10 @@ jobs:
             docker run -d \
               --name springboot-app \
               -p 8080:8080 \
-              -e AWS_DB_URL=${{ secrets.AWS_DB_URL }} \
-              -e AWS_DB_NAME=${{ secrets.AWS_DB_NAME }} \
-              -e AWS_DB_USERNAME=${{ secrets.AWS_DB_USERNAME }} \
-              -e AWS_DB_PASSWORD=${{ secrets.AWS_DB_PASSWORD }} \
+              -e AWS_DB_URL=$AWS_DB_URL \
+              -e AWS_DB_NAME=$AWS_DB_NAME \
+              -e AWS_DB_USERNAME=$AWS_DB_USERNAME \
+              -e AWS_DB_PASSWORD=$AWS_DB_PASSWORD \
               $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
             echo "✅ Spring Boot Docker 컨테이너 실행 완료"
@@ -85,4 +85,4 @@ jobs:
       - name: Delete old ECR images (keep latest 3)
         run: |
           chmod +x .github/scripts/delete_ecr.sh
-          github/scripts/delete_ecr.sh
+          .github/scripts/delete_ecr.sh
