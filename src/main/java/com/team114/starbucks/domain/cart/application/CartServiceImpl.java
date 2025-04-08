@@ -5,6 +5,7 @@ import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
+import com.team114.starbucks.domain.cart.dto.out.GetCartItemResDto;
 import com.team114.starbucks.domain.cart.entity.Cart;
 import com.team114.starbucks.domain.cart.infrastructure.CartRepository;
 import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
@@ -173,5 +174,23 @@ public class CartServiceImpl implements CartService {
         cartRepository.deleteById(cartId);
 
         return null;
+    }
+
+    @Override
+    public GetCartItemResDto getCartItem(String memberUuid, Long cartId) {
+
+        Cart cart = cartRepository.findById(cartId).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
+        );
+
+        Product product = productRepository.findByProductUuid(cart.getProductUuid()).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
+        );
+
+        Option option = optionRepository.findByOptionId(cart.getOptionId()).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
+        );
+
+        return GetCartItemResDto.of(cart, product, option);
     }
 }

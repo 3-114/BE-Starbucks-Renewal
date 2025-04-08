@@ -1,6 +1,7 @@
 package com.team114.starbucks.domain.cart.infrastructure;
 
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
+import com.team114.starbucks.domain.cart.dto.out.GetCartItemResDto;
 import com.team114.starbucks.domain.cart.entity.Cart;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -25,4 +26,5 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
             "JOIN Option o ON c.optionId = o.optionId " +
             "WHERE c.memberUuid = :memberUuid")
     List<GetAllCartItemsResDto> findCartItems(String memberUuid);
+
 }
