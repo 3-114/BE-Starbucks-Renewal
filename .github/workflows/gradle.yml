@@ -10,6 +10,10 @@ env:
   AWS_REGION: ap-northeast-2
   ECR_REGISTRY: 412381782254.dkr.ecr.ap-northeast-2.amazonaws.com
   ECR_REPOSITORY: 114/starbucks-backend
+#  AWS_DB_URL: ${{ secrets.AWS_DB_URL }}
+#  AWS_DB_NAME: ${{ secrets.AWS_DB_NAME }}
+#  AWS_DB_USERNAME: ${{ secrets.AWS_DB_USERNAME }}
+#  AWS_DB_PASSWORD: ${{ secrets.AWS_DB_PASSWORD }}
 
 jobs:
   deploy:
@@ -19,6 +23,10 @@ jobs:
 
     env:
       IMAGE_TAG: ${{ github.sha }}
+      AWS_DB_URL: ${{ secrets.AWS_DB_URL }}
+      AWS_DB_NAME: ${{ secrets.AWS_DB_NAME }}
+      AWS_DB_USERNAME: ${{ secrets.AWS_DB_USERNAME }}
+      AWS_DB_PASSWORD: ${{ secrets.AWS_DB_PASSWORD }}
 
     steps:
       - name: Checkout
@@ -74,7 +82,7 @@ jobs:
             docker run -d \
               --name springboot-app \
               -p 8080:8080 \
-              -e AWS_DB_URL=host.docker.internal \
+              -e AWS_DB_URL=$AWS_DB_URL \
               -e AWS_DB_NAME=$AWS_DB_NAME \
               -e AWS_DB_USERNAME=$AWS_DB_USERNAME \
               -e AWS_DB_PASSWORD=$AWS_DB_PASSWORD \
