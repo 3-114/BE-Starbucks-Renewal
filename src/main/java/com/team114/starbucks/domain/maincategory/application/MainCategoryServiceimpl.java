@@ -3,6 +3,7 @@ package com.team114.starbucks.domain.maincategory.application;
 import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.maincategory.dto.in.CreateMainCategoryReqDto;
+import com.team114.starbucks.domain.maincategory.dto.in.UpdateMainCategoryReqDto;
 import com.team114.starbucks.domain.maincategory.dto.out.GetAllMainCategoryResDto;
 import com.team114.starbucks.domain.maincategory.dto.out.GetOneMainCategoryResDto;
 import com.team114.starbucks.domain.maincategory.entity.MainCategory;
@@ -59,6 +60,24 @@ public class MainCategoryServiceimpl implements MainCategoryService {
         } catch (Exception e) {
             throw new BaseException(BaseResponseStatus.FAILED_TO_FIND);
         }
+    }
+
+    @Transactional
+    @Override
+    public Void updateMainCategory(String mainCategoryUuid, UpdateMainCategoryReqDto updateMainCategoryReqDto) {
+        MainCategory mainCategory = mainCategoryRepository.findByMainCategoryUuid(mainCategoryUuid).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
+        );
+
+        MainCategory updatedMainCategory = MainCategory.builder()
+                .id(mainCategory.getId())
+                .mainCategoryUuid(mainCategory.getMainCategoryUuid())
+                .mainCategoryName(updateMainCategoryReqDto.getMainCategoryName() == null ? mainCategory.getMainCategoryName() : updateMainCategoryReqDto.getMainCategoryName())
+                .build();
+
+        mainCategoryRepository.save(updatedMainCategory);
+
+        return null;
     }
 
 

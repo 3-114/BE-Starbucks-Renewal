@@ -3,9 +3,11 @@ package com.team114.starbucks.domain.maincategory.presentation;
 import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.maincategory.application.MainCategoryService;
 import com.team114.starbucks.domain.maincategory.dto.in.CreateMainCategoryReqDto;
+import com.team114.starbucks.domain.maincategory.dto.in.UpdateMainCategoryReqDto;
 import com.team114.starbucks.domain.maincategory.dto.out.GetAllMainCategoryResDto;
 import com.team114.starbucks.domain.maincategory.dto.out.GetOneMainCategoryResDto;
 import com.team114.starbucks.domain.maincategory.vo.in.CreateMainCategoryReqVo;
+import com.team114.starbucks.domain.maincategory.vo.in.UpdateMainCategoryReqVo;
 import com.team114.starbucks.domain.maincategory.vo.out.CreateMainCategoryResDto;
 import com.team114.starbucks.domain.maincategory.vo.out.CreateMainCategoryResVo;
 import com.team114.starbucks.domain.maincategory.vo.out.GetAllMainCategoryResVo;
@@ -41,7 +43,6 @@ public class MainCategoryController {
 
     }
 
-
     // 2. 메인 카테고리 전체 조회
     @GetMapping
     public BaseResponseEntity<List<GetAllMainCategoryResVo>> getAllMainCategory() {
@@ -65,6 +66,18 @@ public class MainCategoryController {
         GetOneMainCategoryResVo getOneMainCategoryResVo = getOneMainCategoryResDto.toVo();
         return new BaseResponseEntity<>(("메인 카테고리 단건 조회에 성공했습니다. "), getOneMainCategoryResVo);
     }
+
+    // 4. 메인 카테고리 수정
+    @PutMapping("/{mainCategoryUuid}")
+    public BaseResponseEntity<Void> updateMainCategory(
+            @PathVariable String mainCategoryUuid,
+            @RequestBody UpdateMainCategoryReqVo updateMainCategoryReqVo
+    ) {
+        mainCategoryService.updateMainCategory(mainCategoryUuid, UpdateMainCategoryReqDto.from(updateMainCategoryReqVo));
+
+        return new BaseResponseEntity<>("메인 카테고리 수정에 성공했습니다. ", null);
+    }
+
 
 }
 
