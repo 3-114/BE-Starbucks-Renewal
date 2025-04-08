@@ -12,10 +12,10 @@ import com.team114.starbucks.domain.product.entity.Product;
 import com.team114.starbucks.domain.product.enums.ProductStatus;
 import com.team114.starbucks.domain.product.infrastructure.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -116,9 +116,9 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    public Page<GetAllCartItemsResDto> getAllCartItems(String memberUuid, Pageable pageable) {
+    public List<GetAllCartItemsResDto> findAllCartItems(String memberUuid) {
 
-        return cartRepository.findCartItems(memberUuid, pageable)
+        return cartRepository.findCartItems(memberUuid);
 
     }
 }

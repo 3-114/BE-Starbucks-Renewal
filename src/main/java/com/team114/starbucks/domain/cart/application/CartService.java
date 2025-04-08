@@ -2,8 +2,8 @@ package com.team114.starbucks.domain.cart.application;
 
 import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface CartService {
 
@@ -25,5 +25,5 @@ public interface CartService {
      */
     Void addCartItem(String memberUuid, String productUuid, Long optionId, AddCartItemReqDto addCartItemReqDto);
 
-    Page<GetAllCartItemsResDto> getAllCartItems(String memberUuid, Pageable pageable);
+    List<GetAllCartItemsResDto> findAllCartItems(String memberUuid);
 }
