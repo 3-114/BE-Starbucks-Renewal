@@ -74,7 +74,7 @@ jobs:
             docker run -d \
               --name springboot-app \
               -p 8080:8080 \
-              -e AWS_DB_URL=$AWS_DB_URL \
+              -e AWS_DB_URL=host.docker.internal \
               -e AWS_DB_NAME=$AWS_DB_NAME \
               -e AWS_DB_USERNAME=$AWS_DB_USERNAME \
               -e AWS_DB_PASSWORD=$AWS_DB_PASSWORD \
