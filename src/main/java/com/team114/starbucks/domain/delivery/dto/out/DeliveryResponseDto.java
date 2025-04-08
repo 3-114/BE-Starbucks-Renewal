@@ -8,6 +8,7 @@ import lombok.Getter;
 @Getter
 public class DeliveryResponseDto {
 
+    private Long id;
     private String deliveryUuid;
     private String alias;
     private String recipient;
@@ -20,16 +21,20 @@ public class DeliveryResponseDto {
     private boolean defaultAddress;
 
     @Builder
-    public DeliveryResponseDto(String deliveryUuid,
-                               String alias,
-                               String recipient,
-                               String zoneCode,
-                               String mainAddress,
-                               String detailAddress,
-                               String phoneNumber1,
-                               String phoneNumber2,
-                               String deliveryMemo,
-                               boolean defaultAddress) {
+    public DeliveryResponseDto(
+            Long id,
+            String deliveryUuid,
+            String alias,
+            String recipient,
+            String zoneCode,
+            String mainAddress,
+            String detailAddress,
+            String phoneNumber1,
+            String phoneNumber2,
+            String deliveryMemo,
+            boolean defaultAddress
+    ) {
+        this.id = id;
         this.deliveryUuid = deliveryUuid;
         this.alias = alias;
         this.recipient = recipient;
@@ -43,7 +48,7 @@ public class DeliveryResponseDto {
     }
 
     // Entity → DTO 변환 메서드
-    public static DeliveryResponseDto fromEntity(Delivery delivery) {
+    public static DeliveryResponseDto from(Delivery delivery) {
         return DeliveryResponseDto.builder()
                 .deliveryUuid(delivery.getDeliveryUuid())
                 .alias(delivery.getAlias())
