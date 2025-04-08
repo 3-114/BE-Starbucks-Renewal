@@ -3,6 +3,7 @@ package com.team114.starbucks.domain.cart.application;
 import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
+import com.team114.starbucks.domain.cart.dto.out.GetCartItemResDto;
 import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
 
 import java.util.List;
@@ -49,4 +50,12 @@ public interface CartService {
      * @return
      */
     Void deleteCartItem(String memberUuid, Long cartId);
+
+    /**
+     * 5. 장바구니 목록 단건 조회
+     * @param memberUuid
+     * @param cartId
+     * @return
+     */
+    GetCartItemResDto getCartItem(String memberUuid, Long cartId);
 }

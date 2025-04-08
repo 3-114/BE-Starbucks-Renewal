@@ -5,9 +5,11 @@ import com.team114.starbucks.domain.cart.application.CartService;
 import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
+import com.team114.starbucks.domain.cart.dto.out.GetCartItemResDto;
 import com.team114.starbucks.domain.cart.vo.in.AddCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.out.GetAllCartItemsResVo;
+import com.team114.starbucks.domain.cart.vo.out.GetCartItemResVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,7 @@ public class CartController {
      * 2. 장바구니 항목 전체 조회
      * 3. 장바구니 항목 정보 변경
      * 4. 장바구니 항목 삭제
+     * 5. 장바구니 항목 단건 조회
      */
 
     /**
@@ -92,5 +95,14 @@ public class CartController {
     ) {
         cartService.deleteCartItem(memberUuid, cartId);
         return new BaseResponseEntity<>("장바구니 항목 삭제에 성공하였습니다.", null);
+    }
+
+    @GetMapping("/{cartId}")
+    public BaseResponseEntity<GetCartItemResVo> getCartItem(
+            @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
+            @PathVariable Long cartId
+    ) {
+        GetCartItemResVo result = cartService.getCartItem(memberUuid, cartId).toVo();
+        return new BaseResponseEntity<>("장바구니 항목 단건 조회에 성공하였습니다.", result);
     }
 }
