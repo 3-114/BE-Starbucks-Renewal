@@ -76,6 +76,7 @@ public class EventController {
     @PutMapping("/{eventUuid}")
     public BaseResponseEntity<Void> updateEvent(
             @PathVariable String eventUuid,
+
             @RequestBody UpdateEventReqVo updateEventReqVo
     ) {
         eventService.updateEvent(eventUuid, UpdateEventReqDto.from(updateEventReqVo));

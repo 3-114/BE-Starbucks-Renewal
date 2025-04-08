@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,10 +26,17 @@ public class Agreement extends BaseEntity {
 
     private AgreementGroup agreementGroup;
 
-    private String agreementDescription;
-
-    private String agreementDescriptionUrl;
+    private String agreementURL;
 
     private AgreementType agreementType;
 
+    @Builder
+    public Agreement(Long id, String agreementUuid, String agreementName, AgreementGroup agreementGroup, String agreementURL, AgreementType agreementType) {
+        this.id = id;
+        this.agreementUuid = agreementUuid;
+        this.agreementName = agreementName;
+        this.agreementGroup = agreementGroup;
+        this.agreementURL = agreementURL;
+        this.agreementType = agreementType;
+    }
 }
