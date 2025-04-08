@@ -2,14 +2,15 @@ package com.team114.starbucks.domain.event.presentation;
 
 import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.event.application.EventServiceimpl;
-import com.team114.starbucks.domain.event.dto.out.EventResponseDto;
 import com.team114.starbucks.domain.event.dto.in.CreateEventReqDto;
 import com.team114.starbucks.domain.event.dto.in.UpdateEventReqDto;
+import com.team114.starbucks.domain.event.dto.out.EventResponseDto;
 import com.team114.starbucks.domain.event.dto.out.GetOneEventResDto;
 import com.team114.starbucks.domain.event.vo.in.CreateEventReqVo;
-import com.team114.starbucks.domain.event.vo.in.GetOneEventResVo;
 import com.team114.starbucks.domain.event.vo.in.UpdateEventReqVo;
 import com.team114.starbucks.domain.event.vo.out.CreateEventResVo;
+import com.team114.starbucks.domain.event.vo.out.EventResponseVo;
+import com.team114.starbucks.domain.event.vo.out.GetOneEventResVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,14 +45,14 @@ public class EventController {
 
     // 2. 기획전 전체 조회
     @GetMapping("/nav")
-    public BaseResponseEntity<List<CreateEventResVo.EventResponseVo>> getAllEventName() {
+    public BaseResponseEntity<List<EventResponseVo>> getAllEventName() {
 
         List<EventResponseDto> dtoList = eventService.findAllActiveEvents();
 
-        List<CreateEventResVo.EventResponseVo> voList = new ArrayList<>();
+        List<EventResponseVo> voList = new ArrayList<>();
 
         for (EventResponseDto eventResponseDto : dtoList) {
-            CreateEventResVo.EventResponseVo eventResponseVo = eventResponseDto.toVo();
+            EventResponseVo eventResponseVo = eventResponseDto.toVo();
             voList.add(eventResponseVo);
         }
 

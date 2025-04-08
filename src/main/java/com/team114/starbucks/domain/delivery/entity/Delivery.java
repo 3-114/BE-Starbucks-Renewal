@@ -3,15 +3,12 @@ package com.team114.starbucks.domain.delivery.entity;
 import com.team114.starbucks.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.SQLDelete;
 
 import java.util.UUID;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SQLDelete(sql = "UPDATE delivery SET deleted = true WHERE id = ?")
 public class Delivery extends BaseEntity {
 
     @Id
@@ -51,27 +48,6 @@ public class Delivery extends BaseEntity {
     @Column(nullable = false)
     private boolean defaultAddress;
 
-    @Column(nullable = false)
-    private Boolean deleted;
-
-    @Column(nullable = false)
-    private boolean active;
-
-    // 사용자가 배송지를 삭제했을 때
-    public void markAsDeleted() {
-        this.deleted = true;
-    }
-
-    // 현재 배송지를 기본 배송지로 설정할 때
-    public void activateAsDefault() {
-        this.defaultAddress = true;
-    }
-
-    public void deactivate() {
-        this.active = false;
-        this.defaultAddress = false;
-    }
-
     @Builder
     public Delivery(
             Long id,
@@ -85,9 +61,7 @@ public class Delivery extends BaseEntity {
             String phoneNumber1,
             String phoneNumber2,
             String deliveryMemo,
-            boolean defaultAddress,
-            boolean deleted,
-            boolean active
+            boolean defaultAddress
     ) {
         this.id = id;
         this.deliveryUuid = deliveryUuid;
@@ -101,7 +75,9 @@ public class Delivery extends BaseEntity {
         this.phoneNumber2 = phoneNumber2;
         this.deliveryMemo = deliveryMemo;
         this.defaultAddress = defaultAddress;
-        this.deleted = deleted;
-        this.active = active;
+    }
+
+    public void updateDefaultAddress(boolean defaultAddress) {
+        this.defaultAddress = defaultAddress;
     }
 }

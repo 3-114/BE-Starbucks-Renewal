@@ -14,4 +14,5 @@ public class DeliveryCreateRequestVo {
     private String phoneNumber2;
     private String deliveryMemo;
     private boolean defaultAddress;
+
 }
