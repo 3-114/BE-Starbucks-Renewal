@@ -1,7 +1,6 @@
 package com.team114.starbucks.domain.product.dto.out;
 
 import com.team114.starbucks.domain.product.entity.Product;
-import com.team114.starbucks.domain.product.enums.Brand;
 import com.team114.starbucks.domain.product.enums.ProductStatus;
 import com.team114.starbucks.domain.product.vo.out.CreateProductResponseVo;
 import lombok.Builder;
@@ -11,7 +10,7 @@ import lombok.Getter;
 public class CreateProductResponseDto {
 
     private String productName;
-    private Brand brand;
+    private String brand;
     private Integer productPrice;
     private String description;
     private Integer shippingFee;
@@ -21,7 +20,7 @@ public class CreateProductResponseDto {
     @Builder
     public CreateProductResponseDto(
             String productName,
-            Brand brand,
+            String brand,
             Integer productPrice,
             String description,
             Integer shippingFee,
@@ -43,7 +42,6 @@ public class CreateProductResponseDto {
                 .productName(savedProduct.getProductName())
                 .brand(savedProduct.getBrand())
                 .productPrice(savedProduct.getProductPrice())
-                .description(savedProduct.getDescription())
                 .shippingFee(savedProduct.getShippingFee())
                 .productStatus(savedProduct.getProductStatus())
                 .productUuid(savedProduct.getProductUuid())
@@ -56,7 +54,6 @@ public class CreateProductResponseDto {
                 .productName(productName)
                 .brand(brand)
                 .productPrice(productPrice)
-                .description(description)
                 .shippingFee(shippingFee)
                 .productStatus(productStatus)
                 .productUuid(productUuid)
