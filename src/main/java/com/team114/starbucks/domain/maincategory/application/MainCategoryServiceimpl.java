@@ -53,7 +53,6 @@ public class MainCategoryServiceimpl implements MainCategoryService {
     public CreateMainCategoryResDto saveMainCategory(CreateMainCategoryReqDto createMainCategoryReqDto) {
         try {
             MainCategory mainCategory = createMainCategoryReqDto.toEntity(UUID.randomUUID().toString());
-
             MainCategory savedMainCategory = mainCategoryRepository.save(mainCategory);
 
             return CreateMainCategoryResDto.from(savedMainCategory);
