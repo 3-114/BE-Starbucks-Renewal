@@ -1,7 +1,7 @@
-package com.team114.starbucks.domain.event.dto;
+package com.team114.starbucks.domain.event.dto.out;
 
 import com.team114.starbucks.domain.event.entity.Event;
-import com.team114.starbucks.domain.event.vo.EventResponseVo;
+import com.team114.starbucks.domain.event.vo.out.CreateEventResVo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,8 +27,8 @@ public class EventResponseDto {
     }
 
 
-    public EventResponseVo toVo() {
-        return EventResponseVo.builder()
+    public CreateEventResVo.EventResponseVo toVo() {
+        return CreateEventResVo.EventResponseVo.builder()
                 .eventUuid(eventUuid)
                 .eventName(eventName)
                 .build();

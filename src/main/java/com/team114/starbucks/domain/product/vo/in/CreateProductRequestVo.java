@@ -1,15 +1,14 @@
-package com.team114.starbucks.domain.product.vo.out;
+package com.team114.starbucks.domain.product.vo.in;
+
 
 import com.team114.starbucks.domain.product.enums.Brand;
 import com.team114.starbucks.domain.product.enums.ProductStatus;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
-public class ProductGetResVo {
-    private Long id;
-    private String productUuid;
+public class CreateProductRequestVo {
+
+
     private Brand brand;
     private String productName;
     private Integer productPrice;
