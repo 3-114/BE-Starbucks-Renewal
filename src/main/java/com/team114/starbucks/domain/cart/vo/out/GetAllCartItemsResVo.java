@@ -12,7 +12,7 @@ public class GetAllCartItemsResVo {
     private Integer productPrice;   // 상품 - 상품 가격
     private String color;            // 옵션 - 컬러
     private String size;              // 옵션 - 사이즈
-    private Integer optionPrice;    // 옵션 - 옵션 가격
+    private Long optionPrice;    // 옵션 - 옵션 가격
     private Integer discountRate;   // 옵션 - 할인율
     private Long quantity;          // 장바구니 - 수량
     private Boolean selected;       // 장바구니 - 선택 여부
@@ -25,7 +25,7 @@ public class GetAllCartItemsResVo {
             Integer productPrice,
             String color,
             String size,
-            Integer optionPrice,
+            Long optionPrice,
             Integer discountRate,
             Long quantity,
             Boolean selected,
