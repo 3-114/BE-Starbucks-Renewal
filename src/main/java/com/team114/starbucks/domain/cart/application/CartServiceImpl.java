@@ -3,9 +3,11 @@ package com.team114.starbucks.domain.cart.application;
 import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
+import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
 import com.team114.starbucks.domain.cart.entity.Cart;
 import com.team114.starbucks.domain.cart.infrastructure.CartRepository;
+import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
 import com.team114.starbucks.domain.option.entity.Option;
 import com.team114.starbucks.domain.option.infrastructure.OptionRepository;
 import com.team114.starbucks.domain.product.entity.Product;
@@ -30,9 +32,8 @@ public class CartServiceImpl implements CartService {
      * /api/v1/cart
      * 1. 장바구니 항목 추가
      * 2. 장바구니 항목 전체 조회
-     * 3. 장바구니 항목 수량 추가
-     * 4. 장바구니 항목 수량 감소
-     * 5. 장바구니 항목 삭제
+     * 3. 장바구니 항목 정보 변경
+     * 4. 장바구니 항목 삭제
      */
 
     /**
@@ -125,5 +126,52 @@ public class CartServiceImpl implements CartService {
 
         return cartRepository.findCartItems(memberUuid);
 
+    }
+
+    /**
+     * 3. 장바구니 항목 정보 변경
+     * @param memberUuid
+     * @param cartId
+     * @param updateCartItemReqDto
+     * @return
+     */
+    @Transactional
+    @Override
+    public Void updateCartItem(String memberUuid, Long cartId, UpdateCartItemReqDto updateCartItemReqDto) {
+
+        // cartId -> cart 조회
+        Cart cart = cartRepository.findById(cartId).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
+        );
+
+        // newCart 객체 생성
+        Cart newCart = Cart.builder()
+                .id(cart.getId())
+                .memberUuid(cart.getMemberUuid())
+                .optionId(cart.getOptionId())
+                .productUuid(cart.getProductUuid())
+                .quantity(updateCartItemReqDto.getQuantity() == null ? cart.getQuantity() : updateCartItemReqDto.getQuantity())
+                .selected(updateCartItemReqDto.getSelected() == null ? cart.getSelected() : updateCartItemReqDto.getSelected())
+                .build();
+
+        // save 호출
+        cartRepository.save(newCart);
+
+        return null;
+    }
+
+    /**
+     * 4. 장바구니 항목 삭제
+     * @param memberUuid
+     * @param cartId
+     * @return
+     */
+    @Transactional
+    @Override
+    public Void deleteCartItem(String memberUuid, Long cartId) {
+
+        cartRepository.deleteById(cartId);
+
+        return null;
     }
 }
