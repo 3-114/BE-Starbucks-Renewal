@@ -25,5 +25,10 @@ public interface CartService {
      */
     Void addCartItem(String memberUuid, String productUuid, Long optionId, AddCartItemReqDto addCartItemReqDto);
 
+    /**
+     * 2. 장바구니 항목 전체 조회
+     * @param memberUuid
+     * @return
+     */
     List<GetAllCartItemsResDto> findAllCartItems(String memberUuid);
 }

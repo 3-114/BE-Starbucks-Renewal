@@ -114,7 +114,11 @@ public class CartServiceImpl implements CartService {
         return null;
     }
 
-
+    /**
+     * 2. 장바구니 항목 전체 조회
+     * @param memberUuid
+     * @return
+     */
     @Override
     public List<GetAllCartItemsResDto> findAllCartItems(String memberUuid) {
 

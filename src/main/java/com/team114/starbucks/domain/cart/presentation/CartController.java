@@ -50,6 +50,11 @@ public class CartController {
         return new BaseResponseEntity<>("장바구니에 추가되었습니다.", null);
     }
 
+    /**
+     * 2. 장바구니 항목 전체 조회
+     * @param memberUuid
+     * @return
+     */
     @GetMapping
     public BaseResponseEntity<List<GetAllCartItemsResVo>> getAllCartItems(
             @RequestHeader("X-Member-UUID") String memberUuid            // member UUID
