@@ -2,7 +2,7 @@
 
 # 환경 변수 정의
 REGION="ap-northeast-2"
-REPO_NAME="starbucks-backend"
+REPO_NAME="114/starbucks-backend"
 ACCOUNT_ID="412381782254"
 
 echo "🔍 ECR에서 최신 이미지 3개를 제외한 나머지를 삭제합니다..."
