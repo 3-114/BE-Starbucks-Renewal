@@ -80,5 +80,15 @@ public class MainCategoryServiceimpl implements MainCategoryService {
         return null;
     }
 
+    @Transactional
+    @Override
+    public Void deleteMainCategory(String mainCategoryUuid) {
+        mainCategoryRepository.deleteByMainCategoryUuid(mainCategoryUuid).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
+        );
+
+        return null;
+    }
+
 
 }

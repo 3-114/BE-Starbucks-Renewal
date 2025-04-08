@@ -16,4 +16,6 @@ public interface MainCategoryService {
     CreateMainCategoryResDto saveMainCategory(CreateMainCategoryReqDto createMainCategoryReqDto);
 
     Void updateMainCategory(String mainCategoryUuid, UpdateMainCategoryReqDto updateMainCategoryReqDto);
+
+    Void deleteMainCategory(String mainCategoryUuid);
 }

@@ -78,7 +78,15 @@ public class MainCategoryController {
         return new BaseResponseEntity<>("메인 카테고리 수정에 성공했습니다. ", null);
     }
 
+    // 5. 메인 카테고리 삭제
+    @DeleteMapping("/{mainCategoryUuid}")
+    public BaseResponseEntity<Void> deleteMainCategory(
+            @PathVariable String mainCategoryUuid
+    ){
+        mainCategoryService.deleteMainCategory(mainCategoryUuid);
 
+        return new BaseResponseEntity<>("메인 카테고리 삭제에 성공했습니다. ", null);
+    }
 }
 
 
