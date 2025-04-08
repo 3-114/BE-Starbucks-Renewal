@@ -61,4 +61,6 @@ public class SignUpRequestVo {
     @NotBlank(message = "성별을 올바르게 입력해주세요. (남성 또는 여성)")
     private Gender gender;
 
+//    private List<AgreementVo> agreeVo;
+
 }
