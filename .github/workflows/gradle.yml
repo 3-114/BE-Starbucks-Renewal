@@ -54,7 +54,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          envs: ECR_REGISTRY,ECR_REPOSITORY,IMAGE_TAG
+          envs: ECR_REGISTRY,ECR_REPOSITORY,IMAGE_TAG,AWS_DB_URL,AWS_DB_NAME,AWS_DB_USERNAME,AWS_DB_PASSWORD
           script: |
             echo "▶ ECR에서 이미지 Pull 후 Docker 컨테이너로 실행"
 
