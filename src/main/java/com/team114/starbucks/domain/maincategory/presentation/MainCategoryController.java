@@ -2,15 +2,16 @@ package com.team114.starbucks.domain.maincategory.presentation;
 
 import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.maincategory.application.MainCategoryService;
+import com.team114.starbucks.domain.maincategory.dto.in.CreateMainCategoryReqDto;
 import com.team114.starbucks.domain.maincategory.dto.out.GetAllMainCategoryResDto;
 import com.team114.starbucks.domain.maincategory.dto.out.GetOneMainCategoryResDto;
+import com.team114.starbucks.domain.maincategory.vo.in.CreateMainCategoryReqVo;
+import com.team114.starbucks.domain.maincategory.vo.out.CreateMainCategoryResDto;
+import com.team114.starbucks.domain.maincategory.vo.out.CreateMainCategoryResVo;
 import com.team114.starbucks.domain.maincategory.vo.out.GetAllMainCategoryResVo;
 import com.team114.starbucks.domain.maincategory.vo.out.GetOneMainCategoryResVo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,17 @@ public class MainCategoryController {
      * 4. 메인 카테고리 수정
      * 5. 메인 카테고리 삭제
      *  */
+
+    // 1. 메인 카테고리 생성
+    @PostMapping
+    public BaseResponseEntity<CreateMainCategoryResVo> createMainCategory(
+            @RequestBody CreateMainCategoryReqVo createMainCategoryReqVo
+    ) {
+        CreateMainCategoryResDto createMainCategoryResDto = mainCategoryService.saveMainCategory(CreateMainCategoryReqDto.from(createMainCategoryReqVo));
+        return new BaseResponseEntity<>(("메인 카테고리 생성에 성공했습니다. "), createMainCategoryResDto.toVo());
+
+    }
+
 
     // 2. 메인 카테고리 전체 조회
     @GetMapping

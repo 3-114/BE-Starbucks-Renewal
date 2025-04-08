@@ -2,16 +2,19 @@ package com.team114.starbucks.domain.maincategory.application;
 
 import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
+import com.team114.starbucks.domain.maincategory.dto.in.CreateMainCategoryReqDto;
 import com.team114.starbucks.domain.maincategory.dto.out.GetAllMainCategoryResDto;
 import com.team114.starbucks.domain.maincategory.dto.out.GetOneMainCategoryResDto;
 import com.team114.starbucks.domain.maincategory.entity.MainCategory;
 import com.team114.starbucks.domain.maincategory.infrastructure.MainCategoryRepository;
+import com.team114.starbucks.domain.maincategory.vo.out.CreateMainCategoryResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -43,4 +46,20 @@ public class MainCategoryServiceimpl implements MainCategoryService {
         // entity -> dto
         return GetOneMainCategoryResDto.from(mainCategory);
     }
+
+    @Transactional
+    @Override
+    public CreateMainCategoryResDto saveMainCategory(CreateMainCategoryReqDto createMainCategoryReqDto) {
+        try {
+            MainCategory mainCategory = createMainCategoryReqDto.toEntity(UUID.randomUUID().toString());
+
+            MainCategory savedMainCategory = mainCategoryRepository.save(mainCategory);
+
+            return CreateMainCategoryResDto.from(savedMainCategory);
+        } catch (Exception e) {
+            throw new BaseException(BaseResponseStatus.FAILED_TO_FIND);
+        }
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.team114.starbucks.domain.maincategory.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,4 +22,11 @@ public class MainCategory {
     // 메인 카테고리 명
     @Column(nullable = false, length = 100)
     private String mainCategoryName;
+
+    @Builder
+    public MainCategory(Long id, String mainCategoryUuid, String mainCategoryName) {
+        this.id = id;
+        this.mainCategoryUuid = mainCategoryUuid;
+        this.mainCategoryName = mainCategoryName;
+    }
 }
