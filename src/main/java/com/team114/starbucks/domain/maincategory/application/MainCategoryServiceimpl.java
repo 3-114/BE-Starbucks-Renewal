@@ -80,6 +80,9 @@ public class MainCategoryServiceimpl implements MainCategoryService {
         return null;
     }
 
+
+    //동짱
+
     @Transactional
     @Override
     public Void deleteMainCategory(String mainCategoryUuid) {
@@ -90,6 +93,5 @@ public class MainCategoryServiceimpl implements MainCategoryService {
         return null;
     }
 
-    //동짱
 
 }
