@@ -9,7 +9,7 @@ on:
 env:
   AWS_REGION: ap-northeast-2
   ECR_REGISTRY: 412381782254.dkr.ecr.ap-northeast-2.amazonaws.com
-  ECR_REPOSITORY: starbucks-backend
+  ECR_REPOSITORY: 114/starbucks-backend
 
 jobs:
   deploy:
