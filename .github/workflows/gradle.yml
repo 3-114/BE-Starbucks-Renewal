@@ -1,9 +1,11 @@
 name: Deploy Spring Boot to ECR and EC2
 
 on:
-  push:
+  pull_request:
     branches:
       - develop
+  push:
+    branches:
       - cicd
 
 env:
