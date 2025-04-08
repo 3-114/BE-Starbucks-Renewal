@@ -14,6 +14,5 @@ public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
     // 배송지 UUID로 단일 조회 (soft delete가 적용되어 있으므로 deleted = false 조건 자동 포함)
     Optional<Delivery> findByDeliveryUuid(String deliveryUuid);
 
-    // 특정 회원의 기본 배송지 조회
-    Optional<Delivery> findByMemberUuidAndDefaultAddressIsTrue(String memberUuid);
+    Optional<Delivery> findByMemberUuidAndDefaultAddressTrue(String memberUuid);
 }

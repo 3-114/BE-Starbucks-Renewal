@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public class DeliveryUpdateRequestVo {
 
-    private String deliveryUuid; // 수정 시 필요
+    private String deliveryUuid;
+    private String memberUuid;
     private String alias;
     private String recipient;
     private String zoneCode;
@@ -15,4 +16,5 @@ public class DeliveryUpdateRequestVo {
     private String phoneNumber2;
     private String deliveryMemo;
     private boolean defaultAddress;
+
 }

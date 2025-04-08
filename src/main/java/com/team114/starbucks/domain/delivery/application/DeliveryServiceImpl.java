@@ -1,11 +1,13 @@
 package com.team114.starbucks.domain.delivery.application;
 
-import com.team114.starbucks.domain.delivery.dto.in.DeliveryRequestDto;
+import com.team114.starbucks.common.exception.BaseException;
+import com.team114.starbucks.common.response.BaseResponseStatus;
+import com.team114.starbucks.domain.delivery.dto.in.DeliveryCreateRequestDto;
+import com.team114.starbucks.domain.delivery.dto.in.DeliveryUpdateRequestDto;
 import com.team114.starbucks.domain.delivery.dto.out.DeliveryResponseDto;
 import com.team114.starbucks.domain.delivery.entity.Delivery;
 import com.team114.starbucks.domain.delivery.infrastructure.DeliveryRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,72 +16,79 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class DeliveryServiceImpl implements DeliveryService {
 
     private final DeliveryRepository deliveryRepository;
 
     @Override
     @Transactional
-    public DeliveryResponseDto createDelivery(DeliveryRequestDto dto, String memberUuid) {
+    public DeliveryResponseDto saveDelivery(DeliveryCreateRequestDto deliveryCreateRequestDto) {
 
-        Delivery savedDelivery = deliveryRepository.save(
-                dto.toEntity(UUID.randomUUID().toString(), memberUuid)
-        );
+        String memberUuid = deliveryCreateRequestDto.getMemberUuid();
 
-        return DeliveryResponseDto.fromEntity(savedDelivery);
+        // 1. 해당 회원의 기존 배송지가 하나도 없는 경우 → 무조건 기본 배송지로 설정
+        boolean isFirst = deliveryRepository.findAllByMemberUuid(memberUuid).isEmpty();
+        boolean isDefault = isFirst || deliveryCreateRequestDto.isDefaultAddress();
+
+        // 2. 기존 기본 배송지가 있고, 새 배송지를 기본으로 등록 요청한 경우 → 기존 기본 false로 변경
+        if (!isFirst && isDefault) {
+            deliveryRepository.findByMemberUuidAndDefaultAddressTrue(memberUuid)
+                    .ifPresent(existing -> {
+                        existing.updateDefaultAddress(false);
+                        deliveryRepository.save(existing);
+                    });
+        }
+
+        Delivery newDelivery = deliveryCreateRequestDto.toEntity(UUID.randomUUID().toString(), isDefault);
+        Delivery savedDelivery = deliveryRepository.save(newDelivery);
+
+        return DeliveryResponseDto.from(savedDelivery);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<DeliveryResponseDto> getDeliveriesByMemberUuid(String memberUuid) {
-        return deliveryRepository.findAllByMemberUuid(memberUuid).stream()
-                .map(DeliveryResponseDto::fromEntity)
-                .toList();
+        List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
+        return deliveries.stream().map(DeliveryResponseDto::from).toList();
     }
 
     @Override
     @Transactional
-    public DeliveryResponseDto updateDelivery(String deliveryUuid, DeliveryRequestDto dto, String memberUuid) {
-        // 1. 기존 배송지 찾고 비활성화 처리
-        Delivery oldDelivery = deliveryRepository.findByDeliveryUuid(deliveryUuid)
-                .orElseThrow(() -> new IllegalArgumentException("기존 배송지를 찾을 수 없습니다."));
+    public DeliveryResponseDto updateDelivery(
+            String deliveryUuid,
+            DeliveryUpdateRequestDto deliveryUpdateRequestDto,
+            String memberUuid
+    ) {
+        Delivery delivery = deliveryRepository.findByDeliveryUuid(deliveryUuid).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
+        );
 
-        oldDelivery.deactivate(); // active = false, deleted = false
+        Delivery updatedDelivery = Delivery.builder()
+                .id(delivery.getId())
+                .deliveryUuid(deliveryUuid)
+                .memberUuid(memberUuid)
+                .alias(deliveryUpdateRequestDto.getAlias())
+                .zoneCode(deliveryUpdateRequestDto.getZoneCode())
+                .mainAddress(deliveryUpdateRequestDto.getMainAddress())
+                .detailAddress(deliveryUpdateRequestDto.getDetailAddress())
+                .phoneNumber1(deliveryUpdateRequestDto.getPhoneNumber1())
+                .phoneNumber2(deliveryUpdateRequestDto.getPhoneNumber2())
+                .defaultAddress(deliveryUpdateRequestDto.isDefaultAddress())
+                .build();
 
-        // 2. 새로운 배송지가 기본 배송지인 경우 기존 기본 배송지도 비활성화
-        if (Boolean.TRUE.equals(dto.getDefaultAddress())) {
-            deliveryRepository.findByMemberUuidAndDefaultAddressIsTrue(memberUuid)
-                    .ifPresent(Delivery::deactivate);
-        }
+        deliveryRepository.save(updatedDelivery);
 
-        Delivery newDelivery = dto.toEntity(UUID.randomUUID().toString(), memberUuid);
-        Delivery savedDelivery = deliveryRepository.save(newDelivery); // 저장된 객체 반환
-
-        return DeliveryResponseDto.fromEntity(savedDelivery); // 반환
+        return DeliveryResponseDto.from(updatedDelivery);
     }
 
     @Override
     @Transactional
     public DeliveryResponseDto deleteDelivery(String deliveryUuid) {
-        Delivery delivery = deliveryRepository.findByDeliveryUuid(deliveryUuid)
-                .orElseThrow(() -> new IllegalArgumentException("배송지를 찾을 수 없습니다."));
 
-        deliveryRepository.delete(delivery);
+        deliveryRepository.findByDeliveryUuid(deliveryUuid).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
+        );
 
-        return DeliveryResponseDto.fromEntity(delivery); // 삭제 전의 배송지 정보 반환
-    }
-
-    @Override
-    @Transactional
-    public DeliveryResponseDto setDefaultDelivery(String deliveryUuid, String memberUuid) {
-        deliveryRepository.findByMemberUuidAndDefaultAddressIsTrue(memberUuid)
-                .ifPresent(Delivery::deactivate); // 기존 기본 배송지 비활성화
-
-        Delivery newDefault = deliveryRepository.findByDeliveryUuid(deliveryUuid)
-                .orElseThrow(() -> new IllegalArgumentException("배송지를 찾을 수 없습니다."));
-
-        newDefault.activateAsDefault(); // 새로운 배송지를 기본으로 설정
-
-        return DeliveryResponseDto.fromEntity(newDefault); // 변경된 배송지 반환
+        return null;
     }
 }
