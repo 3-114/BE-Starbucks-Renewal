@@ -49,7 +49,8 @@ public class CartServiceImpl implements CartService {
             String memberUuid, String productUuid, Long optionId, AddCartItemReqDto addCartItemReqDto
     ) {
         // product UUID 로 product 조회
-        Product product = productRepository.findByProductUuid(productUuid);
+        Product product = productRepository.findByProductUuid(productUuid)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
 
         // 상품 판매 상태 조회
         final ProductStatus productStatus = product.getProductStatus();
