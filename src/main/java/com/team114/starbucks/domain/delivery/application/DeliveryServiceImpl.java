@@ -68,11 +68,13 @@ public class DeliveryServiceImpl implements DeliveryService {
                 .deliveryUuid(deliveryUuid)
                 .memberUuid(memberUuid)
                 .alias(deliveryUpdateRequestDto.getAlias())
+                .recipient(deliveryUpdateRequestDto.getRecipient())
                 .zoneCode(deliveryUpdateRequestDto.getZoneCode())
                 .mainAddress(deliveryUpdateRequestDto.getMainAddress())
                 .detailAddress(deliveryUpdateRequestDto.getDetailAddress())
                 .phoneNumber1(deliveryUpdateRequestDto.getPhoneNumber1())
                 .phoneNumber2(deliveryUpdateRequestDto.getPhoneNumber2())
+                .deliveryMemo(deliveryUpdateRequestDto.getDeliveryMemo())
                 .defaultAddress(deliveryUpdateRequestDto.isDefaultAddress())
                 .build();
 
@@ -85,10 +87,12 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Transactional
     public DeliveryResponseDto deleteDelivery(String deliveryUuid) {
 
-        deliveryRepository.findByDeliveryUuid(deliveryUuid).orElseThrow(
+        Delivery delivery = deliveryRepository.findByDeliveryUuid(deliveryUuid).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );
 
-        return null;
+        deliveryRepository.delete(delivery);
+
+        return DeliveryResponseDto.from(delivery);
     }
 }
