@@ -18,11 +18,7 @@ public class CreateProductRequestVo {
     private ProductStatus productStatus;
     private Integer shippingFee;
 
-    List<CreateProductThumbnailRequestVo> thumbnailList;
-//    private String thumbnailUrl;
-//    private Integer thumbnailIndex;
-//    private Boolean isThumbnail;
-//    private String uploadedBy;
+    private List<CreateProductThumbnailRequestVo> thumbnailList;
 
     @Builder
     public CreateProductRequestVo(

@@ -17,7 +17,7 @@ public interface ProductService {
 
     CreateProductResponseDto saveProduct(CreateProductRequestDto createProductRequestDto);
 
-    UpdateProductResponseDto updateProduct(String productUuid, UpdateProductRequestDto updateProductRequestDto);
+    Void updateProduct(UpdateProductRequestDto updateProductRequestDto);
 
     Void deleteProduct(String productUuid);
 

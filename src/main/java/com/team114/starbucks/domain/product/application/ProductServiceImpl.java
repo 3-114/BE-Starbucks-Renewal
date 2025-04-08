@@ -68,17 +68,9 @@ public class ProductServiceImpl implements ProductService {
             String productUuid,
             UpdateProductRequestDto updateProductRequestDto) {
 
-        Product product = productRepository.findByProductUuid(productUuid)
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
-
-        // 상품 수정 로직
-        Product updatedProduct = null;
-
-        productRepository.save(updatedProduct);
 
 
-        // dto <- entity
-        return UpdateProductResponseDto.from(product);
+
     }
 
     @Transactional
