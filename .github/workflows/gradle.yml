@@ -1,46 +1,82 @@
-#name: AWS EC2 Deploy
-#
-#on:
-#  push:
-#    branches:
-#      - cicd
-#  pull_request:
-#      types: [closed]
-#      branches:
-#        - develop
-#
-#jobs:
-#  deploy:
-#    name: Deploy
-#    runs-on: ubuntu-latest
-#    environment: production
-#
-#    steps:
-#      - name: Checkout-source code
-#        uses: actions/checkout@v3
-#
-#      - name: AWS setting
-#        uses: aws-actions/configure-aws-credentials@v2
-#        with:
-#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          aws-region: ap-northeast-2
-#
-#      - name: Login to ECR
-#        uses: aws-actions/amazon-ecr-login@v1
-#
-#      - name: Build Docker image
-#        run: |
-#            docker build -t starbucks-renewal .
-#            docker tag starbucks-renewal:latest ${{ secrets.IAM_USERNAME }}:latest
-#
-#      - name: Delete latest image in ECR
-#        uses: appleboy/ssh-action@v1
-#        with:
-#          host: ${{ secrets.EC2_HOST }}
-#          username: ${{ secrets.EC2_USERNAME }}
-#          key: ${{ secrets.EC2_PRIVATE_KEY }}
-#          script: |
-#            aws ecr batch-delete-image --repository-name ${{ secrets.IAM_USERNAME }} --image-ids imageTag=latest
-#            echo ">>> ECR에서 최신 이미지 삭제 완료"
-#
+name: Deploy Spring Boot to ECR and EC2
+
+on:
+  push:
+    branches:
+      - develop
+      - cicd
+
+env:
+  AWS_REGION: ap-northeast-2
+  ECR_REGISTRY: 412381782254.dkr.ecr.ap-northeast-2.amazonaws.com
+  ECR_REPOSITORY: starbucks-backend
+
+jobs:
+  deploy:
+    name: Build, Push to ECR & Deploy to EC2
+    runs-on: ubuntu-latest
+    environment: production
+
+    env:
+      IMAGE_TAG: ${{ github.sha }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build with Gradle
+        run: ./gradlew clean build -x test
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ env.ECR_REGISTRY }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+      - name: SSH to EC2 and Deploy Docker Container
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          envs: ECR_REGISTRY,ECR_REPOSITORY,IMAGE_TAG
+          script: |
+            echo "▶ ECR에서 이미지 Pull 후 Docker 컨테이너로 실행"
+
+            # AWS CLI 로그인
+            aws ecr get-login-password --region ap-northeast-2 \
+              | docker login --username AWS --password-stdin $ECR_REGISTRY
+
+            # 기존 컨테이너 종료 및 삭제
+            docker stop springboot-app || true
+            docker rm springboot-app || true
+
+            # 최신 이미지 Pull
+            docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+            # 새 컨테이너 실행
+            docker run -d \
+              --name springboot-app \
+              -p 8080:8080 \
+              -e AWS_DB_URL=${{ secrets.AWS_DB_URL }} \
+              -e AWS_DB_NAME=${{ secrets.AWS_DB_NAME }} \
+              -e AWS_DB_USERNAME=${{ secrets.AWS_DB_USERNAME }} \
+              -e AWS_DB_PASSWORD=${{ secrets.AWS_DB_PASSWORD }} \
+              $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+            echo "✅ Spring Boot Docker 컨테이너 실행 완료"
