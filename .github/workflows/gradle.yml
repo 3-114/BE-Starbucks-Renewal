@@ -46,7 +46,6 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
       - name: SSH to EC2 and Deploy Docker Container
         uses: appleboy/ssh-action@v1
@@ -80,3 +79,8 @@ jobs:
               $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
             echo "✅ Spring Boot Docker 컨테이너 실행 완료"
+
+      - name: Delete old ECR images (keep latest 3)
+        run: |
+          chmod +x .github/scripts/delete-old-ecr-images.sh
+          github/scripts/delete-old-ecr-images.sh
