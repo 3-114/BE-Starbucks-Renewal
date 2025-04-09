@@ -5,5 +5,6 @@ import lombok.Getter;
 @Getter
 public class GetItemSelectResVo {
 
-    private  selected
+    private Boolean selected;
+
 }

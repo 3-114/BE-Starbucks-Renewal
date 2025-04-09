@@ -9,6 +9,7 @@ import com.team114.starbucks.domain.cart.vo.in.AddCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.out.GetAllCartItemsResVo;
 import com.team114.starbucks.domain.cart.vo.out.GetCartItemResVo;
+import com.team114.starbucks.domain.cart.vo.out.GetItemSelectResVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,46 +72,58 @@ public class CartController {
     /**
      * 3. 장바구니 항목 정보 변경
      * @param memberUuid
-     * @param cartId
+     * @param cartUuid
      * @param updateCartItemReqVo
      * @return
      */
-    @PutMapping("/{cartId}")
+    @PutMapping("/{cartUuid}")
     public BaseResponseEntity<Void> updateCartItem(
             @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
-            @PathVariable Long cartId,
+            @PathVariable String cartUuid,
             @RequestBody UpdateCartItemReqVo updateCartItemReqVo          // 수량, 선택 여부
     ) {
-        cartService.updateCartItem(memberUuid, cartId, UpdateCartItemReqDto.from(updateCartItemReqVo));
+        cartService.updateCartItem(memberUuid, cartUuid, UpdateCartItemReqDto.from(updateCartItemReqVo));
         return new BaseResponseEntity<>("장바구니 항목 정보 변경에 성공하였습니다.", null);
     }
 
     /**
      * 4. 장바구니 항목 삭제
      */
-    @DeleteMapping("/{cartId}")
+    @DeleteMapping("/{cartUuid}")
     public BaseResponseEntity<Void> deleteCartItem(
             @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
-            @PathVariable Long cartId
+            @PathVariable String cartUuid
     ) {
-        cartService.deleteCartItem(memberUuid, cartId);
+        cartService.deleteCartItem(memberUuid, cartUuid);
         return new BaseResponseEntity<>("장바구니 항목 삭제에 성공하였습니다.", null);
     }
 
     /**
-     * 5. 장바구니 항목 여부 조회
+     * 5. 장바구니 항목 단건 조회
      * @param memberUuid
-     * @param cartId
+     * @param cartUuid
      * @return
      */
-    @GetMapping("/{cartId}")
+    @GetMapping("/{cartUuid}")
     public BaseResponseEntity<GetCartItemResVo> getCartItem(
             @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
-            @PathVariable Long cartId
+            @PathVariable String cartUuid
     ) {
-        GetCartItemResVo result = cartService.getCartItem(memberUuid, cartId).toVo();
+        GetCartItemResVo result = cartService.getCartItem(memberUuid, cartUuid).toVo();
         return new BaseResponseEntity<>("장바구니 항목 단건 조회에 성공하였습니다.", result);
     }
 
-    
+    /**
+     * 6. 장바구니 항목 체크 여부 조회
+     * @param memberUuid
+     * @param cartUuid
+     * @return
+     */
+    @GetMapping("/{cartUuid}/get-selected")
+    public GetItemSelectResVo getItemSelect(
+            @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
+            @PathVariable String cartUuid
+    ) {
+
+    }
 }

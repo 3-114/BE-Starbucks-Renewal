@@ -8,7 +8,6 @@ import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetCartItemResDto;
 import com.team114.starbucks.domain.cart.entity.Cart;
 import com.team114.starbucks.domain.cart.infrastructure.CartRepository;
-import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
 import com.team114.starbucks.domain.option.entity.Option;
 import com.team114.starbucks.domain.option.infrastructure.OptionRepository;
 import com.team114.starbucks.domain.product.entity.Product;
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -103,6 +103,7 @@ public class CartServiceImpl implements CartService {
 
         // Cart 객체 생성
         Cart cart = Cart.builder()
+                .cartUuid(UUID.randomUUID().toString())
                 .memberUuid(memberUuid)
                 .optionId(optionId)
                 .productUuid(productUuid)
@@ -132,16 +133,16 @@ public class CartServiceImpl implements CartService {
     /**
      * 3. 장바구니 항목 정보 변경
      * @param memberUuid
-     * @param cartId
+     * @param cartUuid
      * @param updateCartItemReqDto
      * @return
      */
     @Transactional
     @Override
-    public Void updateCartItem(String memberUuid, Long cartId, UpdateCartItemReqDto updateCartItemReqDto) {
+    public Void updateCartItem(String memberUuid, String cartUuid, UpdateCartItemReqDto updateCartItemReqDto) {
 
-        // cartId -> cart 조회
-        Cart cart = cartRepository.findById(cartId).orElseThrow(
+        // cartUuid -> cart 조회
+        Cart cart = cartRepository.findByCartUuid(cartUuid).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );
 
@@ -164,22 +165,22 @@ public class CartServiceImpl implements CartService {
     /**
      * 4. 장바구니 항목 삭제
      * @param memberUuid
-     * @param cartId
+     * @param cartUuid
      * @return
      */
     @Transactional
     @Override
-    public Void deleteCartItem(String memberUuid, Long cartId) {
+    public Void deleteCartItem(String memberUuid, String cartUuid) {
 
-        cartRepository.deleteById(cartId);
+        cartRepository.deleteByCartUuid(cartUuid);
 
         return null;
     }
 
     @Override
-    public GetCartItemResDto getCartItem(String memberUuid, Long cartId) {
+    public GetCartItemResDto getCartItem(String memberUuid, String cartUuid) {
 
-        Cart cart = cartRepository.findById(cartId).orElseThrow(
+        Cart cart = cartRepository.findByCartUuid(cartUuid).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );
 

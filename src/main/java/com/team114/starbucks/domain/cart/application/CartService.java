@@ -37,25 +37,25 @@ public interface CartService {
     /**
      * 3. 장바구니 항목 정보 변경
      * @param memberUuid
-     * @param cartId
+     * @param cartUuid
      * @param updateCartItemReqDto
      * @return
      */
-    Void updateCartItem(String memberUuid, Long cartId, UpdateCartItemReqDto updateCartItemReqDto);
+    Void updateCartItem(String memberUuid, String cartUuid, UpdateCartItemReqDto updateCartItemReqDto);
 
     /**
      * 4. 장바구니 항목 삭제
      * @param memberUuid
-     * @param cartId
+     * @param cartUuid
      * @return
      */
-    Void deleteCartItem(String memberUuid, Long cartId);
+    Void deleteCartItem(String memberUuid, String cartUuid);
 
     /**
      * 5. 장바구니 목록 단건 조회
      * @param memberUuid
-     * @param cartId
+     * @param cartUuid
      * @return
      */
-    GetCartItemResDto getCartItem(String memberUuid, Long cartId);
+    GetCartItemResDto getCartItem(String memberUuid, String cartUuid);
 }

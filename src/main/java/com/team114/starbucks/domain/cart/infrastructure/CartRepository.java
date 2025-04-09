@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CartRepository extends CrudRepository<Cart, Long> {
 
@@ -27,4 +28,7 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
             "WHERE c.memberUuid = :memberUuid")
     List<GetAllCartItemsResDto> findCartItems(String memberUuid);
 
+    Optional<Cart> findByCartUuid(String cartUuid);
+
+    void deleteByCartUuid(String cartUuid);
 }
