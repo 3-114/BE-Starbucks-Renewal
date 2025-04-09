@@ -9,6 +9,7 @@ import lombok.Getter;
 public class DeliveryResponseDto {
 
     private String deliveryUuid;
+    private String memberUuid;
     private String alias;
     private String recipient;
     private String zoneCode;
@@ -20,17 +21,21 @@ public class DeliveryResponseDto {
     private boolean defaultAddress;
 
     @Builder
-    public DeliveryResponseDto(String deliveryUuid,
-                               String alias,
-                               String recipient,
-                               String zoneCode,
-                               String mainAddress,
-                               String detailAddress,
-                               String phoneNumber1,
-                               String phoneNumber2,
-                               String deliveryMemo,
-                               boolean defaultAddress) {
+    public DeliveryResponseDto(
+            String deliveryUuid,
+            String memberUuid,
+            String alias,
+            String recipient,
+            String zoneCode,
+            String mainAddress,
+            String detailAddress,
+            String phoneNumber1,
+            String phoneNumber2,
+            String deliveryMemo,
+            boolean defaultAddress
+    ) {
         this.deliveryUuid = deliveryUuid;
+        this.memberUuid = memberUuid;
         this.alias = alias;
         this.recipient = recipient;
         this.zoneCode = zoneCode;
@@ -43,9 +48,10 @@ public class DeliveryResponseDto {
     }
 
     // Entity → DTO 변환 메서드
-    public static DeliveryResponseDto fromEntity(Delivery delivery) {
+    public static DeliveryResponseDto from(Delivery delivery) {
         return DeliveryResponseDto.builder()
                 .deliveryUuid(delivery.getDeliveryUuid())
+                .memberUuid(delivery.getMemberUuid())
                 .alias(delivery.getAlias())
                 .recipient(delivery.getRecipient())
                 .zoneCode(delivery.getZoneCode())
@@ -62,6 +68,7 @@ public class DeliveryResponseDto {
     public DeliveryResponseVo toVo() {
         return DeliveryResponseVo.builder()
                 .deliveryUuid(this.deliveryUuid)
+                .memberUuid(this.memberUuid)
                 .alias(this.alias)
                 .recipient(this.recipient)
                 .zoneCode(this.zoneCode)

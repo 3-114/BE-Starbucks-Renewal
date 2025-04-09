@@ -17,7 +17,7 @@ import java.util.function.Function;
 @Service
 public class JwtTokenProvider {
 
-    private final Environment env;
+    private final Environment env; // yaml 파일에 변수로 등록 해놓은 것을 쓸 수 있음
     private static final String BEARER_PREFIX = "Bearer ";
     private static final long TOKEN_EXPIRE_TIME = 24 * 60 * 60 * 1000; // 24시간
 

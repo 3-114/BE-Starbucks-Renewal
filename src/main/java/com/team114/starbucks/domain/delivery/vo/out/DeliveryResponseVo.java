@@ -8,6 +8,7 @@ import lombok.Getter;
 public class DeliveryResponseVo {
 
     private String deliveryUuid;
+    private String memberUuid;
     private String alias;
     private String recipient;
     private String zoneCode;
@@ -19,11 +20,21 @@ public class DeliveryResponseVo {
     private boolean defaultAddress;
 
     @Builder
-    public DeliveryResponseVo(String deliveryUuid, String alias, String recipient,
-                              String zoneCode, String mainAddress, String detailAddress,
-                              String phoneNumber1, String phoneNumber2,
-                              String deliveryMemo, boolean defaultAddress) {
+    public DeliveryResponseVo(
+            String deliveryUuid,
+            String memberUuid,
+            String alias,
+            String recipient,
+            String zoneCode,
+            String mainAddress,
+            String detailAddress,
+            String phoneNumber1,
+            String phoneNumber2,
+            String deliveryMemo,
+            boolean defaultAddress
+    ) {
         this.deliveryUuid = deliveryUuid;
+        this.memberUuid = memberUuid;
         this.alias = alias;
         this.recipient = recipient;
         this.zoneCode = zoneCode;
@@ -33,21 +44,5 @@ public class DeliveryResponseVo {
         this.phoneNumber2 = phoneNumber2;
         this.deliveryMemo = deliveryMemo;
         this.defaultAddress = defaultAddress;
-    }
-
-    // DTO → VO 변환 메서드
-    public static DeliveryResponseVo from(DeliveryResponseDto dto) {
-        return DeliveryResponseVo.builder()
-                .deliveryUuid(dto.getDeliveryUuid())
-                .alias(dto.getAlias())
-                .recipient(dto.getRecipient())
-                .zoneCode(dto.getZoneCode())
-                .mainAddress(dto.getMainAddress())
-                .detailAddress(dto.getDetailAddress())
-                .phoneNumber1(dto.getPhoneNumber1())
-                .phoneNumber2(dto.getPhoneNumber2())
-                .deliveryMemo(dto.getDeliveryMemo())
-                .defaultAddress(dto.isDefaultAddress())
-                .build();
     }
 }

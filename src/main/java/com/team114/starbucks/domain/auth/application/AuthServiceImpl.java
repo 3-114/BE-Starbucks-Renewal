@@ -33,6 +33,8 @@ public class AuthServiceImpl implements AuthService {
 
         try {
 
+            // TODO : 유효성 검사 - 중복 체크 로직 필요 ( isPresent 사용하기 )
+
             // 레포지토리에 저장
             Member member = memberRepository.save(
                     signUpRequestDto.toEntity(
@@ -52,6 +54,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public SignInResponseDto signIn(SignInRequestDto signInRequestDto) {
 
+        // try - catch 가 있는 이유 : 뭉뚱그려서 예외 처리 하기 위해서 (불친절한 예외처리)
         try {
             Member member = memberRepository.findByEmail(signInRequestDto.getEmail())
                     .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_LOGIN));
@@ -72,7 +75,7 @@ public class AuthServiceImpl implements AuthService {
     public Authentication authenticate(Member member, String inputPassword) {
         return authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        member.getMemberUuid(),
+                        member.getMemberUuid(), // 고유값이어야 함
                         inputPassword
                 )
         );
