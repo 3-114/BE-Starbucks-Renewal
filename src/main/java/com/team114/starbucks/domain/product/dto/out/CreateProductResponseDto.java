@@ -1,19 +1,21 @@
 package com.team114.starbucks.domain.product.dto.out;
 
 import com.team114.starbucks.domain.product.entity.Product;
-import com.team114.starbucks.domain.product.enums.Brand;
+import com.team114.starbucks.domain.product.entity.ProductDescription;
 import com.team114.starbucks.domain.product.enums.ProductStatus;
 import com.team114.starbucks.domain.product.vo.out.CreateProductResponseVo;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class CreateProductResponseDto {
 
     private String productName;
-    private Brand brand;
+    private String brand;
     private Integer productPrice;
-    private String description;
+    private String productDescription;
     private Integer shippingFee;
     private ProductStatus productStatus;
     private String productUuid;
@@ -21,9 +23,9 @@ public class CreateProductResponseDto {
     @Builder
     public CreateProductResponseDto(
             String productName,
-            Brand brand,
+            String brand,
             Integer productPrice,
-            String description,
+            String productDescription,
             Integer shippingFee,
             ProductStatus productStatus,
             String productUuid
@@ -31,22 +33,23 @@ public class CreateProductResponseDto {
         this.productName = productName;
         this.brand = brand;
         this.productPrice = productPrice;
-        this.description = description;
+        this.productDescription = productDescription;
         this.shippingFee = shippingFee;
         this.productStatus = productStatus;
         this.productUuid = productUuid;
     }
 
     // dto <- entity 정적 팩토리 메서드
-    public static CreateProductResponseDto from(Product savedProduct) {
+    public static CreateProductResponseDto from(Product savedProduct, ProductDescription productDescription) {
+
         return CreateProductResponseDto.builder()
                 .productName(savedProduct.getProductName())
                 .brand(savedProduct.getBrand())
                 .productPrice(savedProduct.getProductPrice())
-                .description(savedProduct.getDescription())
                 .shippingFee(savedProduct.getShippingFee())
                 .productStatus(savedProduct.getProductStatus())
                 .productUuid(savedProduct.getProductUuid())
+                .productDescription(productDescription.getProductDescription())
                 .build();
     }
 
@@ -56,10 +59,10 @@ public class CreateProductResponseDto {
                 .productName(productName)
                 .brand(brand)
                 .productPrice(productPrice)
-                .description(description)
                 .shippingFee(shippingFee)
                 .productStatus(productStatus)
                 .productUuid(productUuid)
+                .productDescription(productDescription)
                 .build();
     }
 
