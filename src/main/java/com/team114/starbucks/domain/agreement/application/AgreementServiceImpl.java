@@ -8,6 +8,7 @@ import com.team114.starbucks.domain.agreement.dto.out.GetAgreementResDto;
 import com.team114.starbucks.domain.agreement.dto.out.GetAllAgreementsResDto;
 import com.team114.starbucks.domain.agreement.entity.Agreement;
 import com.team114.starbucks.domain.agreement.infrastructure.AgreementRepository;
+import com.team114.starbucks.domain.agreement.vo.in.UpdateAgreementReqVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,5 +70,29 @@ public class AgreementServiceImpl implements AgreementService {
         // 람다, 스트림 사용
 //        return agreementRepository.findAll().stream().map(agreement -> GetAllAgreementsResDto.from(agreement)).toList();
 
+    }
+
+    @Transactional
+    @Override
+    public Void updateAgreement(String agreementUuid, UpdateAgreementReqVo updateAgreementReqVo) {
+
+        // uuid -> agreement
+        Agreement agreement = agreementRepository.findByAgreementUuid(agreementUuid).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
+        );
+
+        // 새 agreement 생성
+        Agreement newAgreement = Agreement.builder()
+                .id(agreement.getId())
+                .agreementUuid(agreement.getAgreementUuid())
+                .agreementName(updateAgreementReqVo == null ? agreement.getAgreementName() : updateAgreementReqVo.getAgreementName())
+                .agreementGroup(updateAgreementReqVo == null ? agreement.getAgreementGroup() : updateAgreementReqVo.getAgreementGroup())
+                .agreementType(updateAgreementReqVo == null ? agreement.getAgreementType() : updateAgreementReqVo.getAgreementType())
+                .build();
+
+        // save 호출
+        agreementRepository.save(newAgreement);
+
+        return null;
     }
 }

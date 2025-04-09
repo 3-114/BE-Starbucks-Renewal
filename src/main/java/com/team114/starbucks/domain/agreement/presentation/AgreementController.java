@@ -7,6 +7,7 @@ import com.team114.starbucks.domain.agreement.dto.out.CreateAgreementResDto;
 import com.team114.starbucks.domain.agreement.dto.out.GetAgreementResDto;
 import com.team114.starbucks.domain.agreement.dto.out.GetAllAgreementsResDto;
 import com.team114.starbucks.domain.agreement.vo.in.CreateAgreementReqVo;
+import com.team114.starbucks.domain.agreement.vo.in.UpdateAgreementReqVo;
 import com.team114.starbucks.domain.agreement.vo.out.CreateAgreementResVo;
 import com.team114.starbucks.domain.agreement.vo.out.GetAgreementResVo;
 import com.team114.starbucks.domain.agreement.vo.out.GetAllAgreementsResVo;
@@ -30,6 +31,7 @@ public class AgreementController {
 
     /**
      * 1. 동의 항목 생성
+     *
      * @param createAgreementReqVo
      * @return
      */
@@ -41,11 +43,12 @@ public class AgreementController {
 //        CreateAgreementReqDto.from(createAgreementReqVo)
         CreateAgreementResDto createAgreementResDto = agreementService.saveAgreement(CreateAgreementReqDto.from(createAgreementReqVo));
         CreateAgreementResVo createAgreementResVo = createAgreementResDto.toVo();
-        return new BaseResponseEntity<>("동의항목 생성에 성공했습니다. ",createAgreementResVo);
+        return new BaseResponseEntity<>("동의항목 생성에 성공했습니다. ", createAgreementResVo);
     }
 
     /**
      * 2. 동의 항목 단건 조회
+     *
      * @param agreementUuid
      * @return
      */
@@ -60,6 +63,11 @@ public class AgreementController {
         return new BaseResponseEntity<>("동의항목 단건 조회에 성공하였습니다.", getAgreementResVo);
     }
 
+    /**
+     * 3. 동의 항목 전체 리스트 조회
+     *
+     * @return
+     */
     @GetMapping
     public BaseResponseEntity<List<GetAllAgreementsResVo>> findAllAgreements() {
 
@@ -69,11 +77,21 @@ public class AgreementController {
 
         for (GetAllAgreementsResDto dto : dtoList) {
             result.add(GetAllAgreementsResVo.builder()
-                            .agreementName(dto.getAgreementName())
-                            .agreementType(dto.getAgreementType())
-                            .build());
+                    .agreementName(dto.getAgreementName())
+                    .agreementType(dto.getAgreementType())
+                    .build());
         }
 
         return new BaseResponseEntity<>("동의항목 전체 리스트 조회에 성공하였습니다.", result);
+    }
+
+    // 동의항목 정보 변경
+    @PutMapping("/{agreementUuid}")
+    public BaseResponseEntity<Void> updateAgreement(
+            @PathVariable String agreementUuid,
+            @RequestBody UpdateAgreementReqVo updateAgreementReqVo
+    ) {
+        agreementService.updateAgreement(agreementUuid, updateAgreementReqVo);
+        return new BaseResponseEntity<>("동의항목 정보 변경에 성공하였습니다.", null);
     }
 }
