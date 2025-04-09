@@ -1,12 +1,12 @@
 name: Deploy Spring Boot to ECR and EC2
 
 on:
-  pull_request:
-    branches:
-      - develop
   push:
     branches:
       - cicd
+  merge:
+    branches:
+      - develop
 
 env:
   AWS_REGION: ap-northeast-2
