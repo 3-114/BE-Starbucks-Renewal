@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - cicd
-  merge:
-    branches:
       - develop
 
 env:
