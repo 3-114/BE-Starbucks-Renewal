@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 public class DeliveryResponseVo {
 
-    private Long id;
     private String deliveryUuid;
     private String memberUuid;
     private String alias;
@@ -22,7 +21,6 @@ public class DeliveryResponseVo {
 
     @Builder
     public DeliveryResponseVo(
-            Long id,
             String deliveryUuid,
             String memberUuid,
             String alias,
@@ -35,7 +33,6 @@ public class DeliveryResponseVo {
             String deliveryMemo,
             boolean defaultAddress
     ) {
-        this.id = id;
         this.deliveryUuid = deliveryUuid;
         this.memberUuid = memberUuid;
         this.alias = alias;
