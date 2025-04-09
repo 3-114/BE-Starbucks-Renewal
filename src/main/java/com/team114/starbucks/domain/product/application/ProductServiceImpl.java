@@ -93,7 +93,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
 
-        // 기존 상세내역 업데이트(저장)
+        // 기존 상세내역 업데이트(저장) 추후 리팩토링 예정
         productDescriptionRepository.save(
                 ProductDescription.builder()
                         .productDescription(updateProductRequestDto.getProductDescription())
