@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface AgreementRepository extends JpaRepository<Agreement, Long> {
     Optional<Agreement> findByAgreementUuid(String agreementUuid);
+
+    Optional<Agreement> deleteByAgreementUuid(String agreementUuid);
 }

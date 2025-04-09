@@ -95,4 +95,15 @@ public class AgreementServiceImpl implements AgreementService {
 
         return null;
     }
+
+    @Transactional
+    @Override
+    public Void deleteAgreement(String agreementUuid) {
+
+        agreementRepository.deleteByAgreementUuid(agreementUuid).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
+        );
+
+        return null;
+    }
 }

@@ -25,6 +25,9 @@ public class AgreementController {
     /**
      * 1. 동의 항목 생성
      * 2. 동의 항목 단건 조회
+     * 3. 동의 항목 전체 리스트 조회
+     * 4. 동의 항목 정보 변경
+     * 5. 동의 항목 삭제
      */
 
     private final AgreementService agreementService;
@@ -85,7 +88,12 @@ public class AgreementController {
         return new BaseResponseEntity<>("동의항목 전체 리스트 조회에 성공하였습니다.", result);
     }
 
-    // 동의항목 정보 변경
+    /**
+     * 4. 동의 항목 정보 변경
+     * @param agreementUuid
+     * @param updateAgreementReqVo
+     * @return
+     */
     @PutMapping("/{agreementUuid}")
     public BaseResponseEntity<Void> updateAgreement(
             @PathVariable String agreementUuid,
@@ -93,5 +101,14 @@ public class AgreementController {
     ) {
         agreementService.updateAgreement(agreementUuid, updateAgreementReqVo);
         return new BaseResponseEntity<>("동의항목 정보 변경에 성공하였습니다.", null);
+    }
+
+    @DeleteMapping("/{agreementUuid}")
+    public BaseResponseEntity<Void> deleteAgreement(
+            @PathVariable String agreementUuid
+    ) {
+        agreementService.deleteAgreement(agreementUuid);
+
+        return new BaseResponseEntity<>("동의항목 삭제에 성공하였습니다.", null);
     }
 }

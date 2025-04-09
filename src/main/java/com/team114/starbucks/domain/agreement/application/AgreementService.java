@@ -18,4 +18,6 @@ public interface AgreementService {
     List<GetAllAgreementsResDto> findAllAgreements();
 
     Void updateAgreement(String agreementUuid, UpdateAgreementReqVo updateAgreementReqVo);
+
+    Void deleteAgreement(String agreementUuid);
 }
