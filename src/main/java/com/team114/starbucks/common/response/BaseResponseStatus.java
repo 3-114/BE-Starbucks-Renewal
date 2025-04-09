@@ -24,8 +24,7 @@ public enum BaseResponseStatus {
     FAILED_TO_RESTORE(HttpStatus.INTERNAL_SERVER_ERROR, false, 405, "계정 복구에 실패했습니다. 관리자에게 문의해주세요."),
     NO_EXIST_OAUTH(HttpStatus.NOT_FOUND, false, 406, "소셜 로그인 정보가 존재하지 않습니다."),
     NO_EXIST_VALUE(HttpStatus.NOT_FOUND, false, 407, "해당 정보가 존재하지 않습니다."),
-    FAILED_TO_SAVE(HttpStatus.BAD_REQUEST, false, 408, "저장에 실패하였습니다."),
-    FAILED_TO_FIND(HttpStatus.NOT_FOUND, false, 409, "조회에 실패하였습니다."),
+
 
     /**
      * 500 : server 에러
@@ -75,13 +74,16 @@ public enum BaseResponseStatus {
     /**
      * 4000: comment service error
      */
-
+    
     // Comment
     NO_EXIST_COMMENT(HttpStatus.NOT_FOUND, false, 4001, "존재하지 않는 댓글입니다"),
     NO_DELETE_COMMENT_AUTHORITY(HttpStatus.BAD_REQUEST, false, 4002, "댓글 삭제 권한이 없습니다"),
     NO_DELETE_RE_COMMENT_AUTHORITY(HttpStatus.BAD_REQUEST, false, 4003, "대댓글 삭제 권한이 없습니다"),
     NO_EXIST_RE_COMMENT(HttpStatus.NOT_FOUND, false, 4003, "존재하지 않는 대댓글입니다"),
     NO_EXIST_PIN_AUTHORITY(HttpStatus.BAD_REQUEST, false, 4004, "고정 권한이 없습니다"),
+
+    FAILED_TO_SAVE(HttpStatus.BAD_REQUEST, false, 4005, "저장에 실패하였습니다."),
+    FAILED_TO_FIND(HttpStatus.NOT_FOUND, false, 4006, "조회에 실패하였습니다."),
 
     /**
      * 5000: notification service error
