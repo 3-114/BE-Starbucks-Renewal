@@ -11,7 +11,8 @@ public interface DeliveryService {
 
     DeliveryResponseDto saveDelivery(DeliveryCreateRequestDto deliveryCreateRequestDto);
 
-    List<GetMyDeliveriesResponseDto> getDeliveriesByMemberUuid(String memberUuid);
+    List<GetMyDeliveriesResponseDto> getCartDeliveriesByMemberUuid(String memberUuid);
+    List<DeliveryResponseDto> getDeliveriesByMemberUuid(String memberUuid);
 
     DeliveryResponseDto updateDelivery(
             String deliveryUuid,

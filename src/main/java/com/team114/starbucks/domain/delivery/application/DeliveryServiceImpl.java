@@ -48,9 +48,15 @@ public class DeliveryServiceImpl implements DeliveryService {
     }
 
     @Override
-    public List<GetMyDeliveriesResponseDto> getDeliveriesByMemberUuid(String memberUuid) {
+    public List<GetMyDeliveriesResponseDto> getCartDeliveriesByMemberUuid(String memberUuid) {
         List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
         return deliveries.stream().map(GetMyDeliveriesResponseDto::from).toList();
+    }
+
+    @Override
+    public List<DeliveryResponseDto> getDeliveriesByMemberUuid(String memberUuid) {
+        List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
+        return deliveries.stream().map(DeliveryResponseDto::from).toList();
     }
 
     @Override

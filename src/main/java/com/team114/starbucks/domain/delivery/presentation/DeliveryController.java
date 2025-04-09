@@ -6,6 +6,7 @@ import com.team114.starbucks.domain.delivery.dto.in.DeliveryUpdateRequestDto;
 import com.team114.starbucks.domain.delivery.dto.out.DeliveryResponseDto;
 import com.team114.starbucks.domain.delivery.application.DeliveryService;
 import com.team114.starbucks.domain.delivery.dto.out.GetMyDeliveriesResponseDto;
+import com.team114.starbucks.domain.delivery.entity.Delivery;
 import com.team114.starbucks.domain.delivery.vo.in.DeliveryCreateRequestVo;
 import com.team114.starbucks.domain.delivery.vo.in.DeliveryUpdateRequestVo;
 import com.team114.starbucks.domain.delivery.vo.out.DeliveryResponseVo;
@@ -37,13 +38,25 @@ public class DeliveryController {
         return new BaseResponseEntity<>("배송지가 등록되었습니다.", result);
     }
 
-    // 배송지 목록 조회
+    // 마이페이지 배송지 목록 조회
     @Operation(summary = "배송지 목록 조회", description = "회원의 전체 배송지를 조회합니다.", tags = {"delivery"})
-    @GetMapping
-    public BaseResponseEntity<List<GetMyDeliveriesResponseVo>> getAllDeliveries(
+    @GetMapping("/all")
+    public BaseResponseEntity<List<DeliveryResponseVo>> getAllDeliveries(
             @RequestHeader("Member-Uuid") String memberUuid ) {
 
-        List<GetMyDeliveriesResponseVo> result = deliveryService.getDeliveriesByMemberUuid(memberUuid)
+        List<DeliveryResponseVo> result = deliveryService.getDeliveriesByMemberUuid(memberUuid)
+                .stream().map(DeliveryResponseDto::toVo).toList();
+
+        return new BaseResponseEntity<>("배송지 목록 조회 성공", result);
+    }
+
+    // 장바구니 배송지 목록 조회
+    @Operation(summary = "배송지 목록 조회", description = "회원의 전체 배송지를 조회합니다.", tags = {"delivery"})
+    @GetMapping("/cart")
+    public BaseResponseEntity<List<GetMyDeliveriesResponseVo>> getCartDeliveries(
+            @RequestHeader("Member-Uuid") String memberUuid ) {
+
+        List<GetMyDeliveriesResponseVo> result = deliveryService.getCartDeliveriesByMemberUuid(memberUuid)
                 .stream().map(GetMyDeliveriesResponseDto::toVo).toList();
 
         return new BaseResponseEntity<>("배송지 목록 조회 성공", result);
