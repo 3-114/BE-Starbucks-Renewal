@@ -1,14 +1,12 @@
 package com.team114.starbucks.domain.cart.dto.out;
 
 import com.team114.starbucks.domain.cart.vo.out.GetAllCartItemsResVo;
-import com.team114.starbucks.domain.product.enums.Brand;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 public class GetAllCartItemsResDto {
 
-    private Brand brand;            // 상품 - 브랜드
     private String productName;     // 상품 - 상품명
     private Integer productPrice;   // 상품 - 상품 가격
     private String color;            // 옵션 - 컬러
@@ -21,7 +19,6 @@ public class GetAllCartItemsResDto {
 
     @Builder
     public GetAllCartItemsResDto(
-            Brand brand,
             String productName,
             Integer productPrice,
             String color,
@@ -32,7 +29,6 @@ public class GetAllCartItemsResDto {
             Boolean selected,
             Boolean valid
     ) {
-        this.brand = brand;
         this.productName = productName;
         this.productPrice = productPrice;
         this.color = color;
@@ -48,7 +44,6 @@ public class GetAllCartItemsResDto {
     public static GetAllCartItemsResVo toVo(GetAllCartItemsResDto getAllCartItemsResDto) {
 
         return GetAllCartItemsResVo.builder()
-                .brand(getAllCartItemsResDto.getBrand())
                 .productName(getAllCartItemsResDto.getProductName())
                 .productPrice(getAllCartItemsResDto.getProductPrice())
                 .color(getAllCartItemsResDto.getColor())
