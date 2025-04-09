@@ -5,11 +5,14 @@ import com.team114.starbucks.domain.delivery.dto.in.DeliveryCreateRequestDto;
 import com.team114.starbucks.domain.delivery.dto.in.DeliveryUpdateRequestDto;
 import com.team114.starbucks.domain.delivery.dto.out.DeliveryResponseDto;
 import com.team114.starbucks.domain.delivery.application.DeliveryService;
+import com.team114.starbucks.domain.delivery.dto.out.GetMyDeliveriesResponseDto;
 import com.team114.starbucks.domain.delivery.vo.in.DeliveryCreateRequestVo;
 import com.team114.starbucks.domain.delivery.vo.in.DeliveryUpdateRequestVo;
 import com.team114.starbucks.domain.delivery.vo.out.DeliveryResponseVo;
+import com.team114.starbucks.domain.delivery.vo.out.GetMyDeliveriesResponseVo;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,14 +40,15 @@ public class DeliveryController {
     // 배송지 목록 조회
     @Operation(summary = "배송지 목록 조회", description = "회원의 전체 배송지를 조회합니다.", tags = {"delivery"})
     @GetMapping
-    public BaseResponseEntity<List<DeliveryResponseVo>> getAllDeliveries(
+    public BaseResponseEntity<List<GetMyDeliveriesResponseVo>> getAllDeliveries(
             @RequestHeader("Member-Uuid") String memberUuid ) {
 
-        List<DeliveryResponseVo> result = deliveryService.getDeliveriesByMemberUuid(memberUuid)
-                .stream().map(DeliveryResponseDto::toVo).toList();
+        List<GetMyDeliveriesResponseVo> result = deliveryService.getDeliveriesByMemberUuid(memberUuid)
+                .stream().map(GetMyDeliveriesResponseDto::toVo).toList();
 
         return new BaseResponseEntity<>("배송지 목록 조회 성공", result);
     }
+
 
     // 배송지 수정
     @Operation(summary = "배송지 수정", description = "기존 배송지를 비활성화하고 새 배송지를 생성합니다.", tags = {"delivery"})

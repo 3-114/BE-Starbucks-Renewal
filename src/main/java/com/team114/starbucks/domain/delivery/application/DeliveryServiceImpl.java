@@ -5,6 +5,7 @@ import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.delivery.dto.in.DeliveryCreateRequestDto;
 import com.team114.starbucks.domain.delivery.dto.in.DeliveryUpdateRequestDto;
 import com.team114.starbucks.domain.delivery.dto.out.DeliveryResponseDto;
+import com.team114.starbucks.domain.delivery.dto.out.GetMyDeliveriesResponseDto;
 import com.team114.starbucks.domain.delivery.entity.Delivery;
 import com.team114.starbucks.domain.delivery.infrastructure.DeliveryRepository;
 import lombok.RequiredArgsConstructor;
@@ -47,9 +48,9 @@ public class DeliveryServiceImpl implements DeliveryService {
     }
 
     @Override
-    public List<DeliveryResponseDto> getDeliveriesByMemberUuid(String memberUuid) {
+    public List<GetMyDeliveriesResponseDto> getDeliveriesByMemberUuid(String memberUuid) {
         List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
-        return deliveries.stream().map(DeliveryResponseDto::from).toList();
+        return deliveries.stream().map(GetMyDeliveriesResponseDto::from).toList();
     }
 
     @Override
