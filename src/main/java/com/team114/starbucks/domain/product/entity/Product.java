@@ -1,6 +1,7 @@
 package com.team114.starbucks.domain.product.entity;
 
 import com.team114.starbucks.common.entity.BaseEntity;
+import com.team114.starbucks.domain.product.enums.Brand;
 import com.team114.starbucks.domain.product.enums.ProductStatus;
 import jakarta.persistence.*;
 import lombok.Builder;
