@@ -8,8 +8,8 @@ import lombok.Getter;
 @Getter
 public class DeliveryResponseDto {
 
-    private Long id;
     private String deliveryUuid;
+    private String memberUuid;
     private String alias;
     private String recipient;
     private String zoneCode;
@@ -22,8 +22,8 @@ public class DeliveryResponseDto {
 
     @Builder
     public DeliveryResponseDto(
-            Long id,
             String deliveryUuid,
+            String memberUuid,
             String alias,
             String recipient,
             String zoneCode,
@@ -34,8 +34,8 @@ public class DeliveryResponseDto {
             String deliveryMemo,
             boolean defaultAddress
     ) {
-        this.id = id;
         this.deliveryUuid = deliveryUuid;
+        this.memberUuid = memberUuid;
         this.alias = alias;
         this.recipient = recipient;
         this.zoneCode = zoneCode;
@@ -51,6 +51,7 @@ public class DeliveryResponseDto {
     public static DeliveryResponseDto from(Delivery delivery) {
         return DeliveryResponseDto.builder()
                 .deliveryUuid(delivery.getDeliveryUuid())
+                .memberUuid(delivery.getMemberUuid())
                 .alias(delivery.getAlias())
                 .recipient(delivery.getRecipient())
                 .zoneCode(delivery.getZoneCode())
@@ -67,6 +68,7 @@ public class DeliveryResponseDto {
     public DeliveryResponseVo toVo() {
         return DeliveryResponseVo.builder()
                 .deliveryUuid(this.deliveryUuid)
+                .memberUuid(this.memberUuid)
                 .alias(this.alias)
                 .recipient(this.recipient)
                 .zoneCode(this.zoneCode)
