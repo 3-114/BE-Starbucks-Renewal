@@ -5,16 +5,20 @@ import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.agreement.dto.in.CreateAgreementReqDto;
 import com.team114.starbucks.domain.agreement.dto.out.CreateAgreementResDto;
 import com.team114.starbucks.domain.agreement.dto.out.GetAgreementResDto;
+import com.team114.starbucks.domain.agreement.dto.out.GetAllAgreementsResDto;
 import com.team114.starbucks.domain.agreement.entity.Agreement;
 import com.team114.starbucks.domain.agreement.infrastructure.AgreementRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AgreementServiceImpl implements AgreementService {
     private final AgreementRepository agreementRepository;
 
@@ -39,6 +43,31 @@ public class AgreementServiceImpl implements AgreementService {
 
         // agreement -> Dto
         return GetAgreementResDto.from(agreement);
+
+    }
+
+    @Override
+    public List<GetAllAgreementsResDto> findAllAgreements() {
+
+        // 메서드 참조, 스트림 사용
+        return agreementRepository.findAll().stream().map(GetAllAgreementsResDto::from).toList();
+
+        // 반복문 사용
+//        List<Agreement> agreementList = agreementRepository.findAll();
+//
+//        List<GetAllAgreementsResDto> dtoList = new ArrayList<>();
+//
+//        for (Agreement agreement : agreementList) {
+//            dtoList.add(GetAllAgreementsResDto.builder()
+//                            .agreementName(agreement.getAgreementName())
+//                            .agreementType(agreement.getAgreementType())
+//                            .build());
+//        }
+//
+//        return  dtoList;
+
+        // 람다, 스트림 사용
+//        return agreementRepository.findAll().stream().map(agreement -> GetAllAgreementsResDto.from(agreement)).toList();
 
     }
 }
