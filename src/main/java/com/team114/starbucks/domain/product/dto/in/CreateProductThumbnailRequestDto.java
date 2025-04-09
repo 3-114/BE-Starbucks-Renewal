@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class CreateThumbnailRequestDto {
+public class CreateProductThumbnailRequestDto {
 
     private String thumbnailUrl;
     private Integer thumbnailIndex;
@@ -15,7 +15,7 @@ public class CreateThumbnailRequestDto {
     private String uploadedBy;
 
     @Builder
-    public CreateThumbnailRequestDto(
+    public CreateProductThumbnailRequestDto(
             String thumbnailUrl,
             Integer thumbnailIndex,
             Boolean isThumbnail,
@@ -28,10 +28,10 @@ public class CreateThumbnailRequestDto {
     }
 
     //vo -> dto
-    public static CreateThumbnailRequestDto from(
+    public static CreateProductThumbnailRequestDto from(
             CreateProductThumbnailRequestVo vo
     ) {
-        return CreateThumbnailRequestDto.builder()
+        return CreateProductThumbnailRequestDto.builder()
                 .thumbnailUrl(vo.getThumbnailUrl())
                 .thumbnailIndex(vo.getThumbnailIndex())
                 .isThumbnail(vo.getIsThumbnail())

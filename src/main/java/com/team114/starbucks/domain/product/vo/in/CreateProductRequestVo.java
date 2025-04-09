@@ -10,33 +10,32 @@ import java.util.List;
 @Getter
 public class CreateProductRequestVo {
 
-
-    private String brand;
     private String productName;
+    private String brand;
     private Integer productPrice;
-    private String description;
-    private ProductStatus productStatus;
+    private String productDescription;
     private Integer shippingFee;
+    private ProductStatus productStatus;
 
-    private List<CreateProductThumbnailRequestVo> thumbnailList;
+    private List<CreateProductThumbnailRequestVo> productThumbnailList;
 
     @Builder
     public CreateProductRequestVo(
             String brand,
             String productName,
             Integer productPrice,
-            String description,
+            String productDescription,
             ProductStatus productStatus,
             Integer shippingFee,
-            List<CreateProductThumbnailRequestVo> thumbnailList
+            List<CreateProductThumbnailRequestVo> productThumbnailList
     ) {
         this.brand = brand;
         this.productName = productName;
         this.productPrice = productPrice;
-        this.description = description;
+        this.productDescription = productDescription;
         this.productStatus = productStatus;
         this.shippingFee = shippingFee;
-        this.thumbnailList = thumbnailList;
+        this.productThumbnailList = productThumbnailList;
     }
 
 

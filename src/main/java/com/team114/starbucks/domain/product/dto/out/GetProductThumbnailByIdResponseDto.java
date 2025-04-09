@@ -10,16 +10,19 @@ public class GetProductThumbnailByIdResponseDto {
     private Long productId;
     private String productThumbnailUrl;
     private Integer productThumbnailIndex;
+    private Boolean isThumbnail;
 
     @Builder
     public GetProductThumbnailByIdResponseDto (
             Long productId,
             String productThumbnailUrl,
-            Integer productThumbnailIndex
+            Integer productThumbnailIndex,
+            Boolean isThumbnail
     ) {
         this.productId = productId;
         this.productThumbnailUrl = productThumbnailUrl;
         this.productThumbnailIndex = productThumbnailIndex;
+        this.isThumbnail = isThumbnail;
     }
 
     // dto <- entity
@@ -30,6 +33,7 @@ public class GetProductThumbnailByIdResponseDto {
                 .productId(productThumbnail.getProduct().getId())
                 .productThumbnailUrl(productThumbnail.getThumbnailUrl())
                 .productThumbnailIndex(productThumbnail.getThumbnailIndex())
+                .isThumbnail(productThumbnail.getIsThumbnail())
                 .build();
     }
 

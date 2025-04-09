@@ -9,4 +9,6 @@ public interface ProductDescriptionRepository extends JpaRepository<ProductDescr
 
     Optional<ProductDescription> findByProductUuid(String productUuid);
 
+    void deleteByProductUuid(String productUuid);
+
 }

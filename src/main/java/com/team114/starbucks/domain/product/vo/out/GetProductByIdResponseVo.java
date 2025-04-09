@@ -19,7 +19,7 @@ public class GetProductByIdResponseVo {
     private Integer shippingFee;
     private ProductStatus productStatus;
     private List<GetProductThumbnailByIdResponseDto>
-    getProductThumbnailByIdResponseDtoList;
+    thumbnailList;
 
     @Builder
     public GetProductByIdResponseVo(
@@ -32,7 +32,7 @@ public class GetProductByIdResponseVo {
         this.productDescription = productDescription;
         this.shippingFee = shippingFee;
         this.productStatus = productStatus;
-        this.getProductThumbnailByIdResponseDtoList = getProductThumbnailByIdResponseDtoList;
+        this.thumbnailList = getProductThumbnailByIdResponseDtoList;
     }
 
 }

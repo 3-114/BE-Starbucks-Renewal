@@ -12,10 +12,10 @@ public class UpdateProductRequestVo {
     private String brand;
     private String productName;
     private Integer productPrice;
-    private String description;
+    private String productDescription;
     private ProductStatus productStatus;
     private Integer shippingFee;
 
-    private List<UpdateProductThumbnailRequestVo> thumbnailList;
+    private List<UpdateProductThumbnailRequestVo> productThumbnailList;
 
 }

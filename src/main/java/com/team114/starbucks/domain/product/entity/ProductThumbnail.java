@@ -38,6 +38,8 @@ public class ProductThumbnail extends BaseEntity {
     // 등록자 정보
     private String uploadedBy;
 
+
+
     @Builder
     public ProductThumbnail(
             Long id,

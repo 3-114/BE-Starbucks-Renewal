@@ -11,4 +11,6 @@ public interface ProductThumbnailRepository extends JpaRepository<ProductThumbna
 
     List<ProductThumbnail> findByProductId(Long productId);
 
+    
+
 }

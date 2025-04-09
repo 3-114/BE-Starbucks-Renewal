@@ -15,6 +15,7 @@ public class UpdateProductThumbnailRequestVo {
 
     private String uploadedBy;
 
+
     @Builder
     public UpdateProductThumbnailRequestVo(
             String thumbnailUrl,

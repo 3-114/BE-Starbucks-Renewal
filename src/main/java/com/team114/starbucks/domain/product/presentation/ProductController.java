@@ -9,6 +9,7 @@ import com.team114.starbucks.domain.product.dto.out.CreateProductResponseDto;
 import com.team114.starbucks.domain.product.dto.out.GetProductByIdResponseDto;
 import com.team114.starbucks.domain.product.dto.out.GetProductResponseDto;
 import com.team114.starbucks.domain.product.vo.in.CreateProductRequestVo;
+import com.team114.starbucks.domain.product.vo.in.DeleteProductRequestVo;
 import com.team114.starbucks.domain.product.vo.in.UpdateProductRequestVo;
 import com.team114.starbucks.domain.product.vo.out.CreateProductResponseVo;
 import com.team114.starbucks.domain.product.vo.out.GetProductByIdResponseVo;
@@ -62,9 +63,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public BaseResponseEntity<CreateProductResponseVo> saveProduct
-            (@RequestBody CreateProductRequestVo createProductReqVo
-//             List<CreateThumbnailRequestDto> createThumbnailRequestDto
+    public BaseResponseEntity<CreateProductResponseVo> saveProduct(
+            @RequestBody CreateProductRequestVo createProductReqVo
             ) {
         log.info(createProductReqVo.toString());
         CreateProductRequestDto productPostReqDto = CreateProductRequestDto.from(createProductReqVo);
@@ -77,25 +77,27 @@ public class ProductController {
 
     }
 
-    @PutMapping("/{productUuid}")
-    public BaseResponseEntity<UpdateProductResponseVo> updateProduct(
-            @PathVariable String productUuid,
+    @PutMapping
+    public BaseResponseEntity<Void> updateProduct(
             @RequestBody UpdateProductRequestVo updateProductRequestVo
     ) {
-        UpdateProductResponseVo result = productService.updateProduct(
-                productUuid,
+        productService.updateProduct(
                 UpdateProductRequestDto.from(updateProductRequestVo)
-        ).toVo();
+        );
 
-        return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 정보를 변경하였습니다.", 200, result);
+        return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 정보를 변경하였습니다.", 200, null);
 
     }
 
-    @DeleteMapping("/{productUuid}")
+    @DeleteMapping
     public BaseResponseEntity<Void> deleteProduct(
-            @PathVariable String productUuid
+            @RequestBody DeleteProductRequestVo deleteProductRequestVo
     ) {
-        productService.deleteProduct(productUuid);
+
+        productService.deleteProduct(
+                deleteProductRequestVo.getProductUuid()
+        );
+
 
         return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 삭제 성공", 200, null);
 

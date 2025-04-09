@@ -17,49 +17,49 @@ public class CreateProductRequestDto {
     private String productName;
     private String brand;
     private Integer productPrice;
-    private String description;
+    private String productDescription;
     private Integer shippingFee;
     private ProductStatus productStatus;
 
-    private List<CreateThumbnailRequestDto> thumbnailList;
+    private List<CreateProductThumbnailRequestDto> productThumbnailList;
 
     @Builder
     public CreateProductRequestDto(
             String productName,
             String brand,
             Integer productPrice,
-            String description,
+            String productDescription,
             Integer shippingFee,
             ProductStatus productStatus,
-            List<CreateThumbnailRequestDto> thumbnailList
+            List<CreateProductThumbnailRequestDto> productThumbnailList
     ) {
         this.productName = productName;
         this.brand = brand;
         this.productPrice = productPrice;
-        this.description = description;
+        this.productDescription = productDescription;
         this.shippingFee = shippingFee;
         this.productStatus = productStatus;
-        this.thumbnailList = thumbnailList;
+        this.productThumbnailList = productThumbnailList;
     }
 
     //vo -> dto
     public static CreateProductRequestDto from(
             CreateProductRequestVo vo
     ) {
-        List<CreateThumbnailRequestDto> thumbnailList = new ArrayList<>();
+        List<CreateProductThumbnailRequestDto> productThumbnailList = new ArrayList<>();
 
-        for (CreateProductThumbnailRequestVo thumbnail : vo.getThumbnailList()) {
-            thumbnailList.add(CreateThumbnailRequestDto.from(thumbnail));
+        for (CreateProductThumbnailRequestVo thumbnail : vo.getProductThumbnailList()) {
+            productThumbnailList.add(CreateProductThumbnailRequestDto.from(thumbnail));
         }
 
         return CreateProductRequestDto.builder()
                 .productName(vo.getProductName())
                 .brand(vo.getBrand())
                 .productPrice(vo.getProductPrice())
-                .description(vo.getDescription())
+                .productDescription(vo.getProductDescription())
                 .shippingFee(vo.getShippingFee())
                 .productStatus(vo.getProductStatus())
-                .thumbnailList(thumbnailList)
+                .productThumbnailList(productThumbnailList)
                 .build();
     }
 
