@@ -18,7 +18,7 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
 //            "JOIN Option o ON c.optionId = o.optionId " +
 //            "WHERE c.memberUuid = :memberUuid")
     @Query("SELECT new com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto(" +
-            "p.brand, p.productName, p.productPrice, " +
+            "p.productName, p.productPrice, " +
             "o.color.colorName, o.size.sizeName, o.optionPrice, o.discountRate, " +
             "c.quantity, c.selected, c.valid) " +
             "FROM Cart c " +
