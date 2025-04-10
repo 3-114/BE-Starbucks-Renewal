@@ -31,4 +31,6 @@ public interface CartRepository extends CrudRepository<Cart, Long> {
     Optional<Cart> findByCartUuid(String cartUuid);
 
     void deleteByCartUuid(String cartUuid);
+
+    List<Cart> findByMemberUuid(String memberUuid);
 }
