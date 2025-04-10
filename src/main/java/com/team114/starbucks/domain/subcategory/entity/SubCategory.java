@@ -1,5 +1,6 @@
 package com.team114.starbucks.domain.subcategory.entity;
 
+import com.team114.starbucks.domain.subcategory.dto.in.UpdateSubCategoryReqDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,5 +34,10 @@ public class SubCategory {
         this.mainCategoryUuid = mainCategoryUuid;
         this.subCategoryUuid = subCategoryUuid;
         this.subCategoryName = subCategoryName;
+    }
+
+    public void update(String subCategoryUuidDto, String subCategoryNameDto) {
+        this.subCategoryUuid = subCategoryUuidDto;
+        this.subCategoryName = subCategoryNameDto;
     }
 }

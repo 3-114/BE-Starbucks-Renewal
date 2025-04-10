@@ -3,6 +3,7 @@ package com.team114.starbucks.domain.subcategory.application;
 import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.subcategory.dto.in.CreateSubCategoryReqDto;
+import com.team114.starbucks.domain.subcategory.dto.in.UpdateSubCategoryReqDto;
 import com.team114.starbucks.domain.subcategory.dto.out.GetAllSubCategoryResDto;
 import com.team114.starbucks.domain.subcategory.dto.out.GetOneSubCategoryResDto;
 import com.team114.starbucks.domain.subcategory.entity.SubCategory;
@@ -19,8 +20,17 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SubCategoryServiceImpl implements SubCategoryService {
 
+    /*
+     * 1. 서브 카테고리 생성
+     * 2. 서브 카테고리 전체 조회
+     * 3. 서브 카테고리 단건 조회
+     * 4. 서브 카테고리 수정
+     * 5. 서브 카테고리 삭제
+     *  */
+
     private final SubCategoryRepository subCategoryRepository;
 
+    // 1. 서브 카테고리 생성
     @Transactional
     @Override
     public void createSubCategory(CreateSubCategoryReqDto createSubCategoryReqDto) {
@@ -33,7 +43,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
         }
     }
 
-
+    // 2. 서브 카테고리 전체 조회
     @Override
     public List<GetAllSubCategoryResDto> getAllSubCategory() {
         List<SubCategory> subCategoryList = subCategoryRepository.findAll();
@@ -46,6 +56,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
         return subCategoryResDtoList;
     }
 
+    // 3. 서브 카테고리 단건 조회
     @Override
     public GetOneSubCategoryResDto getOneSubCategory(String subCategoryUuid) {
         SubCategory subCategory = subCategoryRepository.findSubCategoryBySubCategoryUuid(subCategoryUuid).orElseThrow(
@@ -55,4 +66,17 @@ public class SubCategoryServiceImpl implements SubCategoryService {
         return GetOneSubCategoryResDto.from(subCategory);
 
     }
+
+    // 4. 서브 카테고리 수정
+    @Transactional
+    @Override
+    public void updateSubCategory(String subCategoryUuid, UpdateSubCategoryReqDto updateSubCategoryReqDto) {
+        SubCategory subCategory = subCategoryRepository.findSubCategoryBySubCategoryUuid(subCategoryUuid).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
+        );
+
+        subCategory.update(updateSubCategoryReqDto.getMainCategoryUuid(), updateSubCategoryReqDto.getSubCategoryName());
+
+    }
+
 }
