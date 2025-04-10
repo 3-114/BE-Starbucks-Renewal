@@ -125,10 +125,16 @@ public class ProductServiceImpl implements ProductService {
 //        productThumbnailRepository.deleteAllByIdInBatch(productThumbnailList.stream()
 //                .map(ProductThumbnail::getId)
 //                .toList());
+
         productThumbnailRepository.deleteAll(productThumbnailList);
 
         productRepository.deleteByProductUuid(productUuid);
 
+        return null;
+    }
+
+    @Override
+    public GetProductPreviewResponseDto getProductPreview(String productUuid) {
         return null;
     }
 
