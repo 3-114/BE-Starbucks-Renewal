@@ -11,8 +11,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum CartType {
 
-    CART_TYPE_GENERAL("일반"),
-    CART_TYPE_RESERVATION("예약")
+    GENERAL("일반"),
+    RESERVATION("예약")
     ;
 
     private final String cartType;

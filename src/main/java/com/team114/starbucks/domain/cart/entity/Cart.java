@@ -39,13 +39,10 @@ public class Cart extends BaseEntity {
     private Boolean valid;
 
     // 장바구니 유형
+    @Enumerated(EnumType.STRING)
     private CartType cartType;
 
-    // 삭제 여부
-    private Boolean deleted;
-
     @Builder
-
     public Cart(
             Long id,
             String cartUuid,
@@ -55,8 +52,7 @@ public class Cart extends BaseEntity {
             Long quantity,
             Boolean selected,
             Boolean valid,
-            CartType cartType,
-            Boolean deleted
+            CartType cartType
     ) {
         this.id = id;
         this.cartUuid = cartUuid;
@@ -67,6 +63,5 @@ public class Cart extends BaseEntity {
         this.selected = selected;
         this.valid = valid;
         this.cartType = cartType;
-        this.deleted = deleted;
     }
 }
