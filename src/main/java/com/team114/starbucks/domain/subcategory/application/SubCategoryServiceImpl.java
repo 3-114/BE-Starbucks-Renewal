@@ -18,6 +18,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class SubCategoryServiceImpl implements SubCategoryService {
 
     /*
@@ -77,6 +78,17 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 
         subCategory.update(updateSubCategoryReqDto.getMainCategoryUuid(), updateSubCategoryReqDto.getSubCategoryName());
 
+    }
+
+    // 5. 서브 카테고리 삭제
+    @Transactional
+    @Override
+    public void deleteSubCategory(String subCategoryUuid) {
+        SubCategory findSubCategory = subCategoryRepository.findSubCategoryBySubCategoryUuid(subCategoryUuid).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
+        );
+
+        subCategoryRepository.delete(findSubCategory);
     }
 
 }

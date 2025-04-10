@@ -73,6 +73,14 @@ public class SubCategoryController {
         subCategoryService.updateSubCategory(subCategoryUuid, UpdateSubCategoryReqDto.from(updateSubCategoryReqVo));
 
         return new BaseResponseEntity<>("서브 카테고리 수정에 성공했습니다. ", null);
+    }
 
+    // 5. 서브 카테고리 삭제
+    @DeleteMapping("/{subCategoryUuid}")
+    public BaseResponseEntity<Void> deleteSubCategory(
+            @PathVariable String subCategoryUuid
+    ) {
+        subCategoryService.deleteSubCategory(subCategoryUuid);
+        return new BaseResponseEntity<>("서브 카테고리 삭제에 성공했습니다. ", null);
     }
 }

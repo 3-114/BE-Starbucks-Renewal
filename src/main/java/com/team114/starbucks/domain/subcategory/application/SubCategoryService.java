@@ -17,4 +17,6 @@ public interface SubCategoryService {
     GetOneSubCategoryResDto getOneSubCategory(String subCategoryUuid);
 
     void updateSubCategory(String subCategoryUuid,UpdateSubCategoryReqDto updateSubCategoryReqDto);
+
+    void deleteSubCategory(String subCategoryUuid);
 }
