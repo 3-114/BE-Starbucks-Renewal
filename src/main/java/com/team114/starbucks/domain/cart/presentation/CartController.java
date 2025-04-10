@@ -30,7 +30,7 @@ public class CartController {
             @RequestBody AddCartItemReqVo addCartItemReqVo
     ) {
         cartService.addCartItem(AddCartItemReqDto.of(memberUuid, addCartItemReqVo));
-        return new BaseResponseEntity<>("장바구니에 추가되었습니다.", null);
+        return new BaseResponseEntity<>("장바구니에 추가되었습니다.");
     }
 
     @GetMapping
@@ -81,13 +81,21 @@ public class CartController {
         );
     }
 
-    @GetMapping("/product")
+    /**
+     * 장바구니에서 Product Uuid 리스트 조회
+     * @param memberUuid
+     * @return
+     */
+    // cartType : general, reservation
+    @GetMapping("/product/{cartType}")
     public BaseResponseEntity<List<GetProductUuidResVo>> getProductUuid(
-            @RequestHeader("Member-Uuid") String memberUuid
+            @RequestHeader("Member-Uuid") String memberUuid,
+            @PathVariable String cartType
     ) {
         return new BaseResponseEntity<>(
                 "장바구니에서 Product UUID 리스트 조회 성공",
-                cartService.getProductUuidList(memberUuid).stream().map(GetProductUuidResDto::toVo).toList()
+                cartService.getProductUuidList(memberUuid, cartType)
+                        .stream().map(GetProductUuidResDto::toVo).toList()
         );
     }
 }

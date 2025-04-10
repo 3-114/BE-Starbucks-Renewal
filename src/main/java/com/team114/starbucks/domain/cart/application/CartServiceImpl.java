@@ -113,9 +113,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<GetProductUuidResDto> getProductUuidList(String memberUuid) {
-
-        return cartRepository.findByMemberUuid(memberUuid).stream().map(GetProductUuidResDto::from).toList();
-
+    public List<GetProductUuidResDto> getProductUuidList(String memberUuid, String cartType) {
+        return cartRepository.findByMemberUuid(memberUuid)
+                .stream().map(GetProductUuidResDto::from).toList();
     }
 }

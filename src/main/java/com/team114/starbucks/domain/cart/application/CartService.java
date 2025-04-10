@@ -23,5 +23,5 @@ public interface CartService {
 
     GetItemSelectResDto getItemSelect(String memberUuid, String cartUuid);
 
-    List<GetProductUuidResDto> getProductUuidList(String memberUuid);
+    List<GetProductUuidResDto> getProductUuidList(String memberUuid, String cartType);
 }
