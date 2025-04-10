@@ -1,6 +1,7 @@
 package com.team114.starbucks.domain.cart.entity;
 
 import com.team114.starbucks.common.entity.BaseEntity;
+import com.team114.starbucks.domain.cart.enums.CartType;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,15 +35,24 @@ public class Cart extends BaseEntity {
     // 유효 여부
     private Boolean valid;
 
+    // 장바구니 유형
+    private CartType cartType;
+
+    // 삭제 여부
+    private Boolean deleted;
+
     @Builder
+
     public Cart(
             Long id,
-            String memberUuid,
+                String memberUuid,
             Long optionId,
             String productUuid,
             Long quantity,
             Boolean selected,
-            Boolean valid
+            Boolean valid,
+            CartType cartType,
+            Boolean deleted
     ) {
         this.id = id;
         this.memberUuid = memberUuid;
@@ -51,5 +61,7 @@ public class Cart extends BaseEntity {
         this.quantity = quantity;
         this.selected = selected;
         this.valid = valid;
+        this.cartType = cartType;
+        this.deleted = deleted;
     }
 }
