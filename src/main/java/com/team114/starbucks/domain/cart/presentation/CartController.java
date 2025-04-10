@@ -6,10 +6,13 @@ import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetCartItemResDto;
+import com.team114.starbucks.domain.cart.dto.out.GetProductUuidResDto;
 import com.team114.starbucks.domain.cart.vo.in.AddCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.out.GetAllCartItemsResVo;
 import com.team114.starbucks.domain.cart.vo.out.GetCartItemResVo;
+import com.team114.starbucks.domain.cart.vo.out.GetItemSelectResVo;
+import com.team114.starbucks.domain.cart.vo.out.GetProductUuidResVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +32,8 @@ public class CartController {
      * 3. 장바구니 항목 정보 변경
      * 4. 장바구니 항목 삭제
      * 5. 장바구니 항목 단건 조회
+     * 6. 장바구니 항목 체크 여부 조회
+     * 7. 장바구니에서 상품 UUID 리스트 조회
      */
 
     /**
@@ -71,38 +76,72 @@ public class CartController {
     /**
      * 3. 장바구니 항목 정보 변경
      * @param memberUuid
-     * @param cartId
+     * @param cartUuid
      * @param updateCartItemReqVo
      * @return
      */
-    @PutMapping("/{cartId}")
+    @PutMapping("/{cartUuid}")
     public BaseResponseEntity<Void> updateCartItem(
             @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
-            @PathVariable Long cartId,
+            @PathVariable String cartUuid,
             @RequestBody UpdateCartItemReqVo updateCartItemReqVo          // 수량, 선택 여부
     ) {
-        cartService.updateCartItem(memberUuid, cartId, UpdateCartItemReqDto.from(updateCartItemReqVo));
+        cartService.updateCartItem(memberUuid, cartUuid, UpdateCartItemReqDto.from(updateCartItemReqVo));
         return new BaseResponseEntity<>("장바구니 항목 정보 변경에 성공하였습니다.", null);
     }
 
     /**
      * 4. 장바구니 항목 삭제
      */
-    @DeleteMapping("/{cartId}")
+    @DeleteMapping("/{cartUuid}")
     public BaseResponseEntity<Void> deleteCartItem(
             @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
-            @PathVariable Long cartId
+            @PathVariable String cartUuid
     ) {
-        cartService.deleteCartItem(memberUuid, cartId);
+        cartService.deleteCartItem(memberUuid, cartUuid);
         return new BaseResponseEntity<>("장바구니 항목 삭제에 성공하였습니다.", null);
     }
 
-    @GetMapping("/{cartId}")
+    /**
+     * 5. 장바구니 항목 단건 조회
+     * @param memberUuid
+     * @param cartUuid
+     * @return
+     */
+    @GetMapping("/{cartUuid}")
     public BaseResponseEntity<GetCartItemResVo> getCartItem(
             @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
-            @PathVariable Long cartId
+            @PathVariable String cartUuid
     ) {
-        GetCartItemResVo result = cartService.getCartItem(memberUuid, cartId).toVo();
+        GetCartItemResVo result = cartService.getCartItem(memberUuid, cartUuid).toVo();
         return new BaseResponseEntity<>("장바구니 항목 단건 조회에 성공하였습니다.", result);
+    }
+
+    /**
+     * 6. 장바구니 항목 체크 여부 조회
+     * @param memberUuid
+     * @param cartUuid
+     * @return
+     */
+    @GetMapping("/{cartUuid}/get-selected")
+    public BaseResponseEntity<GetItemSelectResVo> getItemSelect(
+            @RequestHeader("X-Member-UUID") String memberUuid,
+            @PathVariable String cartUuid
+    ) {
+        return new BaseResponseEntity<>(
+                "장바구니 항목 체크 여부 조회에 성공하였습니다.",
+                cartService.getItemSelect(memberUuid, cartUuid).toVo()
+        );
+    }
+
+    // 장바구니에서 상품 UUID 리스트 조회
+    @GetMapping("/product")
+    public BaseResponseEntity<List<GetProductUuidResVo>> getProductUuid(
+            @RequestHeader("Member-Uuid") String memberUuid
+    ) {
+        return new BaseResponseEntity<>(
+                "장바구니에서 Product UUID 리스트 조회 성공",
+                cartService.getProductUuidList(memberUuid).stream().map(GetProductUuidResDto::toVo).toList()
+        );
     }
 }

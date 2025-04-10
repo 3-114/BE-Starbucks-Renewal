@@ -17,6 +17,9 @@ public class Cart extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 장바구니 항목 UUID
+    private String cartUuid;
+
     // 멤버 UUID
     private String memberUuid;
 
@@ -45,7 +48,8 @@ public class Cart extends BaseEntity {
 
     public Cart(
             Long id,
-                String memberUuid,
+            String cartUuid,
+            String memberUuid,
             Long optionId,
             String productUuid,
             Long quantity,
@@ -55,6 +59,7 @@ public class Cart extends BaseEntity {
             Boolean deleted
     ) {
         this.id = id;
+        this.cartUuid = cartUuid;
         this.memberUuid = memberUuid;
         this.optionId = optionId;
         this.productUuid = productUuid;
