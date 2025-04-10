@@ -25,8 +25,8 @@ public class OptionController {
     public BaseResponseEntity<OptionResponseVo> createOption(
             @RequestBody OptionCreateRequestVo optionCreateRequestVo
     ) {
-        OptionResponseVo result = optionService.saveOption(OptionCreateRequestDto.from(optionCreateRequestVo)).toVo();
-        return new BaseResponseEntity<>("옵션이 등록되었습니다.", result);
+        optionService.saveOption(OptionCreateRequestDto.from(optionCreateRequestVo));
+        return new BaseResponseEntity<>("옵션이 등록되었습니다.");
     }
 
     // 2. 옵션 전체 조회
@@ -47,16 +47,13 @@ public class OptionController {
     }
 
     // 4. 옵션 수정
-    @PutMapping("/{optionId}")
+    @PutMapping
     public BaseResponseEntity<OptionResponseVo> updateOption(
-            @PathVariable Long optionId,
             @RequestBody OptionUpdateRequestVo optionUpdateRequestVo
     ) {
-        OptionResponseVo result = optionService.updateOption(
-                optionId,
-                OptionUpdateRequestDto.from(optionUpdateRequestVo)
-        ).toVo();
-        return new BaseResponseEntity<>("옵션 정보가 수정되었습니다.", result);
+        optionService.updateOption(OptionUpdateRequestDto.from(optionUpdateRequestVo));
+
+        return new BaseResponseEntity<>("옵션 정보가 수정되었습니다.");
     }
 
     // 5. 옵션 삭제
