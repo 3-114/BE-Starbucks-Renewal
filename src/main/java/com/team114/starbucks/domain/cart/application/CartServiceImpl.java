@@ -6,6 +6,7 @@ import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetCartItemResDto;
+import com.team114.starbucks.domain.cart.dto.out.GetItemSelectResDto;
 import com.team114.starbucks.domain.cart.entity.Cart;
 import com.team114.starbucks.domain.cart.infrastructure.CartRepository;
 import com.team114.starbucks.domain.option.entity.Option;
@@ -177,6 +178,12 @@ public class CartServiceImpl implements CartService {
         return null;
     }
 
+    /**
+     * 5. 장바구니 항목 단건 조회
+     * @param memberUuid
+     * @param cartUuid
+     * @return
+     */
     @Override
     public GetCartItemResDto getCartItem(String memberUuid, String cartUuid) {
 
@@ -193,5 +200,18 @@ public class CartServiceImpl implements CartService {
         );
 
         return GetCartItemResDto.of(cart, product, option);
+    }
+
+    /**
+     * 6. 장바구니 체크여부 조회
+     * @param memberUuid
+     * @param cartUuid
+     * @return
+     */
+    @Override
+    public GetItemSelectResDto getItemSelect(String memberUuid, String cartUuid) {
+
+        return GetItemSelectResDto.from(cartRepository.findByCartUuid(cartUuid)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)));
     }
 }

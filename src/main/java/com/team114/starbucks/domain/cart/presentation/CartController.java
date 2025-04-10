@@ -5,6 +5,7 @@ import com.team114.starbucks.domain.cart.application.CartService;
 import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
+import com.team114.starbucks.domain.cart.dto.out.GetCartItemResDto;
 import com.team114.starbucks.domain.cart.vo.in.AddCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.out.GetAllCartItemsResVo;
@@ -120,10 +121,13 @@ public class CartController {
      * @return
      */
     @GetMapping("/{cartUuid}/get-selected")
-    public GetItemSelectResVo getItemSelect(
-            @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
+    public BaseResponseEntity<GetItemSelectResVo> getItemSelect(
+            @RequestHeader("X-Member-UUID") String memberUuid,
             @PathVariable String cartUuid
     ) {
-
+        return new BaseResponseEntity<>(
+                "장바구니 항목 체크 여부 조회에 성공하였습니다.",
+                cartService.getItemSelect(memberUuid, cartUuid).toVo()
+        );
     }
 }

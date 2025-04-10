@@ -4,7 +4,7 @@ import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetCartItemResDto;
-import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
+import com.team114.starbucks.domain.cart.dto.out.GetItemSelectResDto;
 
 import java.util.List;
 
@@ -16,6 +16,7 @@ public interface CartService {
      * 2. 장바구니 항목 전체 조회
      * 3. 장바구니 항목 정보 변경
      * 4. 장바구니 항목 삭제
+     * 5. 장바구니 항목 단건 조회
      */
 
     /**
@@ -52,10 +53,18 @@ public interface CartService {
     Void deleteCartItem(String memberUuid, String cartUuid);
 
     /**
-     * 5. 장바구니 목록 단건 조회
+     * 5. 장바구니 항목 단건 조회
      * @param memberUuid
      * @param cartUuid
      * @return
      */
     GetCartItemResDto getCartItem(String memberUuid, String cartUuid);
+
+    /**
+     * 6. 장바구니 체크여부 조회
+     * @param memberUuid
+     * @param cartUuid
+     * @return
+     */
+    GetItemSelectResDto getItemSelect(String memberUuid, String cartUuid);
 }
