@@ -4,6 +4,7 @@ import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.subcategory.dto.in.CreateSubCategoryReqDto;
 import com.team114.starbucks.domain.subcategory.dto.out.GetAllSubCategoryResDto;
+import com.team114.starbucks.domain.subcategory.dto.out.GetOneSubCategoryResDto;
 import com.team114.starbucks.domain.subcategory.entity.SubCategory;
 import com.team114.starbucks.domain.subcategory.infrastructure.SubCategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,6 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     }
 
 
-
     @Override
     public List<GetAllSubCategoryResDto> getAllSubCategory() {
         List<SubCategory> subCategoryList = subCategoryRepository.findAll();
@@ -44,5 +44,15 @@ public class SubCategoryServiceImpl implements SubCategoryService {
         }
 
         return subCategoryResDtoList;
+    }
+
+    @Override
+    public GetOneSubCategoryResDto getOneSubCategory(String subCategoryUuid) {
+        SubCategory subCategory = subCategoryRepository.findSubCategoryBySubCategoryUuid(subCategoryUuid).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
+        );
+
+        return GetOneSubCategoryResDto.from(subCategory);
+
     }
 }

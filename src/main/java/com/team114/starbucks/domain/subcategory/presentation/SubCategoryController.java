@@ -4,8 +4,10 @@ import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.subcategory.application.SubCategoryService;
 import com.team114.starbucks.domain.subcategory.dto.in.CreateSubCategoryReqDto;
 import com.team114.starbucks.domain.subcategory.dto.out.GetAllSubCategoryResDto;
+import com.team114.starbucks.domain.subcategory.dto.out.GetOneSubCategoryResDto;
 import com.team114.starbucks.domain.subcategory.vo.in.CreateSubCategoryReqVo;
 import com.team114.starbucks.domain.subcategory.vo.out.GetAllSubCategoryResVo;
+import com.team114.starbucks.domain.subcategory.vo.out.GetOneSubCategoryResVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,6 +50,16 @@ public class SubCategoryController {
         }
 
         return new BaseResponseEntity<>("서브 카테고리 전체 조회에 성공했습니다. ", getAllSubCategoryResVoList);
+    }
+
+    // 3. 서브 카테고리 단건 조회 API
+    @GetMapping("/{subCategoryUuid}")
+    public BaseResponseEntity<GetOneSubCategoryResVo> getOneSubCategory(
+            @PathVariable String subCategoryUuid) {
+        GetOneSubCategoryResDto getOneSubCategoryResDto = subCategoryService.getOneSubCategory(subCategoryUuid);
+
+        return new BaseResponseEntity<>("서브 카테고리 단건 조회에 성공했습니다. ", getOneSubCategoryResDto.toVo());
+
     }
 
 }
