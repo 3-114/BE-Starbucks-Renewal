@@ -41,6 +41,7 @@ public class OptionCreateRequestDto {
                 .productUuid(optionCreateRequestVo.getProductUuid())
                 .colorId(optionCreateRequestVo.getColorId())
                 .sizeId(optionCreateRequestVo.getSizeId())
+                .stock(optionCreateRequestVo.getStock())
                 .optionPrice(optionCreateRequestVo.getOptionPrice())
                 .discountRate(optionCreateRequestVo.getDiscountRate())
                 .build();
