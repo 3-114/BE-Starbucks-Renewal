@@ -5,15 +5,18 @@ import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.delivery.dto.in.DeliveryCreateRequestDto;
 import com.team114.starbucks.domain.delivery.dto.in.DeliveryUpdateRequestDto;
 import com.team114.starbucks.domain.delivery.dto.out.DeliveryResponseDto;
+import com.team114.starbucks.domain.delivery.dto.out.GetDeliveryUuidResponseDto;
 import com.team114.starbucks.domain.delivery.dto.out.GetMyDeliveriesResponseDto;
 import com.team114.starbucks.domain.delivery.entity.Delivery;
 import com.team114.starbucks.domain.delivery.infrastructure.DeliveryRepository;
+import com.team114.starbucks.domain.delivery.vo.out.GetDeliveryUuidResponseVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -57,6 +60,14 @@ public class DeliveryServiceImpl implements DeliveryService {
     public List<DeliveryResponseDto> getDeliveriesByMemberUuid(String memberUuid) {
         List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
         return deliveries.stream().map(DeliveryResponseDto::from).toList();
+    }
+
+    // 장바구니에서 DeliveryUuid 리스트 조회
+    @Override
+    public List<GetDeliveryUuidResponseDto> getDeliveryUuidsByMemberUuid(String memberUuid) {
+
+        List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
+        return deliveries.stream().map(GetDeliveryUuidResponseDto::from).toList();
     }
 
     @Override
