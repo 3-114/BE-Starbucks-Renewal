@@ -40,18 +40,9 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<GetAllCartItemsResDto> findAllCartItems(String memberUuid) {
-
         return cartRepository.findCartItems(memberUuid);
-
     }
 
-    /**
-     * 3. 장바구니 항목 정보 변경
-     * @param memberUuid
-     * @param cartUuid
-     * @param updateCartItemReqDto
-     * @return
-     */
     @Transactional
     @Override
     public Void updateCartItem(String memberUuid, String cartUuid, UpdateCartItemReqDto updateCartItemReqDto) {

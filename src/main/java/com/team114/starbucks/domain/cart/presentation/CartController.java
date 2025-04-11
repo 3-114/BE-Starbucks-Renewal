@@ -24,8 +24,20 @@ import java.util.List;
 @RequestMapping("/api/v1/cart")
 public class CartController {
 
+    /**
+     * /api/v1/cart
+     * 1. 장바구니 항목 생성
+     * 2. 장바구니 항목 전체 리스트로 조회
+     */
+
     private final CartService cartService;
 
+    /**
+     * 1. 장바구니 항목 생성
+     * @param memberUuid
+     * @param addCartItemReqVo
+     * @return
+     */
     @PostMapping
     public BaseResponseEntity<Void> addCartItem(
             @RequestHeader("Member-Uuid") String memberUuid,
@@ -35,20 +47,26 @@ public class CartController {
         return new BaseResponseEntity<>("장바구니에 추가되었습니다.");
     }
 
+    /**
+     * 2. 장바구니 항목 전체 리스트로 조회
+     * @param memberUuid
+     * @return List<GetAllCartItemsResVo>
+     */
     @GetMapping
     public BaseResponseEntity<List<GetAllCartItemsResVo>> getAllCartItems(
-            @RequestHeader("X-Member-UUID") String memberUuid            // member UUID
+            @RequestHeader("Member-Uuid") String memberUuid
     ) {
-        List<GetAllCartItemsResVo> result = cartService.findAllCartItems(memberUuid)
-                .stream().map(GetAllCartItemsResDto::toVo).toList();
-        return new BaseResponseEntity<>("장바구니 전체 목록 조회에 성공하였습니다.", result);
+        return new BaseResponseEntity<>(
+                "장바구니 전체 목록 조회에 성공하였습니다.",
+                cartService.findAllCartItems(memberUuid).stream().map(GetAllCartItemsResDto::toVo).toList()
+        );
     }
 
     @PutMapping("/{cartUuid}")
     public BaseResponseEntity<Void> updateCartItem(
-            @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
+            @RequestHeader("X-Member-UUID") String memberUuid,
             @PathVariable String cartUuid,
-            @RequestBody UpdateCartItemReqVo updateCartItemReqVo          // 수량, 선택 여부
+            @RequestBody UpdateCartItemReqVo updateCartItemReqVo
     ) {
         cartService.updateCartItem(memberUuid, cartUuid, UpdateCartItemReqDto.from(updateCartItemReqVo));
         return new BaseResponseEntity<>("장바구니 항목 정보 변경에 성공하였습니다.", null);
