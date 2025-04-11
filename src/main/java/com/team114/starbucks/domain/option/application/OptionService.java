@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface OptionService {
 
-    OptionResponseDto saveOption(OptionCreateRequestDto optionCreateRequestDto);
+    void saveOption(OptionCreateRequestDto optionCreateRequestDto);
 
     List<OptionResponseDto> findAllOptions();
 
     OptionResponseDto findOptionById(Long optionId);
 
-    OptionResponseDto updateOption(Long optionId, OptionUpdateRequestDto optionUpdateRequestDto);
+    void updateOption(OptionUpdateRequestDto optionUpdateRequestDto);
 
-    Void deleteOption(Long optionId);
+    void deleteOption(Long optionId);
 }
