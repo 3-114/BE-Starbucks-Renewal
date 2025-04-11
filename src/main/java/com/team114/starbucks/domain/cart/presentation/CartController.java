@@ -5,7 +5,6 @@ import com.team114.starbucks.domain.cart.application.CartService;
 import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
-import com.team114.starbucks.domain.cart.dto.out.GetCartItemResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetProductUuidResDto;
 import com.team114.starbucks.domain.cart.vo.in.AddCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
@@ -25,45 +24,15 @@ public class CartController {
 
     private final CartService cartService;
 
-    /**
-     * /api/v1/cart
-     * 1. 장바구니 항목 추가
-     * 2. 장바구니 항목 전체 조회
-     * 3. 장바구니 항목 정보 변경
-     * 4. 장바구니 항목 삭제
-     * 5. 장바구니 항목 단건 조회
-     * 6. 장바구니 항목 체크 여부 조회
-     * 7. 장바구니에서 상품 UUID 리스트 조회
-     */
-
-    /**
-     * 1. 장바구니 항목 추가
-     * @param memberUuid
-     * @param productUuid
-     * @param addCartItemReqVo
-     * @return
-     */
     @PostMapping
     public BaseResponseEntity<Void> addCartItem(
-            @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
-            @RequestHeader("X-Product-UUID") String productUuid,          // product UUID
-            @RequestParam(value = "optionId") Long optionId,              // option ID
-            @RequestBody AddCartItemReqVo addCartItemReqVo                // 수량, 선택 여부
+            @RequestHeader("Member-Uuid") String memberUuid,
+            @RequestBody AddCartItemReqVo addCartItemReqVo
     ) {
-        cartService.addCartItem(
-                memberUuid,
-                productUuid,
-                optionId,
-                AddCartItemReqDto.from(addCartItemReqVo)
-        );
-        return new BaseResponseEntity<>("장바구니에 추가되었습니다.", null);
+        cartService.addCartItem(AddCartItemReqDto.of(memberUuid, addCartItemReqVo));
+        return new BaseResponseEntity<>("장바구니에 추가되었습니다.");
     }
 
-    /**
-     * 2. 장바구니 항목 전체 조회
-     * @param memberUuid
-     * @return
-     */
     @GetMapping
     public BaseResponseEntity<List<GetAllCartItemsResVo>> getAllCartItems(
             @RequestHeader("X-Member-UUID") String memberUuid            // member UUID
@@ -73,13 +42,6 @@ public class CartController {
         return new BaseResponseEntity<>("장바구니 전체 목록 조회에 성공하였습니다.", result);
     }
 
-    /**
-     * 3. 장바구니 항목 정보 변경
-     * @param memberUuid
-     * @param cartUuid
-     * @param updateCartItemReqVo
-     * @return
-     */
     @PutMapping("/{cartUuid}")
     public BaseResponseEntity<Void> updateCartItem(
             @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
@@ -90,9 +52,6 @@ public class CartController {
         return new BaseResponseEntity<>("장바구니 항목 정보 변경에 성공하였습니다.", null);
     }
 
-    /**
-     * 4. 장바구니 항목 삭제
-     */
     @DeleteMapping("/{cartUuid}")
     public BaseResponseEntity<Void> deleteCartItem(
             @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
@@ -102,12 +61,6 @@ public class CartController {
         return new BaseResponseEntity<>("장바구니 항목 삭제에 성공하였습니다.", null);
     }
 
-    /**
-     * 5. 장바구니 항목 단건 조회
-     * @param memberUuid
-     * @param cartUuid
-     * @return
-     */
     @GetMapping("/{cartUuid}")
     public BaseResponseEntity<GetCartItemResVo> getCartItem(
             @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
@@ -117,12 +70,6 @@ public class CartController {
         return new BaseResponseEntity<>("장바구니 항목 단건 조회에 성공하였습니다.", result);
     }
 
-    /**
-     * 6. 장바구니 항목 체크 여부 조회
-     * @param memberUuid
-     * @param cartUuid
-     * @return
-     */
     @GetMapping("/{cartUuid}/get-selected")
     public BaseResponseEntity<GetItemSelectResVo> getItemSelect(
             @RequestHeader("X-Member-UUID") String memberUuid,
@@ -134,14 +81,21 @@ public class CartController {
         );
     }
 
-    // 장바구니에서 상품 UUID 리스트 조회
-    @GetMapping("/product")
+    /**
+     * 장바구니에서 Product Uuid 리스트 조회
+     * @param memberUuid
+     * @return
+     */
+    // cartType : general, reservation
+    @GetMapping("/product/{cartType}")
     public BaseResponseEntity<List<GetProductUuidResVo>> getProductUuid(
-            @RequestHeader("Member-Uuid") String memberUuid
+            @RequestHeader("Member-Uuid") String memberUuid,
+            @PathVariable String cartType
     ) {
         return new BaseResponseEntity<>(
                 "장바구니에서 Product UUID 리스트 조회 성공",
-                cartService.getProductUuidList(memberUuid).stream().map(GetProductUuidResDto::toVo).toList()
+                cartService.getProductUuidList(memberUuid, cartType)
+                        .stream().map(GetProductUuidResDto::toVo).toList()
         );
     }
 }

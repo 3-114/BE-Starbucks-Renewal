@@ -9,12 +9,11 @@ import com.team114.starbucks.domain.cart.dto.out.GetCartItemResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetItemSelectResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetProductUuidResDto;
 import com.team114.starbucks.domain.cart.entity.Cart;
+import com.team114.starbucks.domain.cart.enums.CartType;
 import com.team114.starbucks.domain.cart.infrastructure.CartRepository;
-import com.team114.starbucks.domain.cart.vo.out.GetProductUuidResVo;
 import com.team114.starbucks.domain.option.entity.Option;
 import com.team114.starbucks.domain.option.infrastructure.OptionRepository;
 import com.team114.starbucks.domain.product.entity.Product;
-import com.team114.starbucks.domain.product.enums.ProductStatus;
 import com.team114.starbucks.domain.product.infrastructure.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,103 +31,12 @@ public class CartServiceImpl implements CartService {
     private final OptionRepository optionRepository;
     private final ProductRepository productRepository;
 
-    /**
-     * /api/v1/cart
-     * 1. 장바구니 항목 추가
-     * 2. 장바구니 항목 전체 조회
-     * 3. 장바구니 항목 정보 변경
-     * 4. 장바구니 항목 삭제
-     * 5. 장바구니 항목 단건 조회
-     * 6. 장바구니 항목 체크 여부 조회
-     * 7. 장바구니에서 상품 UUID 리스트 조회
-     */
-
-    /**
-     * 1. 장바구니 항목 추가
-     * @param memberUuid
-     * @param productUuid
-     * @param optionId
-     * @param addCartItemReqDto
-     * @return
-     */
     @Transactional
     @Override
-    public Void addCartItem(
-            String memberUuid, String productUuid, Long optionId, AddCartItemReqDto addCartItemReqDto
-    ) {
-        // product UUID 로 product 조회
-        Product product = productRepository.findByProductUuid(productUuid)
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
-
-        // 상품 판매 상태 조회
-        final ProductStatus productStatus = product.getProductStatus();
-
-        Boolean validityOfProductStatus;
-
-        /**
-         *   [1] 상품 상태에 대한 유효성 검사 - validityOfProductStatus
-         *   case1 : 상품 판매 상태가 판매 중이라면, validityOfProductStatus 는 true
-         *   case2 : 그 외는 validityOfProductStatus 는 false
-         */
-        if(productStatus == ProductStatus.For_Sale) {
-            validityOfProductStatus = true;
-        } else {
-            validityOfProductStatus = false;
-        }
-
-        // Option id 로 Option 조회
-        Option option = optionRepository.findByOptionId(optionId)
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
-
-        // 옵션 재고 값 조회
-        final Integer optionStock = option.getStock();
-
-        Boolean validityOfOptionStock;
-
-        /**
-         *   [2] 옵션에 대한 유효성 검사 - validityOfOptionStock
-         *   case1 : 옵션 재고가 0 이라면 validityOfOptionStock : false
-         *   case2 : 옵션 재고가 1 이상이라면 validityOfOptionStock : true
-         *   case3 : 그 외에는 예외 처리
-         */
-        if(optionStock >= 1) {
-            validityOfOptionStock = true;
-        } else if(optionStock == 0) {
-            validityOfOptionStock = false;
-        } else {
-            throw new BaseException(BaseResponseStatus.NO_EXIST_VALUE);
-        }
-
-        Boolean valid;
-
-        if(validityOfProductStatus && validityOfOptionStock) {
-            valid = true;
-        } else {
-            valid = false;
-        }
-
-        // Cart 객체 생성
-        Cart cart = Cart.builder()
-                .cartUuid(UUID.randomUUID().toString())
-                .memberUuid(memberUuid)
-                .optionId(optionId)
-                .productUuid(productUuid)
-                .quantity(addCartItemReqDto.getQuantity())
-                .selected(addCartItemReqDto.getSelected())
-                .valid(valid)
-                .build();
-
-        // save 호출
-        cartRepository.save(cart);
-
-        return null;
+    public void addCartItem(AddCartItemReqDto addCartItemReqDto) {
+        cartRepository.save(addCartItemReqDto.toEntity(UUID.randomUUID().toString()));
     }
 
-    /**
-     * 2. 장바구니 항목 전체 조회
-     * @param memberUuid
-     * @return
-     */
     @Override
     public List<GetAllCartItemsResDto> findAllCartItems(String memberUuid) {
 
@@ -169,12 +76,6 @@ public class CartServiceImpl implements CartService {
         return null;
     }
 
-    /**
-     * 4. 장바구니 항목 삭제
-     * @param memberUuid
-     * @param cartUuid
-     * @return
-     */
     @Transactional
     @Override
     public Void deleteCartItem(String memberUuid, String cartUuid) {
@@ -184,12 +85,6 @@ public class CartServiceImpl implements CartService {
         return null;
     }
 
-    /**
-     * 5. 장바구니 항목 단건 조회
-     * @param memberUuid
-     * @param cartUuid
-     * @return
-     */
     @Override
     public GetCartItemResDto getCartItem(String memberUuid, String cartUuid) {
 
@@ -208,12 +103,6 @@ public class CartServiceImpl implements CartService {
         return GetCartItemResDto.of(cart, product, option);
     }
 
-    /**
-     * 6. 장바구니 체크여부 조회
-     * @param memberUuid
-     * @param cartUuid
-     * @return
-     */
     @Override
     public GetItemSelectResDto getItemSelect(String memberUuid, String cartUuid) {
 
@@ -221,15 +110,14 @@ public class CartServiceImpl implements CartService {
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)));
     }
 
-    /**
-     * 7. 장바구니에서 상품 UUID 리스트 조회
-     * @param memberUuid
-     * @return
-     */
     @Override
-    public List<GetProductUuidResDto> getProductUuidList(String memberUuid) {
-
-        return cartRepository.findByMemberUuid(memberUuid).stream().map(GetProductUuidResDto::from).toList();
-
+    public List<GetProductUuidResDto> getProductUuidList(String memberUuid, String cartType) {
+        return cartRepository.findByMemberUuid(memberUuid)
+                .stream()
+                .filter(cart -> cart.getCartType().equals(
+                        CartType.valueOf(cartType.toUpperCase())
+                ))
+                .map(GetProductUuidResDto::from)
+                .toList();
     }
 }

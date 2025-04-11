@@ -4,8 +4,10 @@ import com.team114.starbucks.domain.cart.entity.Cart;
 import com.team114.starbucks.domain.cart.vo.out.GetProductUuidResVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class GetProductUuidResDto {
 
     private String productUuid;
@@ -16,14 +18,12 @@ public class GetProductUuidResDto {
     }
 
     public static GetProductUuidResDto from(Cart cart) {
-
         return GetProductUuidResDto.builder()
                 .productUuid(cart.getProductUuid())
                 .build();
     }
 
     public GetProductUuidResVo toVo() {
-
         return GetProductUuidResVo.builder()
                 .productUuid(productUuid)
                 .build();
