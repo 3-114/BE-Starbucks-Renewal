@@ -30,20 +30,30 @@ public class DeliveryServiceImpl implements DeliveryService {
     public DeliveryResponseDto saveDelivery(DeliveryCreateRequestDto deliveryCreateRequestDto) {
 
         String memberUuid = deliveryCreateRequestDto.getMemberUuid();
+        boolean wantsDefault = deliveryCreateRequestDto.isDefaultAddress();
 
-        // 1. 해당 회원의 기존 배송지가 하나도 없는 경우 → 무조건 기본 배송지로 설정
-        boolean isFirst = deliveryRepository.findAllByMemberUuid(memberUuid).isEmpty();
-        boolean isDefault = isFirst || deliveryCreateRequestDto.isDefaultAddress();
+        List<Delivery> existingDeliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
+        boolean hasNoDelivery = existingDeliveries.isEmpty();
+        boolean isDefault = false;
 
-        // 2. 기존 기본 배송지가 있고, 새 배송지를 기본으로 등록 요청한 경우 → 기존 기본 false로 변경
-        if (!isFirst && isDefault) {
-            deliveryRepository.findByMemberUuidAndDefaultAddressTrue(memberUuid)
-                    .ifPresent(existing -> {
-                        existing.updateDefaultAddress(false);
-                        deliveryRepository.save(existing);
-                    });
+        // 1. 배송지가 아예 없는 경우 → 무조건 기본 배송지로 설정
+        if (hasNoDelivery) {
+            isDefault = true;
+
+            // 2. 배송지가 있고, 사용자가 기본 배송지로 등록하고 싶어할 때
+        } else if (wantsDefault) {
+            isDefault = true;
+
+            // 해당 회원의 모든 배송지를 기본 배송지 false로 초기화
+            existingDeliveries.forEach(delivery -> {
+                if (delivery.isDefaultAddress()) {
+                    delivery.updateDefaultAddress(false);
+                    deliveryRepository.save(delivery);
+                }
+            });
         }
 
+        // 새 배송지 저장
         Delivery newDelivery = deliveryCreateRequestDto.toEntity(UUID.randomUUID().toString(), isDefault);
         Delivery savedDelivery = deliveryRepository.save(newDelivery);
 
@@ -53,13 +63,17 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Override
     public List<GetMyDeliveriesResponseDto> getCartDeliveriesByMemberUuid(String memberUuid) {
         List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
-        return deliveries.stream().map(GetMyDeliveriesResponseDto::from).toList();
+        return deliveries.stream()
+                .sorted((d1, d2) -> Boolean.compare(!d1.isDefaultAddress(), !d2.isDefaultAddress()))
+                .map(GetMyDeliveriesResponseDto::from).toList();
     }
 
     @Override
     public List<DeliveryResponseDto> getDeliveriesByMemberUuid(String memberUuid) {
         List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
-        return deliveries.stream().map(DeliveryResponseDto::from).toList();
+        return deliveries.stream()
+                .sorted((d1, d2) -> Boolean.compare(!d1.isDefaultAddress(), !d2.isDefaultAddress()))
+                .map(DeliveryResponseDto::from).toList();
     }
 
     // 장바구니에서 DeliveryUuid 리스트 조회
@@ -67,7 +81,9 @@ public class DeliveryServiceImpl implements DeliveryService {
     public List<GetDeliveryUuidResponseDto> getDeliveryUuidsByMemberUuid(String memberUuid) {
 
         List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
-        return deliveries.stream().map(GetDeliveryUuidResponseDto::from).toList();
+        return deliveries.stream()
+                .sorted((d1, d2) -> Boolean.compare(!d1.isDefaultAddress(), !d2.isDefaultAddress()))
+                .map(GetDeliveryUuidResponseDto::from).toList();
     }
 
     @Override
