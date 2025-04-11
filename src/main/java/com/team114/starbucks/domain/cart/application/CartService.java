@@ -1,6 +1,7 @@
 package com.team114.starbucks.domain.cart.application;
 
 import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
+import com.team114.starbucks.domain.cart.dto.in.CartUuidReqDto;
 import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetCartItemResDto;
@@ -24,4 +25,6 @@ public interface CartService {
     GetItemSelectResDto getItemSelect(String memberUuid, String cartUuid);
 
     List<GetProductUuidResDto> getProductUuidList(String memberUuid, String cartType);
+
+    void decreaseCartQuantity(CartUuidReqDto cartUuidReqDto);
 }
