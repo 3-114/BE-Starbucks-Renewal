@@ -16,7 +16,7 @@ public interface CartService {
 
     List<GetAllCartItemsResDto> findAllCartItems(String memberUuid);
 
-    Void updateCartItem(String memberUuid, String cartUuid, UpdateCartItemReqDto updateCartItemReqDto);
+    void updateCartItem(UpdateCartItemReqDto updateCartItemReqDto);
 
     Void deleteCartItem(String memberUuid, String cartUuid);
 

@@ -45,27 +45,9 @@ public class CartServiceImpl implements CartService {
 
     @Transactional
     @Override
-    public Void updateCartItem(String memberUuid, String cartUuid, UpdateCartItemReqDto updateCartItemReqDto) {
-
-        // cartUuid -> cart 조회
-        Cart cart = cartRepository.findByCartUuid(cartUuid).orElseThrow(
-                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
-        );
-
-        // newCart 객체 생성
-        Cart newCart = Cart.builder()
-                .id(cart.getId())
-                .memberUuid(cart.getMemberUuid())
-                .optionId(cart.getOptionId())
-                .productUuid(cart.getProductUuid())
-                .quantity(updateCartItemReqDto.getQuantity() == null ? cart.getQuantity() : updateCartItemReqDto.getQuantity())
-                .selected(updateCartItemReqDto.getSelected() == null ? cart.getSelected() : updateCartItemReqDto.getSelected())
-                .build();
-
-        // save 호출
-        cartRepository.save(newCart);
-
-        return null;
+    public void updateCartItem(UpdateCartItemReqDto updateCartItemReqDto) {
+        cartRepository.save(updateCartItemReqDto.toEntity(cartRepository.findByCartUuid(updateCartItemReqDto.getCartUuid())
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND))));
     }
 
     @Transactional

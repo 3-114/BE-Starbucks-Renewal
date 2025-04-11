@@ -28,6 +28,7 @@ public class CartController {
      * /api/v1/cart
      * 1. 장바구니 항목 생성
      * 2. 장바구니 항목 전체 리스트로 조회
+     * 3. 장바구니 항목 전체 정보 변경
      */
 
     private final CartService cartService;
@@ -62,19 +63,24 @@ public class CartController {
         );
     }
 
-    @PutMapping("/{cartUuid}")
+    /**
+     * 3. 장바구니 항목 전체 정보 변경
+     * @param memberUuid
+     * @param updateCartItemReqVo
+     * @return
+     */
+    @PutMapping
     public BaseResponseEntity<Void> updateCartItem(
-            @RequestHeader("X-Member-UUID") String memberUuid,
-            @PathVariable String cartUuid,
+            @RequestHeader("Member-Uuid") String memberUuid,
             @RequestBody UpdateCartItemReqVo updateCartItemReqVo
     ) {
-        cartService.updateCartItem(memberUuid, cartUuid, UpdateCartItemReqDto.from(updateCartItemReqVo));
-        return new BaseResponseEntity<>("장바구니 항목 정보 변경에 성공하였습니다.", null);
+        cartService.updateCartItem(UpdateCartItemReqDto.of(memberUuid, updateCartItemReqVo));
+        return new BaseResponseEntity<>("장바구니 항목 정보 전체 변경에 성공하였습니다.");
     }
 
     @DeleteMapping("/{cartUuid}")
     public BaseResponseEntity<Void> deleteCartItem(
-            @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
+            @RequestHeader("Member-Uuid") String memberUuid,            // member UUID
             @PathVariable String cartUuid
     ) {
         cartService.deleteCartItem(memberUuid, cartUuid);
@@ -83,7 +89,7 @@ public class CartController {
 
     @GetMapping("/{cartUuid}")
     public BaseResponseEntity<GetCartItemResVo> getCartItem(
-            @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
+            @RequestHeader("Member-Uuid") String memberUuid,            // member UUID
             @PathVariable String cartUuid
     ) {
         GetCartItemResVo result = cartService.getCartItem(memberUuid, cartUuid).toVo();
@@ -92,7 +98,7 @@ public class CartController {
 
     @GetMapping("/{cartUuid}/get-selected")
     public BaseResponseEntity<GetItemSelectResVo> getItemSelect(
-            @RequestHeader("X-Member-UUID") String memberUuid,
+            @RequestHeader("Member-Uuid") String memberUuid,
             @PathVariable String cartUuid
     ) {
         return new BaseResponseEntity<>(
