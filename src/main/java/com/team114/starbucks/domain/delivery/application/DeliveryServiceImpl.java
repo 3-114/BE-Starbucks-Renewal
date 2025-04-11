@@ -88,45 +88,23 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Override
     @Transactional
-    public DeliveryResponseDto updateDelivery(
-            String deliveryUuid,
-            DeliveryUpdateRequestDto deliveryUpdateRequestDto,
-            String memberUuid
-    ) {
-        Delivery delivery = deliveryRepository.findByDeliveryUuid(deliveryUuid).orElseThrow(
+    public void updateDelivery(DeliveryUpdateRequestDto deliveryUpdateRequestDto) {
+
+        Delivery delivery = deliveryRepository.findByDeliveryUuid(deliveryUpdateRequestDto.getDeliveryUuid()).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );
 
-        Delivery updatedDelivery = Delivery.builder()
-                .id(delivery.getId())
-                .deliveryUuid(deliveryUuid)
-                .memberUuid(memberUuid)
-                .alias(deliveryUpdateRequestDto.getAlias())
-                .recipient(deliveryUpdateRequestDto.getRecipient())
-                .zoneCode(deliveryUpdateRequestDto.getZoneCode())
-                .mainAddress(deliveryUpdateRequestDto.getMainAddress())
-                .detailAddress(deliveryUpdateRequestDto.getDetailAddress())
-                .phoneNumber1(deliveryUpdateRequestDto.getPhoneNumber1())
-                .phoneNumber2(deliveryUpdateRequestDto.getPhoneNumber2())
-                .deliveryMemo(deliveryUpdateRequestDto.getDeliveryMemo())
-                .defaultAddress(deliveryUpdateRequestDto.isDefaultAddress())
-                .build();
-
-        deliveryRepository.save(updatedDelivery);
-
-        return DeliveryResponseDto.from(updatedDelivery);
+        deliveryRepository.save(deliveryUpdateRequestDto.toEntity(delivery));
     }
 
     @Override
     @Transactional
-    public DeliveryResponseDto deleteDelivery(String deliveryUuid) {
+    public void deleteDelivery(String deliveryUuid) {
 
         Delivery delivery = deliveryRepository.findByDeliveryUuid(deliveryUuid).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );
 
         deliveryRepository.delete(delivery);
-
-        return DeliveryResponseDto.from(delivery);
     }
 }

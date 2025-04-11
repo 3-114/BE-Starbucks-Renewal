@@ -65,9 +65,8 @@ public class DeliveryUpdateRequestDto {
                 .build();
     }
 
-    public Delivery toEntity(Long id) {
+    public Delivery toEntity(Delivery delivery) {
         return Delivery.builder()
-                .id(id)
                 .deliveryUuid(deliveryUuid)
                 .memberUuid(memberUuid)
                 .alias(alias)
