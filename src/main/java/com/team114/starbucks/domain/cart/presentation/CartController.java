@@ -3,10 +3,12 @@ package com.team114.starbucks.domain.cart.presentation;
 import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.cart.application.CartService;
 import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
+import com.team114.starbucks.domain.cart.dto.in.CartUuidReqDto;
 import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetProductUuidResDto;
 import com.team114.starbucks.domain.cart.vo.in.AddCartItemReqVo;
+import com.team114.starbucks.domain.cart.vo.in.CartUuidReqVo;
 import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.out.GetAllCartItemsResVo;
 import com.team114.starbucks.domain.cart.vo.out.GetCartItemResVo;
@@ -97,5 +99,14 @@ public class CartController {
                 cartService.getProductUuidList(memberUuid, cartType)
                         .stream().map(GetProductUuidResDto::toVo).toList()
         );
+    }
+
+    @PutMapping("/item-decrease")
+    public BaseResponseEntity<Void> decreaseCartQuantity(
+            @RequestHeader("Member-Uuid") String memberUuid,
+            @RequestBody CartUuidReqVo cartUuidReqVo
+    ) {
+        cartService.decreaseCartQuantity(CartUuidReqDto.of(memberUuid, cartUuidReqVo));
+        return new BaseResponseEntity<>("장바구니에서 해당 장바구니 항목 1개 감소");
     }
 }

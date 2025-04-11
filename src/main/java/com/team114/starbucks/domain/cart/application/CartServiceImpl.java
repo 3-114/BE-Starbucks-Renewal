@@ -3,6 +3,7 @@ package com.team114.starbucks.domain.cart.application;
 import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
+import com.team114.starbucks.domain.cart.dto.in.CartUuidReqDto;
 import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetCartItemResDto;
@@ -119,5 +120,12 @@ public class CartServiceImpl implements CartService {
                 ))
                 .map(GetProductUuidResDto::from)
                 .toList();
+    }
+
+    @Transactional
+    @Override
+    public void decreaseCartQuantity(CartUuidReqDto cartUuidReqDto) {
+        cartRepository.save(cartUuidReqDto.decreaseQuantity(cartRepository.findByCartUuid(cartUuidReqDto.getCartUuid())
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND))));
     }
 }
