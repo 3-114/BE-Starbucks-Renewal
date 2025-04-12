@@ -188,7 +188,7 @@ public class CartController {
             @PathVariable String cartType
     ) {
         return new BaseResponseEntity<>(
-                "",
+                "장바구니 유형 별로 총 항목 갯수 조회 성공",
                 cartService.countTotalCart(CartTypeReqDto.of(memberUuid, cartType)).toVo());
     }
 }
