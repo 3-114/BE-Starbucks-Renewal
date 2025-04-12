@@ -27,4 +27,6 @@ public interface CartService {
     List<GetProductUuidResDto> getProductUuidList(String memberUuid, String cartType);
 
     void decreaseCartQuantity(CartUuidReqDto cartUuidReqDto);
+
+    void increaseCartQuantity(CartUuidReqDto cartUuidReqDto);
 }

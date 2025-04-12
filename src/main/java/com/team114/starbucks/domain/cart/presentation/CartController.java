@@ -101,6 +101,12 @@ public class CartController {
         );
     }
 
+    /**
+     * 장바구니에서 해당 장바구니 항목 1개 감소
+     * @param memberUuid
+     * @param cartUuidReqVo
+     * @return
+     */
     @PutMapping("/item-decrease")
     public BaseResponseEntity<Void> decreaseCartQuantity(
             @RequestHeader("Member-Uuid") String memberUuid,
@@ -108,5 +114,20 @@ public class CartController {
     ) {
         cartService.decreaseCartQuantity(CartUuidReqDto.of(memberUuid, cartUuidReqVo));
         return new BaseResponseEntity<>("장바구니에서 해당 장바구니 항목 1개 감소");
+    }
+
+    /**
+     * 장바구니에서 해당 장바구니 항목 1개 증가
+     * @param memberUuid
+     * @param cartUuidReqVo
+     * @return
+     */
+    @PutMapping("/item-increase")
+    public BaseResponseEntity<Void> increaseCartQuantity(
+            @RequestHeader("Member-Uuid") String memberUuid,
+            @RequestBody CartUuidReqVo cartUuidReqVo
+    ) {
+        cartService.increaseCartQuantity(CartUuidReqDto.of(memberUuid, cartUuidReqVo));
+        return new BaseResponseEntity<>("장바구니에서 해당 장바구니 항목 1개 증가");
     }
 }
