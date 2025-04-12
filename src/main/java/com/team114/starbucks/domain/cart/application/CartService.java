@@ -18,7 +18,7 @@ public interface CartService {
 
     void updateCartItem(UpdateCartItemReqDto updateCartItemReqDto);
 
-    Void deleteCartItem(String memberUuid, String cartUuid);
+    void deleteCartItem(CartUuidReqDto cartUuidReqDto);
 
     GetCartItemResDto getCartItem(String memberUuid, String cartUuid);
 

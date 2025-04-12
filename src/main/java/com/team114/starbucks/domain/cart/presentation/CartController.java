@@ -29,6 +29,7 @@ public class CartController {
      * 1. 장바구니 항목 생성
      * 2. 장바구니 항목 전체 리스트로 조회
      * 3. 장바구니 항목 전체 정보 변경
+     * 4. 장바구니 항목 삭제
      */
 
     private final CartService cartService;
@@ -78,18 +79,24 @@ public class CartController {
         return new BaseResponseEntity<>("장바구니 항목 정보 전체 변경에 성공하였습니다.");
     }
 
-    @DeleteMapping("/{cartUuid}")
+    /**
+     * 4. 장바구니 항목 삭제
+     * @param memberUuid
+     * @param cartUuidReqVo
+     * @return
+     */
+    @DeleteMapping
     public BaseResponseEntity<Void> deleteCartItem(
-            @RequestHeader("Member-Uuid") String memberUuid,            // member UUID
-            @PathVariable String cartUuid
+            @RequestHeader("Member-Uuid") String memberUuid,
+            @RequestBody CartUuidReqVo cartUuidReqVo
     ) {
-        cartService.deleteCartItem(memberUuid, cartUuid);
-        return new BaseResponseEntity<>("장바구니 항목 삭제에 성공하였습니다.", null);
+        cartService.deleteCartItem(CartUuidReqDto.of(memberUuid, cartUuidReqVo));
+        return new BaseResponseEntity<>("장바구니 항목 삭제에 성공하였습니다.");
     }
 
     @GetMapping("/{cartUuid}")
     public BaseResponseEntity<GetCartItemResVo> getCartItem(
-            @RequestHeader("Member-Uuid") String memberUuid,            // member UUID
+            @RequestHeader("Member-Uuid") String memberUuid,
             @PathVariable String cartUuid
     ) {
         GetCartItemResVo result = cartService.getCartItem(memberUuid, cartUuid).toVo();

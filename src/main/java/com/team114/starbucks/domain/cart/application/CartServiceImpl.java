@@ -52,11 +52,8 @@ public class CartServiceImpl implements CartService {
 
     @Transactional
     @Override
-    public Void deleteCartItem(String memberUuid, String cartUuid) {
-
-        cartRepository.deleteByCartUuid(cartUuid);
-
-        return null;
+    public void deleteCartItem(CartUuidReqDto cartUuidReqDto) {
+        cartRepository.deleteByCartUuid(cartUuidReqDto.getCartUuid());
     }
 
     @Override
