@@ -31,6 +31,9 @@ public class CartController {
      * 3. 장바구니 항목 전체 정보 변경
      * 4. 장바구니 항목 삭제
      * 5. 장바구니 항목 단건 조회
+     * 6. 장바구니 항목 체크 여부 조회
+     * 7. 장바구니에서 장바구니 유형별로 상품 UUID 리스트 조회 (일반/예약)
+     * 8. 장바구니에서 항목 수량 감소
      */
 
     private final CartService cartService;
@@ -112,20 +115,27 @@ public class CartController {
         );
     }
 
-    @GetMapping("/{cartUuid}/get-selected")
+    /**
+     * 6. 장바구니 항목 체크 여부 조회
+     * @param memberUuid
+     * @param cartUuidReqVo
+     * @return
+     */
+    @GetMapping("/get-selected")
     public BaseResponseEntity<GetItemSelectResVo> getItemSelect(
             @RequestHeader("Member-Uuid") String memberUuid,
-            @PathVariable String cartUuid
+            @RequestBody CartUuidReqVo cartUuidReqVo
     ) {
         return new BaseResponseEntity<>(
                 "장바구니 항목 체크 여부 조회에 성공하였습니다.",
-                cartService.getItemSelect(memberUuid, cartUuid).toVo()
+                cartService.getItemSelect(CartUuidReqDto.of(memberUuid, cartUuidReqVo)).toVo()
         );
     }
 
     /**
-     * 장바구니에서 Product Uuid 리스트 조회
+     * 7. 장바구니에서 장바구니 유형별로 상품 UUID 리스트 조회 (일반/예약)
      * @param memberUuid
+     * @param cartType
      * @return
      */
     // cartType : general, reservation
@@ -141,6 +151,12 @@ public class CartController {
         );
     }
 
+    /**
+     * 8. 장바구니에서 항목 수량 감소
+     * @param memberUuid
+     * @param cartUuidReqVo
+     * @return
+     */
     @PutMapping("/item-decrease")
     public BaseResponseEntity<Void> decreaseCartQuantity(
             @RequestHeader("Member-Uuid") String memberUuid,

@@ -9,7 +9,6 @@ import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetCartItemResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetItemSelectResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetProductUuidResDto;
-import com.team114.starbucks.domain.cart.entity.Cart;
 import com.team114.starbucks.domain.cart.enums.CartType;
 import com.team114.starbucks.domain.cart.infrastructure.CartRepository;
 import lombok.RequiredArgsConstructor;
@@ -57,9 +56,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public GetItemSelectResDto getItemSelect(String memberUuid, String cartUuid) {
-
-        return GetItemSelectResDto.from(cartRepository.findByCartUuid(cartUuid)
+    public GetItemSelectResDto getItemSelect(CartUuidReqDto cartUuidReqDto) {
+        return GetItemSelectResDto.from(cartRepository.findByCartUuid(cartUuidReqDto.getCartUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)));
     }
 
