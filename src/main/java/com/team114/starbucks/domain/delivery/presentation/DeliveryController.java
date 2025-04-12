@@ -45,17 +45,14 @@ public class DeliveryController {
     @PutMapping("/{deliveryUuid}")
     public BaseResponseEntity<DeliveryResponseVo> updateDelivery(
             @PathVariable String deliveryUuid,
-            @RequestBody DeliveryUpdateRequestVo deliveryUpdateRequestVo,
-            @RequestHeader("Member-Uuid") String memberUuid) {
+            @RequestHeader("Member-Uuid") String memberUuid,
+            @RequestBody DeliveryUpdateRequestVo deliveryUpdateRequestVo) {
 
-        DeliveryResponseVo result = deliveryService.updateDelivery(
-                deliveryUuid,
-                DeliveryUpdateRequestDto.from(deliveryUpdateRequestVo),
-                memberUuid
-        ).toVo();
+        deliveryService.updateDelivery(DeliveryUpdateRequestDto.from(deliveryUpdateRequestVo, memberUuid, deliveryUuid));
 
-        return new BaseResponseEntity<>("배송지가 수정되었습니다.", result);
+        return new BaseResponseEntity<>("배송지가 수정되었습니다.");
     }
+
 
     // 3. 마이페이지 배송지 목록 조회
     @Operation(summary = "배송지 목록 조회", description = "회원의 전체 배송지를 조회합니다.", tags = {"delivery"})
