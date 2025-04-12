@@ -14,11 +14,13 @@ public interface ProductService {
 
     CreateProductResponseDto saveProduct(CreateProductRequestDto createProductRequestDto);
 
-    Void updateProduct(UpdateProductRequestDto updateProductRequestDto);
+    void updateProduct(UpdateProductRequestDto updateProductRequestDto);
 
     Void deleteProduct(String productUuid);
 
     GetProductPreviewResponseDto getProductPreview(String productUuid);
+
+    Boolean checkProductExist(String productUuid);
 
 
 

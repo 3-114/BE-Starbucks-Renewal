@@ -7,14 +7,12 @@ import com.team114.starbucks.domain.product.dto.in.CreateProductRequestDto;
 import com.team114.starbucks.domain.product.dto.in.UpdateProductRequestDto;
 import com.team114.starbucks.domain.product.dto.out.CreateProductResponseDto;
 import com.team114.starbucks.domain.product.dto.out.GetProductByIdResponseDto;
+import com.team114.starbucks.domain.product.dto.out.GetProductPreviewResponseDto;
 import com.team114.starbucks.domain.product.dto.out.GetProductResponseDto;
 import com.team114.starbucks.domain.product.vo.in.CreateProductRequestVo;
 import com.team114.starbucks.domain.product.vo.in.DeleteProductRequestVo;
 import com.team114.starbucks.domain.product.vo.in.UpdateProductRequestVo;
-import com.team114.starbucks.domain.product.vo.out.CreateProductResponseVo;
-import com.team114.starbucks.domain.product.vo.out.GetProductByIdResponseVo;
-import com.team114.starbucks.domain.product.vo.out.GetProductResponseVo;
-import com.team114.starbucks.domain.product.vo.out.UpdateProductResponseVo;
+import com.team114.starbucks.domain.product.vo.out.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -97,10 +95,18 @@ public class ProductController {
         productService.deleteProduct(
                 deleteProductRequestVo.getProductUuid()
         );
-
-
         return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 삭제 성공", 200, null);
+    }
 
+    @GetMapping("/preview/{productUuid}")
+    public BaseResponseEntity<GetProductPreviewResponseVo> getProductPreview(
+            @PathVariable String productUuid
+    ) {
+        GetProductPreviewResponseDto dto = productService.getProductPreview(productUuid);
+
+        GetProductPreviewResponseVo vo = dto.toVo();
+
+        return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 미리보기 성공", 200, vo);
 
     }
 

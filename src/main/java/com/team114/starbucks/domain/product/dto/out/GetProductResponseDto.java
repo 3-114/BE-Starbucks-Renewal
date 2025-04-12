@@ -19,7 +19,6 @@ public class GetProductResponseDto {
     private Integer productPrice;
     private Integer shippingFee;
     private ProductStatus productStatus;
-    private String description;
 
     @Builder
     public GetProductResponseDto(
@@ -28,8 +27,7 @@ public class GetProductResponseDto {
             String brand,
             Integer productPrice,
             Integer shippingFee,
-            ProductStatus productStatus,
-            String description
+            ProductStatus productStatus
     ) {
         this.productUuid = productUuid;
         this.productName = productName;
@@ -37,11 +35,10 @@ public class GetProductResponseDto {
         this.productPrice = productPrice;
         this.shippingFee = shippingFee;
         this.productStatus = productStatus;
-        this.description = description;
     }
 
     // dto <- entity 정적 팩토리 메서드
-    public static GetProductResponseDto from(Product product, Optional<ProductDescription> productDescription) {
+    public static GetProductResponseDto from(Product product) {
 
         return GetProductResponseDto.builder()
                 .productUuid(product.getProductUuid())
@@ -50,7 +47,6 @@ public class GetProductResponseDto {
                 .productPrice(product.getProductPrice())
                 .shippingFee(product.getShippingFee())
                 .productStatus(product.getProductStatus())
-                .description(productDescription.get().getProductDescription())
                 .build();
     }
 
