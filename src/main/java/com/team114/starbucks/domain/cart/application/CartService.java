@@ -20,7 +20,7 @@ public interface CartService {
 
     void deleteCartItem(CartUuidReqDto cartUuidReqDto);
 
-    GetCartItemResDto getCartItem(String memberUuid, String cartUuid);
+    GetCartItemResDto getCartItem(CartUuidReqDto cartUuidReqDto);
 
     GetItemSelectResDto getItemSelect(String memberUuid, String cartUuid);
 

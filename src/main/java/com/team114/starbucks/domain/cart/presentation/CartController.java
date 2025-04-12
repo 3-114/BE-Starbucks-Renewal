@@ -30,6 +30,7 @@ public class CartController {
      * 2. 장바구니 항목 전체 리스트로 조회
      * 3. 장바구니 항목 전체 정보 변경
      * 4. 장바구니 항목 삭제
+     * 5. 장바구니 항목 단건 조회
      */
 
     private final CartService cartService;
@@ -54,7 +55,7 @@ public class CartController {
      * @param memberUuid
      * @return List<GetAllCartItemsResVo>
      */
-    @GetMapping
+    @GetMapping("/all")
     public BaseResponseEntity<List<GetAllCartItemsResVo>> getAllCartItems(
             @RequestHeader("Member-Uuid") String memberUuid
     ) {
@@ -94,13 +95,21 @@ public class CartController {
         return new BaseResponseEntity<>("장바구니 항목 삭제에 성공하였습니다.");
     }
 
-    @GetMapping("/{cartUuid}")
+    /**
+     * 5. 장바구니 항목 단건 조회
+     * @param memberUuid
+     * @param cartUuidReqVo
+     * @return
+     */
+    @GetMapping
     public BaseResponseEntity<GetCartItemResVo> getCartItem(
             @RequestHeader("Member-Uuid") String memberUuid,
-            @PathVariable String cartUuid
+            @RequestBody CartUuidReqVo cartUuidReqVo
     ) {
-        GetCartItemResVo result = cartService.getCartItem(memberUuid, cartUuid).toVo();
-        return new BaseResponseEntity<>("장바구니 항목 단건 조회에 성공하였습니다.", result);
+        return new BaseResponseEntity<>(
+                "장바구니 항목 단건 조회에 성공하였습니다.",
+                cartService.getCartItem(CartUuidReqDto.of(memberUuid, cartUuidReqVo)).toVo()
+        );
     }
 
     @GetMapping("/{cartUuid}/get-selected")
@@ -126,7 +135,7 @@ public class CartController {
             @PathVariable String cartType
     ) {
         return new BaseResponseEntity<>(
-                "장바구니에서 Product UUID 리스트 조회 성공",
+                "장바구니에서 장바구니 유형별로 Product UUID 리스트 조회 성공",
                 cartService.getProductUuidList(memberUuid, cartType)
                         .stream().map(GetProductUuidResDto::toVo).toList()
         );

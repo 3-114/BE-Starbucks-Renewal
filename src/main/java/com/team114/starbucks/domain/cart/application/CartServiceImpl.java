@@ -12,10 +12,6 @@ import com.team114.starbucks.domain.cart.dto.out.GetProductUuidResDto;
 import com.team114.starbucks.domain.cart.entity.Cart;
 import com.team114.starbucks.domain.cart.enums.CartType;
 import com.team114.starbucks.domain.cart.infrastructure.CartRepository;
-import com.team114.starbucks.domain.option.entity.Option;
-import com.team114.starbucks.domain.option.infrastructure.OptionRepository;
-import com.team114.starbucks.domain.product.entity.Product;
-import com.team114.starbucks.domain.product.infrastructure.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,8 +25,6 @@ import java.util.UUID;
 public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
-    private final OptionRepository optionRepository;
-    private final ProductRepository productRepository;
 
     @Transactional
     @Override
@@ -57,21 +51,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public GetCartItemResDto getCartItem(String memberUuid, String cartUuid) {
-
-        Cart cart = cartRepository.findByCartUuid(cartUuid).orElseThrow(
-                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
-        );
-
-        Product product = productRepository.findByProductUuid(cart.getProductUuid()).orElseThrow(
-                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
-        );
-
-        Option option = optionRepository.findByOptionId(cart.getOptionId()).orElseThrow(
-                () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
-        );
-
-        return GetCartItemResDto.of(cart, product, option);
+    public GetCartItemResDto getCartItem(CartUuidReqDto cartUuidReqDto) {
+        return GetCartItemResDto.from(cartRepository.findByCartUuid(cartUuidReqDto.getCartUuid())
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)));
     }
 
     @Override
