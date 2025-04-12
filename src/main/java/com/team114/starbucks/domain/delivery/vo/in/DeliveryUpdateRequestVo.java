@@ -5,8 +5,6 @@ import lombok.Getter;
 @Getter
 public class DeliveryUpdateRequestVo {
 
-    private String deliveryUuid;
-    private String memberUuid;
     private String alias;
     private String recipient;
     private String zoneCode;

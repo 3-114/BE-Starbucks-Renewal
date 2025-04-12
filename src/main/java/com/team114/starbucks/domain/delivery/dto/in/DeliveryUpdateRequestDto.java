@@ -8,17 +8,17 @@ import lombok.Getter;
 @Getter
 public class DeliveryUpdateRequestDto {
 
-    private final String deliveryUuid;
-    private final String memberUuid;
-    private final String alias;
-    private final String recipient;
-    private final String zoneCode;
-    private final String mainAddress;
-    private final String detailAddress;
-    private final String phoneNumber1;
-    private final String phoneNumber2;
-    private final String deliveryMemo;
-    private final boolean defaultAddress;
+    private String deliveryUuid;
+    private String memberUuid;
+    private String alias;
+    private String recipient;
+    private String zoneCode;
+    private String mainAddress;
+    private String detailAddress;
+    private String phoneNumber1;
+    private String phoneNumber2;
+    private String deliveryMemo;
+    private boolean defaultAddress;
 
     @Builder
     public DeliveryUpdateRequestDto(
@@ -48,11 +48,11 @@ public class DeliveryUpdateRequestDto {
     }
 
     public static DeliveryUpdateRequestDto from(
-            DeliveryUpdateRequestVo deliveryUpdateRequestVo
+            DeliveryUpdateRequestVo deliveryUpdateRequestVo, String memberUuid, String deliveryUuid
     ) {
         return DeliveryUpdateRequestDto.builder()
-                .deliveryUuid(deliveryUpdateRequestVo.getDeliveryUuid())
-                .memberUuid(deliveryUpdateRequestVo.getMemberUuid())
+                .deliveryUuid(deliveryUuid)
+                .memberUuid(memberUuid)
                 .alias(deliveryUpdateRequestVo.getAlias())
                 .recipient(deliveryUpdateRequestVo.getRecipient())
                 .zoneCode(deliveryUpdateRequestVo.getZoneCode())
@@ -65,10 +65,10 @@ public class DeliveryUpdateRequestDto {
                 .build();
     }
 
-    public Delivery toEntity(Long id) {
+    public Delivery toEntity(Delivery delivery) {
         return Delivery.builder()
-                .id(id)
-                .deliveryUuid(deliveryUuid)
+                .id(delivery.getId())
+                .deliveryUuid(delivery.getDeliveryUuid())
                 .memberUuid(memberUuid)
                 .alias(alias)
                 .recipient(recipient)

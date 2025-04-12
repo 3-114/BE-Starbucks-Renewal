@@ -18,11 +18,7 @@ public interface DeliveryService {
 
     List<GetDeliveryUuidResponseDto> getDeliveryUuidsByMemberUuid(String memberUuid);
 
-    DeliveryResponseDto updateDelivery(
-            String deliveryUuid,
-            DeliveryUpdateRequestDto deliveryUpdateRequestDto,
-            String memberUuid
-    );
+    void updateDelivery(DeliveryUpdateRequestDto deliveryUpdateRequestDto);
 
-    DeliveryResponseDto deleteDelivery(String deliveryUuid);
+    void deleteDelivery(String deliveryUuid);
 }

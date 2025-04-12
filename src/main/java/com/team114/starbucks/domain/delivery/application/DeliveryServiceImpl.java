@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -60,6 +59,7 @@ public class DeliveryServiceImpl implements DeliveryService {
         return DeliveryResponseDto.from(savedDelivery);
     }
 
+    // 장바구니에서 Deliveryuuid 목록 전체 조회
     @Override
     public List<GetMyDeliveriesResponseDto> getCartDeliveriesByMemberUuid(String memberUuid) {
         List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
@@ -68,6 +68,8 @@ public class DeliveryServiceImpl implements DeliveryService {
                 .map(GetMyDeliveriesResponseDto::from).toList();
     }
 
+
+    // 마이페이지에서 배송지 목록 전체 조회
     @Override
     public List<DeliveryResponseDto> getDeliveriesByMemberUuid(String memberUuid) {
         List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
@@ -86,47 +88,28 @@ public class DeliveryServiceImpl implements DeliveryService {
                 .map(GetDeliveryUuidResponseDto::from).toList();
     }
 
+
+    // 배송지 수정
     @Override
     @Transactional
-    public DeliveryResponseDto updateDelivery(
-            String deliveryUuid,
-            DeliveryUpdateRequestDto deliveryUpdateRequestDto,
-            String memberUuid
-    ) {
-        Delivery delivery = deliveryRepository.findByDeliveryUuid(deliveryUuid).orElseThrow(
+    public void updateDelivery(DeliveryUpdateRequestDto deliveryUpdateRequestDto) {
+
+        Delivery delivery = deliveryRepository.findByDeliveryUuid(deliveryUpdateRequestDto.getDeliveryUuid()).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );
 
-        Delivery updatedDelivery = Delivery.builder()
-                .id(delivery.getId())
-                .deliveryUuid(deliveryUuid)
-                .memberUuid(memberUuid)
-                .alias(deliveryUpdateRequestDto.getAlias())
-                .recipient(deliveryUpdateRequestDto.getRecipient())
-                .zoneCode(deliveryUpdateRequestDto.getZoneCode())
-                .mainAddress(deliveryUpdateRequestDto.getMainAddress())
-                .detailAddress(deliveryUpdateRequestDto.getDetailAddress())
-                .phoneNumber1(deliveryUpdateRequestDto.getPhoneNumber1())
-                .phoneNumber2(deliveryUpdateRequestDto.getPhoneNumber2())
-                .deliveryMemo(deliveryUpdateRequestDto.getDeliveryMemo())
-                .defaultAddress(deliveryUpdateRequestDto.isDefaultAddress())
-                .build();
-
-        deliveryRepository.save(updatedDelivery);
-
-        return DeliveryResponseDto.from(updatedDelivery);
+        deliveryRepository.save(deliveryUpdateRequestDto.toEntity(delivery));
     }
 
+    // 배송지 삭제
     @Override
     @Transactional
-    public DeliveryResponseDto deleteDelivery(String deliveryUuid) {
+    public void deleteDelivery(String deliveryUuid) {
 
         Delivery delivery = deliveryRepository.findByDeliveryUuid(deliveryUuid).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );
 
         deliveryRepository.delete(delivery);
-
-        return DeliveryResponseDto.from(delivery);
     }
 }
