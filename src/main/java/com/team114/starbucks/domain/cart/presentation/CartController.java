@@ -24,8 +24,26 @@ import java.util.List;
 @RequestMapping("/api/v1/cart")
 public class CartController {
 
+    /**
+     * /api/v1/cart
+     * 1. 장바구니 항목 생성
+     * 2. 장바구니 항목 전체 리스트로 조회
+     * 3. 장바구니 항목 전체 정보 변경
+     * 4. 장바구니 항목 삭제
+     * 5. 장바구니 항목 단건 조회
+     * 6. 장바구니 항목 체크 여부 조회
+     * 7. 장바구니에서 장바구니 유형별로 상품 UUID 리스트 조회 (일반/예약)
+     * 8. 장바구니에서 항목 수량 감소
+     */
+
     private final CartService cartService;
 
+    /**
+     * 1. 장바구니 항목 생성
+     * @param memberUuid
+     * @param addCartItemReqVo
+     * @return
+     */
     @PostMapping
     public BaseResponseEntity<Void> addCartItem(
             @RequestHeader("Member-Uuid") String memberUuid,
@@ -35,57 +53,89 @@ public class CartController {
         return new BaseResponseEntity<>("장바구니에 추가되었습니다.");
     }
 
-    @GetMapping
+    /**
+     * 2. 장바구니 항목 전체 리스트로 조회
+     * @param memberUuid
+     * @return List<GetAllCartItemsResVo>
+     */
+    @GetMapping("/all")
     public BaseResponseEntity<List<GetAllCartItemsResVo>> getAllCartItems(
-            @RequestHeader("X-Member-UUID") String memberUuid            // member UUID
-    ) {
-        List<GetAllCartItemsResVo> result = cartService.findAllCartItems(memberUuid)
-                .stream().map(GetAllCartItemsResDto::toVo).toList();
-        return new BaseResponseEntity<>("장바구니 전체 목록 조회에 성공하였습니다.", result);
-    }
-
-    @PutMapping("/{cartUuid}")
-    public BaseResponseEntity<Void> updateCartItem(
-            @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
-            @PathVariable String cartUuid,
-            @RequestBody UpdateCartItemReqVo updateCartItemReqVo          // 수량, 선택 여부
-    ) {
-        cartService.updateCartItem(memberUuid, cartUuid, UpdateCartItemReqDto.from(updateCartItemReqVo));
-        return new BaseResponseEntity<>("장바구니 항목 정보 변경에 성공하였습니다.", null);
-    }
-
-    @DeleteMapping("/{cartUuid}")
-    public BaseResponseEntity<Void> deleteCartItem(
-            @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
-            @PathVariable String cartUuid
-    ) {
-        cartService.deleteCartItem(memberUuid, cartUuid);
-        return new BaseResponseEntity<>("장바구니 항목 삭제에 성공하였습니다.", null);
-    }
-
-    @GetMapping("/{cartUuid}")
-    public BaseResponseEntity<GetCartItemResVo> getCartItem(
-            @RequestHeader("X-Member-UUID") String memberUuid,            // member UUID
-            @PathVariable String cartUuid
-    ) {
-        GetCartItemResVo result = cartService.getCartItem(memberUuid, cartUuid).toVo();
-        return new BaseResponseEntity<>("장바구니 항목 단건 조회에 성공하였습니다.", result);
-    }
-
-    @GetMapping("/{cartUuid}/get-selected")
-    public BaseResponseEntity<GetItemSelectResVo> getItemSelect(
-            @RequestHeader("X-Member-UUID") String memberUuid,
-            @PathVariable String cartUuid
+            @RequestHeader("Member-Uuid") String memberUuid
     ) {
         return new BaseResponseEntity<>(
-                "장바구니 항목 체크 여부 조회에 성공하였습니다.",
-                cartService.getItemSelect(memberUuid, cartUuid).toVo()
+                "장바구니 전체 목록 조회에 성공하였습니다.",
+                cartService.findAllCartItems(memberUuid).stream().map(GetAllCartItemsResDto::toVo).toList()
         );
     }
 
     /**
-     * 장바구니에서 Product Uuid 리스트 조회
+     * 3. 장바구니 항목 전체 정보 변경
      * @param memberUuid
+     * @param updateCartItemReqVo
+     * @return
+     */
+    @PutMapping
+    public BaseResponseEntity<Void> updateCartItem(
+            @RequestHeader("Member-Uuid") String memberUuid,
+            @RequestBody UpdateCartItemReqVo updateCartItemReqVo
+    ) {
+        cartService.updateCartItem(UpdateCartItemReqDto.of(memberUuid, updateCartItemReqVo));
+        return new BaseResponseEntity<>("장바구니 항목 정보 전체 변경에 성공하였습니다.");
+    }
+
+    /**
+     * 4. 장바구니 항목 삭제
+     * @param memberUuid
+     * @param cartUuidReqVo
+     * @return
+     */
+    @DeleteMapping
+    public BaseResponseEntity<Void> deleteCartItem(
+            @RequestHeader("Member-Uuid") String memberUuid,
+            @RequestBody CartUuidReqVo cartUuidReqVo
+    ) {
+        cartService.deleteCartItem(CartUuidReqDto.of(memberUuid, cartUuidReqVo));
+        return new BaseResponseEntity<>("장바구니 항목 삭제에 성공하였습니다.");
+    }
+
+    /**
+     * 5. 장바구니 항목 단건 조회
+     * @param memberUuid
+     * @param cartUuidReqVo
+     * @return
+     */
+    @GetMapping
+    public BaseResponseEntity<GetCartItemResVo> getCartItem(
+            @RequestHeader("Member-Uuid") String memberUuid,
+            @RequestBody CartUuidReqVo cartUuidReqVo
+    ) {
+        return new BaseResponseEntity<>(
+                "장바구니 항목 단건 조회에 성공하였습니다.",
+                cartService.getCartItem(CartUuidReqDto.of(memberUuid, cartUuidReqVo)).toVo()
+        );
+    }
+
+    /**
+     * 6. 장바구니 항목 체크 여부 조회
+     * @param memberUuid
+     * @param cartUuidReqVo
+     * @return
+     */
+    @GetMapping("/get-selected")
+    public BaseResponseEntity<GetItemSelectResVo> getItemSelect(
+            @RequestHeader("Member-Uuid") String memberUuid,
+            @RequestBody CartUuidReqVo cartUuidReqVo
+    ) {
+        return new BaseResponseEntity<>(
+                "장바구니 항목 체크 여부 조회에 성공하였습니다.",
+                cartService.getItemSelect(CartUuidReqDto.of(memberUuid, cartUuidReqVo)).toVo()
+        );
+    }
+
+    /**
+     * 7. 장바구니에서 장바구니 유형별로 상품 UUID 리스트 조회 (일반/예약)
+     * @param memberUuid
+     * @param cartType
      * @return
      */
     // cartType : general, reservation
@@ -95,13 +145,14 @@ public class CartController {
             @PathVariable String cartType
     ) {
         return new BaseResponseEntity<>(
-                "장바구니에서 Product UUID 리스트 조회 성공",
+                "장바구니에서 장바구니 유형별로 Product UUID 리스트 조회 성공",
                 cartService.getProductUuidList(memberUuid, cartType)
                         .stream().map(GetProductUuidResDto::toVo).toList()
         );
     }
 
     /**
+     * 8. 장바구니에서 항목 수량 감소
      * 장바구니에서 해당 장바구니 항목 1개 감소
      * @param memberUuid
      * @param cartUuidReqVo
