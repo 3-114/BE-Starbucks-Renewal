@@ -2,19 +2,21 @@ package com.team114.starbucks.domain.cart.vo.out;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class GetAllCartItemsResVo {
 
-    private String productName;     // 상품 - 상품명
-    private Integer productPrice;   // 상품 - 상품 가격
-    private String color;            // 옵션 - 컬러
-    private String size;              // 옵션 - 사이즈
-    private Long optionPrice;    // 옵션 - 옵션 가격
-    private Integer discountRate;   // 옵션 - 할인율
-    private Long quantity;          // 장바구니 - 수량
-    private Boolean selected;       // 장바구니 - 선택 여부
-    private Boolean valid;          // 장바구니 - 유효 여부
+    private String productName;
+    private Integer productPrice;
+    private String color;
+    private String size;
+    private Long optionPrice;
+    private Integer discountRate;
+    private Long quantity;
+    private Boolean selected;
+    private Boolean valid;
 
     @Builder
     public GetAllCartItemsResVo(

@@ -5,12 +5,10 @@ import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.in.CartUuidReqDto;
 import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
-import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
-import com.team114.starbucks.domain.cart.dto.out.GetCartItemResDto;
-import com.team114.starbucks.domain.cart.dto.out.GetItemSelectResDto;
-import com.team114.starbucks.domain.cart.dto.out.GetProductUuidResDto;
+import com.team114.starbucks.domain.cart.dto.out.*;
 import com.team114.starbucks.domain.cart.enums.CartType;
 import com.team114.starbucks.domain.cart.infrastructure.CartRepository;
+import com.team114.starbucks.domain.cart.vo.out.CartTypeReqDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +31,8 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<GetAllCartItemsResDto> findAllCartItems(String memberUuid) {
-        return cartRepository.findCartItems(memberUuid);
+        return cartRepository.findByMemberUuid(memberUuid)
+                .stream().map(GetAllCartItemsResDto::from).toList();
     }
 
     @Transactional
@@ -62,11 +61,11 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<GetProductUuidResDto> getProductUuidList(String memberUuid, String cartType) {
-        return cartRepository.findByMemberUuid(memberUuid)
+    public List<GetProductUuidResDto> getProductUuidList(CartTypeReqDto cartTypeReqDto) {
+        return cartRepository.findByMemberUuid(cartTypeReqDto.getMemberUuid())
                 .stream()
                 .filter(cart -> cart.getCartType().equals(
-                        CartType.valueOf(cartType.toUpperCase())
+                        CartType.valueOf(cartTypeReqDto.getCartType().toUpperCase())
                 ))
                 .map(GetProductUuidResDto::from)
                 .toList();
@@ -77,5 +76,22 @@ public class CartServiceImpl implements CartService {
     public void decreaseCartQuantity(CartUuidReqDto cartUuidReqDto) {
         cartRepository.save(cartUuidReqDto.decreaseQuantity(cartRepository.findByCartUuid(cartUuidReqDto.getCartUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND))));
+    }
+
+    @Transactional
+    @Override
+    public void increaseCartQuantity(CartUuidReqDto cartUuidReqDto) {
+        cartRepository.save(cartUuidReqDto.increaseQuantity(cartRepository.findByCartUuid(cartUuidReqDto.getCartUuid())
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND))));
+    }
+
+    @Override
+    public CountTotalCartResDto countTotalCart(CartTypeReqDto cartTypeReqDto) {
+        return CountTotalCartResDto.from(
+                cartRepository.countByMemberUuidAndCartType(
+                        cartTypeReqDto.getMemberUuid(),
+                        CartType.valueOf(cartTypeReqDto.getCartType().toUpperCase())
+                )
+        );
     }
 }
