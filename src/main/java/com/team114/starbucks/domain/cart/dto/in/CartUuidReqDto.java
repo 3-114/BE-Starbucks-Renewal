@@ -39,4 +39,18 @@ public class CartUuidReqDto {
                 .cartType(cart.getCartType())
                 .build();
     }
+
+    public Cart increaseQuantity(Cart cart) {
+        return Cart.builder()
+                .id(cart.getId())
+                .cartUuid(cart.getCartUuid())
+                .memberUuid(cart.getMemberUuid())
+                .optionId(cart.getOptionId())
+                .productUuid(cart.getProductUuid())
+                .quantity(cart.getQuantity() + 1)
+                .selected(cart.getSelected())
+                .valid(cart.getValid())
+                .cartType(cart.getCartType())
+                .build();
+    }
 }

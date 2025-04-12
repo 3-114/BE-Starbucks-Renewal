@@ -78,4 +78,11 @@ public class CartServiceImpl implements CartService {
         cartRepository.save(cartUuidReqDto.decreaseQuantity(cartRepository.findByCartUuid(cartUuidReqDto.getCartUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND))));
     }
+
+    @Transactional
+    @Override
+    public void increaseCartQuantity(CartUuidReqDto cartUuidReqDto) {
+        cartRepository.save(cartUuidReqDto.increaseQuantity(cartRepository.findByCartUuid(cartUuidReqDto.getCartUuid())
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND))));
+    }
 }
