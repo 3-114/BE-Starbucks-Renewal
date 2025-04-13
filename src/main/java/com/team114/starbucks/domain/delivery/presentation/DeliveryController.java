@@ -1,24 +1,24 @@
 package com.team114.starbucks.domain.delivery.presentation;
 
 import com.team114.starbucks.common.response.BaseResponseEntity;
+import com.team114.starbucks.domain.delivery.dto.in.CartDeliveryRequestDto;
 import com.team114.starbucks.domain.delivery.dto.in.DeliveryCreateRequestDto;
 import com.team114.starbucks.domain.delivery.dto.in.DeliverySelectedRequestDto;
 import com.team114.starbucks.domain.delivery.dto.in.DeliveryUpdateRequestDto;
 import com.team114.starbucks.domain.delivery.dto.out.DeliveryResponseDto;
 import com.team114.starbucks.domain.delivery.application.DeliveryService;
+import com.team114.starbucks.domain.delivery.dto.out.GetCartDeliveryResponseDto;
 import com.team114.starbucks.domain.delivery.dto.out.GetDeliveryUuidResponseDto;
-import com.team114.starbucks.domain.delivery.dto.out.GetMyDeliveriesResponseDto;
-import com.team114.starbucks.domain.delivery.entity.Delivery;
+import com.team114.starbucks.domain.delivery.vo.in.CartDeliveryRequestVo;
 import com.team114.starbucks.domain.delivery.vo.in.DeliveryCreateRequestVo;
 import com.team114.starbucks.domain.delivery.vo.in.DeliverySelectedRequestVo;
 import com.team114.starbucks.domain.delivery.vo.in.DeliveryUpdateRequestVo;
 import com.team114.starbucks.domain.delivery.vo.out.DeliveryResponseVo;
 import com.team114.starbucks.domain.delivery.vo.out.DeliverySelectedResponseVo;
+import com.team114.starbucks.domain.delivery.vo.out.GetCartDeliveryResponseVo;
 import com.team114.starbucks.domain.delivery.vo.out.GetDeliveryUuidResponseVo;
-import com.team114.starbucks.domain.delivery.vo.out.GetMyDeliveriesResponseVo;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,8 +56,17 @@ public class DeliveryController {
         return new BaseResponseEntity<>("배송지가 수정되었습니다.");
     }
 
+    // 3. 배송지 삭제
+    @Operation(summary = "배송지 삭제", description = "배송지를 삭제합니다.", tags = {"delivery"})
+    @DeleteMapping("/{deliveryUuid}")
+    public BaseResponseEntity<Void> deleteDelivery(
+            @PathVariable String deliveryUuid
+    ) {
+        deliveryService.deleteDelivery(deliveryUuid);
+        return new BaseResponseEntity<>("배송지가 삭제되었습니다.", null);
+    }
 
-    // 3. 마이페이지 배송지 목록 조회
+    // 4. 마이페이지 배송지 목록 조회
     @Operation(summary = "배송지 목록 조회", description = "회원의 전체 배송지를 조회합니다.", tags = {"delivery"})
     @GetMapping("/all")
     public BaseResponseEntity<List<DeliveryResponseVo>> getAllDeliveries(
@@ -69,21 +78,9 @@ public class DeliveryController {
         return new BaseResponseEntity<>("배송지 목록 조회 성공", result);
     }
 
-    // 4. 장바구니 배송지 목록 조회
-    @Operation(summary = "배송지 목록 조회", description = "회원의 전체 배송지를 조회합니다.", tags = {"delivery"})
-    @GetMapping("/cart-detail")
-    public BaseResponseEntity<List<GetMyDeliveriesResponseVo>> getCartDeliveries(
-            @RequestHeader("Member-Uuid") String memberUuid ) {
-
-        List<GetMyDeliveriesResponseVo> result = deliveryService.getCartDeliveriesByMemberUuid(memberUuid)
-                .stream().map(GetMyDeliveriesResponseDto::toVo).toList();
-
-        return new BaseResponseEntity<>("배송지 목록 조회 성공", result);
-    }
-
     // 5. 장바구니에서 배송지 UUID 리스트 조회
     @Operation(summary = "배송지 UUID 목록 조회", description = "회원의 배송지 UUID 목록만 조회합니다.", tags = {"delivery"})
-    @GetMapping("/cart")
+    @GetMapping("/cart/uuids")
     public BaseResponseEntity<List<GetDeliveryUuidResponseVo>> getCartDeliveryUuid(
             @RequestHeader("Member-Uuid") String memberUuid
     ) {
@@ -95,7 +92,7 @@ public class DeliveryController {
 
     // 6. 장바구니의 캐러셀에서 갱신될 배송지 단건 수정
     @Operation(summary = "장바구니 배송지 변경", description = "장바구니의 캐러셀 배송지 변경", tags = {"delivery"})
-    @PutMapping("/cart-detail")
+    @PutMapping("/cart/update-address")
     public BaseResponseEntity<DeliverySelectedResponseVo> updateSelectedDelivery(
             @RequestHeader("Member-Uuid") String memberUuid,
             @RequestBody DeliverySelectedRequestVo deliverySelectedRequestVo
@@ -107,9 +104,22 @@ public class DeliveryController {
         return new BaseResponseEntity<>("선택된 배송지가 변경되었습니다.", result);
     }
 
-    // 7. 배송지 단건 조회 (주문용)
+    // 7. 장바구니 캐러셀 단건 조회
+    @Operation(summary = "장바구니 배송지 목록 조회", description = "장바구니 배송지를 단건 조회합니다.", tags = {"delivery"})
+    @GetMapping("/cart/get-address")
+    public BaseResponseEntity<GetCartDeliveryResponseVo> getSelectedDelivery(
+            @RequestHeader("Member-Uuid") String memberUuid,
+            @RequestBody CartDeliveryRequestVo cartDeliveryRequestVo
+    ) {
+        GetCartDeliveryResponseVo result = deliveryService
+                .getCartDeliveryByUuid(CartDeliveryRequestDto.from(cartDeliveryRequestVo, memberUuid)).toVo();
+
+        return new BaseResponseEntity<>("캐러셀 배송지 단건 조회에 성공했습니다.", result);
+    }
+
+    // 8. 배송지 단건 조회 (주문용)
     @Operation(summary = "주문용 배송지 조회", description = "장바구니에서 선택된 배송지 조회", tags = {"delivery"})
-    @GetMapping("/cart-detail/selected")
+    @GetMapping("/order/selected-address")
     public BaseResponseEntity<DeliverySelectedResponseVo> getSelectedDelivery(
             @RequestHeader("Member-Uuid") String memberUuid
     ) {
@@ -118,15 +128,5 @@ public class DeliveryController {
                 .toVo();
 
         return new BaseResponseEntity<>("선택된 배송지 조회 성공", result);
-    }
-
-    // 배송지 삭제
-    @Operation(summary = "배송지 삭제", description = "배송지를 삭제합니다.", tags = {"delivery"})
-    @DeleteMapping("/{deliveryUuid}")
-    public BaseResponseEntity<Void> deleteDelivery(
-            @PathVariable String deliveryUuid
-    ) {
-        deliveryService.deleteDelivery(deliveryUuid);
-        return new BaseResponseEntity<>("배송지가 삭제되었습니다.", null);
     }
 }

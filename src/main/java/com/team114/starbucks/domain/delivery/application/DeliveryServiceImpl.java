@@ -2,16 +2,16 @@ package com.team114.starbucks.domain.delivery.application;
 
 import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
+import com.team114.starbucks.domain.delivery.dto.in.CartDeliveryRequestDto;
 import com.team114.starbucks.domain.delivery.dto.in.DeliveryCreateRequestDto;
 import com.team114.starbucks.domain.delivery.dto.in.DeliverySelectedRequestDto;
 import com.team114.starbucks.domain.delivery.dto.in.DeliveryUpdateRequestDto;
 import com.team114.starbucks.domain.delivery.dto.out.DeliveryResponseDto;
 import com.team114.starbucks.domain.delivery.dto.out.DeliverySelectedResponseDto;
 import com.team114.starbucks.domain.delivery.dto.out.GetDeliveryUuidResponseDto;
-import com.team114.starbucks.domain.delivery.dto.out.GetMyDeliveriesResponseDto;
+import com.team114.starbucks.domain.delivery.dto.out.GetCartDeliveryResponseDto;
 import com.team114.starbucks.domain.delivery.entity.Delivery;
 import com.team114.starbucks.domain.delivery.infrastructure.DeliveryRepository;
-import com.team114.starbucks.domain.delivery.vo.out.GetDeliveryUuidResponseVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,14 +61,14 @@ public class DeliveryServiceImpl implements DeliveryService {
         return DeliveryResponseDto.from(savedDelivery);
     }
 
-    // 장바구니에서 Deliveryuuid 목록 전체 조회
-    @Override
-    public List<GetMyDeliveriesResponseDto> getCartDeliveriesByMemberUuid(String memberUuid) {
-        List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
-        return deliveries.stream()
-                .sorted((d1, d2) -> Boolean.compare(!d1.isDefaultAddress(), !d2.isDefaultAddress()))
-                .map(GetMyDeliveriesResponseDto::from).toList();
-    }
+//    // 장바구니에서 Deliveryuuid 목록 전체 조회
+//    @Override
+//    public List<GetCartDeliveryResponseDto> getCartDeliveriesByMemberUuid(String memberUuid) {
+//        List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
+//        return deliveries.stream()
+//                .sorted((d1, d2) -> Boolean.compare(!d1.isDefaultAddress(), !d2.isDefaultAddress()))
+//                .map(GetCartDeliveryResponseDto::from).toList();
+//    }
 
 
     // 마이페이지에서 배송지 목록 전체 조회
@@ -112,6 +112,15 @@ public class DeliveryServiceImpl implements DeliveryService {
         selectedDelivery.updateIsSelected(true);
 
         return DeliverySelectedResponseDto.from(deliveryRepository.save(selectedDelivery));
+    }
+
+    @Override
+    public GetCartDeliveryResponseDto getCartDeliveryByUuid(CartDeliveryRequestDto cartDeliveryRequestDto) {
+        Delivery delivery = deliveryRepository
+                .findByMemberUuidAndDeliveryUuid(cartDeliveryRequestDto.getMemberUuid(), cartDeliveryRequestDto.getDeliveryUuid())
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
+
+        return GetCartDeliveryResponseDto.from(delivery);
     }
 
     // 주문용 배송지 단건 조회
