@@ -3,8 +3,10 @@ package com.team114.starbucks.domain.delivery.application;
 import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.delivery.dto.in.DeliveryCreateRequestDto;
+import com.team114.starbucks.domain.delivery.dto.in.DeliverySelectedRequestDto;
 import com.team114.starbucks.domain.delivery.dto.in.DeliveryUpdateRequestDto;
 import com.team114.starbucks.domain.delivery.dto.out.DeliveryResponseDto;
+import com.team114.starbucks.domain.delivery.dto.out.DeliverySelectedResponseDto;
 import com.team114.starbucks.domain.delivery.dto.out.GetDeliveryUuidResponseDto;
 import com.team114.starbucks.domain.delivery.dto.out.GetMyDeliveriesResponseDto;
 import com.team114.starbucks.domain.delivery.entity.Delivery;
@@ -86,6 +88,40 @@ public class DeliveryServiceImpl implements DeliveryService {
         return deliveries.stream()
                 .sorted((d1, d2) -> Boolean.compare(!d1.isDefaultAddress(), !d2.isDefaultAddress()))
                 .map(GetDeliveryUuidResponseDto::from).toList();
+    }
+
+    @Override
+    @Transactional
+    public DeliverySelectedResponseDto updateSelectedDelivery(DeliverySelectedRequestDto dto) {
+        String memberUuid = dto.getMemberUuid();
+        String selectedDeliveryUuid = dto.getDeliveryUuid();
+
+        // 1. 해당 회원의 모든 배송지 isSelected → false
+        List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
+        for (Delivery delivery : deliveries) {
+            if (delivery.isSelected()) {
+                delivery.updateIsSelected(false);
+                deliveryRepository.save(delivery);
+            }
+        }
+
+        // 2. 선택된 배송지 UUID만 isSelected → true
+        Delivery selectedDelivery = deliveryRepository.findByDeliveryUuid(selectedDeliveryUuid)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
+
+        selectedDelivery.updateIsSelected(true);
+
+        return DeliverySelectedResponseDto.from(deliveryRepository.save(selectedDelivery));
+    }
+
+    // 주문용 배송지 단건 조회
+    @Override
+    public DeliverySelectedResponseDto getSelectedDeliveryByMemberUuid(String memberUuid) {
+        Delivery selectedDelivery = deliveryRepository
+                .findByMemberUuidAndIsSelectedTrue(memberUuid)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
+
+        return DeliverySelectedResponseDto.from(selectedDelivery);
     }
 
 

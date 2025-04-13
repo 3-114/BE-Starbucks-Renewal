@@ -18,4 +18,6 @@ public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
     Optional<Delivery> findByMemberUuidAndDefaultAddressTrue(String memberUuid);
 
     List<Delivery> findByMemberUuid(String memberUuid);
+
+    Optional<Delivery> findByMemberUuidAndIsSelectedTrue(String memberUuid);
 }

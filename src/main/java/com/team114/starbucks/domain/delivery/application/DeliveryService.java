@@ -1,8 +1,10 @@
 package com.team114.starbucks.domain.delivery.application;
 
 import com.team114.starbucks.domain.delivery.dto.in.DeliveryCreateRequestDto;
+import com.team114.starbucks.domain.delivery.dto.in.DeliverySelectedRequestDto;
 import com.team114.starbucks.domain.delivery.dto.in.DeliveryUpdateRequestDto;
 import com.team114.starbucks.domain.delivery.dto.out.DeliveryResponseDto;
+import com.team114.starbucks.domain.delivery.dto.out.DeliverySelectedResponseDto;
 import com.team114.starbucks.domain.delivery.dto.out.GetDeliveryUuidResponseDto;
 import com.team114.starbucks.domain.delivery.dto.out.GetMyDeliveriesResponseDto;
 
@@ -17,6 +19,10 @@ public interface DeliveryService {
     List<DeliveryResponseDto> getDeliveriesByMemberUuid(String memberUuid);
 
     List<GetDeliveryUuidResponseDto> getDeliveryUuidsByMemberUuid(String memberUuid);
+
+    DeliverySelectedResponseDto updateSelectedDelivery(DeliverySelectedRequestDto deliverySelectedRequestDto);
+
+    DeliverySelectedResponseDto getSelectedDeliveryByMemberUuid(String memberUuid);
 
     void updateDelivery(DeliveryUpdateRequestDto deliveryUpdateRequestDto);
 
