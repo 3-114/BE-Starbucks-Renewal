@@ -10,10 +10,7 @@ import com.team114.starbucks.domain.cart.dto.out.GetProductUuidResDto;
 import com.team114.starbucks.domain.cart.vo.in.AddCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.in.CartUuidReqVo;
 import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
-import com.team114.starbucks.domain.cart.vo.out.GetAllCartItemsResVo;
-import com.team114.starbucks.domain.cart.vo.out.GetCartItemResVo;
-import com.team114.starbucks.domain.cart.vo.out.GetItemSelectResVo;
-import com.team114.starbucks.domain.cart.vo.out.GetProductUuidResVo;
+import com.team114.starbucks.domain.cart.vo.out.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +31,8 @@ public class CartController {
      * 6. 장바구니 항목 체크 여부 조회
      * 7. 장바구니에서 장바구니 유형별로 상품 UUID 리스트 조회 (일반/예약)
      * 8. 장바구니에서 항목 수량 감소
+     * 9. 장바구니에서 항목 수량 증가
+     * 10. 장바구니 유형 별로 총 항목 갯수를 조회
      */
 
     private final CartService cartService;
@@ -64,8 +63,7 @@ public class CartController {
     ) {
         return new BaseResponseEntity<>(
                 "장바구니 전체 목록 조회에 성공하였습니다.",
-                cartService.findAllCartItems(memberUuid).stream().map(GetAllCartItemsResDto::toVo).toList()
-        );
+                cartService.findAllCartItems(memberUuid).stream().map(GetAllCartItemsResDto::toVo).toList());
     }
 
     /**
@@ -111,8 +109,7 @@ public class CartController {
     ) {
         return new BaseResponseEntity<>(
                 "장바구니 항목 단건 조회에 성공하였습니다.",
-                cartService.getCartItem(CartUuidReqDto.of(memberUuid, cartUuidReqVo)).toVo()
-        );
+                cartService.getCartItem(CartUuidReqDto.of(memberUuid, cartUuidReqVo)).toVo());
     }
 
     /**
@@ -128,8 +125,7 @@ public class CartController {
     ) {
         return new BaseResponseEntity<>(
                 "장바구니 항목 체크 여부 조회에 성공하였습니다.",
-                cartService.getItemSelect(CartUuidReqDto.of(memberUuid, cartUuidReqVo)).toVo()
-        );
+                cartService.getItemSelect(CartUuidReqDto.of(memberUuid, cartUuidReqVo)).toVo());
     }
 
     /**
@@ -146,14 +142,12 @@ public class CartController {
     ) {
         return new BaseResponseEntity<>(
                 "장바구니에서 장바구니 유형별로 Product UUID 리스트 조회 성공",
-                cartService.getProductUuidList(memberUuid, cartType)
-                        .stream().map(GetProductUuidResDto::toVo).toList()
-        );
+                cartService.getProductUuidList(CartTypeReqDto.of(memberUuid, cartType))
+                        .stream().map(GetProductUuidResDto::toVo).toList());
     }
 
     /**
      * 8. 장바구니에서 항목 수량 감소
-     * 장바구니에서 해당 장바구니 항목 1개 감소
      * @param memberUuid
      * @param cartUuidReqVo
      * @return
@@ -168,7 +162,7 @@ public class CartController {
     }
 
     /**
-     * 장바구니에서 해당 장바구니 항목 1개 증가
+     * 9. 장바구니에서 항목 수량 증가
      * @param memberUuid
      * @param cartUuidReqVo
      * @return
@@ -180,5 +174,21 @@ public class CartController {
     ) {
         cartService.increaseCartQuantity(CartUuidReqDto.of(memberUuid, cartUuidReqVo));
         return new BaseResponseEntity<>("장바구니에서 해당 장바구니 항목 1개 증가");
+    }
+
+    /**
+     * 10. 장바구니 유형 별로 총 항목 갯수를 조회
+     * @param memberUuid
+     * @param cartType
+     * @return
+     */
+    @GetMapping("/count/{cartType}")
+    public BaseResponseEntity<CountTotalCartResVo>  countTotalCart(
+            @RequestHeader("Member-Uuid") String memberUuid,
+            @PathVariable String cartType
+    ) {
+        return new BaseResponseEntity<>(
+                "장바구니 유형 별로 총 항목 갯수 조회 성공",
+                cartService.countTotalCart(CartTypeReqDto.of(memberUuid, cartType)).toVo());
     }
 }
