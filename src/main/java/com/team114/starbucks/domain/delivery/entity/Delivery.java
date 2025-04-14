@@ -48,6 +48,9 @@ public class Delivery extends BaseEntity {
     @Column(nullable = false)
     private boolean defaultAddress;
 
+    @Column(nullable = false)
+    private boolean isSelected = false;
+
     @Builder
     public Delivery(
             Long id,
@@ -61,7 +64,8 @@ public class Delivery extends BaseEntity {
             String phoneNumber1,
             String phoneNumber2,
             String deliveryMemo,
-            boolean defaultAddress
+            boolean defaultAddress,
+            boolean isSelected
     ) {
         this.id = id;
         this.deliveryUuid = deliveryUuid;
@@ -75,9 +79,14 @@ public class Delivery extends BaseEntity {
         this.phoneNumber2 = phoneNumber2;
         this.deliveryMemo = deliveryMemo;
         this.defaultAddress = defaultAddress;
+        this.isSelected = isSelected;
     }
 
     public void updateDefaultAddress(boolean defaultAddress) {
         this.defaultAddress = defaultAddress;
+    }
+
+    public void updateIsSelected(boolean isSelected) {
+        this.isSelected = isSelected;
     }
 }
