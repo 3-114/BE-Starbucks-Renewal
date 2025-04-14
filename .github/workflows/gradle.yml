@@ -105,6 +105,20 @@ jobs:
 
       - name: Delete old EC2 Docker images (keep latest 5)
         run: |
+          echo "🧹 중지된 컨테이너 목록"
+          docker ps -a --filter "status=exited"
+  
+          echo "🧹 강제 삭제할 이미지 목록 (최신 5개 제외)"
+          docker images "$ECR_REGISTRY/$ECR_REPOSITORY" --format "{{.Repository}}:{{.Tag}}" \
+            | grep -v "<none>" | sort -r | tail -n +6
+  
+          echo "🧹 중지된 컨테이너 제거"
+          docker ps -aq --filter "status=exited" | xargs -r docker rm -f
+  
+          echo "🧹 강제 이미지 삭제 실행"
+          docker images "$ECR_REGISTRY/$ECR_REPOSITORY" --format "{{.Repository}}:{{.Tag}}" \
+            | grep -v "<none>" | sort -r | tail -n +6 | xargs -r docker rmi -f
+          
           echo "🧹 중지된 컨테이너 먼저 정리"
           docker container prune -f
           
