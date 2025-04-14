@@ -27,6 +27,7 @@ public class UpdateProductRequestDto {
 
     private List<UpdateProductThumbnailRequestDto> productThumbnailList;
 
+
     @Builder
     public UpdateProductRequestDto(
             String productUuid, String productName, String brand, Integer productPrice, String productDescription, Integer shippingFee, ProductStatus productStatus,

@@ -97,3 +97,25 @@ jobs:
         run: |
           chmod +x .github/scripts/delete_ecr.sh
           .github/scripts/delete_ecr.sh
+        with:
+          script: |
+            docker run -d ...  # 기존 run 명령
+            echo "✅ Spring Boot Docker 컨테이너 실행 완료"
+
+            echo "🧹 오래된 Docker 이미지 삭제 시작"
+            docker images "$ECR_REGISTRY/$ECR_REPOSITORY" --format "{{.Repository}}:{{.Tag}}" \
+              | grep -v "<none>" \
+              | grep -v "$IMAGE_TAG" \
+              | tail -n +4 \
+              | xargs -r docker rmi
+            echo "🧼 Docker 이미지 정리 완료"
+            
+            echo "🧹 EC2에 남은 Docker 이미지 중 최신 5개만 남기고 삭제 시작"
+            
+            docker images "$ECR_REGISTRY/$ECR_REPOSITORY" --format "{{.Repository}}:{{.Tag}}" \
+            | grep -v "<none>" \
+            | sort -r \
+            | tail -n +6 \
+            | xargs -r docker rmi
+            echo "🧼 EC2 Docker 이미지 정리 완료"
+
