@@ -113,5 +113,5 @@ jobs:
             | grep -v "<none>" \
             | sort -r \
             | tail -n +6 \
-            | xargs -r docker rmi
+            | xargs -r docker rmi -f
           echo "🧼 EC2 Docker 이미지 정리 완료"
