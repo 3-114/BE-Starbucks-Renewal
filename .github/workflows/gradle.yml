@@ -105,6 +105,9 @@ jobs:
 
       - name: Delete old EC2 Docker images (keep latest 5)
         run: |
+          echo "🧹 중지된 컨테이너 먼저 정리"
+          docker container prune -f
+          
           echo "🧹 EC2에 남은 Docker 이미지 중 최신 5개만 남기고 삭제 시작"
           docker images "$ECR_REGISTRY/$ECR_REPOSITORY" --format "{{.Repository}}:{{.Tag}}" \
             | grep -v "<none>" \
