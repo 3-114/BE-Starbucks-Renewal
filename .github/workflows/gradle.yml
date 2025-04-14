@@ -122,10 +122,14 @@ jobs:
           echo "🧹 중지된 컨테이너 먼저 정리"
           docker container prune -f
           
-          echo "🧹 EC2에 남은 Docker 이미지 중 최신 5개만 남기고 삭제 시작"
-          docker images "$ECR_REGISTRY/$ECR_REPOSITORY" --format "{{.Repository}}:{{.Tag}}" \
-            | grep -v "<none>" \
-            | sort -r \
-            | tail -n +6 \
-            | xargs -r docker rmi -f
+          echo "🧹 EC2에 남은 Docker 이미지 중 최신 3개만 남기고 삭제 시작"
+          docker images "$ECR_REGISTRY/$ECR_REPOSITORY" --format "{{.ID}}" \
+            | uniq | tail -n +6 > old_images.txt
+          
+          echo "🧹 삭제 대상 이미지:"
+          cat old_images.txt
+      
+          cat old_images.txt | xargs -r docker rmi -f
+          rm old_images.txt
+          
           echo "🧼 EC2 Docker 이미지 정리 완료"
