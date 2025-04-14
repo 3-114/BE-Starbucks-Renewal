@@ -55,16 +55,12 @@ public class ProductController {
         GetProductByIdResponseVo vo = dto.toVo();
 
         return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 단건 조회 성공", 200, vo);
-
-
-
     }
 
     @PostMapping
     public BaseResponseEntity<CreateProductResponseVo> saveProduct(
             @RequestBody CreateProductRequestVo createProductReqVo
             ) {
-        log.info(createProductReqVo.toString());
         CreateProductRequestDto productPostReqDto = CreateProductRequestDto.from(createProductReqVo);
 
         CreateProductResponseDto product = productService.saveProduct(productPostReqDto);

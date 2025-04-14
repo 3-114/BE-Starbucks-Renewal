@@ -29,6 +29,10 @@ public class ProductDescriptionServiceImpl implements ProductDescriptionService 
             throw new IllegalArgumentException("Product not found with UUID: " + createProductDescriptionRequestDto.getProductUuid());
         }
 
+        if (productDescriptionRepository.findByProductUuid(createProductDescriptionRequestDto.getProductUuid()).isPresent()) {
+            throw new IllegalArgumentException("ProductDescription already exists with UUID: " + createProductDescriptionRequestDto.getProductUuid());
+        }
+
         productDescriptionRepository.save(createProductDescriptionRequestDto.toEntity(createProductDescriptionRequestDto.getProductUuid()));
     }
 
