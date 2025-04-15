@@ -41,7 +41,6 @@ public class GetProductByIdResponseDto {
     // dto <- entity
     public static GetProductByIdResponseDto from(
             Product product,
-            Optional<ProductDescription> productDescription,
             List<GetProductThumbnailByIdResponseDto> getProductThumbnailByIdResponseDtoList
     ) {
         return GetProductByIdResponseDto.builder()
@@ -49,7 +48,6 @@ public class GetProductByIdResponseDto {
                 .productName(product.getProductName())
                 .brand(product.getBrand())
                 .productPrice(product.getProductPrice())
-                .productDescription(productDescription.get().getProductDescription())
                 .shippingFee(product.getShippingFee())
                 .productStatus(product.getProductStatus())
                 .getProductThumbnailByIdResponseDtoList(getProductThumbnailByIdResponseDtoList)
@@ -66,7 +64,6 @@ public class GetProductByIdResponseDto {
                 .productName(productName)
                 .brand(brand)
                 .productPrice(productPrice)
-                .productDescription(productDescription)
                 .shippingFee(shippingFee)
                 .productStatus(productStatus)
                 .getProductThumbnailByIdResponseDtoList(getProductThumbnailByIdResponseDtoList)
