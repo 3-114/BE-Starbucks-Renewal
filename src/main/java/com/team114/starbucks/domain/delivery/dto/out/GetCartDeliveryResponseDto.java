@@ -16,9 +16,6 @@ public class GetCartDeliveryResponseDto {
     private final String zoneCode;
     private final String mainAddress;
     private final String detailAddress;
-    private final String phoneNumber1;
-    private final String phoneNumber2;
-    private final String deliveryMemo;
     private final boolean defaultAddress;
     private final boolean isSelected;
 
@@ -30,9 +27,6 @@ public class GetCartDeliveryResponseDto {
             String zoneCode,
             String mainAddress,
             String detailAddress,
-            String phoneNumber1,
-            String phoneNumber2,
-            String deliveryMemo,
             boolean defaultAddress,
             boolean isSelected
     ) {
@@ -42,9 +36,6 @@ public class GetCartDeliveryResponseDto {
         this.zoneCode = zoneCode;
         this.mainAddress = mainAddress;
         this.detailAddress = detailAddress;
-        this.phoneNumber1 = phoneNumber1;
-        this.phoneNumber2 = phoneNumber2;
-        this.deliveryMemo = deliveryMemo;
         this.defaultAddress = defaultAddress;
         this.isSelected = isSelected;
     }
@@ -57,9 +48,6 @@ public class GetCartDeliveryResponseDto {
                 .zoneCode(delivery.getZoneCode())
                 .mainAddress(delivery.getMainAddress())
                 .detailAddress(delivery.getDetailAddress())
-                .phoneNumber1(delivery.getPhoneNumber1())
-                .phoneNumber2(delivery.getPhoneNumber2())
-                .deliveryMemo(delivery.getDeliveryMemo())
                 .defaultAddress(delivery.isDefaultAddress())
                 .isSelected(delivery.isSelected())
                 .build();
@@ -73,9 +61,6 @@ public class GetCartDeliveryResponseDto {
                 .zoneCode(zoneCode)
                 .mainAddress(mainAddress)
                 .detailAddress(detailAddress)
-                .phoneNumber1(phoneNumber1)
-                .phoneNumber2(phoneNumber2)
-                .deliveryMemo(deliveryMemo)
                 .defaultAddress(defaultAddress)
                 .isSelected(isSelected)
                 .build();

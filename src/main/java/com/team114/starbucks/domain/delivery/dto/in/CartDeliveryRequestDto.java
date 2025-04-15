@@ -16,9 +16,9 @@ public class CartDeliveryRequestDto {
         this.memberUuid = memberUuid;
     }
 
-    public static CartDeliveryRequestDto from(CartDeliveryRequestVo cartDeliveryRequestVo, String memberUuid) {
+    public static CartDeliveryRequestDto from(String deliveryUuid, String memberUuid) {
         return CartDeliveryRequestDto.builder()
-                .deliveryUuid(cartDeliveryRequestVo.getDeliveryUuid())
+                .deliveryUuid(deliveryUuid)
                 .memberUuid(memberUuid)
                 .build();
     }

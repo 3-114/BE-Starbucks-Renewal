@@ -1,8 +1,10 @@
 package com.team114.starbucks.domain.delivery.vo.in;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class DeliveryCreateRequestVo {
 
     private String alias;
