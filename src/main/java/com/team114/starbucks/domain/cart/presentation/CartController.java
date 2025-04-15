@@ -8,7 +8,6 @@ import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetProductUuidResDto;
 import com.team114.starbucks.domain.cart.vo.in.AddCartItemReqVo;
-import com.team114.starbucks.domain.cart.vo.in.CartUuidReqVo;
 import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.out.*;
 import lombok.RequiredArgsConstructor;
@@ -85,48 +84,48 @@ public class CartController {
     /**
      * 4. 장바구니 항목 삭제
      * @param authentication
-     * @param cartUuidReqVo
+     * @param cartUuid
      * @return
      */
-    @DeleteMapping
+    @DeleteMapping("/{cartUuid}")
     public BaseResponseEntity<Void> deleteCartItem(
             Authentication authentication,
-            @RequestBody CartUuidReqVo cartUuidReqVo
+            @PathVariable String cartUuid
     ) {
-        cartService.deleteCartItem(CartUuidReqDto.of(authentication.getName(), cartUuidReqVo));
+        cartService.deleteCartItem(CartUuidReqDto.of(authentication.getName(), cartUuid));
         return new BaseResponseEntity<>("장바구니 항목 삭제에 성공하였습니다.");
     }
 
     /**
      * 5. 장바구니 항목 단건 조회
      * @param authentication
-     * @param cartUuidReqVo
+     * @param cartUuid
      * @return
      */
-    @GetMapping
+    @GetMapping("/{cartUuid}")
     public BaseResponseEntity<GetCartItemResVo> getCartItem(
             Authentication authentication,
-            @RequestBody CartUuidReqVo cartUuidReqVo
+            @PathVariable String cartUuid
     ) {
         return new BaseResponseEntity<>(
                 "장바구니 항목 단건 조회에 성공하였습니다.",
-                cartService.getCartItem(CartUuidReqDto.of(authentication.getName(), cartUuidReqVo)).toVo());
+                cartService.getCartItem(CartUuidReqDto.of(authentication.getName(), cartUuid)).toVo());
     }
 
     /**
      * 6. 장바구니 항목 체크 여부 조회
      * @param authentication
-     * @param cartUuidReqVo
+     * @param cartUuid
      * @return
      */
-    @GetMapping("/get-selected")
+    @GetMapping("/{cartUuid}/get-selected")
     public BaseResponseEntity<GetItemSelectResVo> getItemSelect(
             Authentication authentication,
-            @RequestBody CartUuidReqVo cartUuidReqVo
+            @PathVariable String cartUuid
     ) {
         return new BaseResponseEntity<>(
                 "장바구니 항목 체크 여부 조회에 성공하였습니다.",
-                cartService.getItemSelect(CartUuidReqDto.of(authentication.getName(), cartUuidReqVo)).toVo());
+                cartService.getItemSelect(CartUuidReqDto.of(authentication.getName(), cartUuid)).toVo());
     }
 
     /**
@@ -150,30 +149,30 @@ public class CartController {
     /**
      * 8. 장바구니에서 항목 수량 감소
      * @param authentication
-     * @param cartUuidReqVo
+     * @param cartUuid
      * @return
      */
-    @PutMapping("/item-decrease")
+    @PutMapping("/{cartUuid}/item-decrease")
     public BaseResponseEntity<Void> decreaseCartQuantity(
             Authentication authentication,
-            @RequestBody CartUuidReqVo cartUuidReqVo
+            @PathVariable String cartUuid
     ) {
-        cartService.decreaseCartQuantity(CartUuidReqDto.of(authentication.getName(), cartUuidReqVo));
+        cartService.decreaseCartQuantity(CartUuidReqDto.of(authentication.getName(), cartUuid));
         return new BaseResponseEntity<>("장바구니에서 해당 장바구니 항목 1개 감소");
     }
 
     /**
      * 9. 장바구니에서 항목 수량 증가
      * @param authentication
-     * @param cartUuidReqVo
+     * @param cartUuid
      * @return
      */
-    @PutMapping("/item-increase")
+    @PutMapping("/{cartUuid}/item-increase")
     public BaseResponseEntity<Void> increaseCartQuantity(
             Authentication authentication,
-            @RequestBody CartUuidReqVo cartUuidReqVo
+            @PathVariable String cartUuid
     ) {
-        cartService.increaseCartQuantity(CartUuidReqDto.of(authentication.getName(), cartUuidReqVo));
+        cartService.increaseCartQuantity(CartUuidReqDto.of(authentication.getName(), cartUuid));
         return new BaseResponseEntity<>("장바구니에서 해당 장바구니 항목 1개 증가");
     }
 
