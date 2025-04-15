@@ -12,6 +12,7 @@ import com.team114.starbucks.domain.cart.vo.in.CartUuidReqVo;
 import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.out.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,156 +40,156 @@ public class CartController {
 
     /**
      * 1. 장바구니 항목 생성
-     * @param memberUuid
      * @param addCartItemReqVo
+     * @param authentication
      * @return
      */
     @PostMapping
     public BaseResponseEntity<Void> addCartItem(
-            @RequestHeader("Member-Uuid") String memberUuid,
-            @RequestBody AddCartItemReqVo addCartItemReqVo
+            @RequestBody AddCartItemReqVo addCartItemReqVo,
+            Authentication authentication
     ) {
-        cartService.addCartItem(AddCartItemReqDto.of(memberUuid, addCartItemReqVo));
+        cartService.addCartItem(AddCartItemReqDto.of(authentication.getName(), addCartItemReqVo));
         return new BaseResponseEntity<>("장바구니에 추가되었습니다.");
     }
 
     /**
      * 2. 장바구니 항목 전체 리스트로 조회
-     * @param memberUuid
-     * @return List<GetAllCartItemsResVo>
+     * @param authentication
+     * @return
      */
     @GetMapping("/all")
     public BaseResponseEntity<List<GetAllCartItemsResVo>> getAllCartItems(
-            @RequestHeader("Member-Uuid") String memberUuid
+            Authentication authentication
     ) {
         return new BaseResponseEntity<>(
                 "장바구니 전체 목록 조회에 성공하였습니다.",
-                cartService.findAllCartItems(memberUuid).stream().map(GetAllCartItemsResDto::toVo).toList());
+                cartService.findAllCartItems(authentication.getName()).stream().map(GetAllCartItemsResDto::toVo).toList());
     }
 
     /**
      * 3. 장바구니 항목 전체 정보 변경
-     * @param memberUuid
+     * @param authentication
      * @param updateCartItemReqVo
      * @return
      */
     @PutMapping
     public BaseResponseEntity<Void> updateCartItem(
-            @RequestHeader("Member-Uuid") String memberUuid,
+            Authentication authentication,
             @RequestBody UpdateCartItemReqVo updateCartItemReqVo
     ) {
-        cartService.updateCartItem(UpdateCartItemReqDto.of(memberUuid, updateCartItemReqVo));
+        cartService.updateCartItem(UpdateCartItemReqDto.of(authentication.getName(), updateCartItemReqVo));
         return new BaseResponseEntity<>("장바구니 항목 정보 전체 변경에 성공하였습니다.");
     }
 
     /**
      * 4. 장바구니 항목 삭제
-     * @param memberUuid
+     * @param authentication
      * @param cartUuidReqVo
      * @return
      */
     @DeleteMapping
     public BaseResponseEntity<Void> deleteCartItem(
-            @RequestHeader("Member-Uuid") String memberUuid,
+            Authentication authentication,
             @RequestBody CartUuidReqVo cartUuidReqVo
     ) {
-        cartService.deleteCartItem(CartUuidReqDto.of(memberUuid, cartUuidReqVo));
+        cartService.deleteCartItem(CartUuidReqDto.of(authentication.getName(), cartUuidReqVo));
         return new BaseResponseEntity<>("장바구니 항목 삭제에 성공하였습니다.");
     }
 
     /**
      * 5. 장바구니 항목 단건 조회
-     * @param memberUuid
+     * @param authentication
      * @param cartUuidReqVo
      * @return
      */
     @GetMapping
     public BaseResponseEntity<GetCartItemResVo> getCartItem(
-            @RequestHeader("Member-Uuid") String memberUuid,
+            Authentication authentication,
             @RequestBody CartUuidReqVo cartUuidReqVo
     ) {
         return new BaseResponseEntity<>(
                 "장바구니 항목 단건 조회에 성공하였습니다.",
-                cartService.getCartItem(CartUuidReqDto.of(memberUuid, cartUuidReqVo)).toVo());
+                cartService.getCartItem(CartUuidReqDto.of(authentication.getName(), cartUuidReqVo)).toVo());
     }
 
     /**
      * 6. 장바구니 항목 체크 여부 조회
-     * @param memberUuid
+     * @param authentication
      * @param cartUuidReqVo
      * @return
      */
     @GetMapping("/get-selected")
     public BaseResponseEntity<GetItemSelectResVo> getItemSelect(
-            @RequestHeader("Member-Uuid") String memberUuid,
+            Authentication authentication,
             @RequestBody CartUuidReqVo cartUuidReqVo
     ) {
         return new BaseResponseEntity<>(
                 "장바구니 항목 체크 여부 조회에 성공하였습니다.",
-                cartService.getItemSelect(CartUuidReqDto.of(memberUuid, cartUuidReqVo)).toVo());
+                cartService.getItemSelect(CartUuidReqDto.of(authentication.getName(), cartUuidReqVo)).toVo());
     }
 
     /**
      * 7. 장바구니에서 장바구니 유형별로 상품 UUID 리스트 조회 (일반/예약)
-     * @param memberUuid
+     * @param authentication
      * @param cartType
      * @return
      */
     // cartType : general, reservation
     @GetMapping("/product/{cartType}")
     public BaseResponseEntity<List<GetProductUuidResVo>> getProductUuid(
-            @RequestHeader("Member-Uuid") String memberUuid,
+            Authentication authentication,
             @PathVariable String cartType
     ) {
         return new BaseResponseEntity<>(
                 "장바구니에서 장바구니 유형별로 Product UUID 리스트 조회 성공",
-                cartService.getProductUuidList(CartTypeReqDto.of(memberUuid, cartType))
+                cartService.getProductUuidList(CartTypeReqDto.of(authentication.getName(), cartType))
                         .stream().map(GetProductUuidResDto::toVo).toList());
     }
 
     /**
      * 8. 장바구니에서 항목 수량 감소
-     * @param memberUuid
+     * @param authentication
      * @param cartUuidReqVo
      * @return
      */
     @PutMapping("/item-decrease")
     public BaseResponseEntity<Void> decreaseCartQuantity(
-            @RequestHeader("Member-Uuid") String memberUuid,
+            Authentication authentication,
             @RequestBody CartUuidReqVo cartUuidReqVo
     ) {
-        cartService.decreaseCartQuantity(CartUuidReqDto.of(memberUuid, cartUuidReqVo));
+        cartService.decreaseCartQuantity(CartUuidReqDto.of(authentication.getName(), cartUuidReqVo));
         return new BaseResponseEntity<>("장바구니에서 해당 장바구니 항목 1개 감소");
     }
 
     /**
      * 9. 장바구니에서 항목 수량 증가
-     * @param memberUuid
+     * @param authentication
      * @param cartUuidReqVo
      * @return
      */
     @PutMapping("/item-increase")
     public BaseResponseEntity<Void> increaseCartQuantity(
-            @RequestHeader("Member-Uuid") String memberUuid,
+            Authentication authentication,
             @RequestBody CartUuidReqVo cartUuidReqVo
     ) {
-        cartService.increaseCartQuantity(CartUuidReqDto.of(memberUuid, cartUuidReqVo));
+        cartService.increaseCartQuantity(CartUuidReqDto.of(authentication.getName(), cartUuidReqVo));
         return new BaseResponseEntity<>("장바구니에서 해당 장바구니 항목 1개 증가");
     }
 
     /**
      * 10. 장바구니 유형 별로 총 항목 갯수를 조회
-     * @param memberUuid
+     * @param authentication
      * @param cartType
      * @return
      */
     @GetMapping("/count/{cartType}")
     public BaseResponseEntity<CountTotalCartResVo>  countTotalCart(
-            @RequestHeader("Member-Uuid") String memberUuid,
+            Authentication authentication,
             @PathVariable String cartType
     ) {
         return new BaseResponseEntity<>(
                 "장바구니 유형 별로 총 항목 갯수 조회 성공",
-                cartService.countTotalCart(CartTypeReqDto.of(memberUuid, cartType)).toVo());
+                cartService.countTotalCart(CartTypeReqDto.of(authentication.getName(), cartType)).toVo());
     }
 }
