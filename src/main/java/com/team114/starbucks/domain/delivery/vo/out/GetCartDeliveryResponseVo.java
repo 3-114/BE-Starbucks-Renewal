@@ -12,9 +12,6 @@ public class GetCartDeliveryResponseVo {
     private final String zoneCode;
     private final String mainAddress;
     private final String detailAddress;
-    private final String phoneNumber1;
-    private final String phoneNumber2;
-    private final String deliveryMemo;
     private final boolean defaultAddress;
     private final boolean isSelected;
 
@@ -26,9 +23,6 @@ public class GetCartDeliveryResponseVo {
             String zoneCode,
             String mainAddress,
             String detailAddress,
-            String phoneNumber1,
-            String phoneNumber2,
-            String deliveryMemo,
             boolean defaultAddress,
             boolean isSelected
     ) {
@@ -38,9 +32,6 @@ public class GetCartDeliveryResponseVo {
         this.zoneCode = zoneCode;
         this.mainAddress = mainAddress;
         this.detailAddress = detailAddress;
-        this.phoneNumber1 = phoneNumber1;
-        this.phoneNumber2 = phoneNumber2;
-        this.deliveryMemo = deliveryMemo;
         this.defaultAddress = defaultAddress;
         this.isSelected = isSelected;
     }

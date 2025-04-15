@@ -19,10 +19,13 @@ import com.team114.starbucks.domain.delivery.vo.out.GetCartDeliveryResponseVo;
 import com.team114.starbucks.domain.delivery.vo.out.GetDeliveryUuidResponseVo;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/deliveries")
@@ -35,11 +38,11 @@ public class DeliveryController {
     @PostMapping
     public BaseResponseEntity<DeliveryResponseVo> createDelivery(
             @RequestBody DeliveryCreateRequestVo deliveryCreateRequestVo,
-            @RequestHeader("Member-Uuid") String memberUuid
+            Authentication authentication
     ) {
 
         DeliveryResponseVo result = deliveryService.saveDelivery(
-                DeliveryCreateRequestDto.from(deliveryCreateRequestVo, memberUuid)).toVo();
+                DeliveryCreateRequestDto.from(deliveryCreateRequestVo, authentication.getName())).toVo();
         return new BaseResponseEntity<>("배송지가 등록되었습니다.", result);
     }
 
@@ -48,10 +51,10 @@ public class DeliveryController {
     @PutMapping("/{deliveryUuid}")
     public BaseResponseEntity<DeliveryResponseVo> updateDelivery(
             @PathVariable String deliveryUuid,
-            @RequestHeader("Member-Uuid") String memberUuid,
+            Authentication authentication,
             @RequestBody DeliveryUpdateRequestVo deliveryUpdateRequestVo) {
 
-        deliveryService.updateDelivery(DeliveryUpdateRequestDto.from(deliveryUpdateRequestVo, memberUuid, deliveryUuid));
+        deliveryService.updateDelivery(DeliveryUpdateRequestDto.from(deliveryUpdateRequestVo, authentication.getName(), deliveryUuid));
 
         return new BaseResponseEntity<>("배송지가 수정되었습니다.");
     }
@@ -70,9 +73,9 @@ public class DeliveryController {
     @Operation(summary = "배송지 목록 조회", description = "회원의 전체 배송지를 조회합니다.", tags = {"delivery"})
     @GetMapping("/all")
     public BaseResponseEntity<List<DeliveryResponseVo>> getAllDeliveries(
-            @RequestHeader("Member-Uuid") String memberUuid ) {
+            Authentication authentication) {
 
-        List<DeliveryResponseVo> result = deliveryService.getDeliveriesByMemberUuid(memberUuid)
+        List<DeliveryResponseVo> result = deliveryService.getDeliveriesByMemberUuid(authentication.getName())
                 .stream().map(DeliveryResponseDto::toVo).toList();
 
         return new BaseResponseEntity<>("배송지 목록 조회 성공", result);
@@ -82,9 +85,9 @@ public class DeliveryController {
     @Operation(summary = "배송지 UUID 목록 조회", description = "회원의 배송지 UUID 목록만 조회합니다.", tags = {"delivery"})
     @GetMapping("/cart/uuids")
     public BaseResponseEntity<List<GetDeliveryUuidResponseVo>> getCartDeliveryUuid(
-            @RequestHeader("Member-Uuid") String memberUuid
+            Authentication authentication
     ) {
-        List<GetDeliveryUuidResponseVo> result = deliveryService.getDeliveryUuidsByMemberUuid(memberUuid)
+        List<GetDeliveryUuidResponseVo> result = deliveryService.getDeliveryUuidsByMemberUuid(authentication.getName())
                 .stream().map(GetDeliveryUuidResponseDto::toVo).toList();
 
         return new BaseResponseEntity<>("장바구니의 배송지 UUID 리스트 조회 성공", result);
@@ -94,25 +97,25 @@ public class DeliveryController {
     @Operation(summary = "장바구니 배송지 변경", description = "장바구니의 캐러셀 배송지 변경", tags = {"delivery"})
     @PutMapping("/cart/update-address")
     public BaseResponseEntity<DeliverySelectedResponseVo> updateSelectedDelivery(
-            @RequestHeader("Member-Uuid") String memberUuid,
+            Authentication authentication,
             @RequestBody DeliverySelectedRequestVo deliverySelectedRequestVo
     ) {
 
         DeliverySelectedResponseVo result = deliveryService
-                .updateSelectedDelivery(DeliverySelectedRequestDto.from(deliverySelectedRequestVo, memberUuid)).toVo();
+                .updateSelectedDelivery(DeliverySelectedRequestDto.from(deliverySelectedRequestVo, authentication.getName())).toVo();
 
         return new BaseResponseEntity<>("선택된 배송지가 변경되었습니다.", result);
     }
 
     // 7. 장바구니 캐러셀 단건 조회
     @Operation(summary = "장바구니 배송지 목록 조회", description = "장바구니 배송지를 단건 조회합니다.", tags = {"delivery"})
-    @GetMapping("/cart/get-address")
+    @GetMapping("/cart/get-address/{deliveryUuid}")
     public BaseResponseEntity<GetCartDeliveryResponseVo> getSelectedDelivery(
-            @RequestHeader("Member-Uuid") String memberUuid,
-            @RequestBody CartDeliveryRequestVo cartDeliveryRequestVo
+            Authentication authentication,
+            @PathVariable String deliveryUuid
     ) {
         GetCartDeliveryResponseVo result = deliveryService
-                .getCartDeliveryByUuid(CartDeliveryRequestDto.from(cartDeliveryRequestVo, memberUuid)).toVo();
+                .getCartDeliveryByUuid(CartDeliveryRequestDto.from(deliveryUuid, authentication.getName())).toVo();
 
         return new BaseResponseEntity<>("캐러셀 배송지 단건 조회에 성공했습니다.", result);
     }
@@ -121,10 +124,10 @@ public class DeliveryController {
     @Operation(summary = "주문용 배송지 조회", description = "장바구니에서 선택된 배송지 조회", tags = {"delivery"})
     @GetMapping("/order/selected-address")
     public BaseResponseEntity<DeliverySelectedResponseVo> getSelectedDelivery(
-            @RequestHeader("Member-Uuid") String memberUuid
+            Authentication authentication
     ) {
         DeliverySelectedResponseVo result = deliveryService
-                .getSelectedDeliveryByMemberUuid(memberUuid)
+                .getSelectedDeliveryByMemberUuid(authentication.getName())
                 .toVo();
 
         return new BaseResponseEntity<>("선택된 배송지 조회 성공", result);
