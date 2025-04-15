@@ -41,10 +41,6 @@ public class DeliveryController {
             Authentication authentication
     ) {
 
-        log.info("auth={}", authentication);  // null인지 확인
-        log.info("request body={}", deliveryCreateRequestVo.getAlias());  // 값 들어오는지 확인
-
-
         DeliveryResponseVo result = deliveryService.saveDelivery(
                 DeliveryCreateRequestDto.from(deliveryCreateRequestVo, authentication.getName())).toVo();
         return new BaseResponseEntity<>("배송지가 등록되었습니다.", result);
