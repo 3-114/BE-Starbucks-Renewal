@@ -52,11 +52,8 @@ public class MainCategoryServiceimpl implements MainCategoryService {
     @Override
     public CreateMainCategoryResDto saveMainCategory(CreateMainCategoryReqDto createMainCategoryReqDto) {
         try {
-            MainCategory mainCategory = createMainCategoryReqDto.toEntity(UUID.randomUUID().toString());
 
-            MainCategory savedMainCategory = mainCategoryRepository.save(mainCategory);
-
-            return CreateMainCategoryResDto.from(savedMainCategory);
+            return CreateMainCategoryResDto.from(mainCategoryRepository.save(createMainCategoryReqDto.toEntity(UUID.randomUUID().toString())));
         } catch (Exception e) {
             throw new BaseException(BaseResponseStatus.FAILED_TO_FIND);
         }
