@@ -1,6 +1,6 @@
 package com.team114.starbucks.common.config;
 
-import com.team114.starbucks.domain.auth.userDetails.CustomUserDetails;
+import com.team114.starbucks.domain.auth.userDetails.UserDetailsImpl;
 import com.team114.starbucks.domain.member.entity.Member;
 import com.team114.starbucks.domain.member.infrastructure.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class ApplicationConfig {
             Member member = memberRepository.findByMemberUuid(uuid)
                     .orElseThrow(() -> new UsernameNotFoundException("해당 UUID 를 가진 회원이 없습니다."));
 
-            return new CustomUserDetails(member);
+            return new UserDetailsImpl(member);
         };
     }
 
