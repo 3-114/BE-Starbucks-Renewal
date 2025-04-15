@@ -19,10 +19,10 @@ public class CartUuidReqDto {
         this.cartUuid = cartUuid;
     }
 
-    public static CartUuidReqDto of(String memberUuid, CartUuidReqVo cartUuidReqVo) {
+    public static CartUuidReqDto of(String memberUuid, String cartUuid) {
         return CartUuidReqDto.builder()
                 .memberUuid(memberUuid)
-                .cartUuid(cartUuidReqVo.getCartUuid())
+                .cartUuid(cartUuid)
                 .build();
     }
 
