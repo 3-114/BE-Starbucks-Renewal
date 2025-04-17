@@ -12,7 +12,6 @@ public class UpdateProductRequestVo {
     private String brand;
     private String productName;
     private Integer productPrice;
-    private String productDescription;
     private ProductStatus productStatus;
     private Integer shippingFee;
 

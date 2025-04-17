@@ -35,7 +35,26 @@ public class ProductServiceImpl implements ProductService {
     public CreateProductResponseDto saveProduct(
             CreateProductRequestDto createProductRequestDto
     ) {
-        return CreateProductResponseDto.from(productRepository.save(createProductRequestDto.toEntity(UUID.randomUUID().toString())));
+
+        String uuid = UUID.randomUUID().toString();
+
+        if (productRepository.existsByProductUuid(uuid)) {
+            throw new BaseException(BaseResponseStatus.DUPLICATED_PRODUCT);
+        }
+
+        Product newProduct = createProductRequestDto.toEntity(uuid);
+
+        productRepository.save(newProduct);
+
+        productThumbnailService.saveAllProductThumbnail(
+                newProduct,
+                createProductRequestDto.getProductThumbnailList()
+        );
+
+        CreateProductResponseDto resDto = CreateProductResponseDto.from(newProduct);
+
+
+        return resDto;
     }
 
     @Transactional
@@ -46,11 +65,19 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findByProductUuid(updateProductRequestDto.getProductUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
 
+        Product newProduct = updateProductRequestDto.updateProduct(product);
+        // 상품 정보 업데이트
+        productRepository.save(newProduct);
+
+        // 상품 썸네일 정보 같이 업데이트 -> 시간없어서 그냥 하나의 API로 수정
         List<ProductThumbnail> productThumbnailList = productThumbnailRepository.findByProductId(product.getId());
 
         productThumbnailRepository.deleteAll(productThumbnailList);
 
-        productThumbnailRepository.saveAll(productThumbnailList);
+        productThumbnailRepository.saveAll(updateProductRequestDto.getProductThumbnailList()
+                .stream()
+                .map(thumbnail -> thumbnail.toEntity(product))
+                .toList());
     }
 
     @Transactional

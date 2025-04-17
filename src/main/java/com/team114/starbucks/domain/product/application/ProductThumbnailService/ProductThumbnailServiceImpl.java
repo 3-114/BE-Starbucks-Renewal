@@ -1,5 +1,6 @@
 package com.team114.starbucks.domain.product.application.ProductThumbnailService;
 
+import com.team114.starbucks.domain.product.dto.in.CreateProductThumbnailRequestDto;
 import com.team114.starbucks.domain.product.entity.Product;
 import com.team114.starbucks.domain.product.entity.ProductThumbnail;
 import com.team114.starbucks.domain.product.infrastructure.ProductRepository;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,11 +32,16 @@ public class ProductThumbnailServiceImpl implements ProductThumbnailService {
     }
 
     @Override
-    public void saveAllProductThumbnail(Product product, List<ProductThumbnail> productThumbnailList) {
+    public void saveAllProductThumbnail(Product product, List<CreateProductThumbnailRequestDto> productThumbnailList) {
         productRepository.findById(product.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + product.getId()));
 
-        productThumbnailRepository.saveAll(productThumbnailList);
+        List<ProductThumbnail> list = new ArrayList<>();
+        for (CreateProductThumbnailRequestDto thumbnail : productThumbnailList) {
+            list.add(thumbnail.toEntity(product));
+        }
+
+        productThumbnailRepository.saveAll(list);
     }
 
 }
