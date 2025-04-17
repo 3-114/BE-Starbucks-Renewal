@@ -26,24 +26,17 @@ public class OptionServiceImpl implements OptionService {
     private final SizeRepository sizeRepository;
     private final ColorRepository colorRepository;
 
+    // 옵션 생성
     @Transactional
     @Override
-    public OptionResponseDto saveOption(OptionCreateRequestDto optionCreateRequestDto) {
-        try {
-            // color repository 에서 colorid로 color 객체 조회
-            Color color = colorRepository.findByColorId(optionCreateRequestDto.getColorId()).orElse(null);
-            // size repository 에서 sizeid로 size 객체 조회
-            Size size = sizeRepository.findBySizeId(optionCreateRequestDto.getSizeId()).orElse(null);
+    public void saveOption(OptionCreateRequestDto optionCreateRequestDto) {
 
-            Option newOption = optionCreateRequestDto.toEntity(color, size);
+            Color color = colorRepository.findByColorId(optionCreateRequestDto.getColorId())
+                    .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
+            Size size = sizeRepository.findBySizeId(optionCreateRequestDto.getSizeId())
+                    .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
 
-            Option savedOption = optionRepository.save(newOption);
-
-            return OptionResponseDto.from(savedOption);
-
-        } catch (Exception e) {
-            throw new BaseException(BaseResponseStatus.FAILED_TO_SAVE);
-        }
+            OptionResponseDto.from(optionRepository.save(optionCreateRequestDto.toEntity(color, size)));
     }
 
     // 옵션 전체 조회
@@ -53,6 +46,7 @@ public class OptionServiceImpl implements OptionService {
         return optionRepository.findAll().stream().map(OptionResponseDto::from).toList();
     }
 
+    // 옵션 단건 조회
     @Override
     public OptionResponseDto findOptionById(Long optionId) {
 
@@ -65,43 +59,22 @@ public class OptionServiceImpl implements OptionService {
     // 옵션 정보 변경
     @Transactional
     @Override
-    public OptionResponseDto updateOption(Long optionId, OptionUpdateRequestDto optionUpdateRequestDto) {
-        // option객체 조회
-        // optionrepo에서 findByOptionId(updateDto.getOptionId)
-        Option option = optionRepository.findByOptionId(optionId).orElseThrow(
+    public void updateOption(OptionUpdateRequestDto optionUpdateRequestDto) {
+
+        Option option = optionRepository.findByOptionId(optionUpdateRequestDto.getOptionId()).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );
 
-        // color repository 에서 colorid로 color 객체 조회
-        Color color = colorRepository.findByColorId(optionUpdateRequestDto.getColorId()).orElse(null);
-        // size repository 에서 sizeid로 size 객체 조회
-        Size size = sizeRepository.findBySizeId(optionUpdateRequestDto.getSizeId()).orElse(null);
+        optionRepository.save(optionUpdateRequestDto.toEntity(option));
 
-        Option newOption = optionUpdateRequestDto.toEntity(optionId ,color, size);
-
-        Option updatedOption = Option.builder()
-                .optionId(option.getOptionId())
-                .productUuid(optionUpdateRequestDto.getProductUuid())
-                .color(option.getColor())
-                .size(option.getSize())
-                .stock(optionUpdateRequestDto.getStock())
-                .optionPrice(optionUpdateRequestDto.getOptionPrice())
-                .discountRate(optionUpdateRequestDto.getDiscountRate())
-                .build();
-
-        Option savedOption = optionRepository.save(updatedOption);
-
-        return OptionResponseDto.from(savedOption);
     }
 
     // 옵션 삭제
     @Transactional
     @Override
-    public Void deleteOption(Long optionId) {
+    public void deleteOption(Long optionId) {
         optionRepository.deleteByOptionId(optionId).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );
-
-        return null;
     }
 }

@@ -5,8 +5,10 @@ import com.team114.starbucks.domain.member.entity.Member;
 import com.team114.starbucks.domain.member.enums.UserRole;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class SignInResponseDto {
 
     private String nickname;

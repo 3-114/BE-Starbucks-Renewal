@@ -1,35 +1,26 @@
 package com.team114.starbucks.domain.option.dto.in;
 
-import com.team114.starbucks.domain.color.entity.Color;
 import com.team114.starbucks.domain.option.entity.Option;
-import com.team114.starbucks.domain.option.vo.in.OptionCreateRequestVo;
 import com.team114.starbucks.domain.option.vo.in.OptionUpdateRequestVo;
-import com.team114.starbucks.domain.size.entity.Size;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 public class OptionUpdateRequestDto {
 
-    private String productUuid;
-    private Long colorId;
-    private Long sizeId;
+    private Long optionId;
     private Integer stock;
     private Long optionPrice;
     private Integer discountRate;
 
     @Builder
     public OptionUpdateRequestDto(
-            String productUuid,
-            Long colorId,
-            Long sizeId,
+            Long optionId,
             Integer stock,
             Long optionPrice,
             Integer discountRate
     ) {
-        this.productUuid = productUuid;
-        this.colorId = colorId;
-        this.sizeId = sizeId;
+        this.optionId = optionId;
         this.stock = stock;
         this.optionPrice = optionPrice;
         this.discountRate = discountRate;
@@ -39,21 +30,20 @@ public class OptionUpdateRequestDto {
             OptionUpdateRequestVo optionUpdateRequestVo
     ) {
         return OptionUpdateRequestDto.builder()
-                .productUuid(optionUpdateRequestVo.getProductUuid())
-                .colorId(optionUpdateRequestVo.getColorId())
-                .sizeId(optionUpdateRequestVo.getSizeId())
+                .optionId(optionUpdateRequestVo.getOptionId())
+                .stock(optionUpdateRequestVo.getStock())
                 .optionPrice(optionUpdateRequestVo.getOptionPrice())
                 .discountRate(optionUpdateRequestVo.getDiscountRate())
                 .build();
     }
 
-    public Option toEntity(Long optionId, Color color, Size size) {
+    public Option toEntity(Option option) {
 
         return Option.builder()
-                .optionId(optionId)
-                .productUuid(productUuid)
-                .color(color)
-                .size(size)
+                .optionId(option.getOptionId())
+                .productUuid(option.getProductUuid())
+                .color(option.getColor())
+                .size(option.getSize())
                 .stock(stock)
                 .optionPrice(optionPrice)
                 .discountRate(discountRate)

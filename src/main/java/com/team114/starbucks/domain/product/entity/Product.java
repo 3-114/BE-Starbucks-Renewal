@@ -7,9 +7,11 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
+@ToString
 @Entity
 @Getter
 @NoArgsConstructor
@@ -23,10 +25,9 @@ public class Product extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String productUuid;
 
-    // 브랜드명
-    @Enumerated(EnumType.STRING)
+    // 브랜드명 ENUM -> STRING으로 수정
     @Column(nullable = false)
-    private Brand brand;
+    private String brand;
 
     // 상품명
     @Column(nullable = false)
@@ -35,10 +36,6 @@ public class Product extends BaseEntity {
     // 가격
     @Column(nullable = false)
     private Integer productPrice;
-
-    // 상품 상세내역
-    @Column(nullable = false, length = 100)
-    private String description;
 
     // 상품 만료기한
     private LocalDateTime expiredAt;
@@ -52,14 +49,16 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private Integer shippingFee;
 
+    // 상품 상세내역 이미지
+
+
     @Builder
     public Product(
             Long id,
             String productUuid,
-            Brand brand,
+            String brand,
             String productName,
             Integer productPrice,
-            String description,
             LocalDateTime expiredAt,
             ProductStatus productStatus,
             Integer shippingFee
@@ -69,8 +68,21 @@ public class Product extends BaseEntity {
         this.brand = brand;
         this.productName = productName;
         this.productPrice = productPrice;
-        this.description = description;
         this.expiredAt = expiredAt;
+        this.productStatus = productStatus;
+        this.shippingFee = shippingFee;
+    }
+
+    public void updateProduct(
+            String productName,
+            Integer productPrice,
+            String brand,
+            ProductStatus productStatus,
+            Integer shippingFee
+    ) {
+        this.productName = productName;
+        this.productPrice = productPrice;
+        this.brand = brand;
         this.productStatus = productStatus;
         this.shippingFee = shippingFee;
     }

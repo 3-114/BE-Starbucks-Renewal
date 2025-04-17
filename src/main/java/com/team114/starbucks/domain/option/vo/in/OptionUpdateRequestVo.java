@@ -4,10 +4,10 @@ import lombok.Getter;
 
 @Getter
 public class OptionUpdateRequestVo {
-    private String productUuid;
-    private Long colorId;
-    private Long sizeId;
+
+    private Long optionId;
     private Integer stock;
     private Long optionPrice;
     private Integer discountRate;
+
 }

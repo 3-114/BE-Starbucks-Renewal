@@ -19,7 +19,7 @@ public class BaseExceptionHandler {
      */
     @ExceptionHandler(BaseException.class)
     protected ResponseEntity<BaseResponseEntity<Void>> BaseError(BaseException e) {
-        BaseResponseEntity<Void> response = new BaseResponseEntity<>(e.getMessage());
+        BaseResponseEntity<Void> response = new BaseResponseEntity<>(e.getStatus());
         log.error("BaseException -> {}({})", e.getStatus(), e.getStatus().getMessage(), e);
         return new ResponseEntity<>(response, response.httpStatus());
     }

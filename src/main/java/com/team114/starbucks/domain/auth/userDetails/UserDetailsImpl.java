@@ -14,14 +14,14 @@ import java.util.List;
 
 @Getter
 @ToString
-public class CustomUserDetails implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
     private final String memberUuid;
     private final UserRole userRole;
     private final String password;
 
     @Builder
-    public CustomUserDetails(Member member) {
+    public UserDetailsImpl(Member member) {
         this.memberUuid = member.getMemberUuid();
         this.userRole = member.getUserRole();
         this.password = member.getPassword();

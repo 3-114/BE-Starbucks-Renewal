@@ -5,7 +5,6 @@ import lombok.Getter;
 @Getter
 public class CreateMainCategoryReqVo {
 
-    private String mainCategoryUuid;
     private String mainCategoryName;
 
 }
