@@ -87,6 +87,7 @@ public class CrawledProductService {
                         SubCategory.builder()
                                 .subCategoryUuid(UUID.randomUUID().toString())
                                 .subCategoryName(subCategoryName)
+                                .mainCategoryUuid(mainCategory.getMainCategoryUuid())
                                 .build()));
 
         Optional<Product> existingProduct = productRepository.findByProductUuid(dto.getProductName());
@@ -107,7 +108,7 @@ public class CrawledProductService {
                 .productStatus(ProductStatus.For_Sale)
                 .shippingFee(2500)
                 .build();
-            productRepository.save(product);
+            product = productRepository.save(product);
         }
 
         List<String> eventUuids = eventRepository.findAllEventUuids();
@@ -150,6 +151,7 @@ public class CrawledProductService {
         for (CrawledProductDto.ThumbnailDto thumb : dto.getThumbnails()) {
             int thumbnailIndex = parseIndex(thumb.getThumbnailIndex());
             ProductThumbnail image = ProductThumbnail.builder()
+                    .product(product)
                     .productUuid(product.getProductUuid())
                     .thumbnailIndex(thumbnailIndex)
                     .thumbnailUrl(thumb.getThumbnailUrl())
