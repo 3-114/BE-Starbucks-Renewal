@@ -3,13 +3,18 @@ package com.team114.starbucks.domain.productcategory.application;
 import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.productcategory.dto.in.CreateProductCategoryReqDto;
+import com.team114.starbucks.domain.productcategory.dto.out.GetAllProductUuidResDto;
 import com.team114.starbucks.domain.productcategory.entity.ProductCategory;
 import com.team114.starbucks.domain.productcategory.infrastructure.ProductCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     /*
@@ -23,6 +28,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     private final ProductCategoryRepository productCategoryRepository;
 
     // 1. 상품 카테고리 생성
+    @Transactional
     @Override
     public void createProductCategory(CreateProductCategoryReqDto createProductCategoryReqDto) {
         try {
@@ -32,6 +38,13 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         } catch (Exception e) {
             throw new BaseException(BaseResponseStatus.FAILED_TO_FIND);
         }
+
+
+    }
+
+    @Override
+    public List<GetAllProductUuidResDto> getProductUuidsByEventUuid(String eventUuid) {
+        return productCategoryRepository.findAllProductUuidByEventUuid(eventUuid).stream().map(GetAllProductUuidResDto::from).toList();
 
 
     }

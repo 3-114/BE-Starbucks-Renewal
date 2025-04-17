@@ -21,7 +21,6 @@ public class UpdateProductRequestDto {
     private String productName;
     private String brand;
     private Integer productPrice;
-    private String productDescription;
     private Integer shippingFee;
     private ProductStatus productStatus;
 
@@ -30,13 +29,12 @@ public class UpdateProductRequestDto {
 
     @Builder
     public UpdateProductRequestDto(
-            String productUuid, String productName, String brand, Integer productPrice, String productDescription, Integer shippingFee, ProductStatus productStatus,
+            String productUuid, String productName, String brand, Integer productPrice, Integer shippingFee, ProductStatus productStatus,
             List<UpdateProductThumbnailRequestDto> productThumbnailList) {
         this.productUuid = productUuid;
         this.productName = productName;
         this.brand = brand;
         this.productPrice = productPrice;
-        this.productDescription = productDescription;
         this.shippingFee = shippingFee;
         this.productStatus = productStatus;
         this.productThumbnailList = productThumbnailList;
@@ -60,10 +58,23 @@ public class UpdateProductRequestDto {
                 .productName(vo.getProductName())
                 .brand(vo.getBrand())
                 .productPrice(vo.getProductPrice())
-                .productDescription(vo.getProductDescription())
                 .shippingFee(vo.getShippingFee())
                 .productStatus(vo.getProductStatus())
                 .productThumbnailList(thumbnailList)
+                .build();
+    }
+
+    public Product updateProduct(
+            Product product
+    ) {
+        return Product.builder()
+                .id(product.getId())
+                .productUuid(product.getProductUuid())
+                .brand(this.brand)
+                .productName(this.productName)
+                .productPrice(this.productPrice)
+                .shippingFee(this.shippingFee)
+                .productStatus(this.productStatus)
                 .build();
     }
 

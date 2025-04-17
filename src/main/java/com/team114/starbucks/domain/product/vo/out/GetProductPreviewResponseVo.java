@@ -12,17 +12,20 @@ public class GetProductPreviewResponseVo {
     private Integer productPrice;
     private String productThumbnailUrl;
     private Boolean isThumbnail;
+    private Integer shippingFee;
 
     @Builder
     public GetProductPreviewResponseVo(
             String productName,
             Integer productPrice,
             String productThumbnailUrl,
-            Boolean isThumbnail
+            Boolean isThumbnail,
+            Integer shippingFee
     ) {
         this.productName = productName;
         this.productPrice = productPrice;
         this.productThumbnailUrl = productThumbnailUrl;
         this.isThumbnail = isThumbnail;
+        this.shippingFee = shippingFee;
     }
 }

@@ -73,4 +73,18 @@ public class Product extends BaseEntity {
         this.shippingFee = shippingFee;
     }
 
+    public void updateProduct(
+            String productName,
+            Integer productPrice,
+            String brand,
+            ProductStatus productStatus,
+            Integer shippingFee
+    ) {
+        this.productName = productName;
+        this.productPrice = productPrice;
+        this.brand = brand;
+        this.productStatus = productStatus;
+        this.shippingFee = shippingFee;
+    }
+
 }

@@ -13,7 +13,7 @@ public interface MainCategoryService {
 
     GetOneMainCategoryResDto getOneMainCategory(String mainCategoryUuid);
 
-    CreateMainCategoryResDto saveMainCategory(CreateMainCategoryReqDto createMainCategoryReqDto);
+    void saveMainCategory(CreateMainCategoryReqDto createMainCategoryReqDto);
 
     Void updateMainCategory(String mainCategoryUuid, UpdateMainCategoryReqDto updateMainCategoryReqDto);
 
