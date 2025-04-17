@@ -35,13 +35,14 @@ public class MainCategoryController {
 
     // 1. 메인 카테고리 생성
     @PostMapping
-    public BaseResponseEntity<CreateMainCategoryResVo> createMainCategory(
+    public BaseResponseEntity<Void> createMainCategory(
             @RequestBody CreateMainCategoryReqVo createMainCategoryReqVo
     ) {
-        CreateMainCategoryResDto createMainCategoryResDto = mainCategoryService.saveMainCategory(CreateMainCategoryReqDto.from(createMainCategoryReqVo));
-        return new BaseResponseEntity<>(("메인 카테고리 생성에 성공했습니다. "), createMainCategoryResDto.toVo());
+        mainCategoryService.saveMainCategory(CreateMainCategoryReqDto.from(createMainCategoryReqVo));
 
+        return new BaseResponseEntity<>("메인 카테고리 생성에 성공했습니다. ", null);
     }
+
 
     // 2. 메인 카테고리 전체 조회
     @GetMapping
