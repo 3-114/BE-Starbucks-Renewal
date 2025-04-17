@@ -36,7 +36,7 @@ public interface CartService {
 
     void deleteCartItem(CartUuidReqDto cartUuidReqDto);
 
-    GetCartItemResDto getCartItem(CartUuidReqDto cartUuidReqDto);
+    CartAndProductResDto getCartItem(CartUuidReqDto cartUuidReqDto);
 
     GetItemSelectResDto getItemSelect(CartUuidReqDto cartUuidReqDto);
 

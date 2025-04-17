@@ -7,9 +7,12 @@ import com.team114.starbucks.domain.cart.dto.in.CartUuidReqDto;
 import com.team114.starbucks.domain.cart.dto.in.ProductUuidReqDto;
 import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.*;
+import com.team114.starbucks.domain.cart.entity.Cart;
 import com.team114.starbucks.domain.cart.enums.CartType;
 import com.team114.starbucks.domain.cart.infrastructure.CartRepository;
 import com.team114.starbucks.domain.cart.vo.out.CartTypeReqDto;
+import com.team114.starbucks.domain.product.application.ProductService;
+import com.team114.starbucks.domain.product.dto.out.GetProductPreviewResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +26,7 @@ import java.util.UUID;
 public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
+    private final ProductService productService;
 
     @Transactional
     @Override
@@ -50,9 +54,11 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public GetCartItemResDto getCartItem(CartUuidReqDto cartUuidReqDto) {
-        return GetCartItemResDto.from(cartRepository.findByCartUuid(cartUuidReqDto.getCartUuid())
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)));
+    public CartAndProductResDto getCartItem(CartUuidReqDto cartUuidReqDto) {
+        Cart cart = cartRepository.findByCartUuid(cartUuidReqDto.getCartUuid())
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
+        GetProductPreviewResponseDto getProductPreviewResponseDto = productService.getProductPreview(cart.getProductUuid());
+        return CartAndProductResDto.of(cart, getProductPreviewResponseDto);
     }
 
     @Override

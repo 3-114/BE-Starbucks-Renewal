@@ -120,7 +120,7 @@ public class CartController {
      */
     @Operation(summary = "장바구니 항목 단건 조회", tags = {"cart"})
     @GetMapping("/{cartUuid}")
-    public BaseResponseEntity<GetCartItemResVo> getCartItem(
+    public BaseResponseEntity<CartAndProductResVo> getCartItem(
             Authentication authentication,
             @PathVariable String cartUuid
     ) {
