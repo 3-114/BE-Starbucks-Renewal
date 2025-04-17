@@ -109,4 +109,14 @@ public class CartServiceImpl implements CartService {
         return cartRepository.findByMemberUuid(memberUuid)
                 .stream().map(MyCartUuidDto::from).toList();
     }
+
+    @Transactional
+    @Override
+    public void toggleCartSelection(CartUuidReqDto cartUuidReqDto) {
+        cartRepository.save(cartUuidReqDto.toggleSelection(
+                cartRepository.findByCartUuid(cartUuidReqDto.getCartUuid()).orElseThrow(
+                        () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
+                )
+        ));
+    }
 }
