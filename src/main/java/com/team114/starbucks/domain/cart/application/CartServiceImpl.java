@@ -103,4 +103,10 @@ public class CartServiceImpl implements CartService {
                 productUuidReqDto.getProductUuid())
                 .stream().map(GetQuantityAndSelectedDto::from).toList();
     }
+
+    @Override
+    public List<MyCartUuidDto> getMyCartUuids(String memberUuid) {
+        return cartRepository.findByMemberUuid(memberUuid)
+                .stream().map(MyCartUuidDto::from).toList();
+    }
 }

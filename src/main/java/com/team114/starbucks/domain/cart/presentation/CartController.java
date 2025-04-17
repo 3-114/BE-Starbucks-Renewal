@@ -9,6 +9,7 @@ import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetProductUuidResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetQuantityAndSelectedDto;
+import com.team114.starbucks.domain.cart.dto.out.MyCartUuidDto;
 import com.team114.starbucks.domain.cart.vo.in.AddCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.out.*;
@@ -37,12 +38,14 @@ public class CartController {
      * 9. 장바구니에서 항목 수량 증가
      * 10. 장바구니 유형 별로 총 항목 갯수를 조회
      * 11. productUuid 에 해당하는 장바구니 정보 조회
+     * 12. get - my cartUuid list
      */
 
     private final CartService cartService;
 
     /**
      * 1. 장바구니 항목 생성
+     *
      * @param addCartItemReqVo
      * @param authentication
      * @return
@@ -59,6 +62,7 @@ public class CartController {
 
     /**
      * 2. 장바구니 항목 전체 리스트로 조회
+     *
      * @param authentication
      * @return
      */
@@ -74,6 +78,7 @@ public class CartController {
 
     /**
      * 3. 장바구니 항목 전체 정보 변경
+     *
      * @param authentication
      * @param updateCartItemReqVo
      * @return
@@ -90,6 +95,7 @@ public class CartController {
 
     /**
      * 4. 장바구니 항목 삭제
+     *
      * @param authentication
      * @param cartUuid
      * @return
@@ -106,6 +112,7 @@ public class CartController {
 
     /**
      * 5. 장바구니 항목 단건 조회
+     *
      * @param authentication
      * @param cartUuid
      * @return
@@ -123,6 +130,7 @@ public class CartController {
 
     /**
      * 6. 장바구니 항목 체크 여부 조회
+     *
      * @param authentication
      * @param cartUuid
      * @return
@@ -140,6 +148,7 @@ public class CartController {
 
     /**
      * 7. 장바구니에서 장바구니 유형별로 상품 UUID 리스트 조회 (일반/예약)
+     *
      * @param authentication
      * @param cartType
      * @return
@@ -159,6 +168,7 @@ public class CartController {
 
     /**
      * 8. 장바구니에서 항목 수량 감소
+     *
      * @param authentication
      * @param cartUuid
      * @return
@@ -175,6 +185,7 @@ public class CartController {
 
     /**
      * 9. 장바구니에서 항목 수량 증가
+     *
      * @param authentication
      * @param cartUuid
      * @return
@@ -191,13 +202,14 @@ public class CartController {
 
     /**
      * 10. 장바구니 유형 별로 총 항목 갯수를 조회
+     *
      * @param authentication
      * @param cartType
      * @return
      */
     @Operation(summary = "장바구니 유형 별로 총 항목 갯수를 조회", tags = {"cart"})
     @GetMapping("/count/{cartType}")
-    public BaseResponseEntity<CountTotalCartResVo>  countTotalCart(
+    public BaseResponseEntity<CountTotalCartResVo> countTotalCart(
             Authentication authentication,
             @PathVariable String cartType
     ) {
@@ -215,5 +227,15 @@ public class CartController {
         return cartService.getCartByProductUuid(
                 ProductUuidReqDto.of(authentication.getName(), productUuid)
         ).stream().map(GetQuantityAndSelectedDto::toVo).toList();
+    }
+
+    @Operation(summary = "memberUuid 로 cartUuid list 조회", tags = {"cart"})
+    @GetMapping("/uuid-list")
+    public BaseResponseEntity<List<MyCartUuidVo>> getMyCartUuids(
+            Authentication authentication
+    ) {
+        return new BaseResponseEntity<>(
+                "memberUuid 로 cartUuid list 조회에 성공하였습니다.",
+                cartService.getMyCartUuids(authentication.getName()).stream().map(MyCartUuidDto::toVo).toList());
     }
 }
