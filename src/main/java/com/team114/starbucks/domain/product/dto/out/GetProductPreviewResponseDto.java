@@ -16,18 +16,21 @@ public class GetProductPreviewResponseDto {
     private Integer productPrice;
     private String productThumbnailUrl;
     private Boolean isThumbnail;
+    private Integer shippingFee;
 
     @Builder
     public GetProductPreviewResponseDto(
             String productName,
             Integer productPrice,
             String productThumbnailUrl,
-            Boolean isThumbnail
+            Boolean isThumbnail,
+            Integer shippingFee
     ) {
         this.productName = productName;
         this.productPrice = productPrice;
         this.productThumbnailUrl = productThumbnailUrl;
         this.isThumbnail = isThumbnail;
+        this.shippingFee = shippingFee;
     }
 
 
@@ -38,6 +41,7 @@ public class GetProductPreviewResponseDto {
                 .productPrice(product.getProductPrice())
                 .productThumbnailUrl(productThumbnail.getThumbnailUrl())
                 .isThumbnail(productThumbnail.getIsThumbnail())
+                .shippingFee(product.getShippingFee())
                 .build();
     }
 
@@ -47,6 +51,7 @@ public class GetProductPreviewResponseDto {
                 .productPrice(productPrice)
                 .productThumbnailUrl(productThumbnailUrl)
                 .isThumbnail(isThumbnail)
+                .shippingFee(shippingFee)
                 .build();
     }
 
