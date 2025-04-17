@@ -105,7 +105,4 @@ public class ProductController {
         return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 미리보기 성공", 200, vo);
 
     }
-
-
-
 }

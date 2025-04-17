@@ -18,6 +18,7 @@ public class ProductDescription {
     @Column(unique = true, nullable = false)
     private String productUuid;
 
+    @Column(columnDefinition = "LONGTEXT")
     private String productDescription;
 
     @Builder

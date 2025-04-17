@@ -1,5 +1,6 @@
-package com.team114.starbucks.domain.oauth2.dto;
+package com.team114.starbucks.domain.oauth2.application;
 
+import com.team114.starbucks.domain.oauth2.dto.UserDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
