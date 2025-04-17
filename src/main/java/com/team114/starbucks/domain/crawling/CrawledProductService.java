@@ -17,7 +17,9 @@ import com.team114.starbucks.domain.color.infrastructure.ColorRepository;
 import com.team114.starbucks.domain.size.entity.Size;
 import com.team114.starbucks.domain.size.infrastructure.SizeRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.team114.starbucks.domain.product.enums.Brand;
@@ -26,6 +28,7 @@ import com.team114.starbucks.domain.product.enums.ProductStatus;
 import java.time.LocalDateTime;
 import java.util.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CrawledProductService {
@@ -34,6 +37,7 @@ public class CrawledProductService {
     private final ProductCategoryRepository productCategoryRepository;
     private final MainCategoryRepository mainCategoryRepository;
     private final SubCategoryRepository subCategoryRepository;
+    private final EventRepository eventRepository;
     private final OptionRepository optionRepository;
     private final ProductThumbnailRepository productThumbnailRepository;
     private final ProductDescriptionRepository productDescriptionRepository;
@@ -51,8 +55,7 @@ public class CrawledProductService {
                 try {
                     saveCrawledProduct(dto);
                 } catch (Exception e) {
-                    System.err.println("[저장 실패] 제품명: " + dto.getProductName());
-                    e.printStackTrace();
+                    log.warn("[저장 실패] 제품명: {}", dto.getProductName(), e);
                 }
             }
         }
@@ -68,41 +71,64 @@ public class CrawledProductService {
 
     @Transactional
     public void saveCrawledProduct(CrawledProductDto dto) {
-        MainCategory mainCategory = mainCategoryRepository.findByMainCategoryName(dto.getCategory().get(0))
+
+        String mainCategoryName = dto.getCategory().get(0); // 대분류
+        String subCategoryName = dto.getCategory().get(1);  // 소분류
+
+        MainCategory mainCategory = mainCategoryRepository.findByMainCategoryName(mainCategoryName)
                 .orElseGet(() -> mainCategoryRepository.save(
                         MainCategory.builder()
                                 .mainCategoryUuid(UUID.randomUUID().toString())
-                                .mainCategoryName(dto.getCategory().get(0))
-                                .build())
-                        );
+                                .mainCategoryName(mainCategoryName)
+                                .build()));
 
-        SubCategory subCategory = subCategoryRepository.findBySubCategoryName(dto.getCategory().get(1))
+        SubCategory subCategory = subCategoryRepository.findBySubCategoryName(subCategoryName)
                 .orElseGet(() -> subCategoryRepository.save(
                         SubCategory.builder()
                                 .subCategoryUuid(UUID.randomUUID().toString())
-                                .subCategoryName(dto.getCategory().get(1))
-                                .mainCategoryUuid(mainCategory.getMainCategoryUuid())
-                                .build())
-                        );
+                                .subCategoryName(subCategoryName)
+                                .build()));
 
-        String productUuid = UUID.randomUUID().toString();
+        Optional<Product> existingProduct = productRepository.findByProductUuid(dto.getProductName());
 
-        Product product = Product.builder()
+        String productUuid;
+        Product product;
+
+        if(existingProduct.isPresent()) {
+            product = existingProduct.get();
+            productUuid = product.getProductUuid();
+        } else {
+            productUuid = UUID.randomUUID().toString();
+            product = Product.builder()
                 .productUuid(productUuid)
                 .productName(dto.getProductName())
                 .productPrice(dto.getProductPrice())
                 .brand(Brand.BRAND_STARBUCKS.getBrand())
                 .productStatus(ProductStatus.For_Sale)
-                .shippingFee(0)
+                .shippingFee(2500)
                 .build();
-        productRepository.save(product);
+            productRepository.save(product);
+        }
 
-        ProductCategory pc = ProductCategory.builder()
-                .productUuid(productUuid)
-                .mainCategoryUuid(mainCategory.getMainCategoryUuid())
-                .subCategoryUuid(subCategory.getSubCategoryUuid())
-                .build();
-        productCategoryRepository.save(pc);
+        List<String> eventUuids = eventRepository.findAllEventUuids();
+        if(eventUuids.isEmpty()) {
+            throw new IllegalStateException("등록된 이벤트가 없습니다.");
+        }
+
+        String randomEventUuid = eventUuids.get(random.nextInt(eventUuids.size()));
+
+        boolean exists = productCategoryRepository.existsByProductUuidAndMainCategoryUuidAndSubCategoryUuid(
+                productUuid, mainCategory.getMainCategoryUuid(), subCategory.getSubCategoryUuid());
+
+        if (!exists) {
+            ProductCategory pc = ProductCategory.builder()
+                    .productUuid(productUuid)
+                    .mainCategoryUuid(mainCategory.getMainCategoryUuid())
+                    .subCategoryUuid(subCategory.getSubCategoryUuid())
+                    .eventUuid(randomEventUuid)
+                    .build();
+            productCategoryRepository.save(pc);
+        }
 
         Color color = colorRepository.findByColorId(5L)
                 .orElseThrow(() -> new IllegalStateException("기본 색상(ID=5)이 존재하지 않습니다."));
