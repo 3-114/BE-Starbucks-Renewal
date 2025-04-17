@@ -105,18 +105,18 @@ public class CartController {
     /**
      * 5. 장바구니 항목 단건 조회
      * @param authentication
-     * @param productUuid
+     * @param cartUuid
      * @return
      */
     @Operation(summary = "장바구니 항목 단건 조회", tags = {"cart"})
-    @GetMapping("/{productUuid}")
+    @GetMapping("/{cartUuid}")
     public BaseResponseEntity<GetCartItemResVo> getCartItem(
             Authentication authentication,
-            @PathVariable String productUuid
+            @PathVariable String cartUuid
     ) {
         return new BaseResponseEntity<>(
                 "장바구니 항목 단건 조회에 성공하였습니다.",
-                cartService.getCartItem(CartUuidReqDto.of(authentication.getName(), productUuid)).toVo());
+                cartService.getCartItem(CartUuidReqDto.of(authentication.getName(), cartUuid)).toVo());
     }
 
     /**
