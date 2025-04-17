@@ -22,7 +22,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -49,6 +49,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        // security filter chain 2개 이상이면 매핑해줄 것.
+//        http
+//                .securityMatchers((auth) -> auth.requestMatchers("/user"));
 
         // csrf disable
         http
