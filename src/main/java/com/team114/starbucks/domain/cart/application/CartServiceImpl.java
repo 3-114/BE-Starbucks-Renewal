@@ -4,6 +4,7 @@ import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.in.CartUuidReqDto;
+import com.team114.starbucks.domain.cart.dto.in.ProductUuidReqDto;
 import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.*;
 import com.team114.starbucks.domain.cart.enums.CartType;
@@ -93,5 +94,13 @@ public class CartServiceImpl implements CartService {
                         CartType.valueOf(cartTypeReqDto.getCartType().toUpperCase())
                 )
         );
+    }
+
+    @Override
+    public List<GetQuantityAndSelectedDto> getCartByProductUuid(ProductUuidReqDto productUuidReqDto) {
+        return cartRepository.findByMemberUuidAndProductUuid(
+                productUuidReqDto.getMemberUuid(),
+                productUuidReqDto.getProductUuid())
+                .stream().map(GetQuantityAndSelectedDto::from).toList();
     }
 }

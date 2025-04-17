@@ -4,9 +4,11 @@ import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.cart.application.CartService;
 import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.in.CartUuidReqDto;
+import com.team114.starbucks.domain.cart.dto.in.ProductUuidReqDto;
 import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetProductUuidResDto;
+import com.team114.starbucks.domain.cart.dto.out.GetQuantityAndSelectedDto;
 import com.team114.starbucks.domain.cart.vo.in.AddCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.out.*;
@@ -202,5 +204,16 @@ public class CartController {
         return new BaseResponseEntity<>(
                 "장바구니 유형 별로 총 항목 갯수 조회 성공",
                 cartService.countTotalCart(CartTypeReqDto.of(authentication.getName(), cartType)).toVo());
+    }
+
+    @Operation(summary = "ProductUuid 로 cart 조회", tags = {"cart"})
+    @GetMapping("/by-product/{productUuid}")
+    public List<GetQuantityAndSelectedVo> getCartByProductUuid(
+            Authentication authentication,
+            @PathVariable String productUuid
+    ) {
+        return cartService.getCartByProductUuid(
+                ProductUuidReqDto.of(authentication.getName(), productUuid)
+        ).stream().map(GetQuantityAndSelectedDto::toVo).toList();
     }
 }
