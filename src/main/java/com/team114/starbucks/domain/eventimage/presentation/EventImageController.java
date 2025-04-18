@@ -1,5 +1,6 @@
 package com.team114.starbucks.domain.eventimage.presentation;
 
+import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.eventimage.application.EventImageService;
 import com.team114.starbucks.domain.eventimage.dto.out.GetEventUrlAndIndexResDto;
 import com.team114.starbucks.domain.eventimage.vo.out.GetEventUrlAndIndexResVo;
@@ -22,7 +23,7 @@ public class EventImageController {
 
 
     @GetMapping("/{eventUuid}")
-    public List<GetEventUrlAndIndexResVo> getEventUrlAndIndex(
+    public BaseResponseEntity<List<GetEventUrlAndIndexResVo>> getEventUrlAndIndex(
             @PathVariable String eventUuid
     ) {
         List<GetEventUrlAndIndexResDto> dtoList = eventImageService.getEventUrlAndIndex(eventUuid);
@@ -32,7 +33,7 @@ public class EventImageController {
             voList.add(getEventUrlAndIndexResDto.toVo());
         }
 
-        return voList;
+        return new BaseResponseEntity<>("기획전 URL 조회에 성공하였습니다. " ,voList);
 
     }
 
