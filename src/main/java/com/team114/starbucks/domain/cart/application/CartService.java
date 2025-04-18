@@ -36,7 +36,7 @@ public interface CartService {
 
     void deleteCartItem(CartUuidReqDto cartUuidReqDto);
 
-    GetCartItemResDto getCartItem(CartUuidReqDto cartUuidReqDto);
+    CartAndProductResDto getCartItem(CartUuidReqDto cartUuidReqDto);
 
     GetItemSelectResDto getItemSelect(CartUuidReqDto cartUuidReqDto);
 
@@ -51,4 +51,6 @@ public interface CartService {
     List<GetQuantityAndSelectedDto> getCartByProductUuid(ProductUuidReqDto productUuidReqDto);
 
     List<MyCartUuidDto> getMyCartUuids(String memberUuid);
+
+    void toggleCartSelection(CartUuidReqDto cartUuidReqDto);
 }

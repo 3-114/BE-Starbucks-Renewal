@@ -37,8 +37,9 @@ public class CartController {
      * 8. 장바구니에서 항목 수량 감소
      * 9. 장바구니에서 항목 수량 증가
      * 10. 장바구니 유형 별로 총 항목 갯수를 조회
-     * 11. productUuid 에 해당하는 장바구니 정보 조회
-     * 12. get - my cartUuid list
+     * 11. ProductUuid 로 cart 조회
+     * 12. memberUuid 로 cartUuid list 조회
+     * 13. 장바구니 항목 체크여부 변경
      */
 
     private final CartService cartService;
@@ -119,7 +120,7 @@ public class CartController {
      */
     @Operation(summary = "장바구니 항목 단건 조회", tags = {"cart"})
     @GetMapping("/{cartUuid}")
-    public BaseResponseEntity<GetCartItemResVo> getCartItem(
+    public BaseResponseEntity<CartAndProductResVo> getCartItem(
             Authentication authentication,
             @PathVariable String cartUuid
     ) {
@@ -130,7 +131,6 @@ public class CartController {
 
     /**
      * 6. 장바구니 항목 체크 여부 조회
-     *
      * @param authentication
      * @param cartUuid
      * @return
@@ -218,6 +218,12 @@ public class CartController {
                 cartService.countTotalCart(CartTypeReqDto.of(authentication.getName(), cartType)).toVo());
     }
 
+    /**
+     * 11. ProductUuid 로 cart 조회
+     * @param authentication
+     * @param productUuid
+     * @return
+     */
     @Operation(summary = "ProductUuid 로 cart 조회", tags = {"cart"})
     @GetMapping("/by-product/{productUuid}")
     public List<GetQuantityAndSelectedVo> getCartByProductUuid(
@@ -229,6 +235,11 @@ public class CartController {
         ).stream().map(GetQuantityAndSelectedDto::toVo).toList();
     }
 
+    /**
+     * 12. memberUuid 로 cartUuid list 조회
+     * @param authentication
+     * @return
+     */
     @Operation(summary = "memberUuid 로 cartUuid list 조회", tags = {"cart"})
     @GetMapping("/uuid-list")
     public BaseResponseEntity<List<MyCartUuidVo>> getMyCartUuids(
@@ -237,5 +248,21 @@ public class CartController {
         return new BaseResponseEntity<>(
                 "memberUuid 로 cartUuid list 조회에 성공하였습니다.",
                 cartService.getMyCartUuids(authentication.getName()).stream().map(MyCartUuidDto::toVo).toList());
+    }
+
+    /**
+     * 13. 장바구니 항목 체크여부 변경
+     * @param authentication
+     * @param cartUuid
+     * @return
+     */
+    @Operation(summary = "장바구니 항목 체크여부 변경", tags = {"cart"})
+    @PutMapping("/{cartUuid}/toggle-selection")
+    public BaseResponseEntity<Void> toggleCartSelection(
+            Authentication authentication,
+            @PathVariable String cartUuid
+    ) {
+        cartService.toggleCartSelection(CartUuidReqDto.of(authentication.getName(), cartUuid));
+        return new BaseResponseEntity<>("장바구니 항목 체크여부 변경에 성공하였습니다.");
     }
 }
