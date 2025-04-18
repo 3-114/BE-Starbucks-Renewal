@@ -3,10 +3,12 @@ package com.team114.starbucks.domain.productcategory.application;
 import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.productcategory.dto.in.CreateProductCategoryReqDto;
+import com.team114.starbucks.domain.productcategory.dto.in.PageParamDto;
 import com.team114.starbucks.domain.productcategory.dto.out.GetAllProductUuidResDto;
 import com.team114.starbucks.domain.productcategory.entity.ProductCategory;
 import com.team114.starbucks.domain.productcategory.infrastructure.ProductCategoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,5 +49,14 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         return productCategoryRepository.findAllProductUuidByEventUuid(eventUuid).stream().map(GetAllProductUuidResDto::from).toList();
 
 
+    }
+
+    @Override
+    public Page<GetAllProductUuidResDto> getProductUuids(PageParamDto pageParamDto) {
+        return pageParamDto.getMainCategoryUuid() == null
+                ? productCategoryRepository.findAll(pageParamDto.toEntity()).map(GetAllProductUuidResDto::from)
+                : productCategoryRepository.findByMainCategoryUuid(
+                        pageParamDto.getMainCategoryUuid(), pageParamDto.toEntity())
+                .map(GetAllProductUuidResDto::from);
     }
 }
