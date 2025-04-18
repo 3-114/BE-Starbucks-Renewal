@@ -2,9 +2,11 @@ package com.team114.starbucks.domain.eventimage.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class EventImage {
 
     // 이벤트이미지 ID
