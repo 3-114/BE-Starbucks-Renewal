@@ -4,17 +4,17 @@ package com.team114.starbucks.domain.product.presentation;
 import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.product.application.ProductService;
 import com.team114.starbucks.domain.product.dto.in.CreateProductRequestDto;
+import com.team114.starbucks.domain.product.dto.in.PageParamReqDto;
+import com.team114.starbucks.domain.product.dto.in.PaginationParamDto;
 import com.team114.starbucks.domain.product.dto.in.UpdateProductRequestDto;
-import com.team114.starbucks.domain.product.dto.out.CreateProductResponseDto;
-import com.team114.starbucks.domain.product.dto.out.GetProductByIdResponseDto;
-import com.team114.starbucks.domain.product.dto.out.GetProductPreviewResponseDto;
-import com.team114.starbucks.domain.product.dto.out.GetProductResponseDto;
+import com.team114.starbucks.domain.product.dto.out.*;
 import com.team114.starbucks.domain.product.vo.in.CreateProductRequestVo;
 import com.team114.starbucks.domain.product.vo.in.DeleteProductRequestVo;
 import com.team114.starbucks.domain.product.vo.in.UpdateProductRequestVo;
 import com.team114.starbucks.domain.product.vo.out.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -106,6 +106,20 @@ public class ProductController {
 
     }
 
+    @GetMapping("/uuid-list")
+    public BaseResponseEntity<Page<ProductUuidResVo>> getProductUuids(
+            @RequestParam(required = false) String mainCategoryUuid,
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "10") int size
+    ) {
+        return new BaseResponseEntity<>(
+                "상품 페이지 조회에 성공하였습니다.",
+                productService.getProductUuids(
+                        PageParamReqDto.from(mainCategoryUuid),
+                        PaginationParamDto.of(page, size)
+                ).map(ProductUuidResDto::toVo)
+        );
 
+    }
 
 }

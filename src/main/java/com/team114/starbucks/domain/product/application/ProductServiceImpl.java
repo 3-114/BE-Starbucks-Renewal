@@ -5,6 +5,8 @@ import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.product.application.ProductThumbnailService.ProductThumbnailService;
 import com.team114.starbucks.domain.product.dto.in.CreateProductRequestDto;
+import com.team114.starbucks.domain.product.dto.in.PageParamReqDto;
+import com.team114.starbucks.domain.product.dto.in.PaginationParamDto;
 import com.team114.starbucks.domain.product.dto.in.UpdateProductRequestDto;
 import com.team114.starbucks.domain.product.dto.out.*;
 import com.team114.starbucks.domain.product.entity.Product;
@@ -12,8 +14,10 @@ import com.team114.starbucks.domain.product.entity.ProductThumbnail;
 import com.team114.starbucks.domain.product.infrastructure.ProductRepository;
 import com.team114.starbucks.domain.product.infrastructure.ProductThumbnailRepository;
 import com.team114.starbucks.domain.product.dto.out.GetProductThumbnailByIdResponseDto;
+import com.team114.starbucks.domain.productcategory.application.ProductCategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
@@ -29,6 +33,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductThumbnailRepository productThumbnailRepository;
     private final ProductThumbnailService productThumbnailService;
+    private final ProductCategoryService productCategoryService;
 
     @Transactional
     @Override
@@ -121,6 +126,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Boolean checkProductExist(String productUuid) {
         return productRepository.existsByProductUuid(productUuid);
+    }
+
+    @Override
+    public Page<ProductUuidResDto> getProductUuids(PageParamReqDto pageParamReqDto, PaginationParamDto paginationParamDto) {
+        return productCategoryService.findByMainCategoryUuid(
+                pageParamReqDto.getMainCategoryUuid(),
+                paginationParamDto.toPageable()
+        ).map(ProductUuidResDto::from);
     }
 
 
