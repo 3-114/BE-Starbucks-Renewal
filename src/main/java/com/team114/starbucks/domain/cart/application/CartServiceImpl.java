@@ -164,4 +164,10 @@ public class CartServiceImpl implements CartService {
                 cartRepository.findByCartUuid(myCartQuantityReqDto.getCartUuid())
                         .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND))));
     }
+
+    @Transactional
+    @Override
+    public void deleteAllCartItems(String memberUuid) {
+        cartRepository.deleteAllByMemberUuid(memberUuid);
+    }
 }
