@@ -2,7 +2,6 @@ package com.team114.starbucks.domain.cart.dto.out;
 
 import com.team114.starbucks.domain.cart.entity.Cart;
 import com.team114.starbucks.domain.cart.vo.out.CartAndProductResVo;
-import com.team114.starbucks.domain.cart.vo.out.GetCartItemResVo;
 import com.team114.starbucks.domain.product.dto.out.GetProductPreviewResponseDto;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +13,7 @@ public class CartAndProductResDto {
 
     private Long quantity;
     private Boolean selected;
+    private String cartUuid;
     private String productName;
     private Integer productPrice;
     private String productThumbnailUrl;
@@ -24,6 +24,7 @@ public class CartAndProductResDto {
     public CartAndProductResDto(
             Long quantity,
             Boolean selected,
+            String cartUuid,
             String productName,
             Integer productPrice,
             String productThumbnailUrl,
@@ -32,6 +33,7 @@ public class CartAndProductResDto {
     ) {
         this.quantity = quantity;
         this.selected = selected;
+        this.cartUuid = cartUuid;
         this.productName = productName;
         this.productPrice = productPrice;
         this.productThumbnailUrl = productThumbnailUrl;
@@ -46,6 +48,7 @@ public class CartAndProductResDto {
         return CartAndProductResDto.builder()
                 .quantity(cart.getQuantity())
                 .selected(cart.getSelected())
+                .cartUuid(cart.getCartUuid())
                 .productName(getProductPreviewResponseDto.getProductName())
                 .productPrice(getProductPreviewResponseDto.getProductPrice())
                 .productThumbnailUrl(getProductPreviewResponseDto.getProductThumbnailUrl())
@@ -58,6 +61,7 @@ public class CartAndProductResDto {
         return CartAndProductResVo.builder()
                 .quantity(quantity)
                 .selected(selected)
+                .cartUuid(cartUuid)
                 .productName(productName)
                 .productPrice(productPrice)
                 .productThumbnailUrl(productThumbnailUrl)

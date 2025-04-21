@@ -8,6 +8,7 @@ import com.team114.starbucks.domain.cart.dto.out.GetProductUuidResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetQuantityAndSelectedDto;
 import com.team114.starbucks.domain.cart.dto.out.MyCartUuidDto;
 import com.team114.starbucks.domain.cart.vo.in.AddCartItemReqVo;
+import com.team114.starbucks.domain.cart.vo.in.CartQuantityReqVo;
 import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.out.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,6 +39,7 @@ public class CartController {
      * 12. memberUuid 로 cartUuid list 조회
      * 13. 장바구니 항목 체크여부 변경
      * 14. 장바구니 항목 전체 선택 및 전체 해제
+     * 15. 장바구니 항목 갯수 정보 변경
      */
 
     private final CartService cartService;
@@ -286,5 +288,23 @@ public class CartController {
     ) {
         cartService.toggleAllCartSelection(authentication.getName());
         return new BaseResponseEntity<>("장바구니 항목 전체 선택 및 전체 해제에 성공하였습니다.");
+    }
+
+    /**
+     * 15. 장바구니 항목 갯수 정보 변경
+     * @param authentication
+     * @param cartUuid
+     * @param cartQuantityReqVo
+     * @return
+     */
+    @Operation(summary = "장바구니 항목 갯수 정보 변경", tags = {"cart"})
+    @PutMapping("/{cartUuid}/quantity-change")
+    public BaseResponseEntity<Void> changeCartQuantity(
+            Authentication authentication,
+            @PathVariable String cartUuid,
+            @RequestBody CartQuantityReqVo cartQuantityReqVo
+    ) {
+        cartService.changeCartQuantity(MyCartQuantityReqDto.of(authentication.getName(), cartUuid, cartQuantityReqVo));
+        return new BaseResponseEntity<>("장바구니에서 해당 장바구니 항목 수량 변경에 성공하였습니다.");
     }
 }

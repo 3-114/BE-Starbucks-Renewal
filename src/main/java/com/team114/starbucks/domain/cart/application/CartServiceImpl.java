@@ -151,4 +151,12 @@ public class CartServiceImpl implements CartService {
                         .build())
                 .toList());
     }
+
+    @Transactional
+    @Override
+    public void changeCartQuantity(MyCartQuantityReqDto myCartQuantityReqDto) {
+        cartRepository.save(myCartQuantityReqDto.changeQuantity(
+                cartRepository.findByCartUuid(myCartQuantityReqDto.getCartUuid())
+                        .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND))));
+    }
 }

@@ -10,6 +10,7 @@ public class CartAndProductResVo {
 
     private Long quantity;
     private Boolean selected;
+    private String cartUuid;
     private String productName;
     private Integer productPrice;
     private String productThumbnailUrl;
@@ -20,6 +21,7 @@ public class CartAndProductResVo {
     public CartAndProductResVo(
             Long quantity,
             Boolean selected,
+            String cartUuid,
             String productName,
             Integer productPrice,
             String productThumbnailUrl,
@@ -28,6 +30,7 @@ public class CartAndProductResVo {
     ) {
         this.quantity = quantity;
         this.selected = selected;
+        this.cartUuid = cartUuid;
         this.productName = productName;
         this.productPrice = productPrice;
         this.productThumbnailUrl = productThumbnailUrl;
