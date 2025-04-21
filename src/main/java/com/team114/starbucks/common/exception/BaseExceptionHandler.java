@@ -2,7 +2,6 @@ package com.team114.starbucks.common.exception;
 
 import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.common.response.BaseResponseStatus;
-import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @RestControllerAdvice
-@Hidden // 스웨거 애노테이션으로 스웨거에서 컨트롤러를 숨길 때 사용되는 애노테이션
 public class BaseExceptionHandler {
 
     /**

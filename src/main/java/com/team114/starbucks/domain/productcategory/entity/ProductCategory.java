@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(indexes = {
+        @Index(name = "idx_main_category_uuid", columnList = "main_category_uuid")
+})
 public class ProductCategory {
 
     // 카테고리 항목 ID
