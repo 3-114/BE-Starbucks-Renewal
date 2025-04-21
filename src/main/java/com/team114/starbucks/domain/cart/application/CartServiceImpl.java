@@ -132,10 +132,13 @@ public class CartServiceImpl implements CartService {
 
     @Transactional
     @Override
-    public void toggleAllCartSelection(String memberUuid) {
+    public List<MyCartUuidDto> toggleAllCartSelection(String memberUuid) {
         List<Cart> carts = cartRepository.findByMemberUuidOrderBySelectedDesc(memberUuid);
 
         boolean newSelected = carts.stream().anyMatch(cart -> !cart.getSelected());
+
+        List<MyCartUuidDto> results = carts.stream().filter(cart -> !cart.getSelected())
+                .map(MyCartUuidDto::from).toList();
 
         cartRepository.saveAll(carts.stream()
                 .map(cart -> Cart.builder()
@@ -150,6 +153,8 @@ public class CartServiceImpl implements CartService {
                         .cartType(cart.getCartType())
                         .build())
                 .toList());
+
+        return results;
     }
 
     @Transactional

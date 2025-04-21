@@ -283,11 +283,13 @@ public class CartController {
      */
     @Operation(summary = "장바구니 항목 전체 선택 및 전체 해제", tags = {"cart"})
     @PutMapping("/all/toggle-selection")
-    public BaseResponseEntity<Void> toggleAllCartSelection(
+    public BaseResponseEntity<List<MyCartUuidVo>> toggleAllCartSelection(
             Authentication authentication
     ) {
-        cartService.toggleAllCartSelection(authentication.getName());
-        return new BaseResponseEntity<>("장바구니 항목 전체 선택 및 전체 해제에 성공하였습니다.");
+        return new BaseResponseEntity<>(
+                "장바구니 항목 전체 선택 및 전체 해제에 성공하였습니다.",
+                cartService.toggleAllCartSelection(authentication.getName()).stream().map(MyCartUuidDto::toVo).toList()
+        );
     }
 
     /**

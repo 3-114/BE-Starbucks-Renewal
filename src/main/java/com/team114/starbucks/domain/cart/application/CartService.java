@@ -51,7 +51,7 @@ public interface CartService {
 
     void toggleCartSelection(CartUuidReqDto cartUuidReqDto);
 
-    void toggleAllCartSelection(String memberUuid);
+    List<MyCartUuidDto> toggleAllCartSelection(String memberUuid);
 
     void changeCartQuantity(MyCartQuantityReqDto myCartQuantityReqDto);
 }
