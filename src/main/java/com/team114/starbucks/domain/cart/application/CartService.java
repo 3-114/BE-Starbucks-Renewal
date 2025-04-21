@@ -8,6 +8,7 @@ import com.team114.starbucks.domain.cart.dto.out.*;
 import com.team114.starbucks.domain.cart.vo.out.CartTypeReqDto;
 import com.team114.starbucks.domain.cart.vo.out.CountTotalCartResVo;
 import com.team114.starbucks.domain.cart.vo.out.GetQuantityAndSelectedVo;
+import com.team114.starbucks.domain.cart.vo.out.MyCartUuidVo;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public interface CartService {
 
     void deleteCartItem(CartUuidReqDto cartUuidReqDto);
 
-    GetCartItemResDto getCartItem(CartUuidReqDto cartUuidReqDto);
+    CartAndProductResDto getCartItem(CartUuidReqDto cartUuidReqDto);
 
     GetItemSelectResDto getItemSelect(CartUuidReqDto cartUuidReqDto);
 
@@ -48,4 +49,8 @@ public interface CartService {
     CountTotalCartResDto countTotalCart(CartTypeReqDto cartTypeReqDto);
 
     List<GetQuantityAndSelectedDto> getCartByProductUuid(ProductUuidReqDto productUuidReqDto);
+
+    List<MyCartUuidDto> getMyCartUuids(String memberUuid);
+
+    void toggleCartSelection(CartUuidReqDto cartUuidReqDto);
 }

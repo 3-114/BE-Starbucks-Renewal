@@ -1,7 +1,6 @@
 package com.team114.starbucks.domain.cart.dto.in;
 
 import com.team114.starbucks.domain.cart.entity.Cart;
-import com.team114.starbucks.domain.cart.vo.in.CartUuidReqVo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -53,4 +52,19 @@ public class CartUuidReqDto {
                 .cartType(cart.getCartType())
                 .build();
     }
+
+    public Cart toggleSelection(Cart cart) {
+        return Cart.builder()
+                .id(cart.getId())
+                .cartUuid(cart.getCartUuid())
+                .memberUuid(cart.getMemberUuid())
+                .optionId(cart.getOptionId())
+                .productUuid(cart.getProductUuid())
+                .quantity(cart.getQuantity())
+                .selected(!cart.getSelected())
+                .valid(cart.getValid())
+                .cartType(cart.getCartType())
+                .build();
+    }
+
 }
