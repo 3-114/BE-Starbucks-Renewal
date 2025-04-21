@@ -1,6 +1,7 @@
 package com.team114.starbucks.domain.eventimage.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,4 +27,11 @@ public class EventImage {
     @Column(nullable = false)
     private Integer eventUrlIndex;
 
+    @Builder
+    public EventImage(Long eventImageId, String eventUuid, String eventUrl, Integer eventUrlIndex) {
+        this.eventImageId = eventImageId;
+        this.eventUuid = eventUuid;
+        this.eventUrl = eventUrl;
+        this.eventUrlIndex = eventUrlIndex;
+    }
 }
