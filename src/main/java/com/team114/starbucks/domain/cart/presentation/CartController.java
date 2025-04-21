@@ -2,10 +2,7 @@ package com.team114.starbucks.domain.cart.presentation;
 
 import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.cart.application.CartService;
-import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
-import com.team114.starbucks.domain.cart.dto.in.CartUuidReqDto;
-import com.team114.starbucks.domain.cart.dto.in.ProductUuidReqDto;
-import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
+import com.team114.starbucks.domain.cart.dto.in.*;
 import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetProductUuidResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetQuantityAndSelectedDto;
@@ -158,7 +155,8 @@ public class CartController {
     @Operation(
             summary = "장바구니에서 장바구니 유형별로 상품 UUID 리스트 조회 (일반/예약)",
             description = "cartType - 일반 : general / 예약 : reservation",
-            tags = {"cart"})
+            tags = {"cart"}
+    )
     @GetMapping("/product/{cartType}")
     public BaseResponseEntity<List<GetProductUuidResVo>> getProductUuid(
             Authentication authentication,
@@ -244,14 +242,20 @@ public class CartController {
      * @param authentication
      * @return
      */
-    @Operation(summary = "memberUuid 로 cartUuid list 조회", tags = {"cart"})
+    @Operation(
+            summary = "memberUuid 로 장바구니 유형별 cartUuid list 조회",
+            description = "cartType - 없으면 전체 조회 / 일반 : general / 예약 : reservation",
+            tags = {"cart"}
+    )
     @GetMapping("/uuid-list")
     public BaseResponseEntity<List<MyCartUuidVo>> getMyCartUuids(
-            Authentication authentication
+            Authentication authentication,
+            @RequestParam(required = false) String cartType
     ) {
         return new BaseResponseEntity<>(
                 "memberUuid 로 cartUuid list 조회에 성공하였습니다.",
-                cartService.getMyCartUuids(authentication.getName()).stream().map(MyCartUuidDto::toVo).toList());
+                cartService.getMyCartUuids(MyCartTypeReqDto.of(authentication.getName(), cartType))
+                        .stream().map(MyCartUuidDto::toVo).toList());
     }
 
     /**
