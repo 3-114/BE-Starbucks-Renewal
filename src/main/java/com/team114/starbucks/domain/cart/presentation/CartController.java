@@ -155,7 +155,10 @@ public class CartController {
      * @return
      */
     // cartType : general, reservation
-    @Operation(summary = "장바구니에서 장바구니 유형별로 상품 UUID 리스트 조회 (일반/예약)", tags = {"cart"})
+    @Operation(
+            summary = "장바구니에서 장바구니 유형별로 상품 UUID 리스트 조회 (일반/예약)",
+            description = "cartType - 일반 : general / 예약 : reservation",
+            tags = {"cart"})
     @GetMapping("/product/{cartType}")
     public BaseResponseEntity<List<GetProductUuidResVo>> getProductUuid(
             Authentication authentication,
