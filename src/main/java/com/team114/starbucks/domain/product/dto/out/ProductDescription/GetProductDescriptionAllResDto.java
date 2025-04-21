@@ -20,9 +20,16 @@ public class GetProductDescriptionAllResDto {
     }
 
     public static GetProductDescriptionAllResDto from(ProductDescription productDescription) {
-        return GetProductDescriptionAllResDto.builder()
+        return com.team114.starbucks.domain.product.dto.out.ProductDescription.GetProductDescriptionAllResDto.builder()
                 .productUuid(productDescription.getProductUuid())
                 .productDescription(productDescription.getProductDescription())
+                .build();
+    }
+
+    public com.team114.starbucks.domain.product.vo.out.ProductDescription.GetProductDescriptionAllResDto toVo() {
+        return com.team114.starbucks.domain.product.vo.out.ProductDescription.GetProductDescriptionAllResDto.builder()
+                .productUuid(this.productUuid)
+                .productDescription(this.productDescription)
                 .build();
     }
 
