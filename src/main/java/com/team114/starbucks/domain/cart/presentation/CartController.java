@@ -40,6 +40,7 @@ public class CartController {
      * 11. ProductUuid 로 cart 조회
      * 12. memberUuid 로 cartUuid list 조회
      * 13. 장바구니 항목 체크여부 변경
+     * 14. 장바구니 항목 전체 선택 및 전체 해제
      */
 
     private final CartService cartService;
@@ -264,5 +265,19 @@ public class CartController {
     ) {
         cartService.toggleCartSelection(CartUuidReqDto.of(authentication.getName(), cartUuid));
         return new BaseResponseEntity<>("장바구니 항목 체크여부 변경에 성공하였습니다.");
+    }
+
+    /**
+     * 14. 장바구니 항목 전체 선택 및 전체 해제
+     * @param authentication
+     * @return
+     */
+    @Operation(summary = "장바구니 항목 전체 선택 및 전체 해제", tags = {"cart"})
+    @PutMapping("/all/toggle-selection")
+    public BaseResponseEntity<Void> toggleAllCartSelection(
+            Authentication authentication
+    ) {
+        cartService.toggleAllCartSelection(authentication.getName());
+        return new BaseResponseEntity<>("장바구니 항목 전체 선택 및 전체 해제에 성공하였습니다.");
     }
 }
