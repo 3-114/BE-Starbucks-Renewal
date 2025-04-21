@@ -53,4 +53,6 @@ public interface CartService {
     List<MyCartUuidDto> getMyCartUuids(String memberUuid);
 
     void toggleCartSelection(CartUuidReqDto cartUuidReqDto);
+
+    void toggleAllCartSelection(String memberUuid);
 }

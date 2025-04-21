@@ -36,7 +36,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<GetAllCartItemsResDto> findAllCartItems(String memberUuid) {
-        return cartRepository.findByMemberUuid(memberUuid)
+        return cartRepository.findByMemberUuidOrderBySelectedDesc(memberUuid)
                 .stream().map(GetAllCartItemsResDto::from).toList();
     }
 
@@ -69,7 +69,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<GetProductUuidResDto> getProductUuidList(CartTypeReqDto cartTypeReqDto) {
-        return cartRepository.findByMemberUuid(cartTypeReqDto.getMemberUuid())
+        return cartRepository.findByMemberUuidOrderBySelectedDesc(cartTypeReqDto.getMemberUuid())
                 .stream()
                 .filter(cart -> cart.getCartType().equals(
                         CartType.valueOf(cartTypeReqDto.getCartType().toUpperCase())
@@ -105,14 +105,14 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<GetQuantityAndSelectedDto> getCartByProductUuid(ProductUuidReqDto productUuidReqDto) {
         return cartRepository.findByMemberUuidAndProductUuid(
-                productUuidReqDto.getMemberUuid(),
-                productUuidReqDto.getProductUuid())
+                        productUuidReqDto.getMemberUuid(),
+                        productUuidReqDto.getProductUuid())
                 .stream().map(GetQuantityAndSelectedDto::from).toList();
     }
 
     @Override
     public List<MyCartUuidDto> getMyCartUuids(String memberUuid) {
-        return cartRepository.findByMemberUuid(memberUuid)
+        return cartRepository.findByMemberUuidOrderBySelectedDesc(memberUuid)
                 .stream().map(MyCartUuidDto::from).toList();
     }
 
@@ -124,5 +124,27 @@ public class CartServiceImpl implements CartService {
                         () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
                 )
         ));
+    }
+
+    @Transactional
+    @Override
+    public void toggleAllCartSelection(String memberUuid) {
+        List<Cart> carts = cartRepository.findByMemberUuidOrderBySelectedDesc(memberUuid);
+
+        boolean newSelected = carts.stream().anyMatch(cart -> !cart.getSelected());
+
+        cartRepository.saveAll(carts.stream()
+                .map(cart -> Cart.builder()
+                        .id(cart.getId())
+                        .cartUuid(cart.getCartUuid())
+                        .memberUuid(cart.getMemberUuid())
+                        .optionId(cart.getOptionId())
+                        .productUuid(cart.getProductUuid())
+                        .quantity(cart.getQuantity())
+                        .selected(newSelected)
+                        .valid(cart.getValid())
+                        .cartType(cart.getCartType())
+                        .build())
+                .toList());
     }
 }

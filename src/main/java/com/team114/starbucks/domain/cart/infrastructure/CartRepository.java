@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
     List<Cart> findByMemberUuid(String memberUuid);
+    List<Cart> findByMemberUuidOrderBySelectedDesc(String memberUuid);
     Optional<Cart> findByCartUuid(String cartUuid);
     void deleteByCartUuid(String cartUuid);
     Long countByMemberUuidAndCartType(String memberUuid, CartType cartType);
