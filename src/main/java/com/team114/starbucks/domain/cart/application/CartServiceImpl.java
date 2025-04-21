@@ -137,8 +137,10 @@ public class CartServiceImpl implements CartService {
 
         boolean newSelected = carts.stream().anyMatch(cart -> !cart.getSelected());
 
-        List<MyCartUuidDto> results = carts.stream().filter(cart -> !cart.getSelected())
-                .map(MyCartUuidDto::from).toList();
+        List<MyCartUuidDto> results = carts.stream()
+                .filter(cart -> !newSelected || !cart.getSelected())
+                .map(MyCartUuidDto::from)
+                .toList();
 
         cartRepository.saveAll(carts.stream()
                 .map(cart -> Cart.builder()
