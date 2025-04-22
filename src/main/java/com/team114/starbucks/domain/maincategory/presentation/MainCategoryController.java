@@ -89,23 +89,3 @@ public class MainCategoryController {
         return new BaseResponseEntity<>("메인 카테고리 삭제에 성공했습니다. ", null);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -137,8 +137,10 @@ public class CartServiceImpl implements CartService {
 
         boolean newSelected = carts.stream().anyMatch(cart -> !cart.getSelected());
 
-        List<MyCartUuidDto> results = carts.stream().filter(cart -> !cart.getSelected())
-                .map(MyCartUuidDto::from).toList();
+        List<MyCartUuidDto> results = carts.stream()
+                .filter(cart -> !newSelected || !cart.getSelected())
+                .map(MyCartUuidDto::from)
+                .toList();
 
         cartRepository.saveAll(carts.stream()
                 .map(cart -> Cart.builder()
@@ -163,5 +165,11 @@ public class CartServiceImpl implements CartService {
         cartRepository.save(myCartQuantityReqDto.changeQuantity(
                 cartRepository.findByCartUuid(myCartQuantityReqDto.getCartUuid())
                         .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND))));
+    }
+
+    @Transactional
+    @Override
+    public void deleteAllCartItems(String memberUuid) {
+        cartRepository.deleteAllByMemberUuid(memberUuid);
     }
 }

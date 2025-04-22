@@ -309,4 +309,13 @@ public class CartController {
         cartService.changeCartQuantity(MyCartQuantityReqDto.of(authentication.getName(), cartUuid, cartQuantityReqVo));
         return new BaseResponseEntity<>("장바구니에서 해당 장바구니 항목 수량 변경에 성공하였습니다.");
     }
+
+    @Operation(summary = "내 장바구니 항목 전체 삭제", tags = {"cart"})
+    @DeleteMapping
+    public BaseResponseEntity<Void> deleteAllCartItems(
+            Authentication authentication
+    ) {
+        cartService.deleteAllCartItems(authentication.getName());
+        return new BaseResponseEntity<>("내 장바구니 항목 전체 삭제에 성공하였습니다.");
+    }
 }
