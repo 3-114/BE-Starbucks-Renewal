@@ -5,6 +5,7 @@ import com.team114.starbucks.common.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -61,7 +62,13 @@ public class SecurityConfig {
                                     "/api/v1/payments/**",
                                     "/api/v1/options/**",
                                     "/api/v1/event/nav/**",
+                                    "/api/v1/event-image/**"
+                            ).permitAll()
+                            .requestMatchers(
+                                    HttpMethod.GET,
+                                    "/api/v1/event/**",
                                     "/api/v1/main-category/**",
+                                    "api/v1/sub-category/**",
                                     "/api/v1/product-category/**"
                             ).permitAll()
                             .anyRequest()
