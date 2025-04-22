@@ -33,7 +33,7 @@ public class AuthController {
      * 회원가입
      * @param signUpRequestVo
      */
-    @Operation(summary = "sign-up API", description = "회원가입 API 입니다.", tags = {"auth-service"})
+    @Operation(summary = "회원가입", tags = {"Auth"})
     @PostMapping("/sign-up")
     public BaseResponseEntity<SignUpResponseVo> signUp(
             @RequestBody SignUpRequestVo signUpRequestVo
@@ -47,7 +47,7 @@ public class AuthController {
      * @param signInRequestVo
      * @Return signInResponseVo
      */
-    @Operation(summary = "sign-in API", description = "로그인 API 입니다.", tags = {"auth-service"})
+    @Operation(summary = "로그인", tags = {"Auth"})
     @PostMapping("/sign-in")
     public BaseResponseEntity<SignInResponseVo> signIn(
             @RequestBody SignInRequestVo signInRequestVo

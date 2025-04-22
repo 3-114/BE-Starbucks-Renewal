@@ -11,6 +11,7 @@ import com.team114.starbucks.domain.coupon.vo.out.CreateCouponResVo;
 import com.team114.starbucks.domain.coupon.vo.out.GetAllCouponsResVo;
 import com.team114.starbucks.domain.coupon.vo.out.GetCouponResVo;
 import com.team114.starbucks.domain.coupon.vo.out.UpdateCouponResVo;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,7 @@ public class CouponController {
      * @return createCouponResVo
      * @throws
      */
+    @Operation(summary = "쿠폰 생성", tags = {"Coupon"})
     @PostMapping
     public BaseResponseEntity<CreateCouponResVo> createCoupon(
             @RequestBody CreateCouponReqVo createCouponReqVo
@@ -52,6 +54,7 @@ public class CouponController {
      * @return createCouponResVo
      * @throws
      */
+    @Operation(summary = "쿠폰 전체 조회", tags = {"Coupon"})
     @GetMapping
     public BaseResponseEntity<List<GetAllCouponsResVo>> getAllCoupons() {
 
@@ -88,6 +91,7 @@ public class CouponController {
      * @return getCouponResVo
      * @throws
      */
+    @Operation(summary = "쿠폰 단건 조회", tags = {"Coupon"})
     @GetMapping("/{couponUuid}")
     public BaseResponseEntity<GetCouponResVo> getCoupon(
             @PathVariable String couponUuid
@@ -102,6 +106,7 @@ public class CouponController {
      * @return updateCouponResVo
      * @throws
      */
+    @Operation(summary = "쿠폰 정보 변경", tags = {"Coupon"})
     @PutMapping("/{couponUuid}")
     public BaseResponseEntity<UpdateCouponResVo> updateCoupon(
             @PathVariable String couponUuid,
@@ -120,6 +125,7 @@ public class CouponController {
      * @return
      * @throws
      */
+    @Operation(summary = "쿠폰 삭제", tags = {"Coupon"})
     @DeleteMapping("/{couponUuid}")
     public BaseResponseEntity<Void> deleteCoupon(
             @PathVariable String couponUuid
