@@ -11,6 +11,7 @@ import com.team114.starbucks.domain.event.vo.in.UpdateEventReqVo;
 import com.team114.starbucks.domain.event.vo.out.CreateEventResVo;
 import com.team114.starbucks.domain.event.vo.out.EventResponseVo;
 import com.team114.starbucks.domain.event.vo.out.GetOneEventResVo;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,7 @@ public class EventController {
      * */
 
     // 1. 기획전 생성
+    @Operation(summary = "기획전 생성", tags = {"event"})
     @PostMapping
     public BaseResponseEntity<CreateEventResVo> createEvent(
             @RequestBody CreateEventReqVo createEventReqVo
@@ -44,6 +46,7 @@ public class EventController {
     }
 
     // 2. 기획전 전체 조회
+    @Operation(summary = "기획전 전체 조회", tags = {"event"})
     @GetMapping("/nav")
     public BaseResponseEntity<List<EventResponseVo>> getAllEventName() {
 
@@ -61,6 +64,7 @@ public class EventController {
 
 
     // 3. 기획전 단건 조회
+    @Operation(summary = "기획전 단건 조회", tags = {"event"})
     @GetMapping("/{eventUuid}")
     public GetOneEventResVo getEvent(
             @PathVariable String eventUuid
@@ -71,8 +75,8 @@ public class EventController {
         return getOneEventResVo;
     }
 
-
     // 4. 기획전 수정
+    @Operation(summary = "기획전 수정", tags = {"event"})
     @PutMapping("/{eventUuid}")
     public BaseResponseEntity<Void> updateEvent(
             @PathVariable String eventUuid,
@@ -86,6 +90,7 @@ public class EventController {
     }
 
     // 5. 기획전 삭제
+    @Operation(summary = "기획전 삭제", tags = {"event"})
     @DeleteMapping("/{eventUuid}")
     public BaseResponseEntity<Void> deleteEvent(
             @PathVariable String eventUuid
