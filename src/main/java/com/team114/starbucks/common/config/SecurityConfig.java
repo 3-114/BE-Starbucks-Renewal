@@ -60,7 +60,9 @@ public class SecurityConfig {
                                     "/api/v1/orders/**",
                                     "/api/v1/payments/**",
                                     "/api/v1/options/**",
-                                    "/api/v1/event/nav/**"
+                                    "/api/v1/event/nav/**",
+                                    "/api/v1/main-category/**",
+                                    "/api/v1/product-category/**"
                             ).permitAll()
                             .anyRequest()
                             .authenticated()

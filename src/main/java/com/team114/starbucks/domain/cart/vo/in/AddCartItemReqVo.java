@@ -6,9 +6,6 @@ import lombok.Getter;
 public class AddCartItemReqVo {
 
     private String productUuid;
-    private Long optionId;
     private Long quantity;
-    private Boolean selected;
-    private Boolean valid;
 
 }
