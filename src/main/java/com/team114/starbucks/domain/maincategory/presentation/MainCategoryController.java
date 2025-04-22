@@ -5,12 +5,12 @@ import com.team114.starbucks.domain.maincategory.application.MainCategoryService
 import com.team114.starbucks.domain.maincategory.dto.in.CreateMainCategoryReqDto;
 import com.team114.starbucks.domain.maincategory.dto.in.UpdateMainCategoryReqDto;
 import com.team114.starbucks.domain.maincategory.dto.out.GetAllMainCategoryResDto;
+import com.team114.starbucks.domain.maincategory.dto.out.GetNameAndImageResDto;
 import com.team114.starbucks.domain.maincategory.dto.out.GetOneMainCategoryResDto;
 import com.team114.starbucks.domain.maincategory.vo.in.CreateMainCategoryReqVo;
 import com.team114.starbucks.domain.maincategory.vo.in.UpdateMainCategoryReqVo;
-import com.team114.starbucks.domain.maincategory.vo.out.CreateMainCategoryResDto;
-import com.team114.starbucks.domain.maincategory.vo.out.CreateMainCategoryResVo;
 import com.team114.starbucks.domain.maincategory.vo.out.GetAllMainCategoryResVo;
+import com.team114.starbucks.domain.maincategory.vo.out.GetNameAndImageResVo;
 import com.team114.starbucks.domain.maincategory.vo.out.GetOneMainCategoryResVo;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +32,7 @@ public class MainCategoryController {
      * 3. 메인 카테고리 단건 조회
      * 4. 메인 카테고리 수정
      * 5. 메인 카테고리 삭제
+     * 6. 메인 카테고리 이름, 이미지 전체 조회
      *  */
 
     // 1. 메인 카테고리 생성
@@ -47,7 +48,7 @@ public class MainCategoryController {
 
 
     // 2. 메인 카테고리 전체 조회
-    @Operation(summary = "메인 카테고리 전체 조회", tags = {"main-category"})
+    @Operation(summary = "메인 카테고리 이름 전체 조회", tags = {"main-category"})
     @GetMapping
     public BaseResponseEntity<List<GetAllMainCategoryResVo>> getAllMainCategory() {
         List<GetAllMainCategoryResDto> allMainCategoryResDtoslist = mainCategoryService.getAllMainCategory();
@@ -85,13 +86,33 @@ public class MainCategoryController {
     }
 
     // 5. 메인 카테고리 삭제
+
     @Operation(summary = "메인 카테고리 삭제", tags = {"main-category"})
     @DeleteMapping("/{mainCategoryUuid}")
     public BaseResponseEntity<Void> deleteMainCategory(
             @PathVariable String mainCategoryUuid
-    ){
+    ) {
         mainCategoryService.deleteMainCategory(mainCategoryUuid);
 
         return new BaseResponseEntity<>("메인 카테고리 삭제에 성공했습니다. ", null);
     }
+
+    // 6. 메인 카테고리 이름, 이미지 전체 조회
+    @Operation(summary = "메인 카테고리 이름, 이미지 전체 조회", tags = {"main-category"})
+    @GetMapping("/side-bar")
+    public BaseResponseEntity<List<GetNameAndImageResVo>> getNameAndImageResVo() {
+        List<GetNameAndImageResDto> nameAndImageResDtoList = mainCategoryService.getNameAndImage();
+        List<GetNameAndImageResVo> getNameAndImageResVoList = new ArrayList<>();
+
+        for (GetNameAndImageResDto getNameAndImageResDto : nameAndImageResDtoList) {
+            GetNameAndImageResVo getNameAndImageResVo = getNameAndImageResDto.toVo();
+            getNameAndImageResVoList.add(getNameAndImageResVo);
+        }
+
+        return new BaseResponseEntity<>("메인 카테고리 이름, 이미지 조회에 성공했습니다. ", getNameAndImageResVoList);
+
+
+    }
+
+
 }
