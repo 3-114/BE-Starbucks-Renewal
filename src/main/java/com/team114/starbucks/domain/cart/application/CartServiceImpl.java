@@ -8,6 +8,8 @@ import com.team114.starbucks.domain.cart.entity.Cart;
 import com.team114.starbucks.domain.cart.enums.CartType;
 import com.team114.starbucks.domain.cart.infrastructure.CartRepository;
 import com.team114.starbucks.domain.cart.vo.out.CartTypeReqDto;
+import com.team114.starbucks.domain.option.application.OptionService;
+import com.team114.starbucks.domain.option.entity.Option;
 import com.team114.starbucks.domain.product.application.ProductService;
 import com.team114.starbucks.domain.product.dto.out.GetProductPreviewResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +26,16 @@ public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
     private final ProductService productService;
+    private final OptionService optionService;
 
     @Transactional
     @Override
     public void addCartItem(AddCartItemReqDto addCartItemReqDto) {
-        cartRepository.save(addCartItemReqDto.toEntity(UUID.randomUUID().toString()));
+        cartRepository.save(
+                addCartItemReqDto.toEntity(
+                        optionService.findAnyOptionByProductUuid(addCartItemReqDto.getProductUuid())
+                )
+        );
     }
 
     @Override

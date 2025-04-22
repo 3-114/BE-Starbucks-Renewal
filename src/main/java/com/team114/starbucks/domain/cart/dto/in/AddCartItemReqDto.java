@@ -3,9 +3,12 @@ package com.team114.starbucks.domain.cart.dto.in;
 import com.team114.starbucks.domain.cart.entity.Cart;
 import com.team114.starbucks.domain.cart.enums.CartType;
 import com.team114.starbucks.domain.cart.vo.in.AddCartItemReqVo;
+import com.team114.starbucks.domain.option.entity.Option;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
@@ -13,26 +16,17 @@ public class AddCartItemReqDto {
 
     private String memberUuid;
     private String productUuid;
-    private Long optionId;
     private Long quantity;
-    private Boolean selected;
-    private Boolean valid;
 
     @Builder
     public AddCartItemReqDto(
             String memberUuid,
             String productUuid,
-            Long optionId,
-            Long quantity,
-            Boolean selected,
-            Boolean valid
+            Long quantity
     ) {
         this.memberUuid = memberUuid;
         this.productUuid = productUuid;
-        this.optionId = optionId;
         this.quantity = quantity;
-        this.selected = selected;
-        this.valid = valid;
     }
 
     public static AddCartItemReqDto of(
@@ -42,23 +36,20 @@ public class AddCartItemReqDto {
         return AddCartItemReqDto.builder()
                 .memberUuid(memberUuid)
                 .productUuid(addCartItemReqVo.getProductUuid())
-                .optionId(addCartItemReqVo.getOptionId())
                 .quantity(addCartItemReqVo.getQuantity())
-                .selected(addCartItemReqVo.getSelected())
-                .valid(addCartItemReqVo.getValid())
                 .build();
     }
 
-    public Cart toEntity(String cartUuid) {
+    public Cart toEntity(Option option) {
 
         return Cart.builder()
-                .cartUuid(cartUuid)
+                .cartUuid(UUID.randomUUID().toString())
                 .memberUuid(memberUuid)
-                .optionId(optionId)
+                .optionId(option.getOptionId())
                 .productUuid(productUuid)
                 .quantity(quantity)
-                .selected(selected)
-                .valid(valid)
+                .selected(true)
+                .valid(true)
                 .cartType(CartType.GENERAL)
                 .build();
     }
