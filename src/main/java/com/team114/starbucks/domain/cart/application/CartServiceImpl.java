@@ -33,7 +33,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<GetAllCartItemsResDto> findAllCartItems(String memberUuid) {
-        return cartRepository.findByMemberUuidOrderBySelectedDesc(memberUuid)
+        return cartRepository.findByMemberUuid(memberUuid)
                 .stream().map(GetAllCartItemsResDto::from).toList();
     }
 
@@ -66,7 +66,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<GetProductUuidResDto> getProductUuidList(CartTypeReqDto cartTypeReqDto) {
-        return cartRepository.findByMemberUuidOrderBySelectedDesc(cartTypeReqDto.getMemberUuid())
+        return cartRepository.findByMemberUuid(cartTypeReqDto.getMemberUuid())
                 .stream()
                 .filter(cart -> cart.getCartType().equals(
                         CartType.valueOf(cartTypeReqDto.getCartType().toUpperCase())
@@ -110,9 +110,9 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<MyCartUuidDto> getMyCartUuids(MyCartTypeReqDto myCartTypeReqDto) {
         return myCartTypeReqDto.getCartType() == null
-                ? cartRepository.findByMemberUuidOrderBySelectedDesc(myCartTypeReqDto.getMemberUuid())
+                ? cartRepository.findByMemberUuid(myCartTypeReqDto.getMemberUuid())
                 .stream().map(MyCartUuidDto::from).toList()
-                : cartRepository.findByMemberUuidOrderBySelectedDesc(
+                : cartRepository.findByMemberUuid(
                         myCartTypeReqDto.getMemberUuid())
                 .stream()
                 .filter(cart -> cart.getCartType().equals(
@@ -133,8 +133,9 @@ public class CartServiceImpl implements CartService {
     @Transactional
     @Override
     public List<MyCartUuidDto> toggleAllCartSelection(String memberUuid) {
-        List<Cart> carts = cartRepository.findByMemberUuidOrderBySelectedDesc(memberUuid);
+        List<Cart> carts = cartRepository.findByMemberUuid(memberUuid);
 
+        // 새롭게 선택된 애가 있냐
         boolean newSelected = carts.stream().anyMatch(cart -> !cart.getSelected());
 
         List<MyCartUuidDto> results = carts.stream()
@@ -169,7 +170,9 @@ public class CartServiceImpl implements CartService {
 
     @Transactional
     @Override
-    public void deleteAllCartItems(String memberUuid) {
-        cartRepository.deleteAllByMemberUuid(memberUuid);
+    public void deleteAllCartItems(MyCartTypeReqDto myCartTypeReqDto) {
+        cartRepository.deleteAllByMemberUuidAndCartType(
+                myCartTypeReqDto.getMemberUuid(),
+                CartType.valueOf(myCartTypeReqDto.getCartType().toUpperCase()));
     }
 }
