@@ -1,5 +1,6 @@
 package com.team114.starbucks.domain.cart.dto.in;
 
+import com.team114.starbucks.domain.cart.enums.CartType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
