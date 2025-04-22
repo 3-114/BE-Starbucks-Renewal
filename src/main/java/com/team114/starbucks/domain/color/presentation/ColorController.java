@@ -6,6 +6,7 @@ import com.team114.starbucks.domain.color.dto.in.ColorRequestDto;
 import com.team114.starbucks.domain.color.dto.out.ColorResponseDto;
 import com.team114.starbucks.domain.color.vo.in.ColorRequestVo;
 import com.team114.starbucks.domain.color.vo.out.ColorResponseVo;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class ColorController {
     private final ColorService colorService;
 
     // 1. Color 생성
+    @Operation(summary = "새로운 색상 생성", tags = {"Color"})
     @PostMapping
     public BaseResponseEntity<ColorResponseVo> createColor(
             @RequestBody ColorRequestVo colorRequestVo
@@ -28,6 +30,7 @@ public class ColorController {
     }
 
     // 2. Color 전체 조회
+    @Operation(summary = "색상 전체 조회", tags = {"Color"})
     @GetMapping
     public BaseResponseEntity<List<ColorResponseVo>> getAllColors() {
 
@@ -38,6 +41,7 @@ public class ColorController {
     }
 
     // 3. Color 단건 조회
+    @Operation(summary = "색상 단건 조회", tags = {"Color"})
     @GetMapping("/{colorId}")
     public BaseResponseEntity<ColorResponseVo> getColor(
             @PathVariable Long colorId
@@ -47,6 +51,7 @@ public class ColorController {
     }
 
     // 4. Color 수정
+    @Operation(summary = "색상 수정", tags = {"Color"})
     @PutMapping("/{colorId}")
     public BaseResponseEntity<ColorResponseVo> updateColor(
         @PathVariable Long colorId,
@@ -60,6 +65,7 @@ public class ColorController {
     }
 
     // 5. Color 삭제
+    @Operation(summary = "색상 삭제", tags = {"Color"})
     @DeleteMapping("/{colorId}")
     public BaseResponseEntity<BaseResponseEntity> deleteColor(
         @PathVariable Long colorId
