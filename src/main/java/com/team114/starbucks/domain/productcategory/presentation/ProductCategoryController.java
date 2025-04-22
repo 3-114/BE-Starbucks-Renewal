@@ -33,7 +33,7 @@ public class ProductCategoryController {
      *  */
 
     // 1. 상품 카테고리 생성
-    @Operation(summary = "카테고리 항목 생성", tags = {"product-category"})
+    @Operation(summary = "카테고리 항목 생성", tags = {"Product_Category"})
     @PostMapping
     public BaseResponseEntity<Void> createProductCategory(
             @RequestBody CreateProductCategoryReqVo createProductCategoryReqVo
@@ -45,7 +45,7 @@ public class ProductCategoryController {
     }
 
     // 6. GET request: eventUuid / response: List<productUuid>
-    @Operation(summary = "카테고리 항목 생성", tags = {"product-category"})
+    @Operation(summary = "카테고리 항목 생성", tags = {"Product_Category"})
     @GetMapping("/{eventUuid}")
     public BaseResponseEntity<List<GetAllProductUuidResVo>> getProductUuidsByEventUuid(
             @PathVariable String eventUuid
@@ -61,7 +61,7 @@ public class ProductCategoryController {
      * @param size
      * @return
      */
-    @Operation(summary = "product uuid 리스트 조회", tags = {"product-category"})
+    @Operation(summary = "product uuid 리스트 조회", tags = {"Product"})
     @GetMapping("/uuid-list")
     public BaseResponseEntity<Page<GetAllProductUuidResVo>> getProductUuids(
             @RequestParam(required = false) String mainCategoryUuid,
