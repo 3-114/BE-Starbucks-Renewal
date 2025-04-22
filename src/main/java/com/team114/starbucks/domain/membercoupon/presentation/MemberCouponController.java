@@ -9,6 +9,7 @@ import com.team114.starbucks.domain.membercoupon.enums.CouponViewFilter;
 import com.team114.starbucks.domain.membercoupon.vo.in.IssueCouponReqVo;
 import com.team114.starbucks.domain.membercoupon.vo.in.ConsumeCouponReqVo;
 import com.team114.starbucks.domain.membercoupon.vo.out.MyCouponResVo;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +37,7 @@ public class MemberCouponController {
      * @return
      * @throws
      */
+    @Operation(summary = "쿠폰 받기", tags = {"Coupon"})
     @PostMapping("/issue")
     public BaseResponseEntity<Void> issueCoupon(
             // X- 접두사로 커스텀 헤더임을 명시적으로 표시
@@ -52,6 +54,7 @@ public class MemberCouponController {
      * @return
      * @throws
      */
+    @Operation(summary = "쿠폰 사용하기", tags = {"Coupon"})
     @PutMapping("/consume")
     public BaseResponseEntity<Void> consumeCoupon(
             // X- 접두사로 커스텀 헤더임을 명시적으로 표시
@@ -68,6 +71,7 @@ public class MemberCouponController {
      * @return Page<MyCouponResVo>
      * @throws
      */
+    @Operation(summary = "내 쿠폰 조회", tags = {"Coupon"})
     @GetMapping
     public BaseResponseEntity<Page<MyCouponResVo>> getMyCoupons(
             @RequestHeader("X-Member-UUID") String memberUuid,
