@@ -6,6 +6,7 @@ import com.team114.starbucks.domain.eventimage.dto.in.CreateEventImageReqDto;
 import com.team114.starbucks.domain.eventimage.dto.out.GetEventUrlAndIndexResDto;
 import com.team114.starbucks.domain.eventimage.vo.in.CreateEventImageReqVo;
 import com.team114.starbucks.domain.eventimage.vo.out.GetEventUrlAndIndexResVo;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ public class EventImageController {
 
 
     // [GET] eventUuid -> eventUrl, eventUrlIndex 조회
+    @Operation(summary = "기획전 상세내역 조회", tags = {"event-image"})
     @GetMapping("/{eventUuid}")
     public BaseResponseEntity<List<GetEventUrlAndIndexResVo>> getEventUrlAndIndex(
             @PathVariable String eventUuid
@@ -36,6 +38,7 @@ public class EventImageController {
     }
 
     // [POST]
+    @Operation(summary = "기획전 상세내역 생성", tags = {"event-image"})
     @PostMapping
     public BaseResponseEntity<Void> createEventImage(
             @RequestBody CreateEventImageReqVo createEventImageReqVo
