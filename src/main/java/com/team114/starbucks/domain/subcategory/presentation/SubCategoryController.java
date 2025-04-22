@@ -10,6 +10,7 @@ import com.team114.starbucks.domain.subcategory.vo.in.CreateSubCategoryReqVo;
 import com.team114.starbucks.domain.subcategory.vo.in.UpdateSubCategoryReqVo;
 import com.team114.starbucks.domain.subcategory.vo.out.GetAllSubCategoryResVo;
 import com.team114.starbucks.domain.subcategory.vo.out.GetOneSubCategoryResVo;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,7 @@ public class SubCategoryController {
     private final SubCategoryService subCategoryService;
 
     // 1. 서브 카테고리 생성
+    @Operation(summary = "서브 카테고리 생성", tags = {"sub-category"})
     @PostMapping
     public BaseResponseEntity<Void> createSubCategory(
             @RequestBody CreateSubCategoryReqVo createSubCategoryReqVo
@@ -42,6 +44,7 @@ public class SubCategoryController {
     }
 
     // 2. 서브 카테고리 전체 조회
+    @Operation(summary = "서브 카테고리 전체 조회", tags = {"sub-category"})
     @GetMapping
     public BaseResponseEntity<List<GetAllSubCategoryResVo>> getAllSubCategory() {
         List<GetAllSubCategoryResDto> getAllSubCategoryResDtoList = subCategoryService.getAllSubCategory();
@@ -55,6 +58,7 @@ public class SubCategoryController {
     }
 
     // 3. 서브 카테고리 단건 조회 API
+    @Operation(summary = "서브 카테고리 단건 조회", tags = {"sub-category"})
     @GetMapping("/{subCategoryUuid}")
     public BaseResponseEntity<GetOneSubCategoryResVo> getOneSubCategory(
             @PathVariable String subCategoryUuid) {
@@ -65,6 +69,7 @@ public class SubCategoryController {
     }
 
     // 4. 서브 카테고리 수정
+    @Operation(summary = "서브 카테고리 수정", tags = {"sub-category"})
     @PutMapping("/{subCategoryUuid}")
     public BaseResponseEntity<Void> updateSubCategory(
             @PathVariable String subCategoryUuid,
@@ -76,6 +81,7 @@ public class SubCategoryController {
     }
 
     // 5. 서브 카테고리 삭제
+    @Operation(summary = "서브 카테고리 삭제", tags = {"sub-category"})
     @DeleteMapping("/{subCategoryUuid}")
     public BaseResponseEntity<Void> deleteSubCategory(
             @PathVariable String subCategoryUuid
