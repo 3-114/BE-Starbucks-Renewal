@@ -7,6 +7,7 @@ import com.team114.starbucks.domain.cart.dto.out.GetAllCartItemsResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetProductUuidResDto;
 import com.team114.starbucks.domain.cart.dto.out.GetQuantityAndSelectedDto;
 import com.team114.starbucks.domain.cart.dto.out.MyCartUuidDto;
+import com.team114.starbucks.domain.cart.enums.CartType;
 import com.team114.starbucks.domain.cart.vo.in.AddCartItemReqVo;
 import com.team114.starbucks.domain.cart.vo.in.CartQuantityReqVo;
 import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
@@ -67,7 +68,7 @@ public class CartController {
      * @param authentication
      * @return
      */
-    @Operation(summary = "장바구니 항목 전체 리스트로 조회", tags = {"cart"})
+    @Operation(summary = "장바구니 항목 전체 리스트로 조회", tags = {"cart"}, hidden = true)
     @GetMapping("/all")
     public BaseResponseEntity<List<GetAllCartItemsResVo>> getAllCartItems(
             Authentication authentication
@@ -84,7 +85,7 @@ public class CartController {
      * @param updateCartItemReqVo
      * @return
      */
-    @Operation(summary = "장바구니 항목 전체 정보 변경", tags = {"cart"})
+    @Operation(summary = "장바구니 항목 전체 정보 변경", tags = {"cart"}, hidden = true)
     @PutMapping
     public BaseResponseEntity<Void> updateCartItem(
             Authentication authentication,
@@ -157,7 +158,8 @@ public class CartController {
     @Operation(
             summary = "장바구니에서 장바구니 유형별로 상품 UUID 리스트 조회 (일반/예약)",
             description = "cartType - 일반 : general / 예약 : reservation",
-            tags = {"cart"}
+            tags = {"cart"},
+            hidden = true
     )
     @GetMapping("/product/{cartType}")
     public BaseResponseEntity<List<GetProductUuidResVo>> getProductUuid(
@@ -177,7 +179,7 @@ public class CartController {
      * @param cartUuid
      * @return
      */
-    @Operation(summary = "장바구니에서 항목 수량 감소", tags = {"cart"})
+    @Operation(summary = "장바구니에서 항목 수량 감소", tags = {"cart"}, hidden = true)
     @PutMapping("/{cartUuid}/item-decrease")
     public BaseResponseEntity<Void> decreaseCartQuantity(
             Authentication authentication,
@@ -194,7 +196,7 @@ public class CartController {
      * @param cartUuid
      * @return
      */
-    @Operation(summary = "장바구니에서 항목 수량 증가", tags = {"cart"})
+    @Operation(summary = "장바구니에서 항목 수량 증가", tags = {"cart"}, hidden = true)
     @PutMapping("/{cartUuid}/item-increase")
     public BaseResponseEntity<Void> increaseCartQuantity(
             Authentication authentication,
@@ -228,7 +230,7 @@ public class CartController {
      * @param productUuid
      * @return
      */
-    @Operation(summary = "ProductUuid 로 cart 조회", tags = {"cart"})
+    @Operation(summary = "ProductUuid 로 cart 조회", tags = {"cart"}, hidden = true)
     @GetMapping("/by-product/{productUuid}")
     public List<GetQuantityAndSelectedVo> getCartByProductUuid(
             Authentication authentication,
@@ -310,12 +312,17 @@ public class CartController {
         return new BaseResponseEntity<>("장바구니에서 해당 장바구니 항목 수량 변경에 성공하였습니다.");
     }
 
-    @Operation(summary = "내 장바구니 항목 전체 삭제", tags = {"cart"})
-    @DeleteMapping
+    @Operation(
+            summary = "내 장바구니 유형별 항목 전체 삭제",
+            description = "cartType - 일반 : general / 예약 : reservation",
+            tags = {"cart"}
+    )
+    @DeleteMapping("/{cartType}/all")
     public BaseResponseEntity<Void> deleteAllCartItems(
-            Authentication authentication
+            Authentication authentication,
+            @PathVariable String cartType
     ) {
-        cartService.deleteAllCartItems(authentication.getName());
-        return new BaseResponseEntity<>("내 장바구니 항목 전체 삭제에 성공하였습니다.");
+        cartService.deleteAllCartItems(MyCartTypeReqDto.of(authentication.getName(), cartType));
+        return new BaseResponseEntity<>("내 장바구니 유형별 항목 전체 삭제에 성공하였습니다.");
     }
 }

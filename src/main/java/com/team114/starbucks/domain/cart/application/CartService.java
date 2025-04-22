@@ -55,5 +55,5 @@ public interface CartService {
 
     void changeCartQuantity(MyCartQuantityReqDto myCartQuantityReqDto);
 
-    void deleteAllCartItems(String memberUuid);
+    void deleteAllCartItems(MyCartTypeReqDto myCartTypeReqDto);
 }
