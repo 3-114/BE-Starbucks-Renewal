@@ -61,12 +61,10 @@ public class SecurityConfig {
                                     "/api/v1/orders/**",
                                     "/api/v1/payments/**",
                                     "/api/v1/options/**",
-                                    "/api/v1/event/nav/**",
-                                    "/api/v1/event-image/**"
+                                    "/api/v1/event/nav/**"
                             ).permitAll()
                             .requestMatchers(
                                     HttpMethod.GET,
-                                    "/api/v1/event/**",
                                     "/api/v1/main-category/**",
                                     "/api/v1/sub-category/**",
                                     "/api/v1/product-category/**"
