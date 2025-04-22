@@ -68,7 +68,7 @@ public class SecurityConfig {
                                     HttpMethod.GET,
                                     "/api/v1/event/**",
                                     "/api/v1/main-category/**",
-                                    "api/v1/sub-category/**",
+                                    "/api/v1/sub-category/**",
                                     "/api/v1/product-category/**"
                             ).permitAll()
                             .anyRequest()
