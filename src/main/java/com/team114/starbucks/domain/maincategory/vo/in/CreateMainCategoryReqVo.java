@@ -6,5 +6,6 @@ import lombok.Getter;
 public class CreateMainCategoryReqVo {
 
     private String mainCategoryName;
+    private String mainCategoryImage;
 
 }

@@ -8,8 +8,6 @@ import com.team114.starbucks.domain.maincategory.dto.out.GetAllMainCategoryResDt
 import com.team114.starbucks.domain.maincategory.dto.out.GetOneMainCategoryResDto;
 import com.team114.starbucks.domain.maincategory.vo.in.CreateMainCategoryReqVo;
 import com.team114.starbucks.domain.maincategory.vo.in.UpdateMainCategoryReqVo;
-import com.team114.starbucks.domain.maincategory.vo.out.CreateMainCategoryResDto;
-import com.team114.starbucks.domain.maincategory.vo.out.CreateMainCategoryResVo;
 import com.team114.starbucks.domain.maincategory.vo.out.GetAllMainCategoryResVo;
 import com.team114.starbucks.domain.maincategory.vo.out.GetOneMainCategoryResVo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -89,7 +87,7 @@ public class MainCategoryController {
     @DeleteMapping("/{mainCategoryUuid}")
     public BaseResponseEntity<Void> deleteMainCategory(
             @PathVariable String mainCategoryUuid
-    ){
+    ) {
         mainCategoryService.deleteMainCategory(mainCategoryUuid);
 
         return new BaseResponseEntity<>("메인 카테고리 삭제에 성공했습니다. ", null);

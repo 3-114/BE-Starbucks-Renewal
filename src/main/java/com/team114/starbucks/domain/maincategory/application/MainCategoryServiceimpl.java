@@ -8,7 +8,6 @@ import com.team114.starbucks.domain.maincategory.dto.out.GetAllMainCategoryResDt
 import com.team114.starbucks.domain.maincategory.dto.out.GetOneMainCategoryResDto;
 import com.team114.starbucks.domain.maincategory.entity.MainCategory;
 import com.team114.starbucks.domain.maincategory.infrastructure.MainCategoryRepository;
-import com.team114.starbucks.domain.maincategory.vo.out.CreateMainCategoryResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +51,7 @@ public class MainCategoryServiceimpl implements MainCategoryService {
     @Override
     public void saveMainCategory(CreateMainCategoryReqDto createMainCategoryReqDto) {
         try {
-            CreateMainCategoryResDto.from(mainCategoryRepository.save(createMainCategoryReqDto.toEntity(UUID.randomUUID().toString())));
+            mainCategoryRepository.save(createMainCategoryReqDto.toEntity(UUID.randomUUID().toString()));
 
         } catch (Exception e) {
             throw new BaseException(BaseResponseStatus.FAILED_TO_FIND);
