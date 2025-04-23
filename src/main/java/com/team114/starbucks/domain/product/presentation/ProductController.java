@@ -13,6 +13,7 @@ import com.team114.starbucks.domain.product.vo.in.CreateProductRequestVo;
 import com.team114.starbucks.domain.product.vo.in.DeleteProductRequestVo;
 import com.team114.starbucks.domain.product.vo.in.UpdateProductRequestVo;
 import com.team114.starbucks.domain.product.vo.out.*;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ public class ProductController {
 
     private final ProductService productService;
 
+    @Operation(summary = "상품 전체 조회", tags = {"Product"})
     @GetMapping
     public BaseResponseEntity<List<GetProductResponseDto>> getAllProducts() {
 
@@ -42,10 +44,9 @@ public class ProductController {
         }
 
         return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 조회 성공", 200, dtolist);
-
-
     }
 
+    @Operation(summary = "상품 단건 조회", tags = {"Product"})
     @GetMapping("/{productUuid}")
     public BaseResponseEntity<GetProductByIdResponseVo> getProduct(
             @PathVariable String productUuid
@@ -57,6 +58,7 @@ public class ProductController {
         return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 단건 조회 성공", 200, vo);
     }
 
+    @Operation(summary = "상품 생성", tags = {"Product"})
     @PostMapping
     public BaseResponseEntity<CreateProductResponseVo> saveProduct(
             @RequestBody CreateProductRequestVo createProductReqVo
@@ -68,9 +70,9 @@ public class ProductController {
         CreateProductResponseVo result = product.toVo();
 
         return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 등록 성공", 200, result);
-
     }
 
+    @Operation(summary = "상품 수정", tags = {"Product"})
     @PutMapping
     public BaseResponseEntity<Void> updateProduct(
             @RequestBody UpdateProductRequestVo updateProductRequestVo
@@ -80,9 +82,9 @@ public class ProductController {
         );
 
         return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 정보를 변경하였습니다.", 200, null);
-
     }
 
+    @Operation(summary = "상품 삭제", tags = {"Product"})
     @DeleteMapping
     public BaseResponseEntity<Void> deleteProduct(
             @RequestBody DeleteProductRequestVo deleteProductRequestVo
@@ -94,6 +96,7 @@ public class ProductController {
         return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 삭제 성공", 200, null);
     }
 
+    @Operation(summary = "상품 프리뷰 조회", tags = {"Product"})
     @GetMapping("/preview/{productUuid}")
     public BaseResponseEntity<GetProductPreviewResponseVo> getProductPreview(
             @PathVariable String productUuid
@@ -103,9 +106,6 @@ public class ProductController {
         GetProductPreviewResponseVo vo = dto.toVo();
 
         return new BaseResponseEntity<>(HttpStatus.OK, true, "상품 미리보기 성공", 200, vo);
-
     }
-
-
 
 }

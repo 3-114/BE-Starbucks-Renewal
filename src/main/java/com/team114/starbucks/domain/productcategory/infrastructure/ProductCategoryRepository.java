@@ -1,6 +1,8 @@
 package com.team114.starbucks.domain.productcategory.infrastructure;
 
 import com.team114.starbucks.domain.productcategory.entity.ProductCategory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,4 +14,7 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
     List<ProductCategory> findAllProductUuidByEventUuid(String eventUuid);
 
     boolean existsByProductUuidAndMainCategoryUuidAndSubCategoryUuid(String productUuid, String mainCategoryUuid, String subCategoryUuid);
+    Page<ProductCategory> findAllProductUuidByEventUuid(String eventUuid, Pageable pageable);
+
+    Page<ProductCategory> findByMainCategoryUuid(String mainCategoryUuid, Pageable entity);
 }

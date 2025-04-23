@@ -77,4 +77,10 @@ public class OptionServiceImpl implements OptionService {
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );
     }
+
+    @Override
+    public Option findAnyOptionByProductUuid(String productUuid) {
+        return optionRepository.findAnyOptionByProductUuid(productUuid)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
+    }
 }

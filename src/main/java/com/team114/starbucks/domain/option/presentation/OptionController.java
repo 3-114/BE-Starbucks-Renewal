@@ -8,6 +8,7 @@ import com.team114.starbucks.domain.option.dto.out.OptionResponseDto;
 import com.team114.starbucks.domain.option.vo.in.OptionCreateRequestVo;
 import com.team114.starbucks.domain.option.vo.in.OptionUpdateRequestVo;
 import com.team114.starbucks.domain.option.vo.out.OptionResponseVo;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ public class OptionController {
     private final OptionService optionService;
 
     // 1. 옵션 등록
+    @Operation(summary = "옵션 생성", tags = {"Option"})
     @PostMapping
     public BaseResponseEntity<OptionResponseVo> createOption(
             @RequestBody OptionCreateRequestVo optionCreateRequestVo
@@ -30,6 +32,7 @@ public class OptionController {
     }
 
     // 2. 옵션 전체 조회
+    @Operation(summary = "옵션 전체 조회", tags = {"Option"})
     @GetMapping
     public BaseResponseEntity<List<OptionResponseVo>> getAllOptions() {
         List<OptionResponseVo> result = optionService.findAllOptions()
@@ -38,6 +41,7 @@ public class OptionController {
     }
 
     // 3. 옵션 단건 조회
+    @Operation(summary = "옵션 단건 조회", tags = {"Option"})
     @GetMapping("/{optionId}")
     public BaseResponseEntity<OptionResponseVo> getOption(
             @PathVariable Long optionId
@@ -47,6 +51,7 @@ public class OptionController {
     }
 
     // 4. 옵션 수정
+    @Operation(summary = "옵션 수정", tags = {"Option"})
     @PutMapping
     public BaseResponseEntity<OptionResponseVo> updateOption(
             @RequestBody OptionUpdateRequestVo optionUpdateRequestVo
@@ -57,6 +62,7 @@ public class OptionController {
     }
 
     // 5. 옵션 삭제
+    @Operation(summary = "옵션 삭제", tags = {"Option"})
     @DeleteMapping("/{optionId}")
     public BaseResponseEntity<Void> deleteOption(
             @PathVariable Long optionId

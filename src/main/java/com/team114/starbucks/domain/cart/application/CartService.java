@@ -1,9 +1,6 @@
 package com.team114.starbucks.domain.cart.application;
 
-import com.team114.starbucks.domain.cart.dto.in.AddCartItemReqDto;
-import com.team114.starbucks.domain.cart.dto.in.CartUuidReqDto;
-import com.team114.starbucks.domain.cart.dto.in.ProductUuidReqDto;
-import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
+import com.team114.starbucks.domain.cart.dto.in.*;
 import com.team114.starbucks.domain.cart.dto.out.*;
 import com.team114.starbucks.domain.cart.vo.out.CartTypeReqDto;
 import com.team114.starbucks.domain.cart.vo.out.CountTotalCartResVo;
@@ -36,7 +33,7 @@ public interface CartService {
 
     void deleteCartItem(CartUuidReqDto cartUuidReqDto);
 
-    GetCartItemResDto getCartItem(CartUuidReqDto cartUuidReqDto);
+    CartAndProductResDto getCartItem(CartUuidReqDto cartUuidReqDto);
 
     GetItemSelectResDto getItemSelect(CartUuidReqDto cartUuidReqDto);
 
@@ -50,5 +47,13 @@ public interface CartService {
 
     List<GetQuantityAndSelectedDto> getCartByProductUuid(ProductUuidReqDto productUuidReqDto);
 
-    List<MyCartUuidDto> getMyCartUuids(String memberUuid);
+    List<MyCartUuidDto> getMyCartUuids(MyCartTypeReqDto myCartTypeReqDto);
+
+    void toggleCartSelection(CartUuidReqDto cartUuidReqDto);
+
+    List<MyCartUuidDto> toggleAllCartSelection(String memberUuid);
+
+    void changeCartQuantity(MyCartQuantityReqDto myCartQuantityReqDto);
+
+    void deleteAllCartItems(MyCartTypeReqDto myCartTypeReqDto);
 }
