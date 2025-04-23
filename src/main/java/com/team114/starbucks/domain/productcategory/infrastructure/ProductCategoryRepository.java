@@ -13,5 +13,7 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
 
     List<ProductCategory> findAllProductUuidByEventUuid(String eventUuid);
 
+    Page<ProductCategory> findAllProductUuidByEventUuid(String eventUuid, Pageable pageable);
+
     Page<ProductCategory> findByMainCategoryUuid(String mainCategoryUuid, Pageable entity);
 }

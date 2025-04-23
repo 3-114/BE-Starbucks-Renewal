@@ -1,9 +1,9 @@
 package com.team114.starbucks.domain.productcategory.presentation;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.productcategory.application.ProductCategoryService;
 import com.team114.starbucks.domain.productcategory.dto.in.CreateProductCategoryReqDto;
+import com.team114.starbucks.domain.productcategory.dto.in.EventImageParamReqDto;
 import com.team114.starbucks.domain.productcategory.dto.in.PageParamDto;
 import com.team114.starbucks.domain.productcategory.dto.out.GetAllProductUuidResDto;
 import com.team114.starbucks.domain.productcategory.vo.in.CreateProductCategoryReqVo;
@@ -45,7 +45,7 @@ public class ProductCategoryController {
     }
 
     // 6. GET request: eventUuid / response: List<productUuid>
-    @Operation(summary = "카테고리 항목 생성", tags = {"Product_Category"})
+    @Operation(summary = "카테고리 항목 생성", tags = {"Product_Category"}, hidden = true)
     @GetMapping("/{eventUuid}")
     public BaseResponseEntity<List<GetAllProductUuidResVo>> getProductUuidsByEventUuid(
             @PathVariable String eventUuid
@@ -56,6 +56,7 @@ public class ProductCategoryController {
 
     /**
      * 7. mainCategoryUuid 로 product uuid 리스트 조회
+     *
      * @param mainCategoryUuid
      * @param page
      * @param size
@@ -71,6 +72,20 @@ public class ProductCategoryController {
         return new BaseResponseEntity<>(
                 "product uuid 리스트 조회에 성공하였습니다.",
                 productCategoryService.getProductUuids(PageParamDto.of(mainCategoryUuid, page, size)).map(GetAllProductUuidResDto::toVo)
+        );
+    }
+
+    @Operation(summary = "기획전 상세내역 상품 리스트 조회", tags = {"event"})
+    @GetMapping("/uuid-list/event")
+    public BaseResponseEntity<Page<GetAllProductUuidResVo>> getEventProductUuids(
+            @RequestParam String eventUuid,
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "10") int size
+    ) {
+        return new BaseResponseEntity<>(
+                "product uuid 리스트 조회에 성공했습니다.",
+                productCategoryService.getEventProductUuids(EventImageParamReqDto.of(eventUuid, page, size))
+                        .map(GetAllProductUuidResDto::toVo)
         );
     }
 }
