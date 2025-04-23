@@ -7,6 +7,5 @@ public class CreateEventImageReqVo {
 
     private String eventUuid;
     private String eventUrl;
-    private int eventUrlIndex;
 
 }
