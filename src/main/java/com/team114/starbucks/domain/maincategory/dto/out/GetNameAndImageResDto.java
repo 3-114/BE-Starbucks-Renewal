@@ -10,17 +10,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GetNameAndImageResDto {
 
+    private String mainCategoryUuid;
     private String mainCategoryName;
     private String mainCategoryImage;
 
     @Builder
-    public GetNameAndImageResDto(String mainCategoryName, String mainCategoryImage) {
+    public GetNameAndImageResDto(String mainCategoryUuid, String mainCategoryName, String mainCategoryImage) {
+        this.mainCategoryUuid = mainCategoryUuid;
         this.mainCategoryName = mainCategoryName;
         this.mainCategoryImage = mainCategoryImage;
     }
 
     public static GetNameAndImageResDto from(MainCategory mainCategory) {
         return GetNameAndImageResDto.builder()
+                .mainCategoryUuid(mainCategory.getMainCategoryUuid())
                 .mainCategoryName(mainCategory.getMainCategoryName())
                 .mainCategoryImage(mainCategory.getMainCategoryImage())
                 .build();
@@ -28,8 +31,10 @@ public class GetNameAndImageResDto {
 
     public GetNameAndImageResVo toVo() {
         return GetNameAndImageResVo.builder()
+                .mainCategoryUuid(mainCategoryUuid)
                 .mainCategoryName(mainCategoryName)
                 .mainCategoryImage(mainCategoryImage)
                 .build();
     }
+
 }
