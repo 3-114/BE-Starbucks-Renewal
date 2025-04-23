@@ -1,6 +1,7 @@
 package com.team114.starbucks.domain.productcategory.application;
 
 import com.team114.starbucks.domain.productcategory.dto.in.CreateProductCategoryReqDto;
+import com.team114.starbucks.domain.productcategory.dto.in.EventImageParamReqDto;
 import com.team114.starbucks.domain.productcategory.dto.in.PageParamDto;
 import com.team114.starbucks.domain.productcategory.dto.out.GetAllProductUuidResDto;
 import com.team114.starbucks.domain.productcategory.vo.out.GetAllProductUuidResVo;
@@ -16,4 +17,6 @@ public interface ProductCategoryService {
     List<GetAllProductUuidResDto> getProductUuidsByEventUuid(String eventUuid);
 
     Page<GetAllProductUuidResDto> getProductUuids(PageParamDto pageParamDto);
+
+    Page<GetAllProductUuidResDto> getEventProductUuids(EventImageParamReqDto eventImageParamReqDto);
 }

@@ -3,6 +3,7 @@ package com.team114.starbucks.domain.productcategory.application;
 import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.productcategory.dto.in.CreateProductCategoryReqDto;
+import com.team114.starbucks.domain.productcategory.dto.in.EventImageParamReqDto;
 import com.team114.starbucks.domain.productcategory.dto.in.PageParamDto;
 import com.team114.starbucks.domain.productcategory.dto.out.GetAllProductUuidResDto;
 import com.team114.starbucks.domain.productcategory.entity.ProductCategory;
@@ -58,5 +59,13 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
                 : productCategoryRepository.findByMainCategoryUuid(
                         pageParamDto.getMainCategoryUuid(), pageParamDto.toEntity())
                 .map(GetAllProductUuidResDto::from);
+    }
+
+    @Override
+    public Page<GetAllProductUuidResDto> getEventProductUuids(EventImageParamReqDto eventImageParamReqDto) {
+        return productCategoryRepository.findAllProductUuidByEventUuid(
+                        eventImageParamReqDto.getEventUuid(), eventImageParamReqDto.toPageable())
+                .map(GetAllProductUuidResDto::from);
+
     }
 }

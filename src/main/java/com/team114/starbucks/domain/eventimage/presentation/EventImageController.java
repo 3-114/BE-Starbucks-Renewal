@@ -22,7 +22,7 @@ public class EventImageController {
 
 
     // [GET] eventUuid -> eventUrl, eventUrlIndex 조회
-    @Operation(summary = "기획전 상세내역 조회", tags = {"event"})
+    @Operation(summary = "기획전 상세내역 이미지 조회", tags = {"event"})
     @GetMapping("/{eventUuid}")
     public BaseResponseEntity<List<GetEventUrlAndIndexResVo>> getEventUrlAndIndex(
             @PathVariable String eventUuid
