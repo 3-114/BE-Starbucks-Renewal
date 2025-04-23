@@ -36,7 +36,13 @@ public class EventImageServiceImpl implements EventImageService {
     @Override
     public void createEventImage(CreateEventImageReqDto createEventImageReqDto) {
         try {
-            eventImageRepository.save(createEventImageReqDto.toEntity());
+            // 생성 시 기존 MaxIndex값 +1 해주기
+            int maxIndex = eventImageRepository
+                    .findMaxIndexByEventUuid(createEventImageReqDto.getEventUuid())
+                    .orElse(-1); // 또는 0으로 시작하고 싶으면 .orElse(0)
+
+            EventImage eventImage = createEventImageReqDto.toEntity(maxIndex);
+            eventImageRepository.save(eventImage);
 
         } catch (Exception e) {
             throw new BaseException(BaseResponseStatus.FAILED_TO_FIND);
