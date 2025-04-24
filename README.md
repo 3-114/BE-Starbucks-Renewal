@@ -14,6 +14,8 @@
 	
 # 📖 프로젝트 개요
 
+---
+
 </div>
 
 <br>
@@ -32,6 +34,8 @@
 <div align="center" style="font-size: 32px; font-weight: bold; color: #f4a261;">
 	
 # 👥 팀원 소개
+
+---
 
 </div>
 
@@ -106,7 +110,21 @@
 	
 # 📲 Porting Manual
 
+---
+
 </div>
+
+<br>
+
+##  🖥️ Front - End
+
+<br>
+
+
+| 항목            | 내용              |
+|---------------|-----------------|
+| Project Build | Gradle - Groovy |
+
 
 <br>
 <br>  
@@ -150,7 +168,13 @@
 
 ```
 
+<br>
+
 ## ☁️ InfraStructure
+
+<br>
+
+
 
 <br>
 <br>
@@ -158,14 +182,18 @@
 
 <div align="center">
 	
+
+
 # 🖥️ 프로젝트 설명
+
+---
 
 </div>
 
 <br>
 <br>
 
-### 🏗️ Architecture
+## 🏗️ Architecture
 
 <br>
 
@@ -174,7 +202,7 @@
 <br>
 <br>
 
-### 📝 [ERD 바로가기](https://www.erdcloud.com/d/AfbenbEeNpbLj2dwu)
+## 📝 [ERD 바로가기](https://www.erdcloud.com/d/AfbenbEeNpbLj2dwu)
 
 <br>
 
@@ -183,7 +211,13 @@
 <br>
 <br>
 
-### 🎯 기술 스택
+<div align="center">
+
+# 🎯 기술 스택
+
+---
+
+</div>
 
 <br>
 
