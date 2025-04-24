@@ -28,7 +28,7 @@ public class AuthController {
      */
 
     /**
-     * 회원가입
+     * 1. 회원가입
      *
      * @param createSignUpReqVo 회원가입 정보
      * @return {@link BaseResponseEntity} 회원가입 결과 닉네임
@@ -43,7 +43,8 @@ public class AuthController {
     }
 
     /**
-     * 로그인
+     * 2. 로그인
+     *
      * @param getSignInReqVo 로그인 정보
      * @return {@link BaseResponseEntity} 로그인 결과
      */
