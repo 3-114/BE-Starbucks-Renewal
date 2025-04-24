@@ -22,7 +22,7 @@ public class EventImageController {
 
 
     // [GET] eventUuid -> eventUrl, eventUrlIndex 조회
-    @Operation(summary = "기획전 상세내역 조회", tags = {"event"})
+    @Operation(summary = "기획전 상세내역 이미지 조회", tags = {"event"})
     @GetMapping("/{eventUuid}")
     public BaseResponseEntity<List<GetEventUrlAndIndexResVo>> getEventUrlAndIndex(
             @PathVariable String eventUuid
@@ -38,7 +38,7 @@ public class EventImageController {
     }
 
     // [POST]
-    @Operation(summary = "기획전 상세내역 생성", tags = {"event"})
+    @Operation(summary = "기획전 상세내역 이미지 생성", tags = {"event"})
     @PostMapping
     public BaseResponseEntity<Void> createEventImage(
             @RequestBody CreateEventImageReqVo createEventImageReqVo

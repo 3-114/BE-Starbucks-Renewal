@@ -8,11 +8,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GetNameAndImageResVo {
 
+    private String mainCategoryUuid;
     private String mainCategoryName;
     private String mainCategoryImage;
 
     @Builder
-    public GetNameAndImageResVo(String mainCategoryName, String mainCategoryImage) {
+    public GetNameAndImageResVo(String mainCategoryUuid, String mainCategoryName, String mainCategoryImage) {
+        this.mainCategoryUuid = mainCategoryUuid;
         this.mainCategoryName = mainCategoryName;
         this.mainCategoryImage = mainCategoryImage;
     }

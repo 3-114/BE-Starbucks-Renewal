@@ -12,28 +12,27 @@ public class CreateEventImageReqDto {
 
     private String eventUuid;
     private String eventUrl;
-    private int eventUrlIndex;
 
     @Builder
-    public CreateEventImageReqDto(String eventUuid, String eventUrl, int eventUrlIndex) {
+    public CreateEventImageReqDto(String eventUuid, String eventUrl) {
         this.eventUuid = eventUuid;
         this.eventUrl = eventUrl;
-        this.eventUrlIndex = eventUrlIndex;
     }
+
 
     public static CreateEventImageReqDto from(CreateEventImageReqVo createEventImageReqVo) {
         return CreateEventImageReqDto.builder()
                 .eventUuid(createEventImageReqVo.getEventUuid())
                 .eventUrl(createEventImageReqVo.getEventUrl())
-                .eventUrlIndex(createEventImageReqVo.getEventUrlIndex())
                 .build();
     }
 
-    public EventImage toEntity() {
+
+    public EventImage toEntity(int maxIndex) {
         return EventImage.builder()
                 .eventUuid(eventUuid)
                 .eventUrl(eventUrl)
-                .eventUrlIndex(eventUrlIndex)
+                .eventUrlIndex(maxIndex + 1)
                 .build();
     }
 
