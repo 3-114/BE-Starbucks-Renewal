@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class SignUpResponseVo {
+public class CreateSignUpResVo {
 
     private String nickname;
 
     @Builder
-    public SignUpResponseVo(String nickname) {
+    public CreateSignUpResVo(String nickname) {
         this.nickname = nickname;
     }
 }

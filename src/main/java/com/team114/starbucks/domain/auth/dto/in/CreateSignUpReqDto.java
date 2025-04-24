@@ -1,6 +1,6 @@
 package com.team114.starbucks.domain.auth.dto.in;
 
-import com.team114.starbucks.domain.auth.vo.in.SignUpRequestVo;
+import com.team114.starbucks.domain.auth.vo.in.CreateSignUpReqVo;
 import com.team114.starbucks.domain.member.entity.Member;
 import com.team114.starbucks.domain.member.enums.Gender;
 import com.team114.starbucks.domain.member.enums.UserRole;
@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.UUID;
 
-@NoArgsConstructor
 @Getter
-public class SignUpRequestDto {
+@NoArgsConstructor
+public class CreateSignUpReqDto {
 
     private String email;
     private String name;
@@ -24,7 +24,7 @@ public class SignUpRequestDto {
     private Gender gender;
 
     @Builder
-    public SignUpRequestDto(
+    public CreateSignUpReqDto(
             String email,
             String name,
             String nickname,
@@ -42,17 +42,17 @@ public class SignUpRequestDto {
         this.gender = gender;
     }
 
-    public static SignUpRequestDto from(
-            SignUpRequestVo signUpRequestVo
+    public static CreateSignUpReqDto from(
+            CreateSignUpReqVo createSignUpReqVo
     ) {
-        return SignUpRequestDto.builder()
-                .email(signUpRequestVo.getEmail())
-                .name(signUpRequestVo.getName())
-                .nickname(signUpRequestVo.getNickname())
-                .password(signUpRequestVo.getPassword())
-                .birthday(signUpRequestVo.getBirthday())
-                .phoneNumber(signUpRequestVo.getPhoneNumber())
-                .gender(signUpRequestVo.getGender())
+        return CreateSignUpReqDto.builder()
+                .email(createSignUpReqVo.getEmail())
+                .name(createSignUpReqVo.getName())
+                .nickname(createSignUpReqVo.getNickname())
+                .password(createSignUpReqVo.getPassword())
+                .birthday(createSignUpReqVo.getBirthday())
+                .phoneNumber(createSignUpReqVo.getPhoneNumber())
+                .gender(createSignUpReqVo.getGender())
                 .build();
     }
 

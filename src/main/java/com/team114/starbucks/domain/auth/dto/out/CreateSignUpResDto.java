@@ -1,30 +1,32 @@
 package com.team114.starbucks.domain.auth.dto.out;
 
 import com.team114.starbucks.domain.member.entity.Member;
-import com.team114.starbucks.domain.auth.vo.out.SignUpResponseVo;
+import com.team114.starbucks.domain.auth.vo.out.CreateSignUpResVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class SignUpResponseDto {
+@NoArgsConstructor
+public class CreateSignUpResDto {
 
     private String nickname;
 
     @Builder
-    public SignUpResponseDto(String nickname) {
+    public CreateSignUpResDto(String nickname) {
         this.nickname = nickname;
     }
 
-    public static SignUpResponseDto from(Member member) {
+    public static CreateSignUpResDto from(Member member) {
 
-        return SignUpResponseDto.builder()
+        return CreateSignUpResDto.builder()
                 .nickname(member.getNickname())
                 .build();
     }
 
-    public SignUpResponseVo toVo() {
+    public CreateSignUpResVo toVo() {
 
-        return SignUpResponseVo.builder()
+        return CreateSignUpResVo.builder()
                 .nickname(nickname)
                 .build();
     }

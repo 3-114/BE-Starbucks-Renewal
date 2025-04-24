@@ -7,7 +7,7 @@ import lombok.Getter;
 import java.util.Date;
 
 @Getter
-public class SignUpRequestVo {
+public class CreateSignUpReqVo {
 
     /**
      * @NotNull : null 불가, 빈 문자열 허용, 공백 문자열 허용

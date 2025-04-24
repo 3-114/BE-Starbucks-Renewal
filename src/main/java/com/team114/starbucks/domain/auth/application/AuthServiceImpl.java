@@ -3,10 +3,10 @@ package com.team114.starbucks.domain.auth.application;
 import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.jwt.JwtTokenProvider;
 import com.team114.starbucks.common.response.BaseResponseStatus;
-import com.team114.starbucks.domain.auth.dto.in.SignInRequestDto;
-import com.team114.starbucks.domain.auth.dto.in.SignUpRequestDto;
-import com.team114.starbucks.domain.auth.dto.out.SignInResponseDto;
-import com.team114.starbucks.domain.auth.dto.out.SignUpResponseDto;
+import com.team114.starbucks.domain.auth.dto.in.GetSignInReqDto;
+import com.team114.starbucks.domain.auth.dto.in.CreateSignUpReqDto;
+import com.team114.starbucks.domain.auth.dto.out.GetSignInResDto;
+import com.team114.starbucks.domain.auth.dto.out.CreateSignUpResDto;
 import com.team114.starbucks.domain.member.entity.Member;
 import com.team114.starbucks.domain.member.infrastructure.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,15 +29,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Transactional
     @Override
-    public SignUpResponseDto signUp(SignUpRequestDto signUpRequestDto) {
+    public CreateSignUpResDto signUp(CreateSignUpReqDto createSignUpReqDto) {
 
         try {
-            return SignUpResponseDto.from(
-                    memberRepository.save(
-                            signUpRequestDto.toEntity(
-                                    passwordEncoder.encode(signUpRequestDto.getPassword())
-                            )
-                    )
+            return CreateSignUpResDto.from(memberRepository.save(createSignUpReqDto.toEntity(
+                                    passwordEncoder.encode(createSignUpReqDto.getPassword())))
             );
         } catch (Exception e) {
             throw new BaseException(BaseResponseStatus.FAILED_TO_RESTORE);
@@ -46,28 +42,25 @@ public class AuthServiceImpl implements AuthService {
 
     @Transactional
     @Override
-    public SignInResponseDto signIn(SignInRequestDto signInRequestDto) {
+    public GetSignInResDto signIn(GetSignInReqDto getSignInReqDto) {
 
         try {
-            Member member = memberRepository.findByEmail(signInRequestDto.getEmail())
+            Member member = memberRepository.findByEmail(getSignInReqDto.getEmail())
                     .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_LOGIN));
 
-            return SignInResponseDto.from(member, createToken(authenticate(member, signInRequestDto.getPassword())).substring(7));
+            return GetSignInResDto.from(member, createToken(authenticate(member, getSignInReqDto.getPassword())).substring(7));
         } catch (Exception e) {
             throw new BaseException(BaseResponseStatus.FAILED_TO_LOGIN);
         }
     }
 
-    // 토큰 생성
     public String createToken(Authentication authentication) {
         return jwtTokenProvider.generateAccessToken(authentication);
     }
 
-    // 인증 (진짜인지 확인)
     public Authentication authenticate(Member member, String inputPassword) {
         return authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        member.getMemberUuid(), // 고유값이어야 함
+                new UsernamePasswordAuthenticationToken(member.getMemberUuid(),
                         inputPassword
                 )
         );
