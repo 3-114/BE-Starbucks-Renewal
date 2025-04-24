@@ -111,9 +111,6 @@
 <br>
 <br>  
 
-
-## 🖥️ Front - End  
-
 ##  ⚙️ Back - End  
 
 | 항목            | 내용              |
@@ -154,7 +151,6 @@
 ```
 
 ## ☁️ InfraStructure
-
 
 <br>
 <br>
