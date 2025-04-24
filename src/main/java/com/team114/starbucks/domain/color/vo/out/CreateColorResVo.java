@@ -2,14 +2,16 @@ package com.team114.starbucks.domain.color.vo.out;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class ColorResponseVo {
+@NoArgsConstructor
+public class CreateColorResVo {
 
     private String colorName;
 
     @Builder
-    public ColorResponseVo(
+    public CreateColorResVo(
             String colorName
     ) {
         this.colorName = colorName;

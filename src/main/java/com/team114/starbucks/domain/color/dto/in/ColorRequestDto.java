@@ -1,11 +1,13 @@
 package com.team114.starbucks.domain.color.dto.in;
 
 import com.team114.starbucks.domain.color.entity.Color;
-import com.team114.starbucks.domain.color.vo.in.ColorRequestVo;
+import com.team114.starbucks.domain.color.vo.in.CreateColorReqVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class ColorRequestDto {
     private String colorName;
 
@@ -15,10 +17,10 @@ public class ColorRequestDto {
     }
 
     public static ColorRequestDto from(
-            ColorRequestVo colorRequestVo
+            CreateColorReqVo createColorReqVo
     ) {
         return ColorRequestDto.builder()
-                .colorName(colorRequestVo.getColorName())
+                .colorName(createColorReqVo.getColorName())
                 .build();
     }
 
