@@ -4,8 +4,10 @@ import com.team114.starbucks.domain.coupon.enums.DiscountType;
 import com.team114.starbucks.domain.coupon.vo.in.UpdateCouponReqVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class UpdateCouponReqDto {
 
     private String couponName;

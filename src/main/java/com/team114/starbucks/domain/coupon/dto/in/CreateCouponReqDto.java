@@ -5,10 +5,12 @@ import com.team114.starbucks.domain.coupon.enums.DiscountType;
 import com.team114.starbucks.domain.coupon.vo.in.CreateCouponReqVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
 public class CreateCouponReqDto {
 
     private String couponName;

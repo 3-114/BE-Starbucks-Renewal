@@ -25,7 +25,6 @@ public class CouponController {
     private final CouponService couponService;
 
     /**
-     * api/v1/coupon
      * 1. 쿠폰 생성
      * 2. 쿠폰 전체 조회
      * 3. 쿠폰 UUID -> 단건 조회
@@ -35,9 +34,9 @@ public class CouponController {
 
     /**
      * 1. 쿠폰 생성
-     * @param createCouponReqVo
-     * @return createCouponResVo
-     * @throws
+     *
+     * @param createCouponReqVo 쿠폰생성 데이터
+     * @return {@link BaseResponseEntity} 쿠폰생성 결과
      */
     @Operation(summary = "쿠폰 생성", tags = {"Coupon"})
     @PostMapping
@@ -50,46 +49,24 @@ public class CouponController {
 
     /**
      * 2. 쿠폰 전체 조회
-     * @param
-     * @return createCouponResVo
-     * @throws
+     *
+     * @return {@link BaseResponseEntity} 쿠폰 전체조회 결과
      */
     @Operation(summary = "쿠폰 전체 조회", tags = {"Coupon"})
     @GetMapping
     public BaseResponseEntity<List<GetAllCouponsResVo>> getAllCoupons() {
 
-        // [ Stream, Method Reference 사용 ]
         List<GetAllCouponsResVo> result = couponService.findAllCoupons()
                 .stream().map(GetAllCouponsResDto::toVo).toList();
 
         return new BaseResponseEntity<>("쿠폰 전체 조회에 성공하였습니다.", result);
-
-        /**
-         *         [ dto -> vo (반복문 사용) ]
-         *
-         *          List<GetAllCouponsResDto> dtolist = couponService.findAllCoupons();
-         *
-         *         List<GetAllCouponsResVo> voList = new ArrayList<>();
-         *         for (GetAllCouponsResDto getAllCouponsResDto : dtolist) {
-         *             voList.add(getAllCouponsResDto.toVo());
-         *         }
-         *         return new BaseResponseEntity<>("쿠폰 전체 조회에 성공하였습니다.", voList);
-         */
-        /**
-         *         [ Stream, Method Reference 사용 ]
-         *         List<GetAllCouponsResVo> result = couponService.findAllCoupons()
-         *                 .stream().map(GetAllCouponsResDto::toVo).toList();
-         *
-         *         return new BaseResponseEntity<>("쿠폰 전체 조회에 성공하였습니다.", result);
-         */
-
     }
 
     /**
      * 3. 쿠폰 UUID -> 단건 조회
-     * @param
-     * @return getCouponResVo
-     * @throws
+     *
+     * @param couponUuid 쿠폰 UUID
+     * @return {@link BaseResponseEntity} 쿠폰 단건조회 결과
      */
     @Operation(summary = "쿠폰 단건 조회", tags = {"Coupon"})
     @GetMapping("/{couponUuid}")
@@ -102,9 +79,10 @@ public class CouponController {
 
     /**
      * 4. 쿠폰 정보 변경
-     * @param updateCouponReqVo
-     * @return updateCouponResVo
-     * @throws
+     *
+     * @param couponUuid 쿠폰 UUID
+     * @param updateCouponReqVo 쿠폰 수정 데이터
+     * @return {@link BaseResponseEntity} 쿠폰 수정 결과
      */
     @Operation(summary = "쿠폰 정보 변경", tags = {"Coupon"})
     @PutMapping("/{couponUuid}")
@@ -121,9 +99,9 @@ public class CouponController {
 
     /**
      * 5. 쿠폰 삭제
-     * @param couponUuid
-     * @return
-     * @throws
+     *
+     * @param couponUuid 쿠폰 UUID
+     * @return {@link BaseResponseEntity} 쿠폰 삭제 결과
      */
     @Operation(summary = "쿠폰 삭제", tags = {"Coupon"})
     @DeleteMapping("/{couponUuid}")

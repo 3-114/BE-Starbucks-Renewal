@@ -12,52 +12,13 @@ import java.util.List;
 
 public interface CouponService {
 
-    /**
-     * api/v1/coupon
-     * 1. 쿠폰 생성
-     * 2. 쿠폰 전체 조회
-     * 3. 쿠폰 UUID -> 단건 조회
-     * 4. 쿠폰 정보 변경
-     * 5. 쿠폰 삭제
-     */
-
-    /**
-     * 1. 쿠폰 생성
-     * @param createCouponReqDto
-     * @return createCouponResDto
-     * @throws
-     */
     CreateCouponResDto saveCoupon(CreateCouponReqDto createCouponReqDto);
 
-    /**
-     * 2. 쿠폰 전체 조회
-     * @param
-     * @return List<GetAllCouponsResDto>
-     * @throws
-     */
     List<GetAllCouponsResDto> findAllCoupons();
 
-    /**
-     * 3. 쿠폰 UUID -> 단건 조회
-     * @param  couponUuid
-     * @return getCouponResDto
-     * @throws
-     */
     GetCouponResDto findCouponByUuid(String couponUuid);
 
-    /**
-     * 4. 쿠폰 정보 변경
-     * @param couponUuid, updateCouponReqDto
-     * @return updateCouponResDto
-     * @throws
-     */
     UpdateCouponResDto updateCoupon(String couponUuid, UpdateCouponReqDto updateCouponReqDto);
 
-    /**
-     * 5. 쿠폰 삭제
-     * @param couponUuid
-     * @return
-     * @throws
-     */
-    Void deleteCoupon(String couponUuid);
+    void deleteCoupon(String couponUuid);
 }
