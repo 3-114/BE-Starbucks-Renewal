@@ -1,6 +1,5 @@
 package com.team114.starbucks.domain.subcategory.entity;
 
-import com.team114.starbucks.domain.subcategory.dto.in.UpdateSubCategoryReqDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

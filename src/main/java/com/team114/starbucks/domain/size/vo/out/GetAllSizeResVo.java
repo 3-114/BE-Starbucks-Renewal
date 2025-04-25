@@ -2,9 +2,11 @@ package com.team114.starbucks.domain.size.vo.out;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class SizeResponseVo {
+@NoArgsConstructor
+public class GetAllSizeResVo {
 
     private Long sizeId;
     private String sizeName;
@@ -12,7 +14,7 @@ public class SizeResponseVo {
     private String sizeDescription;
 
     @Builder
-    public SizeResponseVo(
+    public GetAllSizeResVo(
             Long sizeId,
             String sizeName,
             String sizeCode,
@@ -23,4 +25,5 @@ public class SizeResponseVo {
         this.sizeCode = sizeCode;
         this.sizeDescription = sizeDescription;
     }
+
 }

@@ -1,12 +1,14 @@
 package com.team114.starbucks.domain.size.dto.out;
 
 import com.team114.starbucks.domain.size.entity.Size;
-import com.team114.starbucks.domain.size.vo.out.SizeResponseVo;
+import com.team114.starbucks.domain.size.vo.out.GetAllSizeResVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class SizeResponseDto {
+@NoArgsConstructor
+public class GetAllSizeResDto {
 
     private Long sizeId;
     private String sizeName;
@@ -14,7 +16,7 @@ public class SizeResponseDto {
     private String sizeDescription;
 
     @Builder
-    public SizeResponseDto(
+    public GetAllSizeResDto(
             Long sizeId,
             String sizeName,
             String sizeCode,
@@ -26,8 +28,8 @@ public class SizeResponseDto {
         this.sizeDescription = sizeDescription;
     }
 
-    public static SizeResponseDto from(Size size) {
-        return SizeResponseDto.builder()
+    public static GetAllSizeResDto from(Size size) {
+        return GetAllSizeResDto.builder()
                 .sizeId(size.getSizeId())
                 .sizeName(size.getSizeName())
                 .sizeCode(size.getSizeCode())
@@ -35,12 +37,13 @@ public class SizeResponseDto {
                 .build();
     }
 
-    public SizeResponseVo toVo() {
-        return SizeResponseVo.builder()
+    public GetAllSizeResVo toVo() {
+        return GetAllSizeResVo.builder()
                 .sizeId(sizeId)
                 .sizeName(sizeName)
                 .sizeCode(sizeCode)
                 .sizeDescription(sizeDescription)
                 .build();
     }
+
 }

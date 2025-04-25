@@ -24,4 +24,5 @@ public class UpdateSubCategoryReqDto {
                 .subCategoryName(updateSubCategoryReqVo.getSubCategoryName())
                 .build();
     }
+
 }

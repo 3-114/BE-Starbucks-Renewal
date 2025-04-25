@@ -6,14 +6,14 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class GetOneSubCategoryResVo {
+public class GetSubCategoryResVo {
 
     private String mainCategoryUuid;
     private String subCategoryUuid;
     private String subCategoryName;
 
     @Builder
-    public GetOneSubCategoryResVo(String mainCategoryUuid, String subCategoryUuid, String subCategoryName) {
+    public GetSubCategoryResVo(String mainCategoryUuid, String subCategoryUuid, String subCategoryName) {
         this.mainCategoryUuid = mainCategoryUuid;
         this.subCategoryUuid = subCategoryUuid;
         this.subCategoryName = subCategoryName;

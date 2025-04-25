@@ -1,20 +1,20 @@
 package com.team114.starbucks.domain.size.application;
 
-import com.team114.starbucks.domain.size.dto.in.SizeRequestDto;
-import com.team114.starbucks.domain.size.dto.out.SizeResponseDto;
+import com.team114.starbucks.domain.size.dto.in.GetAllSizeReqDto;
+import com.team114.starbucks.domain.size.dto.out.GetAllSizeResDto;
 
 import java.util.List;
 
 public interface SizeService {
 
-    SizeResponseDto saveSize(SizeRequestDto sizeRequestDto);
+    GetAllSizeResDto saveSize(GetAllSizeReqDto getAllSizeReqDto);
 
-    List<SizeResponseDto> findAllSizes();
+    List<GetAllSizeResDto> findAllSizes();
 
-    SizeResponseDto findBySizeId(Long sizeId);
+    GetAllSizeResDto findBySizeId(Long sizeId);
 
-    SizeResponseDto updateSize(Long sizeId, SizeRequestDto sizeRequestDto);
+    GetAllSizeResDto updateSize(Long sizeId, GetAllSizeReqDto getAllSizeReqDto);
 
-    Void deleteSize(Long sizeId);
+    void deleteSize(Long sizeId);
 
 }
