@@ -1,29 +1,29 @@
 package com.team114.starbucks.domain.maincategory.dto.out;
 
 import com.team114.starbucks.domain.maincategory.entity.MainCategory;
-import com.team114.starbucks.domain.maincategory.vo.out.GetOneMainCategoryResVo;
+import com.team114.starbucks.domain.maincategory.vo.out.GetMainCategoryResVo;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class GetOneMainCategoryResDto {
+public class GetMainCategoryResDto {
 
     private String mainCategoryName;
 
     @Builder
-    public GetOneMainCategoryResDto(String mainCategoryName) {
+    public GetMainCategoryResDto(String mainCategoryName) {
         this.mainCategoryName = mainCategoryName;
     }
 
-    public static GetOneMainCategoryResDto from(MainCategory mainCategory) {
-        return GetOneMainCategoryResDto.builder()
+    public static GetMainCategoryResDto from(MainCategory mainCategory) {
+        return GetMainCategoryResDto.builder()
                 .mainCategoryName(mainCategory.getMainCategoryName())
                 .build();
     }
 
 
-    public GetOneMainCategoryResVo toVo() {
-        return GetOneMainCategoryResVo.builder()
+    public GetMainCategoryResVo toVo() {
+        return GetMainCategoryResVo.builder()
                 .mainCategoryName(mainCategoryName)
                 .build();
     }

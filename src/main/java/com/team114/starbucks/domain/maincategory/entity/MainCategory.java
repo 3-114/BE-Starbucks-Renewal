@@ -34,4 +34,5 @@ public class MainCategory {
         this.mainCategoryName = mainCategoryName;
         this.mainCategoryImage = mainCategoryImage;
     }
+
 }

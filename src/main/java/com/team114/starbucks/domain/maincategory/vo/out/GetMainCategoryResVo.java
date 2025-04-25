@@ -2,14 +2,17 @@ package com.team114.starbucks.domain.maincategory.vo.out;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class GetOneMainCategoryResVo {
+@NoArgsConstructor
+public class GetMainCategoryResVo {
 
     private String mainCategoryName;
 
     @Builder
-    public GetOneMainCategoryResVo(String mainCategoryName) {
+    public GetMainCategoryResVo(String mainCategoryName) {
         this.mainCategoryName = mainCategoryName;
     }
+
 }

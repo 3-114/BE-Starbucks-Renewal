@@ -2,8 +2,10 @@ package com.team114.starbucks.domain.maincategory.vo.out;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class GetAllMainCategoryResVo {
 
     private String mainCategoryUuid;
@@ -14,4 +16,5 @@ public class GetAllMainCategoryResVo {
         this.mainCategoryUuid = mainCategoryUuid;
         this.mainCategoryName = mainCategoryName;
     }
+
 }

@@ -4,8 +4,10 @@ import com.team114.starbucks.domain.maincategory.entity.MainCategory;
 import com.team114.starbucks.domain.maincategory.vo.out.GetAllMainCategoryResVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class GetAllMainCategoryResDto {
 
     private String mainCategoryUuid;
