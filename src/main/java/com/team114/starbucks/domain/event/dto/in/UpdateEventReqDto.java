@@ -3,10 +3,12 @@ package com.team114.starbucks.domain.event.dto.in;
 import com.team114.starbucks.domain.event.vo.in.UpdateEventReqVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Getter
+@NoArgsConstructor
 public class UpdateEventReqDto {
 
     private String eventName;
@@ -26,6 +28,6 @@ public class UpdateEventReqDto {
                 .startDate(updateEventReqVo.getStartDate())
                 .endDate(updateEventReqVo.getEndDate())
                 .build();
-    }
 
+    }
 }

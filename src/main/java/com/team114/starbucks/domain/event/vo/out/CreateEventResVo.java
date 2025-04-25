@@ -2,8 +2,10 @@ package com.team114.starbucks.domain.event.vo.out;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class CreateEventResVo {
 
     private String eventName;
@@ -16,6 +18,7 @@ public class CreateEventResVo {
     }
 
     @Getter
+    @NoArgsConstructor
     public static class EventResponseVo {
         private String eventUuid;
         private String eventName;

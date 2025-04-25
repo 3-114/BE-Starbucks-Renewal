@@ -1,14 +1,17 @@
 package com.team114.starbucks.domain.event.dto.out;
 
 import com.team114.starbucks.domain.event.entity.Event;
-import com.team114.starbucks.domain.event.vo.out.GetOneEventResVo;
+import com.team114.starbucks.domain.event.vo.out.GetEventResVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Getter
-public class GetOneEventResDto {
+@NoArgsConstructor
+public class GetEventResDto {
+
     private String eventUuid;
     private String eventName;
     private LocalDate startDate;
@@ -16,7 +19,7 @@ public class GetOneEventResDto {
     private Boolean isActive;
 
     @Builder
-    public GetOneEventResDto(String eventUuid, String eventName, LocalDate startDate, LocalDate endDate, Boolean isActive) {
+    public GetEventResDto(String eventUuid, String eventName, LocalDate startDate, LocalDate endDate, Boolean isActive) {
         this.eventUuid = eventUuid;
         this.eventName = eventName;
         this.startDate = startDate;
@@ -24,9 +27,8 @@ public class GetOneEventResDto {
         this.isActive = isActive;
     }
 
-    public static GetOneEventResDto from(Event event) {
-
-        return GetOneEventResDto.builder()
+    public static GetEventResDto from(Event event) {
+        return GetEventResDto.builder()
                 .eventUuid(event.getEventUuid())
                 .eventName(event.getEventName())
                 .startDate(event.getStartDate())
@@ -35,15 +37,14 @@ public class GetOneEventResDto {
                 .build();
     }
 
-    public GetOneEventResVo toVo() {
-        return GetOneEventResVo.builder()
+    public GetEventResVo toVo() {
+        return GetEventResVo.builder()
                 .eventUuid(eventUuid)
                 .eventName(eventName)
                 .startDate(startDate)
                 .endDate(endDate)
                 .isActive(isActive)
                 .build();
-
 
     }
 }

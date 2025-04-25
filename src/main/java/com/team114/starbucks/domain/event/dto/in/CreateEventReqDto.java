@@ -4,10 +4,12 @@ import com.team114.starbucks.domain.event.entity.Event;
 import com.team114.starbucks.domain.event.vo.in.CreateEventReqVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Getter
+@NoArgsConstructor
 public class CreateEventReqDto {
 
     private String eventName;
@@ -26,7 +28,6 @@ public class CreateEventReqDto {
     public static CreateEventReqDto from(
             CreateEventReqVo createEventReqVo
     ) {
-
         return CreateEventReqDto.builder()
                 .eventName(createEventReqVo.getEventName())
                 .startDate(createEventReqVo.getStartDate())
@@ -36,7 +37,6 @@ public class CreateEventReqDto {
     }
 
     public Event toEntity(String eventUuid) {
-
         return Event.builder()
                 .eventName(eventName)
                 .eventUuid(eventUuid)

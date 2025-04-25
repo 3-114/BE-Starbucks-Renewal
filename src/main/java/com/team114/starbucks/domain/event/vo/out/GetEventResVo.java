@@ -2,11 +2,13 @@ package com.team114.starbucks.domain.event.vo.out;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Getter
-public class GetOneEventResVo {
+@NoArgsConstructor
+public class GetEventResVo {
 
     private String eventUuid;
     private String eventName;
@@ -15,7 +17,7 @@ public class GetOneEventResVo {
     private Boolean isActive;
 
     @Builder
-    public GetOneEventResVo(String eventUuid, String eventName, LocalDate startDate, LocalDate endDate, Boolean isActive) {
+    public GetEventResVo(String eventUuid, String eventName, LocalDate startDate, LocalDate endDate, Boolean isActive) {
         this.eventUuid = eventUuid;
         this.eventName = eventName;
         this.startDate = startDate;
