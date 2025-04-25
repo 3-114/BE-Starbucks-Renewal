@@ -1,12 +1,12 @@
 package com.team114.starbucks.domain.delivery.dto.out;
 
 import com.team114.starbucks.domain.delivery.entity.Delivery;
-import com.team114.starbucks.domain.delivery.vo.out.DeliverySelectedResponseVo;
+import com.team114.starbucks.domain.delivery.vo.out.GetSelectedDeliveryResVo;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class DeliverySelectedResponseDto {
+public class GetDeliverySelectedReDto {
 
     private final String deliveryUuid;
     private final String alias;
@@ -21,7 +21,7 @@ public class DeliverySelectedResponseDto {
     private final boolean isSelected;
 
     @Builder
-    public DeliverySelectedResponseDto(
+    public GetDeliverySelectedReDto(
             String deliveryUuid,
             String alias,
             String recipient,
@@ -47,8 +47,8 @@ public class DeliverySelectedResponseDto {
         this.isSelected = isSelected;
     }
 
-    public static DeliverySelectedResponseDto from(Delivery delivery) {
-        return DeliverySelectedResponseDto.builder()
+    public static GetDeliverySelectedReDto from(Delivery delivery) {
+        return GetDeliverySelectedReDto.builder()
                 .deliveryUuid(delivery.getDeliveryUuid())
                 .alias(delivery.getAlias())
                 .recipient(delivery.getRecipient())
@@ -63,8 +63,8 @@ public class DeliverySelectedResponseDto {
                 .build();
     }
 
-    public DeliverySelectedResponseVo toVo() {
-        return DeliverySelectedResponseVo.builder()
+    public GetSelectedDeliveryResVo toVo() {
+        return GetSelectedDeliveryResVo.builder()
                 .deliveryUuid(deliveryUuid)
                 .alias(alias)
                 .recipient(recipient)

@@ -2,14 +2,14 @@ package com.team114.starbucks.domain.delivery.application;
 
 import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
-import com.team114.starbucks.domain.delivery.dto.in.CartDeliveryRequestDto;
-import com.team114.starbucks.domain.delivery.dto.in.DeliveryCreateRequestDto;
-import com.team114.starbucks.domain.delivery.dto.in.DeliverySelectedRequestDto;
-import com.team114.starbucks.domain.delivery.dto.in.DeliveryUpdateRequestDto;
-import com.team114.starbucks.domain.delivery.dto.out.DeliveryResponseDto;
-import com.team114.starbucks.domain.delivery.dto.out.DeliverySelectedResponseDto;
-import com.team114.starbucks.domain.delivery.dto.out.GetDeliveryUuidResponseDto;
-import com.team114.starbucks.domain.delivery.dto.out.GetCartDeliveryResponseDto;
+import com.team114.starbucks.domain.delivery.dto.in.GetCartDeliveryReDto;
+import com.team114.starbucks.domain.delivery.dto.in.CreateDeliveryReqDto;
+import com.team114.starbucks.domain.delivery.dto.in.GetSelectedDeliveryReqDto;
+import com.team114.starbucks.domain.delivery.dto.in.UpdateDeliveryReqDto;
+import com.team114.starbucks.domain.delivery.dto.out.GetAllDeliveryResDto;
+import com.team114.starbucks.domain.delivery.dto.out.GetDeliverySelectedReDto;
+import com.team114.starbucks.domain.delivery.dto.out.GetDeliveryUuidResDto;
+import com.team114.starbucks.domain.delivery.dto.out.GetCartDeliveryResDto;
 import com.team114.starbucks.domain.delivery.entity.Delivery;
 import com.team114.starbucks.domain.delivery.infrastructure.DeliveryRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +28,10 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Override
     @Transactional
-    public DeliveryResponseDto saveDelivery(DeliveryCreateRequestDto deliveryCreateRequestDto) {
+    public GetAllDeliveryResDto saveDelivery(CreateDeliveryReqDto createDeliveryReqDto) {
 
-        String memberUuid = deliveryCreateRequestDto.getMemberUuid();
-        boolean wantsDefault = deliveryCreateRequestDto.isDefaultAddress();
+        String memberUuid = createDeliveryReqDto.getMemberUuid();
+        boolean wantsDefault = createDeliveryReqDto.isDefaultAddress();
 
         List<Delivery> existingDeliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
         boolean hasNoDelivery = existingDeliveries.isEmpty();
@@ -54,50 +54,36 @@ public class DeliveryServiceImpl implements DeliveryService {
             });
         }
 
-        // 새 배송지 저장
-        Delivery newDelivery = deliveryCreateRequestDto.toEntity(UUID.randomUUID().toString(), isDefault);
+        Delivery newDelivery = createDeliveryReqDto.toEntity(UUID.randomUUID().toString(), isDefault);
         Delivery savedDelivery = deliveryRepository.save(newDelivery);
 
-        return DeliveryResponseDto.from(savedDelivery);
+        return GetAllDeliveryResDto.from(savedDelivery);
     }
 
-//    // 장바구니에서 Deliveryuuid 목록 전체 조회
-//    @Override
-//    public List<GetCartDeliveryResponseDto> getCartDeliveriesByMemberUuid(String memberUuid) {
-//        List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
-//        return deliveries.stream()
-//                .sorted((d1, d2) -> Boolean.compare(!d1.isDefaultAddress(), !d2.isDefaultAddress()))
-//                .map(GetCartDeliveryResponseDto::from).toList();
-//    }
 
-
-    // 마이페이지에서 배송지 목록 전체 조회
     @Override
-    public List<DeliveryResponseDto> getDeliveriesByMemberUuid(String memberUuid) {
+    public List<GetAllDeliveryResDto> getDeliveriesByMemberUuid(String memberUuid) {
         List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
         return deliveries.stream()
                 .sorted((d1, d2) -> Boolean.compare(!d1.isDefaultAddress(), !d2.isDefaultAddress()))
-                .map(DeliveryResponseDto::from).toList();
+                .map(GetAllDeliveryResDto::from).toList();
     }
 
-    // 장바구니에서 DeliveryUuid 리스트 조회
     @Override
-    public List<GetDeliveryUuidResponseDto> getDeliveryUuidsByMemberUuid(String memberUuid) {
-
+    public List<GetDeliveryUuidResDto> getDeliveryUuidsByMemberUuid(String memberUuid) {
         List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
         return deliveries.stream()
                 .sorted((d1, d2) -> Boolean.compare(!d1.isDefaultAddress(), !d2.isDefaultAddress()))
-                .map(GetDeliveryUuidResponseDto::from).toList();
+                .map(GetDeliveryUuidResDto::from).toList();
     }
 
     @Override
     @Transactional
-    public DeliverySelectedResponseDto updateSelectedDelivery(DeliverySelectedRequestDto dto) {
-        String memberUuid = dto.getMemberUuid();
+    public GetDeliverySelectedReDto updateSelectedDelivery(GetSelectedDeliveryReqDto dto) {
         String selectedDeliveryUuid = dto.getDeliveryUuid();
 
         // 1. 해당 회원의 모든 배송지 isSelected → false
-        List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(memberUuid);
+        List<Delivery> deliveries = deliveryRepository.findAllByMemberUuid(dto.getMemberUuid());
         for (Delivery delivery : deliveries) {
             if (delivery.isSelected()) {
                 delivery.updateIsSelected(false);
@@ -111,46 +97,41 @@ public class DeliveryServiceImpl implements DeliveryService {
 
         selectedDelivery.updateIsSelected(true);
 
-        return DeliverySelectedResponseDto.from(deliveryRepository.save(selectedDelivery));
+        return GetDeliverySelectedReDto.from(deliveryRepository.save(selectedDelivery));
     }
 
     @Override
-    public GetCartDeliveryResponseDto getCartDeliveryByUuid(CartDeliveryRequestDto cartDeliveryRequestDto) {
+    public GetCartDeliveryResDto getCartDeliveryByUuid(GetCartDeliveryReDto getCartDeliveryReDto) {
         Delivery delivery = deliveryRepository
-                .findByMemberUuidAndDeliveryUuid(cartDeliveryRequestDto.getMemberUuid(), cartDeliveryRequestDto.getDeliveryUuid())
+                .findByMemberUuidAndDeliveryUuid(getCartDeliveryReDto.getMemberUuid(), getCartDeliveryReDto.getDeliveryUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
 
-        return GetCartDeliveryResponseDto.from(delivery);
+        return GetCartDeliveryResDto.from(delivery);
     }
 
-    // 주문용 배송지 단건 조회
     @Override
-    public DeliverySelectedResponseDto getSelectedDeliveryByMemberUuid(String memberUuid) {
+    public GetDeliverySelectedReDto getSelectedDeliveryByMemberUuid(String memberUuid) {
         Delivery selectedDelivery = deliveryRepository
                 .findByMemberUuidAndIsSelectedTrue(memberUuid)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
 
-        return DeliverySelectedResponseDto.from(selectedDelivery);
+        return GetDeliverySelectedReDto.from(selectedDelivery);
     }
 
 
-    // 배송지 수정
     @Override
     @Transactional
-    public void updateDelivery(DeliveryUpdateRequestDto deliveryUpdateRequestDto) {
-
-        Delivery delivery = deliveryRepository.findByDeliveryUuid(deliveryUpdateRequestDto.getDeliveryUuid()).orElseThrow(
+    public void updateDelivery(UpdateDeliveryReqDto updateDeliveryReqDto) {
+        Delivery delivery = deliveryRepository.findByDeliveryUuid(updateDeliveryReqDto.getDeliveryUuid()).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );
 
-        deliveryRepository.save(deliveryUpdateRequestDto.toEntity(delivery));
+        deliveryRepository.save(updateDeliveryReqDto.toEntity(delivery));
     }
 
-    // 배송지 삭제
     @Override
     @Transactional
     public void deleteDelivery(String deliveryUuid) {
-
         Delivery delivery = deliveryRepository.findByDeliveryUuid(deliveryUuid).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );

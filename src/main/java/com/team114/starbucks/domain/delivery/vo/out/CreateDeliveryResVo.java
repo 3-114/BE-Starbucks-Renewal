@@ -1,11 +1,12 @@
 package com.team114.starbucks.domain.delivery.vo.out;
 
-import com.team114.starbucks.domain.delivery.dto.out.DeliveryResponseDto;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class DeliveryResponseVo {
+@NoArgsConstructor
+public class CreateDeliveryResVo {
 
     private String deliveryUuid;
     private String memberUuid;
@@ -20,7 +21,7 @@ public class DeliveryResponseVo {
     private boolean defaultAddress;
 
     @Builder
-    public DeliveryResponseVo(
+    public CreateDeliveryResVo(
             String deliveryUuid,
             String memberUuid,
             String alias,

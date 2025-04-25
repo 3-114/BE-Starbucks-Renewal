@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class DeliveryCreateRequestVo {
+public class CreateDeliveryReqVo {
 
     private String alias;
     private String recipient;

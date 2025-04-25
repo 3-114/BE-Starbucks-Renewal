@@ -1,14 +1,12 @@
 package com.team114.starbucks.domain.delivery.dto.out;
 
-import com.team114.starbucks.domain.delivery.dto.in.DeliverySelectedRequestDto;
 import com.team114.starbucks.domain.delivery.entity.Delivery;
-import com.team114.starbucks.domain.delivery.vo.in.DeliverySelectedRequestVo;
-import com.team114.starbucks.domain.delivery.vo.out.GetCartDeliveryResponseVo;
+import com.team114.starbucks.domain.delivery.vo.out.GetCartDeliveryResVo;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class GetCartDeliveryResponseDto {
+public class GetCartDeliveryResDto {
 
     private final String deliveryUuid;
     private final String alias;
@@ -20,7 +18,7 @@ public class GetCartDeliveryResponseDto {
     private final boolean isSelected;
 
     @Builder
-    public GetCartDeliveryResponseDto(
+    public GetCartDeliveryResDto(
             String deliveryUuid,
             String alias,
             String recipient,
@@ -40,8 +38,8 @@ public class GetCartDeliveryResponseDto {
         this.isSelected = isSelected;
     }
 
-    public static GetCartDeliveryResponseDto from(Delivery delivery) {
-        return GetCartDeliveryResponseDto.builder()
+    public static GetCartDeliveryResDto from(Delivery delivery) {
+        return GetCartDeliveryResDto.builder()
                 .deliveryUuid(delivery.getDeliveryUuid())
                 .alias(delivery.getAlias())
                 .recipient(delivery.getRecipient())
@@ -53,8 +51,8 @@ public class GetCartDeliveryResponseDto {
                 .build();
     }
 
-    public GetCartDeliveryResponseVo toVo() {
-        return GetCartDeliveryResponseVo.builder()
+    public GetCartDeliveryResVo toVo() {
+        return GetCartDeliveryResVo.builder()
                 .deliveryUuid(deliveryUuid)
                 .alias(alias)
                 .recipient(recipient)

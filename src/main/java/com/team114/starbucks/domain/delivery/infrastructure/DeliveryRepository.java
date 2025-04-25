@@ -9,7 +9,6 @@ import java.util.Optional;
 
 public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
 
-    // 특정 회원의 배송지 전체 조회
     List<Delivery> findAllByMemberUuid(String memberUuid);
 
     Optional<Delivery> findByDeliveryUuid(String deliveryUuid);
@@ -21,4 +20,5 @@ public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
     Optional<Delivery> findByMemberUuidAndIsSelectedTrue(String memberUuid);
 
     Optional<Delivery> findByMemberUuidAndDeliveryUuid(String memberUuid, String deliveryUuid);
+
 }

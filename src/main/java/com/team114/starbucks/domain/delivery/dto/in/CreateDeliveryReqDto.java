@@ -1,14 +1,14 @@
 package com.team114.starbucks.domain.delivery.dto.in;
 
 import com.team114.starbucks.domain.delivery.entity.Delivery;
-import com.team114.starbucks.domain.delivery.vo.in.DeliveryCreateRequestVo;
+import com.team114.starbucks.domain.delivery.vo.in.CreateDeliveryReqVo;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.util.UUID;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class DeliveryCreateRequestDto {
+@NoArgsConstructor
+public class CreateDeliveryReqDto {
 
     private String memberUuid;
     private String alias;
@@ -22,7 +22,7 @@ public class DeliveryCreateRequestDto {
     private boolean defaultAddress;
 
     @Builder
-    public DeliveryCreateRequestDto(
+    public CreateDeliveryReqDto(
             String memberUuid,
             String alias,
             String recipient,
@@ -46,21 +46,21 @@ public class DeliveryCreateRequestDto {
         this.defaultAddress = defaultAddress;
     }
 
-    public static DeliveryCreateRequestDto from(
-            DeliveryCreateRequestVo deliveryCreateRequestVo,
+    public static CreateDeliveryReqDto from(
+            CreateDeliveryReqVo createDeliveryReqVo,
             String memberUuid
     ) {
-        return DeliveryCreateRequestDto.builder()
+        return CreateDeliveryReqDto.builder()
                 .memberUuid(memberUuid)
-                .alias(deliveryCreateRequestVo.getAlias())
-                .recipient(deliveryCreateRequestVo.getRecipient())
-                .zoneCode(deliveryCreateRequestVo.getZoneCode())
-                .mainAddress(deliveryCreateRequestVo.getMainAddress())
-                .detailAddress(deliveryCreateRequestVo.getDetailAddress())
-                .phoneNumber1(deliveryCreateRequestVo.getPhoneNumber1())
-                .phoneNumber2(deliveryCreateRequestVo.getPhoneNumber2())
-                .deliveryMemo(deliveryCreateRequestVo.getDeliveryMemo())
-                .defaultAddress(deliveryCreateRequestVo.isDefaultAddress())
+                .alias(createDeliveryReqVo.getAlias())
+                .recipient(createDeliveryReqVo.getRecipient())
+                .zoneCode(createDeliveryReqVo.getZoneCode())
+                .mainAddress(createDeliveryReqVo.getMainAddress())
+                .detailAddress(createDeliveryReqVo.getDetailAddress())
+                .phoneNumber1(createDeliveryReqVo.getPhoneNumber1())
+                .phoneNumber2(createDeliveryReqVo.getPhoneNumber2())
+                .deliveryMemo(createDeliveryReqVo.getDeliveryMemo())
+                .defaultAddress(createDeliveryReqVo.isDefaultAddress())
                 .build();
     }
 

@@ -1,12 +1,14 @@
 package com.team114.starbucks.domain.delivery.dto.in;
 
 import com.team114.starbucks.domain.delivery.entity.Delivery;
-import com.team114.starbucks.domain.delivery.vo.in.DeliveryUpdateRequestVo;
+import com.team114.starbucks.domain.delivery.vo.in.UpdateDeliveryReqVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class DeliveryUpdateRequestDto {
+@NoArgsConstructor
+public class UpdateDeliveryReqDto {
 
     private String deliveryUuid;
     private String memberUuid;
@@ -21,7 +23,7 @@ public class DeliveryUpdateRequestDto {
     private boolean defaultAddress;
 
     @Builder
-    public DeliveryUpdateRequestDto(
+    public UpdateDeliveryReqDto(
             String deliveryUuid,
             String memberUuid,
             String alias,
@@ -47,21 +49,21 @@ public class DeliveryUpdateRequestDto {
         this.defaultAddress = defaultAddress;
     }
 
-    public static DeliveryUpdateRequestDto from(
-            DeliveryUpdateRequestVo deliveryUpdateRequestVo, String memberUuid, String deliveryUuid
+    public static UpdateDeliveryReqDto from(
+            UpdateDeliveryReqVo updateDeliveryReqVo, String memberUuid, String deliveryUuid
     ) {
-        return DeliveryUpdateRequestDto.builder()
+        return UpdateDeliveryReqDto.builder()
                 .deliveryUuid(deliveryUuid)
                 .memberUuid(memberUuid)
-                .alias(deliveryUpdateRequestVo.getAlias())
-                .recipient(deliveryUpdateRequestVo.getRecipient())
-                .zoneCode(deliveryUpdateRequestVo.getZoneCode())
-                .mainAddress(deliveryUpdateRequestVo.getMainAddress())
-                .detailAddress(deliveryUpdateRequestVo.getDetailAddress())
-                .phoneNumber1(deliveryUpdateRequestVo.getPhoneNumber1())
-                .phoneNumber2(deliveryUpdateRequestVo.getPhoneNumber2())
-                .deliveryMemo(deliveryUpdateRequestVo.getDeliveryMemo())
-                .defaultAddress(deliveryUpdateRequestVo.isDefaultAddress())
+                .alias(updateDeliveryReqVo.getAlias())
+                .recipient(updateDeliveryReqVo.getRecipient())
+                .zoneCode(updateDeliveryReqVo.getZoneCode())
+                .mainAddress(updateDeliveryReqVo.getMainAddress())
+                .detailAddress(updateDeliveryReqVo.getDetailAddress())
+                .phoneNumber1(updateDeliveryReqVo.getPhoneNumber1())
+                .phoneNumber2(updateDeliveryReqVo.getPhoneNumber2())
+                .deliveryMemo(updateDeliveryReqVo.getDeliveryMemo())
+                .defaultAddress(updateDeliveryReqVo.isDefaultAddress())
                 .build();
     }
 

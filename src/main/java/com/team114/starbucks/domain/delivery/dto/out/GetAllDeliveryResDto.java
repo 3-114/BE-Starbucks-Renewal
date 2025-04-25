@@ -1,12 +1,14 @@
 package com.team114.starbucks.domain.delivery.dto.out;
 
 import com.team114.starbucks.domain.delivery.entity.Delivery;
-import com.team114.starbucks.domain.delivery.vo.out.DeliveryResponseVo;
+import com.team114.starbucks.domain.delivery.vo.out.CreateDeliveryResVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class DeliveryResponseDto {
+@NoArgsConstructor
+public class GetAllDeliveryResDto {
 
     private String deliveryUuid;
     private String memberUuid;
@@ -21,7 +23,7 @@ public class DeliveryResponseDto {
     private boolean defaultAddress;
 
     @Builder
-    public DeliveryResponseDto(
+    public GetAllDeliveryResDto(
             String deliveryUuid,
             String memberUuid,
             String alias,
@@ -48,8 +50,8 @@ public class DeliveryResponseDto {
     }
 
     // Entity → DTO 변환 메서드
-    public static DeliveryResponseDto from(Delivery delivery) {
-        return DeliveryResponseDto.builder()
+    public static GetAllDeliveryResDto from(Delivery delivery) {
+        return GetAllDeliveryResDto.builder()
                 .deliveryUuid(delivery.getDeliveryUuid())
                 .memberUuid(delivery.getMemberUuid())
                 .alias(delivery.getAlias())
@@ -65,8 +67,8 @@ public class DeliveryResponseDto {
     }
 
     // DeliveryResponseDto.java
-    public DeliveryResponseVo toVo() {
-        return DeliveryResponseVo.builder()
+    public CreateDeliveryResVo toVo() {
+        return CreateDeliveryResVo.builder()
                 .deliveryUuid(this.deliveryUuid)
                 .memberUuid(this.memberUuid)
                 .alias(this.alias)

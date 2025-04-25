@@ -7,6 +7,8 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class GetDeliveryUuidResponseVo {
+public class GetAllDeliveryUuidResVo {
+
     private String deliveryUuid;
+
 }

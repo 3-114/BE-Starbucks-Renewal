@@ -1,33 +1,32 @@
 package com.team114.starbucks.domain.delivery.application;
 
-import com.team114.starbucks.domain.delivery.dto.in.CartDeliveryRequestDto;
-import com.team114.starbucks.domain.delivery.dto.in.DeliveryCreateRequestDto;
-import com.team114.starbucks.domain.delivery.dto.in.DeliverySelectedRequestDto;
-import com.team114.starbucks.domain.delivery.dto.in.DeliveryUpdateRequestDto;
-import com.team114.starbucks.domain.delivery.dto.out.DeliveryResponseDto;
-import com.team114.starbucks.domain.delivery.dto.out.DeliverySelectedResponseDto;
-import com.team114.starbucks.domain.delivery.dto.out.GetDeliveryUuidResponseDto;
-import com.team114.starbucks.domain.delivery.dto.out.GetCartDeliveryResponseDto;
+import com.team114.starbucks.domain.delivery.dto.in.GetCartDeliveryReDto;
+import com.team114.starbucks.domain.delivery.dto.in.CreateDeliveryReqDto;
+import com.team114.starbucks.domain.delivery.dto.in.GetSelectedDeliveryReqDto;
+import com.team114.starbucks.domain.delivery.dto.in.UpdateDeliveryReqDto;
+import com.team114.starbucks.domain.delivery.dto.out.GetAllDeliveryResDto;
+import com.team114.starbucks.domain.delivery.dto.out.GetDeliverySelectedReDto;
+import com.team114.starbucks.domain.delivery.dto.out.GetDeliveryUuidResDto;
+import com.team114.starbucks.domain.delivery.dto.out.GetCartDeliveryResDto;
 
 import java.util.List;
 
 public interface DeliveryService {
 
-    DeliveryResponseDto saveDelivery(DeliveryCreateRequestDto deliveryCreateRequestDto);
+    GetAllDeliveryResDto saveDelivery(CreateDeliveryReqDto createDeliveryReqDto);
 
-//    List<GetCartDeliveryResponseDto> getCartDeliveriesByMemberUuid(String memberUuid);
+    List<GetAllDeliveryResDto> getDeliveriesByMemberUuid(String memberUuid);
 
-    List<DeliveryResponseDto> getDeliveriesByMemberUuid(String memberUuid);
+    List<GetDeliveryUuidResDto> getDeliveryUuidsByMemberUuid(String memberUuid);
 
-    List<GetDeliveryUuidResponseDto> getDeliveryUuidsByMemberUuid(String memberUuid);
+    GetDeliverySelectedReDto updateSelectedDelivery(GetSelectedDeliveryReqDto getSelectedDeliveryReqDto);
 
-    DeliverySelectedResponseDto updateSelectedDelivery(DeliverySelectedRequestDto deliverySelectedRequestDto);
+    GetDeliverySelectedReDto getSelectedDeliveryByMemberUuid(String memberUuid);
 
-    DeliverySelectedResponseDto getSelectedDeliveryByMemberUuid(String memberUuid);
+    void updateDelivery(UpdateDeliveryReqDto updateDeliveryReqDto);
 
-    void updateDelivery(DeliveryUpdateRequestDto deliveryUpdateRequestDto);
-
-    GetCartDeliveryResponseDto getCartDeliveryByUuid(CartDeliveryRequestDto cartDeliveryRequestDto);
+    GetCartDeliveryResDto getCartDeliveryByUuid(GetCartDeliveryReDto getCartDeliveryReDto);
 
     void deleteDelivery(String deliveryUuid);
+
 }

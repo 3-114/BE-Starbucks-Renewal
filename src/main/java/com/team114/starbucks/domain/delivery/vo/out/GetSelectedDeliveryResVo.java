@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class DeliverySelectedResponseVo {
+public class GetSelectedDeliveryResVo {
 
     private final String deliveryUuid;
     private final String alias;
@@ -19,7 +19,7 @@ public class DeliverySelectedResponseVo {
     private final boolean isSelected;
 
     @Builder
-    public DeliverySelectedResponseVo(
+    public GetSelectedDeliveryResVo(
             String deliveryUuid,
             String alias,
             String recipient,

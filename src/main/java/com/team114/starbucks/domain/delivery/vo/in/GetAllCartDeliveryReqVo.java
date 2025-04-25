@@ -3,7 +3,7 @@ package com.team114.starbucks.domain.delivery.vo.in;
 import lombok.Getter;
 
 @Getter
-public class DeliverySelectedRequestVo {
+public class GetAllCartDeliveryReqVo {
 
     private String deliveryUuid;
 
