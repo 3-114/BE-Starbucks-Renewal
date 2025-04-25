@@ -6,14 +6,15 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class GetEventUrlAndIndexResVo {
+public class GetAllEventUrlAndIndexResVo {
 
     private String eventUrl;
     private int eventUrlIndex;
 
     @Builder
-    public GetEventUrlAndIndexResVo(String eventUrl, int eventUrlIndex) {
+    public GetAllEventUrlAndIndexResVo(String eventUrl, int eventUrlIndex) {
         this.eventUrl = eventUrl;
         this.eventUrlIndex = eventUrlIndex;
     }
+
 }

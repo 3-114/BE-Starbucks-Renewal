@@ -19,7 +19,6 @@ public class CreateEventImageReqDto {
         this.eventUrl = eventUrl;
     }
 
-
     public static CreateEventImageReqDto from(CreateEventImageReqVo createEventImageReqVo) {
         return CreateEventImageReqDto.builder()
                 .eventUuid(createEventImageReqVo.getEventUuid())
@@ -27,13 +26,12 @@ public class CreateEventImageReqDto {
                 .build();
     }
 
-
     public EventImage toEntity(int maxIndex) {
         return EventImage.builder()
                 .eventUuid(eventUuid)
                 .eventUrl(eventUrl)
                 .eventUrlIndex(maxIndex + 1)
                 .build();
-    }
 
+    }
 }
