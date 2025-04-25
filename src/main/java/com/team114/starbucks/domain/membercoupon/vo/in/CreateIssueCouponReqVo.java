@@ -2,9 +2,11 @@ package com.team114.starbucks.domain.membercoupon.vo.in;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class IssueCouponReqVo {
+@NoArgsConstructor
+public class CreateIssueCouponReqVo {
 
     /**
      * [ Validation ]
@@ -22,7 +24,8 @@ public class IssueCouponReqVo {
     private String couponUuid;
 
     @Builder
-    public IssueCouponReqVo(String couponUuid) {
+    public CreateIssueCouponReqVo(String couponUuid) {
         this.couponUuid = couponUuid;
     }
+
 }

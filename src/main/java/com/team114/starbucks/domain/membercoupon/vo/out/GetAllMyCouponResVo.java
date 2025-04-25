@@ -4,11 +4,13 @@ import com.team114.starbucks.domain.coupon.enums.DiscountType;
 import com.team114.starbucks.domain.membercoupon.enums.CouponStatus;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
-public class MyCouponResVo {
+@NoArgsConstructor
+public class GetAllMyCouponResVo {
 
     private String couponUuid;
     private String couponName;
@@ -22,7 +24,7 @@ public class MyCouponResVo {
     private LocalDateTime expiredAt;
 
     @Builder
-    public MyCouponResVo(
+    public GetAllMyCouponResVo(
             String couponUuid,
             String couponName,
             DiscountType discountType,
@@ -45,4 +47,5 @@ public class MyCouponResVo {
         this.issuedAt = issuedAt;
         this.expiredAt = expiredAt;
     }
+
 }
