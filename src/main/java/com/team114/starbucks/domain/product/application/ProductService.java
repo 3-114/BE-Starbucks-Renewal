@@ -1,29 +1,25 @@
 package com.team114.starbucks.domain.product.application;
 
-import com.team114.starbucks.domain.product.dto.in.CreateProductRequestDto;
-import com.team114.starbucks.domain.product.dto.in.UpdateProductRequestDto;
+import com.team114.starbucks.domain.product.dto.in.CreateProductReqDto;
+import com.team114.starbucks.domain.product.dto.in.UpdateProductReqDto;
 import com.team114.starbucks.domain.product.dto.out.*;
 
 import java.util.List;
 
 public interface ProductService {
 
-    GetProductByIdResponseDto findProductByUuid(String productUuid);
+    GetProductByIdResDto findProductByUuid(String productUuid);
 
-    List<GetProductResponseDto> findAllProducts();
+    List<GetProductResDto> findAllProducts();
 
-    CreateProductResponseDto saveProduct(CreateProductRequestDto createProductRequestDto);
+    CreateProductResDto saveProduct(CreateProductReqDto createProductReqDto);
 
-    void updateProduct(UpdateProductRequestDto updateProductRequestDto);
+    void updateProduct(UpdateProductReqDto updateProductReqDto);
 
-    Void deleteProduct(String productUuid);
+    void deleteProduct(String productUuid);
 
-    GetProductPreviewResponseDto getProductPreview(String productUuid);
+    GetProductPreviewResDto getProductPreview(String productUuid);
 
     Boolean checkProductExist(String productUuid);
-
-
-
-
 
 }

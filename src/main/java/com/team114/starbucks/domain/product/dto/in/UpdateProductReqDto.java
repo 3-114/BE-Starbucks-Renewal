@@ -1,11 +1,9 @@
 package com.team114.starbucks.domain.product.dto.in;
 
-import com.team114.starbucks.domain.product.dto.out.UpdateProductResponseDto;
 import com.team114.starbucks.domain.product.entity.Product;
-import com.team114.starbucks.domain.product.entity.ProductDescription;
 import com.team114.starbucks.domain.product.enums.ProductStatus;
-import com.team114.starbucks.domain.product.vo.in.UpdateProductRequestVo;
-import com.team114.starbucks.domain.product.vo.in.UpdateProductThumbnailRequestVo;
+import com.team114.starbucks.domain.product.vo.in.UpdateProductReqVo;
+import com.team114.starbucks.domain.product.vo.in.UpdateProductThumbnailReqVo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +13,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class UpdateProductRequestDto {
+public class UpdateProductReqDto {
 
     private String productUuid;
     private String productName;
@@ -24,13 +22,12 @@ public class UpdateProductRequestDto {
     private Integer shippingFee;
     private ProductStatus productStatus;
 
-    private List<UpdateProductThumbnailRequestDto> productThumbnailList;
-
+    private List<UpdateProductThumbnailReqDto> productThumbnailList;
 
     @Builder
-    public UpdateProductRequestDto(
+    public UpdateProductReqDto(
             String productUuid, String productName, String brand, Integer productPrice, Integer shippingFee, ProductStatus productStatus,
-            List<UpdateProductThumbnailRequestDto> productThumbnailList) {
+            List<UpdateProductThumbnailReqDto> productThumbnailList) {
         this.productUuid = productUuid;
         this.productName = productName;
         this.brand = brand;
@@ -40,20 +37,14 @@ public class UpdateProductRequestDto {
         this.productThumbnailList = productThumbnailList;
     }
 
+    public static UpdateProductReqDto from(UpdateProductReqVo vo) {
+        List<UpdateProductThumbnailReqDto> thumbnailList = new ArrayList<>();
 
-    // vo -> dto 변환
-    public static UpdateProductRequestDto from(
-            UpdateProductRequestVo vo
-    ) {
-
-        List<UpdateProductThumbnailRequestDto> thumbnailList = new ArrayList<>();
-
-        for (UpdateProductThumbnailRequestVo thumbnail : vo.getProductThumbnailList()) {
-            thumbnailList.add(UpdateProductThumbnailRequestDto.from(thumbnail));
+        for (UpdateProductThumbnailReqVo thumbnail : vo.getProductThumbnailList()) {
+            thumbnailList.add(UpdateProductThumbnailReqDto.from(thumbnail));
         }
 
-
-        return UpdateProductRequestDto.builder()
+        return UpdateProductReqDto.builder()
                 .productUuid(vo.getProductUuid())
                 .productName(vo.getProductName())
                 .brand(vo.getBrand())
@@ -64,9 +55,7 @@ public class UpdateProductRequestDto {
                 .build();
     }
 
-    public Product updateProduct(
-            Product product
-    ) {
+    public Product updateProduct(Product product) {
         return Product.builder()
                 .id(product.getId())
                 .productUuid(product.getProductUuid())
@@ -77,7 +66,5 @@ public class UpdateProductRequestDto {
                 .productStatus(this.productStatus)
                 .build();
     }
-
-
 
 }

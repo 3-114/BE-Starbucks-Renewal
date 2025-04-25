@@ -1,14 +1,15 @@
 package com.team114.starbucks.domain.product.vo.in;
 
-
 import com.team114.starbucks.domain.product.enums.ProductStatus;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
-public class CreateProductRequestVo {
+@NoArgsConstructor
+public class CreateProductReqVo {
 
     private String productName;
     private String brand;
@@ -17,17 +18,17 @@ public class CreateProductRequestVo {
     private Integer shippingFee;
     private ProductStatus productStatus;
 
-    private List<CreateProductThumbnailRequestVo> productThumbnailList;
+    private List<CreateProductThumbnailReqVo> productThumbnailList;
 
     @Builder
-    public CreateProductRequestVo(
+    public CreateProductReqVo(
             String brand,
             String productName,
             Integer productPrice,
             String productDescription,
             ProductStatus productStatus,
             Integer shippingFee,
-            List<CreateProductThumbnailRequestVo> productThumbnailList
+            List<CreateProductThumbnailReqVo> productThumbnailList
     ) {
         this.brand = brand;
         this.productName = productName;

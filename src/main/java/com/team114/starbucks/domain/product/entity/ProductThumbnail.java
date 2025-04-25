@@ -35,10 +35,9 @@ public class ProductThumbnail extends BaseEntity {
 
     // 이미지 업로드 시간
     private LocalDateTime updatedAt;
+
     // 등록자 정보
     private String uploadedBy;
-
-
 
     @Builder
     public ProductThumbnail(
@@ -60,11 +59,5 @@ public class ProductThumbnail extends BaseEntity {
         this.uploadedBy = uploadedBy;
         this.productUuid = productUuid;
     }
-
-
-
-
-
-
 
 }

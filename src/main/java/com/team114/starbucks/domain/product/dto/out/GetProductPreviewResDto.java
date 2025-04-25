@@ -3,14 +3,14 @@ package com.team114.starbucks.domain.product.dto.out;
 
 import com.team114.starbucks.domain.product.entity.Product;
 import com.team114.starbucks.domain.product.entity.ProductThumbnail;
-import com.team114.starbucks.domain.product.vo.out.GetProductPreviewResponseVo;
+import com.team114.starbucks.domain.product.vo.out.GetProductPreviewResVo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class GetProductPreviewResponseDto {
+public class GetProductPreviewResDto {
 
     private String productName;
     private Integer productPrice;
@@ -19,7 +19,7 @@ public class GetProductPreviewResponseDto {
     private Integer shippingFee;
 
     @Builder
-    public GetProductPreviewResponseDto(
+    public GetProductPreviewResDto(
             String productName,
             Integer productPrice,
             String productThumbnailUrl,
@@ -33,10 +33,8 @@ public class GetProductPreviewResponseDto {
         this.shippingFee = shippingFee;
     }
 
-
-
-    public static GetProductPreviewResponseDto from(Product product, ProductThumbnail productThumbnail) {
-        return GetProductPreviewResponseDto.builder()
+    public static GetProductPreviewResDto from(Product product, ProductThumbnail productThumbnail) {
+        return GetProductPreviewResDto.builder()
                 .productName(product.getProductName())
                 .productPrice(product.getProductPrice())
                 .productThumbnailUrl(productThumbnail.getThumbnailUrl())
@@ -45,8 +43,8 @@ public class GetProductPreviewResponseDto {
                 .build();
     }
 
-    public GetProductPreviewResponseVo toVo(){
-        return GetProductPreviewResponseVo.builder()
+    public GetProductPreviewResVo toVo(){
+        return GetProductPreviewResVo.builder()
                 .productName(productName)
                 .productPrice(productPrice)
                 .productThumbnailUrl(productThumbnailUrl)
@@ -54,6 +52,5 @@ public class GetProductPreviewResponseDto {
                 .shippingFee(shippingFee)
                 .build();
     }
-
 
 }

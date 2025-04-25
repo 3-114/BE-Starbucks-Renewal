@@ -2,7 +2,7 @@ package com.team114.starbucks.domain.cart.dto.out;
 
 import com.team114.starbucks.domain.cart.entity.Cart;
 import com.team114.starbucks.domain.cart.vo.out.CartAndProductResVo;
-import com.team114.starbucks.domain.product.dto.out.GetProductPreviewResponseDto;
+import com.team114.starbucks.domain.product.dto.out.GetProductPreviewResDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,17 +43,17 @@ public class CartAndProductResDto {
 
     public static CartAndProductResDto of(
             Cart cart,
-            GetProductPreviewResponseDto getProductPreviewResponseDto
+            GetProductPreviewResDto getProductPreviewResDto
     ) {
         return CartAndProductResDto.builder()
                 .quantity(cart.getQuantity())
                 .selected(cart.getSelected())
                 .cartUuid(cart.getCartUuid())
-                .productName(getProductPreviewResponseDto.getProductName())
-                .productPrice(getProductPreviewResponseDto.getProductPrice())
-                .productThumbnailUrl(getProductPreviewResponseDto.getProductThumbnailUrl())
-                .isThumbnail(getProductPreviewResponseDto.getIsThumbnail())
-                .shippingFee(getProductPreviewResponseDto.getShippingFee())
+                .productName(getProductPreviewResDto.getProductName())
+                .productPrice(getProductPreviewResDto.getProductPrice())
+                .productThumbnailUrl(getProductPreviewResDto.getProductThumbnailUrl())
+                .isThumbnail(getProductPreviewResDto.getIsThumbnail())
+                .shippingFee(getProductPreviewResDto.getShippingFee())
                 .build();
     }
 

@@ -3,9 +3,11 @@ package com.team114.starbucks.domain.product.vo.out;
 import com.team114.starbucks.domain.product.enums.ProductStatus;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class UpdateProductResponseVo {
+@NoArgsConstructor
+public class UpdateProductResVo {
 
     private String productUuid;
     private String productName;
@@ -16,7 +18,7 @@ public class UpdateProductResponseVo {
     private ProductStatus productStatus;
 
     @Builder
-    public UpdateProductResponseVo(
+    public UpdateProductResVo(
             String productUuid, String productName, String brand, Integer productPrice, String description, Integer shippingFee, ProductStatus productStatus) {
         this.productUuid = productUuid;
         this.productName = productName;

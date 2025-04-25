@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class GetProductPreviewResponseVo {
+public class GetProductPreviewResVo {
+
     private String productName;
     private Integer productPrice;
     private String productThumbnailUrl;
@@ -15,7 +16,7 @@ public class GetProductPreviewResponseVo {
     private Integer shippingFee;
 
     @Builder
-    public GetProductPreviewResponseVo(
+    public GetProductPreviewResVo(
             String productName,
             Integer productPrice,
             String productThumbnailUrl,
@@ -28,4 +29,5 @@ public class GetProductPreviewResponseVo {
         this.isThumbnail = isThumbnail;
         this.shippingFee = shippingFee;
     }
+
 }

@@ -2,10 +2,12 @@ package com.team114.starbucks.domain.product.vo.in;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 @Getter
-public class CreateProductThumbnailRequestVo {
+@NoArgsConstructor
+public class CreateProductThumbnailReqVo {
 
     private String thumbnailUrl;
 
@@ -16,7 +18,7 @@ public class CreateProductThumbnailRequestVo {
     private String uploadedBy;
 
     @Builder
-    public CreateProductThumbnailRequestVo(
+    public CreateProductThumbnailReqVo(
             String thumbnailUrl,
             Integer thumbnailIndex,
             Boolean isThumbnail,

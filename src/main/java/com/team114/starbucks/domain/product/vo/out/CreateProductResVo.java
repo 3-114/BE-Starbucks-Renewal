@@ -1,16 +1,14 @@
 package com.team114.starbucks.domain.product.vo.out;
 
 
-import com.team114.starbucks.domain.product.dto.out.CreateProductThumbnailResponseDto;
 import com.team114.starbucks.domain.product.enums.ProductStatus;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.util.List;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class CreateProductResponseVo {
-
+@NoArgsConstructor
+public class CreateProductResVo {
 
     private String productName;
     private String brand;
@@ -20,9 +18,8 @@ public class CreateProductResponseVo {
     private ProductStatus productStatus;
     private String productUuid;
 
-
     @Builder
-    public CreateProductResponseVo(
+    public CreateProductResVo(
             String productUuid, String productName, String brand, Integer productPrice, String productDescription, Integer shippingFee, ProductStatus productStatus
             ) {
         this.productUuid = productUuid;
@@ -33,4 +30,5 @@ public class CreateProductResponseVo {
         this.shippingFee = shippingFee;
         this.productStatus = productStatus;
     }
+
 }

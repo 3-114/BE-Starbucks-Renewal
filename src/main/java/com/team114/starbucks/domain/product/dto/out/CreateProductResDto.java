@@ -1,16 +1,15 @@
 package com.team114.starbucks.domain.product.dto.out;
 
 import com.team114.starbucks.domain.product.entity.Product;
-import com.team114.starbucks.domain.product.entity.ProductDescription;
 import com.team114.starbucks.domain.product.enums.ProductStatus;
-import com.team114.starbucks.domain.product.vo.out.CreateProductResponseVo;
+import com.team114.starbucks.domain.product.vo.out.CreateProductResVo;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.util.List;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class CreateProductResponseDto {
+@NoArgsConstructor
+public class CreateProductResDto {
 
     private String productName;
     private String brand;
@@ -20,7 +19,7 @@ public class CreateProductResponseDto {
     private String productUuid;
 
     @Builder
-    public CreateProductResponseDto(
+    public CreateProductResDto(
             String productName,
             String brand,
             Integer productPrice,
@@ -37,9 +36,9 @@ public class CreateProductResponseDto {
     }
 
     // dto <- entity 정적 팩토리 메서드
-    public static CreateProductResponseDto from(Product savedProduct) {
+    public static CreateProductResDto from(Product savedProduct) {
 
-        return CreateProductResponseDto.builder()
+        return CreateProductResDto.builder()
                 .productName(savedProduct.getProductName())
                 .brand(savedProduct.getBrand())
                 .productPrice(savedProduct.getProductPrice())
@@ -50,8 +49,8 @@ public class CreateProductResponseDto {
     }
 
     // dto -> vo
-    public CreateProductResponseVo toVo() {
-        return CreateProductResponseVo.builder()
+    public CreateProductResVo toVo() {
+        return CreateProductResVo.builder()
                 .productName(productName)
                 .brand(brand)
                 .productPrice(productPrice)

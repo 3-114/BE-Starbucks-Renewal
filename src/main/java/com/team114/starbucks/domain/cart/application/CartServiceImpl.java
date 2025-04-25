@@ -9,15 +9,13 @@ import com.team114.starbucks.domain.cart.enums.CartType;
 import com.team114.starbucks.domain.cart.infrastructure.CartRepository;
 import com.team114.starbucks.domain.cart.vo.out.CartTypeReqDto;
 import com.team114.starbucks.domain.option.application.OptionService;
-import com.team114.starbucks.domain.option.entity.Option;
 import com.team114.starbucks.domain.product.application.ProductService;
-import com.team114.starbucks.domain.product.dto.out.GetProductPreviewResponseDto;
+import com.team114.starbucks.domain.product.dto.out.GetProductPreviewResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -61,8 +59,8 @@ public class CartServiceImpl implements CartService {
     public CartAndProductResDto getCartItem(CartUuidReqDto cartUuidReqDto) {
         Cart cart = cartRepository.findByCartUuid(cartUuidReqDto.getCartUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
-        GetProductPreviewResponseDto getProductPreviewResponseDto = productService.getProductPreview(cart.getProductUuid());
-        return CartAndProductResDto.of(cart, getProductPreviewResponseDto);
+        GetProductPreviewResDto getProductPreviewResDto = productService.getProductPreview(cart.getProductUuid());
+        return CartAndProductResDto.of(cart, getProductPreviewResDto);
     }
 
     @Override

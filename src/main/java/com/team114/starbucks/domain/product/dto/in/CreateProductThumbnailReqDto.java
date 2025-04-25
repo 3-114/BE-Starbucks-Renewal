@@ -2,12 +2,14 @@ package com.team114.starbucks.domain.product.dto.in;
 
 import com.team114.starbucks.domain.product.entity.Product;
 import com.team114.starbucks.domain.product.entity.ProductThumbnail;
-import com.team114.starbucks.domain.product.vo.in.CreateProductThumbnailRequestVo;
+import com.team114.starbucks.domain.product.vo.in.CreateProductThumbnailReqVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class CreateProductThumbnailRequestDto {
+@NoArgsConstructor
+public class CreateProductThumbnailReqDto {
 
     private String thumbnailUrl;
     private Integer thumbnailIndex;
@@ -15,7 +17,7 @@ public class CreateProductThumbnailRequestDto {
     private String uploadedBy;
 
     @Builder
-    public CreateProductThumbnailRequestDto(
+    public CreateProductThumbnailReqDto(
             String thumbnailUrl,
             Integer thumbnailIndex,
             Boolean isThumbnail,
@@ -27,11 +29,8 @@ public class CreateProductThumbnailRequestDto {
         this.uploadedBy = uploadedBy;
     }
 
-    //vo -> dto
-    public static CreateProductThumbnailRequestDto from(
-            CreateProductThumbnailRequestVo vo
-    ) {
-        return CreateProductThumbnailRequestDto.builder()
+    public static CreateProductThumbnailReqDto from(CreateProductThumbnailReqVo vo) {
+        return CreateProductThumbnailReqDto.builder()
                 .thumbnailUrl(vo.getThumbnailUrl())
                 .thumbnailIndex(vo.getThumbnailIndex())
                 .isThumbnail(vo.getIsThumbnail())
@@ -39,10 +38,7 @@ public class CreateProductThumbnailRequestDto {
                 .build();
     }
 
-    // dto -> entity
-    public ProductThumbnail toEntity(
-            Product product
-    ) {
+    public ProductThumbnail toEntity(Product product) {
         return ProductThumbnail.builder()
                 .product(product)
                 .thumbnailUrl(thumbnailUrl)
@@ -51,6 +47,5 @@ public class CreateProductThumbnailRequestDto {
                 .uploadedBy(uploadedBy)
                 .build();
     }
-
 
 }

@@ -1,15 +1,16 @@
 package com.team114.starbucks.domain.product.vo.out;
 
-import com.team114.starbucks.domain.product.dto.out.GetProductThumbnailByIdResponseDto;
-import com.team114.starbucks.domain.product.entity.ProductThumbnail;
+import com.team114.starbucks.domain.product.dto.out.GetProductThumbnailByIdResDto;
 import com.team114.starbucks.domain.product.enums.ProductStatus;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
-public class GetProductByIdResponseVo {
+@NoArgsConstructor
+public class GetProductByIdResVo {
 
     private String productUuid;
     private String productName;
@@ -18,13 +19,12 @@ public class GetProductByIdResponseVo {
     private String productDescription;
     private Integer shippingFee;
     private ProductStatus productStatus;
-    private List<GetProductThumbnailByIdResponseDto>
-    thumbnailList;
+    private List<GetProductThumbnailByIdResDto> thumbnailList;
 
     @Builder
-    public GetProductByIdResponseVo(
+    public GetProductByIdResVo(
             String productUuid, String productName, String brand, Integer productPrice, String productDescription, Integer shippingFee, ProductStatus productStatus,
-            List<GetProductThumbnailByIdResponseDto> getProductThumbnailByIdResponseDtoList) {
+            List<GetProductThumbnailByIdResDto> getProductThumbnailByIdResDtoList) {
         this.productUuid = productUuid;
         this.productName = productName;
         this.brand = brand;
@@ -32,7 +32,7 @@ public class GetProductByIdResponseVo {
         this.productDescription = productDescription;
         this.shippingFee = shippingFee;
         this.productStatus = productStatus;
-        this.thumbnailList = getProductThumbnailByIdResponseDtoList;
+        this.thumbnailList = getProductThumbnailByIdResDtoList;
     }
 
 }

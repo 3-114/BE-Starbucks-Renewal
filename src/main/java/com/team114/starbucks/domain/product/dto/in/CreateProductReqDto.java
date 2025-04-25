@@ -3,16 +3,18 @@ package com.team114.starbucks.domain.product.dto.in;
 
 import com.team114.starbucks.domain.product.entity.Product;
 import com.team114.starbucks.domain.product.enums.ProductStatus;
-import com.team114.starbucks.domain.product.vo.in.CreateProductRequestVo;
-import com.team114.starbucks.domain.product.vo.in.CreateProductThumbnailRequestVo;
+import com.team114.starbucks.domain.product.vo.in.CreateProductReqVo;
+import com.team114.starbucks.domain.product.vo.in.CreateProductThumbnailReqVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class CreateProductRequestDto {
+@NoArgsConstructor
+public class CreateProductReqDto {
 
     private String productName;
     private String brand;
@@ -21,17 +23,17 @@ public class CreateProductRequestDto {
     private Integer shippingFee;
     private ProductStatus productStatus;
 
-    private List<CreateProductThumbnailRequestDto> productThumbnailList;
+    private List<CreateProductThumbnailReqDto> productThumbnailList;
 
     @Builder
-    public CreateProductRequestDto(
+    public CreateProductReqDto(
             String productName,
             String brand,
             Integer productPrice,
             String productDescription,
             Integer shippingFee,
             ProductStatus productStatus,
-            List<CreateProductThumbnailRequestDto> productThumbnailList
+            List<CreateProductThumbnailReqDto> productThumbnailList
     ) {
         this.productName = productName;
         this.brand = brand;
@@ -43,16 +45,16 @@ public class CreateProductRequestDto {
     }
 
     //vo -> dto
-    public static CreateProductRequestDto from(
-            CreateProductRequestVo vo
+    public static CreateProductReqDto from(
+            CreateProductReqVo vo
     ) {
-        List<CreateProductThumbnailRequestDto> productThumbnailList = new ArrayList<>();
+        List<CreateProductThumbnailReqDto> productThumbnailList = new ArrayList<>();
 
-        for (CreateProductThumbnailRequestVo thumbnail : vo.getProductThumbnailList()) {
-            productThumbnailList.add(CreateProductThumbnailRequestDto.from(thumbnail));
+        for (CreateProductThumbnailReqVo thumbnail : vo.getProductThumbnailList()) {
+            productThumbnailList.add(CreateProductThumbnailReqDto.from(thumbnail));
         }
 
-        return CreateProductRequestDto.builder()
+        return CreateProductReqDto.builder()
                 .productName(vo.getProductName())
                 .brand(vo.getBrand())
                 .productPrice(vo.getProductPrice())
@@ -75,8 +77,5 @@ public class CreateProductRequestDto {
                 .productStatus(productStatus)
                 .build();
     }
-
-
-
 
 }

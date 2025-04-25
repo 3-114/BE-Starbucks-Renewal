@@ -2,9 +2,6 @@ package com.team114.starbucks.domain.cart.dto.out;
 
 import com.team114.starbucks.domain.cart.entity.Cart;
 import com.team114.starbucks.domain.cart.vo.out.GetCartItemResVo;
-import com.team114.starbucks.domain.option.entity.Option;
-import com.team114.starbucks.domain.product.dto.out.GetProductPreviewResponseDto;
-import com.team114.starbucks.domain.product.entity.Product;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

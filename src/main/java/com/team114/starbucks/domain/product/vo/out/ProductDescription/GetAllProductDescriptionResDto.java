@@ -3,15 +3,17 @@ package com.team114.starbucks.domain.product.vo.out.ProductDescription;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class GetProductDescriptionAllResDto {
+@NoArgsConstructor
+public class GetAllProductDescriptionResDto {
 
     private String productUuid;
     private String productDescription;
 
     @Builder
-    public GetProductDescriptionAllResDto(String productUuid, String productDescription) {
+    public GetAllProductDescriptionResDto(String productUuid, String productDescription) {
         this.productUuid = productUuid;
         this.productDescription = productDescription;
     }
