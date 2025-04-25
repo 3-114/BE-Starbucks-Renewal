@@ -4,8 +4,8 @@ import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
 import com.team114.starbucks.domain.color.entity.Color;
 import com.team114.starbucks.domain.color.infrastructure.ColorRepository;
-import com.team114.starbucks.domain.option.dto.in.OptionCreateRequestDto;
-import com.team114.starbucks.domain.option.dto.in.OptionUpdateRequestDto;
+import com.team114.starbucks.domain.option.dto.in.CreateOptionReqDto;
+import com.team114.starbucks.domain.option.dto.in.UpdateOptionReqDto;
 import com.team114.starbucks.domain.option.dto.out.OptionResponseDto;
 import com.team114.starbucks.domain.option.entity.Option;
 import com.team114.starbucks.domain.option.infrastructure.OptionRepository;
@@ -26,50 +26,41 @@ public class OptionServiceImpl implements OptionService {
     private final SizeRepository sizeRepository;
     private final ColorRepository colorRepository;
 
-    // 옵션 생성
     @Transactional
     @Override
-    public void saveOption(OptionCreateRequestDto optionCreateRequestDto) {
-
-            Color color = colorRepository.findByColorId(optionCreateRequestDto.getColorId())
+    public void saveOption(CreateOptionReqDto createOptionReqDto) {
+            Color color = colorRepository.findByColorId(createOptionReqDto.getColorId())
                     .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
-            Size size = sizeRepository.findBySizeId(optionCreateRequestDto.getSizeId())
+            Size size = sizeRepository.findBySizeId(createOptionReqDto.getSizeId())
                     .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
 
-            OptionResponseDto.from(optionRepository.save(optionCreateRequestDto.toEntity(color, size)));
+            OptionResponseDto.from(optionRepository.save(createOptionReqDto.toEntity(color, size)));
     }
 
-    // 옵션 전체 조회
     @Override
     public List<OptionResponseDto> findAllOptions() {
 
         return optionRepository.findAll().stream().map(OptionResponseDto::from).toList();
     }
 
-    // 옵션 단건 조회
     @Override
     public OptionResponseDto findOptionById(Long optionId) {
-
         Option option = optionRepository.findByOptionId(optionId)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
 
         return OptionResponseDto.from(option);
     }
 
-    // 옵션 정보 변경
     @Transactional
     @Override
-    public void updateOption(OptionUpdateRequestDto optionUpdateRequestDto) {
-
-        Option option = optionRepository.findByOptionId(optionUpdateRequestDto.getOptionId()).orElseThrow(
+    public void updateOption(UpdateOptionReqDto updateOptionReqDto) {
+        Option option = optionRepository.findByOptionId(updateOptionReqDto.getOptionId()).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );
 
-        optionRepository.save(optionUpdateRequestDto.toEntity(option));
-
+        optionRepository.save(updateOptionReqDto.toEntity(option));
     }
 
-    // 옵션 삭제
     @Transactional
     @Override
     public void deleteOption(Long optionId) {
@@ -83,4 +74,5 @@ public class OptionServiceImpl implements OptionService {
         return optionRepository.findAnyOptionByProductUuid(productUuid)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
     }
+
 }

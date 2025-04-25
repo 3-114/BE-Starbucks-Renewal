@@ -2,13 +2,15 @@ package com.team114.starbucks.domain.option.dto.in;
 
 import com.team114.starbucks.domain.color.entity.Color;
 import com.team114.starbucks.domain.option.entity.Option;
-import com.team114.starbucks.domain.option.vo.in.OptionCreateRequestVo;
+import com.team114.starbucks.domain.option.vo.in.CreateOptionReqVo;
 import com.team114.starbucks.domain.size.entity.Size;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class OptionCreateRequestDto {
+@NoArgsConstructor
+public class CreateOptionReqDto {
 
     private String productUuid;
     private Long colorId;
@@ -18,7 +20,7 @@ public class OptionCreateRequestDto {
     private Integer discountRate;
 
     @Builder
-    public OptionCreateRequestDto(
+    public CreateOptionReqDto(
             String productUuid,
             Long colorId,
             Long sizeId,
@@ -34,16 +36,16 @@ public class OptionCreateRequestDto {
         this.discountRate = discountRate;
     }
 
-    public static OptionCreateRequestDto from(
-            OptionCreateRequestVo optionCreateRequestVo
+    public static CreateOptionReqDto from(
+            CreateOptionReqVo createOptionReqVo
     ) {
-        return OptionCreateRequestDto.builder()
-                .productUuid(optionCreateRequestVo.getProductUuid())
-                .colorId(optionCreateRequestVo.getColorId())
-                .sizeId(optionCreateRequestVo.getSizeId())
-                .stock(optionCreateRequestVo.getStock())
-                .optionPrice(optionCreateRequestVo.getOptionPrice())
-                .discountRate(optionCreateRequestVo.getDiscountRate())
+        return CreateOptionReqDto.builder()
+                .productUuid(createOptionReqVo.getProductUuid())
+                .colorId(createOptionReqVo.getColorId())
+                .sizeId(createOptionReqVo.getSizeId())
+                .stock(createOptionReqVo.getStock())
+                .optionPrice(createOptionReqVo.getOptionPrice())
+                .discountRate(createOptionReqVo.getDiscountRate())
                 .build();
     }
 
@@ -57,4 +59,5 @@ public class OptionCreateRequestDto {
                 .discountRate(discountRate)
                 .build();
     }
+
 }

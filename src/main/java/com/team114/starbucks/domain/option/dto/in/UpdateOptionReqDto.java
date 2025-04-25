@@ -1,12 +1,14 @@
 package com.team114.starbucks.domain.option.dto.in;
 
 import com.team114.starbucks.domain.option.entity.Option;
-import com.team114.starbucks.domain.option.vo.in.OptionUpdateRequestVo;
+import com.team114.starbucks.domain.option.vo.in.UpdateOptionReqVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class OptionUpdateRequestDto {
+@NoArgsConstructor
+public class UpdateOptionReqDto {
 
     private Long optionId;
     private Integer stock;
@@ -14,7 +16,7 @@ public class OptionUpdateRequestDto {
     private Integer discountRate;
 
     @Builder
-    public OptionUpdateRequestDto(
+    public UpdateOptionReqDto(
             Long optionId,
             Integer stock,
             Long optionPrice,
@@ -26,19 +28,16 @@ public class OptionUpdateRequestDto {
         this.discountRate = discountRate;
     }
 
-    public static OptionUpdateRequestDto from(
-            OptionUpdateRequestVo optionUpdateRequestVo
-    ) {
-        return OptionUpdateRequestDto.builder()
-                .optionId(optionUpdateRequestVo.getOptionId())
-                .stock(optionUpdateRequestVo.getStock())
-                .optionPrice(optionUpdateRequestVo.getOptionPrice())
-                .discountRate(optionUpdateRequestVo.getDiscountRate())
+    public static UpdateOptionReqDto from(UpdateOptionReqVo updateOptionReqVo) {
+        return UpdateOptionReqDto.builder()
+                .optionId(updateOptionReqVo.getOptionId())
+                .stock(updateOptionReqVo.getStock())
+                .optionPrice(updateOptionReqVo.getOptionPrice())
+                .discountRate(updateOptionReqVo.getDiscountRate())
                 .build();
     }
 
     public Option toEntity(Option option) {
-
         return Option.builder()
                 .optionId(option.getOptionId())
                 .productUuid(option.getProductUuid())
@@ -48,6 +47,6 @@ public class OptionUpdateRequestDto {
                 .optionPrice(optionPrice)
                 .discountRate(discountRate)
                 .build();
-
     }
+
 }

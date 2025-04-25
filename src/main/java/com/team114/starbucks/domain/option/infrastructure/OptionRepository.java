@@ -9,10 +9,11 @@ import java.util.Optional;
 public interface OptionRepository extends JpaRepository<Option, Integer> {
 
     Optional<Option> findByOptionId(Long optionId);
+
     Optional<Option> deleteByOptionId(Long optionId);
 
-    // 상품 UUID 기반 옵션 목록 조회
     List<Option> findByProductUuid(String productUuid);
 
     Optional<Option> findAnyOptionByProductUuid(String productUuid);
+
 }

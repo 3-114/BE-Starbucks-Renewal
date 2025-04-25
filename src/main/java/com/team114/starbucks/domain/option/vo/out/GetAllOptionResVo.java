@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class OptionResponseVo {
+public class GetAllOptionResVo {
 
     private final Long optionId;
     private final String productUuid;
@@ -15,7 +15,7 @@ public class OptionResponseVo {
     private final Integer discountRate;
 
     @Builder
-    public OptionResponseVo(
+    public GetAllOptionResVo(
             Long optionId,
             String productUuid,
             Long colorId,
