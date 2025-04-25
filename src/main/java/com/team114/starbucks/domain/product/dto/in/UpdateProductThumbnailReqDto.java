@@ -3,21 +3,22 @@ package com.team114.starbucks.domain.product.dto.in;
 
 import com.team114.starbucks.domain.product.entity.Product;
 import com.team114.starbucks.domain.product.entity.ProductThumbnail;
-import com.team114.starbucks.domain.product.vo.in.UpdateProductThumbnailRequestVo;
+import com.team114.starbucks.domain.product.vo.in.UpdateProductThumbnailReqVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class UpdateProductThumbnailRequestDto {
+@NoArgsConstructor
+public class UpdateProductThumbnailReqDto {
 
     private String thumbnailUrl;
     private Integer thumbnailIndex;
     private Boolean isThumbnail;
     private String uploadedBy;
 
-
     @Builder
-    public UpdateProductThumbnailRequestDto(
+    public UpdateProductThumbnailReqDto(
             String thumbnailUrl,
             Integer thumbnailIndex,
             Boolean isThumbnail,
@@ -29,11 +30,8 @@ public class UpdateProductThumbnailRequestDto {
         this.uploadedBy = uploadedBy;
     }
 
-
-    public static UpdateProductThumbnailRequestDto from(
-            UpdateProductThumbnailRequestVo vo
-    ) {
-        return UpdateProductThumbnailRequestDto.builder()
+    public static UpdateProductThumbnailReqDto from(UpdateProductThumbnailReqVo vo) {
+        return UpdateProductThumbnailReqDto.builder()
                 .thumbnailUrl(vo.getThumbnailUrl())
                 .thumbnailIndex(vo.getThumbnailIndex())
                 .isThumbnail(vo.getIsThumbnail())
@@ -41,9 +39,7 @@ public class UpdateProductThumbnailRequestDto {
                 .build();
     }
 
-    public ProductThumbnail toEntity(
-            Product product
-    ) {
+    public ProductThumbnail toEntity(Product product) {
         return ProductThumbnail.builder()
                 .product(product)
                 .thumbnailUrl(thumbnailUrl)

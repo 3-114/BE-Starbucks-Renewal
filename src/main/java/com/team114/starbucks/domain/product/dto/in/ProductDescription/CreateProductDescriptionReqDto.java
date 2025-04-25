@@ -2,28 +2,26 @@ package com.team114.starbucks.domain.product.dto.in.ProductDescription;
 
 
 import com.team114.starbucks.domain.product.entity.ProductDescription;
-import com.team114.starbucks.domain.product.vo.in.ProductDescription.CreateProductDescriptionRequestVo;
+import com.team114.starbucks.domain.product.vo.in.ProductDescription.CreateProductDescriptionReqVo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CreateProductDescriptionRequestDto {
+public class CreateProductDescriptionReqDto {
 
     private String productUuid;
     private String productDescription;
 
     @Builder
-    public CreateProductDescriptionRequestDto(String productUuid, String productDescription) {
+    public CreateProductDescriptionReqDto(String productUuid, String productDescription) {
         this.productUuid = productUuid;
         this.productDescription = productDescription;
     }
 
-    public static CreateProductDescriptionRequestDto from(
-            CreateProductDescriptionRequestVo vo
-    ) {
-        return CreateProductDescriptionRequestDto.builder()
+    public static CreateProductDescriptionReqDto from(CreateProductDescriptionReqVo vo) {
+        return CreateProductDescriptionReqDto.builder()
                 .productUuid(vo.getProductUuid())
                 .productDescription(vo.getProductDescription())
                 .build();
@@ -35,4 +33,5 @@ public class CreateProductDescriptionRequestDto {
                 .productDescription(this.productDescription)
                 .build();
     }
+
 }

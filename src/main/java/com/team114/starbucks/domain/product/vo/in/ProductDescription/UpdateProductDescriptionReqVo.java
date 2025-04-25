@@ -6,8 +6,9 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UpdateProductDescriptionRequestVo {
+public class UpdateProductDescriptionReqVo {
 
     private String productUuid;
     private String productDescription;
+
 }

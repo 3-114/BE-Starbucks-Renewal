@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class GetProductDescriptionByProductUuidResVo {
+
     private String productUuid;
     private String productDescription;
 
@@ -15,4 +16,5 @@ public class GetProductDescriptionByProductUuidResVo {
         this.productUuid = productUuid;
         this.productDescription = productDescription;
     }
+
 }
