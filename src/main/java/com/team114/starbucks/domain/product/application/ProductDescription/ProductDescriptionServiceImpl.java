@@ -1,18 +1,15 @@
 package com.team114.starbucks.domain.product.application.ProductDescription;
 
 import com.team114.starbucks.domain.product.application.ProductService;
-import com.team114.starbucks.domain.product.dto.in.ProductDescription.CreateProductDescriptionRequestDto;
-import com.team114.starbucks.domain.product.dto.in.ProductDescription.UpdateProductDescriptionRequestDto;
-import com.team114.starbucks.domain.product.dto.out.ProductDescription.GetProductDescriptionAllResDto;
+import com.team114.starbucks.domain.product.dto.in.ProductDescription.CreateProductDescriptionReqDto;
+import com.team114.starbucks.domain.product.dto.in.ProductDescription.UpdateProductDescriptionReqDto;
+import com.team114.starbucks.domain.product.dto.out.ProductDescription.GetAllProductDescriptionResDto;
 import com.team114.starbucks.domain.product.dto.out.ProductDescription.GetProductDescriptionByProductUuidResDto;
-import com.team114.starbucks.domain.product.entity.Product;
-import com.team114.starbucks.domain.product.entity.ProductDescription;
 import com.team114.starbucks.domain.product.infrastructure.ProductDescriptionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -23,29 +20,25 @@ public class ProductDescriptionServiceImpl implements ProductDescriptionService 
     private final ProductService productService;
 
     @Override
-    public void createProductDescription(CreateProductDescriptionRequestDto createProductDescriptionRequestDto) {
-
-        if (!productService.checkProductExist(createProductDescriptionRequestDto.getProductUuid())) {
-            throw new IllegalArgumentException("Product not found with UUID: " + createProductDescriptionRequestDto.getProductUuid());
+    public void createProductDescription(CreateProductDescriptionReqDto createProductDescriptionReqDto) {
+        if (!productService.checkProductExist(createProductDescriptionReqDto.getProductUuid())) {
+            throw new IllegalArgumentException("Product not found with UUID: " + createProductDescriptionReqDto.getProductUuid());
+        }
+        if (productDescriptionRepository.findByProductUuid(createProductDescriptionReqDto.getProductUuid()).isPresent()) {
+            throw new IllegalArgumentException("ProductDescription already exists with UUID: " + createProductDescriptionReqDto.getProductUuid());
         }
 
-        if (productDescriptionRepository.findByProductUuid(createProductDescriptionRequestDto.getProductUuid()).isPresent()) {
-            throw new IllegalArgumentException("ProductDescription already exists with UUID: " + createProductDescriptionRequestDto.getProductUuid());
-        }
-
-        productDescriptionRepository.save(createProductDescriptionRequestDto.toEntity(createProductDescriptionRequestDto.getProductUuid()));
+        productDescriptionRepository.save(createProductDescriptionReqDto.toEntity(createProductDescriptionReqDto.getProductUuid()));
     }
 
     @Override
-    public void updateProductDescription(UpdateProductDescriptionRequestDto updateProductDescriptionRequestDto) {
-
-        if (!productService.checkProductExist(updateProductDescriptionRequestDto.getProductUuid())) {
-            throw new IllegalArgumentException("Product not found with UUID: " + updateProductDescriptionRequestDto.getProductUuid());
+    public void updateProductDescription(UpdateProductDescriptionReqDto updateProductDescriptionReqDto) {
+        if (!productService.checkProductExist(updateProductDescriptionReqDto.getProductUuid())) {
+            throw new IllegalArgumentException("Product not found with UUID: " + updateProductDescriptionReqDto.getProductUuid());
         }
 
-        productDescriptionRepository.save(updateProductDescriptionRequestDto.toEntity(productDescriptionRepository.findByProductUuid(updateProductDescriptionRequestDto.getProductUuid())
-                .orElseThrow(() -> new IllegalArgumentException("ProductDescription not found with UUID: " + updateProductDescriptionRequestDto.getProductUuid()))));
-
+        productDescriptionRepository.save(updateProductDescriptionReqDto.toEntity(productDescriptionRepository.findByProductUuid(updateProductDescriptionReqDto.getProductUuid())
+                .orElseThrow(() -> new IllegalArgumentException("ProductDescription not found with UUID: " + updateProductDescriptionReqDto.getProductUuid()))));
     }
 
     @Override
@@ -56,10 +49,9 @@ public class ProductDescriptionServiceImpl implements ProductDescriptionService 
     }
 
     @Override
-    public List<GetProductDescriptionAllResDto> getProductDescriptionAll() {
+    public List<GetAllProductDescriptionResDto> getProductDescriptionAll() {
 
-        return productDescriptionRepository.findAll().stream().map(GetProductDescriptionAllResDto::from).toList();
+        return productDescriptionRepository.findAll().stream().map(GetAllProductDescriptionResDto::from).toList();
     }
-
 
 }

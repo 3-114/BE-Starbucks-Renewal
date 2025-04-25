@@ -4,8 +4,9 @@ import com.team114.starbucks.domain.subcategory.entity.SubCategory;
 import com.team114.starbucks.domain.subcategory.vo.out.GetAllSubCategoryResVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Getter
+@NoArgsConstructor
 public class GetAllSubCategoryResDto {
 
     private String mainCategoryUuid;

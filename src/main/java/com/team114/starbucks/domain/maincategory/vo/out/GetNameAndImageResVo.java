@@ -18,4 +18,5 @@ public class GetNameAndImageResVo {
         this.mainCategoryName = mainCategoryName;
         this.mainCategoryImage = mainCategoryImage;
     }
+
 }

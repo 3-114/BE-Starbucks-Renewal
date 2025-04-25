@@ -4,8 +4,10 @@ import com.team114.starbucks.domain.event.entity.Event;
 import com.team114.starbucks.domain.event.vo.out.CreateEventResVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class CreateEventResDto {
 
     private String eventName;
@@ -29,5 +31,6 @@ public class CreateEventResDto {
                 .eventName(eventName)
                 .eventUuid(eventUuid)
                 .build();
+
     }
 }

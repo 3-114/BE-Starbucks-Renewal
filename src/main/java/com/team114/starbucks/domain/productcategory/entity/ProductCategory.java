@@ -42,4 +42,5 @@ public class ProductCategory {
         this.subCategoryUuid = subCategoryUuid;
         this.eventUuid = eventUuid;
     }
+
 }

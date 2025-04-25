@@ -7,17 +7,15 @@ import com.team114.starbucks.domain.cart.dto.out.*;
 import com.team114.starbucks.domain.cart.entity.Cart;
 import com.team114.starbucks.domain.cart.enums.CartType;
 import com.team114.starbucks.domain.cart.infrastructure.CartRepository;
-import com.team114.starbucks.domain.cart.vo.out.CartTypeReqDto;
+import com.team114.starbucks.domain.cart.vo.out.GetMyCartTypeReqDto;
 import com.team114.starbucks.domain.option.application.OptionService;
-import com.team114.starbucks.domain.option.entity.Option;
 import com.team114.starbucks.domain.product.application.ProductService;
-import com.team114.starbucks.domain.product.dto.out.GetProductPreviewResponseDto;
+import com.team114.starbucks.domain.product.dto.out.GetProductPreviewResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -30,53 +28,53 @@ public class CartServiceImpl implements CartService {
 
     @Transactional
     @Override
-    public void addCartItem(AddCartItemReqDto addCartItemReqDto) {
+    public void addCartItem(CreateCartReqDto createCartReqDto) {
         cartRepository.save(
-                addCartItemReqDto.toEntity(
-                        optionService.findAnyOptionByProductUuid(addCartItemReqDto.getProductUuid())
+                createCartReqDto.toEntity(
+                        optionService.findAnyOptionByProductUuid(createCartReqDto.getProductUuid())
                 )
         );
     }
 
     @Override
-    public List<GetAllCartItemsResDto> findAllCartItems(String memberUuid) {
+    public List<GetAllCartResDto> findAllCartItems(String memberUuid) {
         return cartRepository.findByMemberUuid(memberUuid)
-                .stream().map(GetAllCartItemsResDto::from).toList();
+                .stream().map(GetAllCartResDto::from).toList();
     }
 
     @Transactional
     @Override
-    public void updateCartItem(UpdateCartItemReqDto updateCartItemReqDto) {
-        cartRepository.save(updateCartItemReqDto.toEntity(cartRepository.findByCartUuid(updateCartItemReqDto.getCartUuid())
+    public void updateCartItem(UpdateCartReqDto updateCartReqDto) {
+        cartRepository.save(updateCartReqDto.toEntity(cartRepository.findByCartUuid(updateCartReqDto.getCartUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND))));
     }
 
     @Transactional
     @Override
-    public void deleteCartItem(CartUuidReqDto cartUuidReqDto) {
-        cartRepository.deleteByCartUuid(cartUuidReqDto.getCartUuid());
+    public void deleteCartItem(GetMyCartUuidReqDto getMyCartUuidReqDto) {
+        cartRepository.deleteByCartUuid(getMyCartUuidReqDto.getCartUuid());
     }
 
     @Override
-    public CartAndProductResDto getCartItem(CartUuidReqDto cartUuidReqDto) {
-        Cart cart = cartRepository.findByCartUuid(cartUuidReqDto.getCartUuid())
+    public GetCartAndProductResDto getCartItem(GetMyCartUuidReqDto getMyCartUuidReqDto) {
+        Cart cart = cartRepository.findByCartUuid(getMyCartUuidReqDto.getCartUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
-        GetProductPreviewResponseDto getProductPreviewResponseDto = productService.getProductPreview(cart.getProductUuid());
-        return CartAndProductResDto.of(cart, getProductPreviewResponseDto);
+        GetProductPreviewResDto getProductPreviewResDto = productService.getProductPreview(cart.getProductUuid());
+        return GetCartAndProductResDto.of(cart, getProductPreviewResDto);
     }
 
     @Override
-    public GetItemSelectResDto getItemSelect(CartUuidReqDto cartUuidReqDto) {
-        return GetItemSelectResDto.from(cartRepository.findByCartUuid(cartUuidReqDto.getCartUuid())
+    public GetCartSelectResDto getItemSelect(GetMyCartUuidReqDto getMyCartUuidReqDto) {
+        return GetCartSelectResDto.from(cartRepository.findByCartUuid(getMyCartUuidReqDto.getCartUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)));
     }
 
     @Override
-    public List<GetProductUuidResDto> getProductUuidList(CartTypeReqDto cartTypeReqDto) {
-        return cartRepository.findByMemberUuid(cartTypeReqDto.getMemberUuid())
+    public List<GetProductUuidResDto> getProductUuidList(GetMyCartTypeReqDto getMyCartTypeReqDto) {
+        return cartRepository.findByMemberUuid(getMyCartTypeReqDto.getMemberUuid())
                 .stream()
                 .filter(cart -> cart.getCartType().equals(
-                        CartType.valueOf(cartTypeReqDto.getCartType().toUpperCase())
+                        CartType.valueOf(getMyCartTypeReqDto.getCartType().toUpperCase())
                 ))
                 .map(GetProductUuidResDto::from)
                 .toList();
@@ -84,24 +82,24 @@ public class CartServiceImpl implements CartService {
 
     @Transactional
     @Override
-    public void decreaseCartQuantity(CartUuidReqDto cartUuidReqDto) {
-        cartRepository.save(cartUuidReqDto.decreaseQuantity(cartRepository.findByCartUuid(cartUuidReqDto.getCartUuid())
+    public void decreaseCartQuantity(GetMyCartUuidReqDto getMyCartUuidReqDto) {
+        cartRepository.save(getMyCartUuidReqDto.decreaseQuantity(cartRepository.findByCartUuid(getMyCartUuidReqDto.getCartUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND))));
     }
 
     @Transactional
     @Override
-    public void increaseCartQuantity(CartUuidReqDto cartUuidReqDto) {
-        cartRepository.save(cartUuidReqDto.increaseQuantity(cartRepository.findByCartUuid(cartUuidReqDto.getCartUuid())
+    public void increaseCartQuantity(GetMyCartUuidReqDto getMyCartUuidReqDto) {
+        cartRepository.save(getMyCartUuidReqDto.increaseQuantity(cartRepository.findByCartUuid(getMyCartUuidReqDto.getCartUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND))));
     }
 
     @Override
-    public CountTotalCartResDto countTotalCart(CartTypeReqDto cartTypeReqDto) {
-        return CountTotalCartResDto.from(
+    public GetTotalCartCountResDto countTotalCart(GetMyCartTypeReqDto getMyCartTypeReqDto) {
+        return GetTotalCartCountResDto.from(
                 cartRepository.countByMemberUuidAndCartType(
-                        cartTypeReqDto.getMemberUuid(),
-                        CartType.valueOf(cartTypeReqDto.getCartType().toUpperCase())
+                        getMyCartTypeReqDto.getMemberUuid(),
+                        CartType.valueOf(getMyCartTypeReqDto.getCartType().toUpperCase())
                 )
         );
     }
@@ -115,23 +113,23 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<MyCartUuidDto> getMyCartUuids(MyCartTypeReqDto myCartTypeReqDto) {
-        return myCartTypeReqDto.getCartType() == null
-                ? cartRepository.findByMemberUuid(myCartTypeReqDto.getMemberUuid())
-                .stream().map(MyCartUuidDto::from).toList()
+    public List<GetAllMyCartUuidDto> getMyCartUuids(com.team114.starbucks.domain.cart.dto.in.GetMyCartTypeReqDto getMyCartTypeReqDto) {
+        return getMyCartTypeReqDto.getCartType() == null
+                ? cartRepository.findByMemberUuid(getMyCartTypeReqDto.getMemberUuid())
+                .stream().map(GetAllMyCartUuidDto::from).toList()
                 : cartRepository.findByMemberUuid(
-                        myCartTypeReqDto.getMemberUuid())
+                        getMyCartTypeReqDto.getMemberUuid())
                 .stream()
                 .filter(cart -> cart.getCartType().equals(
-                        CartType.valueOf(myCartTypeReqDto.getCartType().toUpperCase())))
-                .map(MyCartUuidDto::from).toList();
+                        CartType.valueOf(getMyCartTypeReqDto.getCartType().toUpperCase())))
+                .map(GetAllMyCartUuidDto::from).toList();
     }
 
     @Transactional
     @Override
-    public void toggleCartSelection(CartUuidReqDto cartUuidReqDto) {
-        cartRepository.save(cartUuidReqDto.toggleSelection(
-                cartRepository.findByCartUuid(cartUuidReqDto.getCartUuid()).orElseThrow(
+    public void toggleCartSelection(GetMyCartUuidReqDto getMyCartUuidReqDto) {
+        cartRepository.save(getMyCartUuidReqDto.toggleSelection(
+                cartRepository.findByCartUuid(getMyCartUuidReqDto.getCartUuid()).orElseThrow(
                         () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
                 )
         ));
@@ -139,15 +137,14 @@ public class CartServiceImpl implements CartService {
 
     @Transactional
     @Override
-    public List<MyCartUuidDto> toggleAllCartSelection(String memberUuid) {
+    public List<GetAllMyCartUuidDto> toggleAllCartSelection(String memberUuid) {
         List<Cart> carts = cartRepository.findByMemberUuid(memberUuid);
 
-        // 새롭게 선택된 애가 있냐
         boolean newSelected = carts.stream().anyMatch(cart -> !cart.getSelected());
 
-        List<MyCartUuidDto> results = carts.stream()
+        List<GetAllMyCartUuidDto> results = carts.stream()
                 .filter(cart -> !newSelected || !cart.getSelected())
-                .map(MyCartUuidDto::from)
+                .map(GetAllMyCartUuidDto::from)
                 .toList();
 
         cartRepository.saveAll(carts.stream()
@@ -169,17 +166,18 @@ public class CartServiceImpl implements CartService {
 
     @Transactional
     @Override
-    public void changeCartQuantity(MyCartQuantityReqDto myCartQuantityReqDto) {
-        cartRepository.save(myCartQuantityReqDto.changeQuantity(
-                cartRepository.findByCartUuid(myCartQuantityReqDto.getCartUuid())
+    public void changeCartQuantity(GetMyCartQuantityReqDto getMyCartQuantityReqDto) {
+        cartRepository.save(getMyCartQuantityReqDto.changeQuantity(
+                cartRepository.findByCartUuid(getMyCartQuantityReqDto.getCartUuid())
                         .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND))));
     }
 
     @Transactional
     @Override
-    public void deleteAllCartItems(MyCartTypeReqDto myCartTypeReqDto) {
+    public void deleteAllCartItems(com.team114.starbucks.domain.cart.dto.in.GetMyCartTypeReqDto getMyCartTypeReqDto) {
         cartRepository.deleteAllByMemberUuidAndCartType(
-                myCartTypeReqDto.getMemberUuid(),
-                CartType.valueOf(myCartTypeReqDto.getCartType().toUpperCase()));
+                getMyCartTypeReqDto.getMemberUuid(),
+                CartType.valueOf(getMyCartTypeReqDto.getCartType().toUpperCase()));
     }
+
 }

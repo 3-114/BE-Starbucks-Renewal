@@ -34,4 +34,5 @@ public class EventImage {
         this.eventUrl = eventUrl;
         this.eventUrlIndex = eventUrlIndex;
     }
+
 }

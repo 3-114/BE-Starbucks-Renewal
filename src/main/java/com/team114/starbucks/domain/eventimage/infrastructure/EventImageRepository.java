@@ -14,8 +14,7 @@ public interface EventImageRepository extends JpaRepository<EventImage, Long> {
 
     List<EventImage> findByEventUuid(String eventUuid);
 
-//    Optional<Integer> findMaxIndexByEventUuid(String eventUuid);
-
     @Query("SELECT MAX(e.eventUrlIndex) FROM EventImage e WHERE e.eventUuid = :eventUuid")
     Optional<Integer> findMaxIndexByEventUuid(@Param("eventUuid") String eventUuid);
+
 }

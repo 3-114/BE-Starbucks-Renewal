@@ -19,14 +19,11 @@ public class ColorServiceImpl implements ColorService {
 
     private final ColorRepository colorRepository;
 
-    // Color 생성
     @Transactional
     @Override
     public ColorResponseDto saveColor(ColorRequestDto colorRequestDto) {
         try {
-            Color newColor = colorRequestDto.toEntity();
-
-            Color savedColor = colorRepository.save(newColor);
+            Color savedColor = colorRepository.save(colorRequestDto.toEntity());
 
             return ColorResponseDto.from(savedColor);
 
@@ -35,7 +32,6 @@ public class ColorServiceImpl implements ColorService {
         }
     }
 
-    // Color 전체 조회
     @Override
     public List<ColorResponseDto> findAllColors() {
         return colorRepository.findAll().stream().map(ColorResponseDto::from).toList();
@@ -70,12 +66,10 @@ public class ColorServiceImpl implements ColorService {
 
     @Transactional
     @Override
-    public Void deleteColor(Long colorId){
+    public void deleteColor(Long colorId){
 
         colorRepository.deleteByColorId(colorId).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );
-
-        return null;
     }
 }

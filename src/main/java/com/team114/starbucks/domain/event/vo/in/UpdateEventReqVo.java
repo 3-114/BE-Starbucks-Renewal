@@ -6,7 +6,9 @@ import java.time.LocalDate;
 
 @Getter
 public class UpdateEventReqVo {
+
     private String eventName;
     private LocalDate startDate;
     private LocalDate endDate;
+
 }

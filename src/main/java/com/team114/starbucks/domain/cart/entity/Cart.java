@@ -1,7 +1,6 @@
 package com.team114.starbucks.domain.cart.entity;
 
 import com.team114.starbucks.common.entity.BaseEntity;
-import com.team114.starbucks.domain.cart.dto.in.UpdateCartItemReqDto;
 import com.team114.starbucks.domain.cart.enums.CartType;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -65,4 +64,5 @@ public class Cart extends BaseEntity {
         this.valid = valid;
         this.cartType = cartType;
     }
+
 }

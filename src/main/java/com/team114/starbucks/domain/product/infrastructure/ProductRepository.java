@@ -8,7 +8,9 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Boolean existsByProductUuid(String productUuid);
+
     Optional<Product> findByProductUuid(String productUuid);
+
     void deleteByProductUuid(String productUuid);
 
 }

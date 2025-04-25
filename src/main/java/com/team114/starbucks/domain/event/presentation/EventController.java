@@ -4,13 +4,13 @@ import com.team114.starbucks.common.response.BaseResponseEntity;
 import com.team114.starbucks.domain.event.application.EventServiceimpl;
 import com.team114.starbucks.domain.event.dto.in.CreateEventReqDto;
 import com.team114.starbucks.domain.event.dto.in.UpdateEventReqDto;
-import com.team114.starbucks.domain.event.dto.out.EventResponseDto;
-import com.team114.starbucks.domain.event.dto.out.GetOneEventResDto;
+import com.team114.starbucks.domain.event.dto.out.GetAllEventResDto;
+import com.team114.starbucks.domain.event.dto.out.GetEventResDto;
 import com.team114.starbucks.domain.event.vo.in.CreateEventReqVo;
 import com.team114.starbucks.domain.event.vo.in.UpdateEventReqVo;
 import com.team114.starbucks.domain.event.vo.out.CreateEventResVo;
-import com.team114.starbucks.domain.event.vo.out.EventResponseVo;
-import com.team114.starbucks.domain.event.vo.out.GetOneEventResVo;
+import com.team114.starbucks.domain.event.vo.out.GetAllEventResVo;
+import com.team114.starbucks.domain.event.vo.out.GetEventResVo;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -33,49 +33,63 @@ public class EventController {
      * 5. 기획전 삭제
      * */
 
-    // 1. 기획전 생성
+    /**
+     * 1. 기획전 생성
+     *
+     * @param createEventReqVo 기획전 데이터
+     * @return {@link BaseResponseEntity} 기획전 생성 결과
+     */
     @Operation(summary = "기획전 생성", tags = {"event"})
     @PostMapping
     public BaseResponseEntity<CreateEventResVo> createEvent(
             @RequestBody CreateEventReqVo createEventReqVo
     ) {
-
-        return new BaseResponseEntity<>(
-                "기획전 생성에 성공하였습니다.",
+        return new BaseResponseEntity<>("기획전 생성에 성공하였습니다.",
                 eventService.saveEvent(CreateEventReqDto.from(createEventReqVo)).toVo());
     }
 
-    // 2. 기획전 전체 조회
+    /**
+     * 2. 기획전 전체 조회
+     *
+     * @return {@link BaseResponseEntity} 기획전 전체 조회 결과
+     */
     @Operation(summary = "기획전 전체 조회", tags = {"event"})
     @GetMapping("/nav")
-    public BaseResponseEntity<List<EventResponseVo>> getAllEventName() {
+    public BaseResponseEntity<List<GetAllEventResVo>> getAllEventName() {
 
-        List<EventResponseDto> dtoList = eventService.findAllActiveEvents();
+        List<GetAllEventResDto> dtoList = eventService.findAllActiveEvents();
+        List<GetAllEventResVo> voList = new ArrayList<>();
 
-        List<EventResponseVo> voList = new ArrayList<>();
-
-        for (EventResponseDto eventResponseDto : dtoList) {
-            EventResponseVo eventResponseVo = eventResponseDto.toVo();
-            voList.add(eventResponseVo);
+        for (GetAllEventResDto getAllEventResDto : dtoList) {
+            GetAllEventResVo getAllEventResVo = getAllEventResDto.toVo();
+            voList.add(getAllEventResVo);
         }
-
         return new BaseResponseEntity<>("기획전 조회에 성공하였습니다.", voList);
     }
 
-
-    // 3. 기획전 단건 조회
+    /**
+     * 3. 기획전 단건 조회
+     *
+     * @param eventUuid 기획전 UUID
+     * @return {@link BaseResponseEntity} 기획전 단건 조회 결과
+     */
     @Operation(summary = "기획전 단건 조회", tags = {"event"})
     @GetMapping("/{eventUuid}")
-    public GetOneEventResVo getEvent(
+    public BaseResponseEntity<GetEventResVo> getEvent(
             @PathVariable String eventUuid
     ) {
-        GetOneEventResDto getOneEventResDto = eventService.findEventByUuid(eventUuid);
-        GetOneEventResVo getOneEventResVo = getOneEventResDto.toVo();
-
-        return getOneEventResVo;
+        GetEventResDto getEventResDto = eventService.findEventByUuid(eventUuid);
+        return new BaseResponseEntity<>("기획전 단건 조회에 성공하였습니다. ", getEventResDto.toVo());
     }
 
-    // 4. 기획전 수정
+
+    /**
+     * 4. 기획전 수정
+     *
+     * @param eventUuid        기획전 UUID
+     * @param updateEventReqVo 기획전 수정 데이터
+     * @return {@link BaseResponseEntity} 기획전 수정 결과
+     */
     @Operation(summary = "기획전 수정", tags = {"event"})
     @PutMapping("/{eventUuid}")
     public BaseResponseEntity<Void> updateEvent(
@@ -83,13 +97,15 @@ public class EventController {
             @RequestBody UpdateEventReqVo updateEventReqVo
     ) {
         eventService.updateEvent(eventUuid, UpdateEventReqDto.from(updateEventReqVo));
-        return new BaseResponseEntity<>(
-                "기획전 삭제에 성공하였습니다. ",
-                null
-        );
+        return new BaseResponseEntity<>("기획전 수정에 성공하였습니다. ", null);
     }
 
-    // 5. 기획전 삭제
+    /**
+     * 5. 기획전 삭제
+     *
+     * @param eventUuid 기획전 UUID
+     * @return {@link BaseResponseEntity} 기획전 수정 결과
+     */
     @Operation(summary = "기획전 삭제", tags = {"event"})
     @DeleteMapping("/{eventUuid}")
     public BaseResponseEntity<Void> deleteEvent(

@@ -2,8 +2,8 @@ package com.team114.starbucks.domain.size.application;
 
 import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
-import com.team114.starbucks.domain.size.dto.in.SizeRequestDto;
-import com.team114.starbucks.domain.size.dto.out.SizeResponseDto;
+import com.team114.starbucks.domain.size.dto.in.GetAllSizeReqDto;
+import com.team114.starbucks.domain.size.dto.out.GetAllSizeResDto;
 import com.team114.starbucks.domain.size.entity.Size;
 import com.team114.starbucks.domain.size.infrastructure.SizeRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,57 +21,54 @@ public class SizeServiceImpl implements SizeService{
 
     @Transactional
     @Override
-    public SizeResponseDto saveSize(SizeRequestDto sizeRequestDto) {
+    public GetAllSizeResDto saveSize(GetAllSizeReqDto getAllSizeReqDto) {
         try {
-            Size newSize = sizeRequestDto.toEntity();
-
+            Size newSize = getAllSizeReqDto.toEntity();
             Size savedSize = sizeRepository.save(newSize);
 
-            return SizeResponseDto.from(savedSize);
+            return GetAllSizeResDto.from(savedSize);
         } catch (Exception e) {
             throw new BaseException(BaseResponseStatus.FAILED_TO_SAVE);
         }
     }
 
     @Override
-    public List<SizeResponseDto> findAllSizes() {
-        return sizeRepository.findAll().stream().map(SizeResponseDto::from).toList();
+    public List<GetAllSizeResDto> findAllSizes() {
+
+        return sizeRepository.findAll().stream().map(GetAllSizeResDto::from).toList();
     }
 
     @Override
-    public SizeResponseDto findBySizeId(Long sizeId) {
+    public GetAllSizeResDto findBySizeId(Long sizeId) {
         Size size = sizeRepository.findBySizeId(sizeId)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
 
-        return SizeResponseDto.from(size);
+        return GetAllSizeResDto.from(size);
     }
 
     @Transactional
     @Override
-    public SizeResponseDto updateSize(Long sizeId, SizeRequestDto sizeRequestDto) {
+    public GetAllSizeResDto updateSize(Long sizeId, GetAllSizeReqDto getAllSizeReqDto) {
         Size size = sizeRepository.findBySizeId(sizeId).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );
-
         Size updatedSize = Size.builder()
                 .sizeId(size.getSizeId())
                 .sizeName(size.getSizeName())
                 .sizeCode(size.getSizeCode())
                 .sizeDescription(size.getSizeDescription())
                 .build();
-
         sizeRepository.save(updatedSize);
 
-        return SizeResponseDto.from(updatedSize);
+        return GetAllSizeResDto.from(updatedSize);
     }
 
     @Transactional
     @Override
-    public Void deleteSize(Long sizeId) {
+    public void deleteSize(Long sizeId) {
         sizeRepository.deleteBySizeId(sizeId).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );
-
-        return null;
     }
+
 }

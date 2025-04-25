@@ -2,11 +2,11 @@ package com.team114.starbucks.domain.event.application;
 
 import com.team114.starbucks.common.exception.BaseException;
 import com.team114.starbucks.common.response.BaseResponseStatus;
-import com.team114.starbucks.domain.event.dto.out.EventResponseDto;
+import com.team114.starbucks.domain.event.dto.out.GetAllEventResDto;
 import com.team114.starbucks.domain.event.dto.in.CreateEventReqDto;
 import com.team114.starbucks.domain.event.dto.in.UpdateEventReqDto;
 import com.team114.starbucks.domain.event.dto.out.CreateEventResDto;
-import com.team114.starbucks.domain.event.dto.out.GetOneEventResDto;
+import com.team114.starbucks.domain.event.dto.out.GetEventResDto;
 import com.team114.starbucks.domain.event.entity.Event;
 import com.team114.starbucks.domain.event.infrastructure.EventRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,43 +24,33 @@ public class EventServiceimpl implements EventService {
 
     private final EventRepository eventRepository;
 
-    // 기획전 전체 조회
     @Override
-    public List<EventResponseDto> findAllActiveEvents() {
+    public List<GetAllEventResDto> findAllActiveEvents() {
 
         List<Event> EventList = eventRepository.findByIsActiveTrue();
-
-        List<EventResponseDto> responseDtoList = new ArrayList<>();
+        List<GetAllEventResDto> responseDtoList = new ArrayList<>();
 
         for (Event event : EventList) {
-            EventResponseDto dto = EventResponseDto.from(event);
+            GetAllEventResDto dto = GetAllEventResDto.from(event);
             responseDtoList.add(dto);
         }
 
         return responseDtoList;
     }
 
-    // 기획전 생성
     @Transactional
     @Override
     public CreateEventResDto saveEvent(CreateEventReqDto createEventReqDto) {
 
-        // [1] dto -> entity
         Event newEvent = createEventReqDto.toEntity(UUID.randomUUID().toString());
-
-        // [2] repository 에 저장
         Event savedEvent = eventRepository.save(newEvent);
 
-        // [3] entity -> dto
         return CreateEventResDto.from(savedEvent);
-
     }
 
-    // 기획전 수정
     @Transactional
     @Override
-    public Void updateEvent(String eventUuid, UpdateEventReqDto updateEventReqDto) {
-
+    public void updateEvent(String eventUuid, UpdateEventReqDto updateEventReqDto) {
         Event event = eventRepository.findByEventUuid(eventUuid).orElseThrow(() -> new BaseException(BaseResponseStatus.FAILED_TO_FIND));
 
         Event updatedEvent = Event.builder()
@@ -73,30 +63,22 @@ public class EventServiceimpl implements EventService {
                 .build();
 
         eventRepository.save(updatedEvent);
-
-        return null;
     }
 
-    // 기획전 삭제
     @Transactional
     @Override
-    public Void deleteEvent(String eventUuid) {
+    public void deleteEvent(String eventUuid) {
         eventRepository.deleteByEventUuid(eventUuid).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );
-        return null;
     }
 
-
-    // 기획전 단건 조회
     @Override
-    public GetOneEventResDto findEventByUuid(String eventUuid) {
+    public GetEventResDto findEventByUuid(String eventUuid) {
         Event event = eventRepository.findByEventUuid(eventUuid).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.FAILED_TO_FIND)
         );
-        return GetOneEventResDto.from(event);
+        return GetEventResDto.from(event);
 
     }
-
-
 }

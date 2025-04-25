@@ -15,4 +15,5 @@ public interface MainCategoryRepository extends JpaRepository<MainCategory, Long
     Optional<MainCategory> deleteByMainCategoryUuid(String mainCategoryUuid);
 
     Optional<MainCategory> findByMainCategoryName(String mainCategoryName);
+
 }

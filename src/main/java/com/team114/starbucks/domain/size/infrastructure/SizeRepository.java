@@ -8,5 +8,7 @@ import java.util.Optional;
 public interface SizeRepository extends JpaRepository<Size, Long> {
 
     Optional<Size> findBySizeId(Long sizeId);
+
     Optional<Size> deleteBySizeId(Long sizeId);
+
 }

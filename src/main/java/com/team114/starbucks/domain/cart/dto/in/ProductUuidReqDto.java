@@ -24,4 +24,5 @@ public class ProductUuidReqDto {
                 .productUuid(productUuid)
                 .build();
     }
+
 }

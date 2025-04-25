@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
-    //List <이벤트> findbyBooelan값 isTrue
+
     List<Event> findByIsActiveTrue();
 
     Optional<Event> findByEventUuid(String eventUuid);
@@ -19,4 +19,5 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     @Query("SELECT e.eventUuid FROM Event e")
     List<String> findAllEventUuids();
+
 }
