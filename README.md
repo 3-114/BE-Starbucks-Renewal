@@ -118,7 +118,7 @@
 
 <div align="center">
 
-###  🖥️ Front - End
+###  [🖥️ Front - End](https://github.com/114-Starbucks-Renewal-Spharos6th/FE-Starbucks-Renewal)
 
 </div>
 
@@ -127,9 +127,15 @@
 
 <div align="center">
 
-| 항목            | 내용              |
-|---------------|-----------------|
-| Project Build | Gradle - Groovy |
+
+
+| 항목        | 내용               |
+|-----------|------------------|
+| Language  | Typescript       |
+| Framework | Next.js 15.2.4   |
+| Deploy    | AWS              |
+| UI        | Tailwind CSS 4.0 |
+| node.js   | 22.14.0          |
 
  
 </div>
@@ -149,12 +155,12 @@
 
 <div align="center">
 
-| 항목            | 내용              |
-|---------------|-----------------|
-| Project Build | Gradle - Groovy |
-| Language      | Java            |
-| Spring Boot   | 3.4.4           |
-| Packaging     | Jar             |
+| 항목            | 내용                |
+|---------------|-------------------|
+| Project Build | Gradle - Groovy   |
+| Language      | Java              |
+| Framework     | Spring Boot 3.4.4 |
+| Packaging     | Jar               |
  
 </div>
 
@@ -202,7 +208,26 @@
 <div align="center">
 
 ### ☁️ InfraStructure
- 
+
+📌 Develop 서버
+
+| 항목           | 내용                                 |
+|--------------|------------------------------------|
+| Spec         | AWS EC2 T3 Medium                  |
+| Frontend Url | https://www.starbucks-renewal.shop |
+| Backend Url  | https://web.starbucks-renewal.shop |
+| OS           | Ubuntu 24.04.2 LTS                 |
+| WebServer    | AWS CDN + ALB                      |
+
+📌 Master DB
+
+
+| 항목           | 내용        |
+|--------------|-----------|
+| Spec         | mysql 8.0 |
+
+
+
 </div>
 
 
