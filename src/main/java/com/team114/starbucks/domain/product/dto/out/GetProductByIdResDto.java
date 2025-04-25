@@ -49,7 +49,7 @@ public class GetProductByIdResDto {
                 .productPrice(product.getProductPrice())
                 .shippingFee(product.getShippingFee())
                 .productStatus(product.getProductStatus())
-                .getProductThumbnailByIdResponseDtoList(getProductThumbnailByIdResDtoList)
+                .getProductThumbnailByIdResDtoList(getProductThumbnailByIdResDtoList)
                 .build();
     }
 
@@ -61,7 +61,7 @@ public class GetProductByIdResDto {
                 .productPrice(productPrice)
                 .shippingFee(shippingFee)
                 .productStatus(productStatus)
-                .getProductThumbnailByIdResponseDtoList(getProductThumbnailByIdResDtoList)
+                .getProductThumbnailByIdResDtoList(getProductThumbnailByIdResDtoList)
                 .build();
     }
 
