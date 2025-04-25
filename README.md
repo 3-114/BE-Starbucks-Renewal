@@ -10,7 +10,9 @@
 <br>
 <br>
 
-<div align="center" style="font-size: 32px; font-weight: bold; color: #f4a261;">
+---
+
+<div align="center">
 	
 # 📖 프로젝트 개요
 
@@ -28,6 +30,8 @@
 <br>
 <br>
 <br>
+
+---
 
 <div align="center" style="font-size: 32px; font-weight: bold; color: #f4a261;">
 	
@@ -48,7 +52,6 @@
     <td align="center"><a href="https://github.com/chuman0216">추지우</a></td>
   </tr>
 
-  <!-- 역할 라인 (Frontend / Backend) -->
   <tr>
     <td align="center"><div class="role-box frontend">🖥️ Frontend</div></td>
     <td align="center"><div class="role-box backend">⚙️ Backend</div></td>
@@ -57,42 +60,31 @@
     <td align="center"><div class="role-box devops">☁️ DevOps</div></td>
   </tr>
 
-  <!-- 담당 업무 -->
   <tr>
-    <td>
-      <ul>
-        <li align="center">메인 페이지</li>
-        <li align="center">상품 상세페이지</li>
-        <li align="center">장바구니 페이지</li>
-      </ul>
+    <td align="center">
+      메인 페이지<br>
+      상품 상세페이지<br>
+      장바구니 페이지
     </td>
-    <td>
-      <ul>
-        <li align="center">상품 카테고리</li>
-        <li align="center">이벤트(기획전)</li>
-        <li align="center">QueryDSL</li>
-      </ul>
+    <td align="center">
+      상품 카테고리<br>
+      이벤트(기획전)<br>
+      QueryDSL
     </td>
-    <td>
-      <ul>
-        <li align="center">로그인/회원가입</li>
-        <li align="center">JWT, Security</li>
-        <li align="center">장바구니</li>
-      </ul>
+    <td align="center">
+      로그인/회원가입<br>
+      JWT, Security<br>
+      장바구니
     </td>
-    <td>
-      <ul>
-        <li align="center">회원 배송지</li>
-        <li align="center">상품 상세 옵션</li>
-        <li align="center">데이터 전처리/삽입</li>
-      </ul>
+    <td align="center">
+      회원 배송지<br>
+      상품 상세 옵션<br>
+      데이터 전처리/삽입
     </td>
-    <td>
-      <ul>
-        <li align="center">상품 기능</li>
-        <li align="center">상품 이미지 관리</li>
-        <li align="center">CI/CD</li>
-      </ul>
+    <td align="center">
+      상품 기능<br>
+      상품 이미지 관리<br>
+      CI/CD
     </td>
   </tr>
 </table>
@@ -102,6 +94,9 @@
 <br>
 <br>
 
+
+---
+
 <div align="center">  
 	
 # 📲 Porting Manual
@@ -109,21 +104,65 @@
 </div>
 
 <br>
+
+<div align="center">
+
+###  [🖥️ Front - End](https://github.com/114-Starbucks-Renewal-Spharos6th/FE-Starbucks-Renewal)
+
+</div>
+
+
+<br>
+
+<div align="center">
+
+
+
+| 항목        | 내용               |
+|-----------|------------------|
+| Language  | Typescript       |
+| Framework | Next.js 15.2.4   |
+| Deploy    | AWS              |
+| UI        | Tailwind CSS 4.0 |
+| node.js   | 22.14.0          |
+
+ 
+</div>
+
+
+
+
+<br>
 <br>  
 
+<div align="center">
 
-## 🖥️ Front - End  
+###  ⚙️ Back - End  
+ 
+</div>
 
-##  ⚙️ Back - End  
 
-| 항목            | 내용              |
-|---------------|-----------------|
-| Project Build | Gradle - Groovy |
-| Language      | Java            |
-| Spring Boot   | 3.4.4           |
-| Packaging     | Jar             |
+<div align="center">
+
+| 항목            | 내용                |
+|---------------|-------------------|
+| Project Build | Gradle - Groovy   |
+| Language      | Java              |
+| Framework     | Spring Boot 3.4.4 |
+| Packaging     | Jar               |
+ 
+</div>
+
+<br>
+
+<div align="center">
 
 ### Dependencies ↙️
+
+ 
+</div>
+
+
 
 ```bash
 
@@ -153,32 +192,76 @@
 
 ```
 
-## ☁️ InfraStructure
-
-
-<br>
-<br>
 <br>
 
 <div align="center">
+
+### ☁️ InfraStructure
+
+📌 Develop 서버
+
+| 항목           | 내용                                 |
+|--------------|------------------------------------|
+| Spec         | AWS EC2 T3 Medium                  |
+| Frontend Url | https://www.starbucks-renewal.shop |
+| Backend Url  | https://web.starbucks-renewal.shop |
+| OS           | Ubuntu 24.04.2 LTS                 |
+| WebServer    | AWS CDN + ALB                      |
+
+📌 Master DB
+
+
+| 항목           | 내용        |
+|--------------|-----------|
+| Spec         | mysql 8.0 |
+
+
+
+</div>
+
+
+<br>
+
+
+
+<br>
+<br>
+<br>
+
+---
+
+<div align="center">
 	
+
 # 🖥️ 프로젝트 설명
+
+
 
 </div>
 
 <br>
 <br>
 
+<div align="center">
+
 ### 🏗️ Architecture
+ 
+</div>
+
 
 <br>
 
-![스크린샷 2025-04-21 오후 2 56 38](https://github.com/user-attachments/assets/fd78783d-a19d-471c-8bc2-c7f0f35a3f4f)
+![114-아키텍쳐](https://github.com/user-attachments/assets/58712f9b-50dc-4b0d-ac8d-0e407e7325f4)
 
 <br>
 <br>
+
+<div align="center">
 
 ### 📝 [ERD 바로가기](https://www.erdcloud.com/d/AfbenbEeNpbLj2dwu)
+ 
+</div>
+
 
 <br>
 
@@ -187,64 +270,77 @@
 <br>
 <br>
 
-### 🎯 기술 스택
-
-<br>
+---
 
 <div align="center">
-## 🖥️ Front - End ↙️
+
+# 🎯 기술 스택
+
 </div>
 
 <br>
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Next.js-000000?style=flat&logo=nextdotjs&logoColor=white" />
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white" />
-  <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white" />
+	
+### 🖥️ Front - End ↙️
+
+</div>
+
+
+<br>
+
+<div align="center">
+  <img src="https://img.shields.io/badge/Next.js-000000?style=flat&logo=nextdotjs&logoColor=white" height="28"/>
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white" height="28"/>
+  <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white" height="28"/>
   <br>
-  <img src="https://img.shields.io/badge/Figma-F24E1E?style=flat&logo=figma&logoColor=white" />
-  <img src="https://img.shields.io/badge/shadcn/ui-000000?style=flat&logo=react&logoColor=white" />
-  <img src="https://img.shields.io/badge/Zod-7C3AED?style=flat&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/Figma-F24E1E?style=flat&logo=figma&logoColor=white" height="28"/>
+  <img src="https://img.shields.io/badge/shadcn/ui-000000?style=flat&logo=react&logoColor=white" height="28"/>
+  <img src="https://img.shields.io/badge/Zod-7C3AED?style=flat&logo=typescript&logoColor=white" height="28"/>
 </div>
 
 <br>
 
 <div align="center">
-## ⚙️ Back - End ↙️
+	
+### ⚙️ Back - End ↙️
 </div>
+
 
 <br>
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=spring&logoColor=white" />
-  <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat&logo=springboot&logoColor=white" />
-  <img src="https://img.shields.io/badge/SpringSecurity-6DB33F?style=flat&logo=springsecurity&logoColor=white" />
+  <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat&logo=spring&logoColor=white" height="28"/>
+  <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat&logo=springboot&logoColor=white" height="28"/>
+  <img src="https://img.shields.io/badge/SpringSecurity-6DB33F?style=flat&logo=springsecurity&logoColor=white" height="28"/>
   <br>
-  <img src="https://img.shields.io/badge/QueryDSL-009688?style=flat&logo=apachemaven&logoColor=white" />
-  <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white" />
-  <img src="https://img.shields.io/badge/SpringDataJPA-4B8BBE?style=flat&logo=hibernate&logoColor=white" />
+  <img src="https://img.shields.io/badge/QueryDSL-009688?style=flat&logo=apachemaven&logoColor=white" height="28"/>
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white" height="28"/>
+  <img src="https://img.shields.io/badge/SpringDataJPA-4B8BBE?style=flat&logo=hibernate&logoColor=white" height="28"/>
 </div>
 
 <br>
 
 <div align="center">
-## 🖥️ Collabo ↙️
+	
+### 🖥️ Collabo ↙️
 </div>
+
 
 <br>
 
 <div align="center">
 
   <!-- 협업 도구 -->
-  <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white" />
-  <img src="https://img.shields.io/badge/Slack-4A154B?style=flat&logo=slack&logoColor=white" />
-  <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" />
+  <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white" height="28"/>
+  <img src="https://img.shields.io/badge/Slack-4A154B?style=flat&logo=slack&logoColor=white" height="28"/>
+  <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white" height="28"/>
   <br>
 
   <!-- 개발 도구 -->
-  <img src="https://img.shields.io/badge/IntelliJ IDEA-000000?style=flat&logo=intellijidea&logoColor=white" />
-  <img src="https://img.shields.io/badge/VSCode-007ACC?style=flat&logo=visualstudiocode&logoColor=white" />
-  <img src="https://img.shields.io/badge/AWS-FF9900?style=flat&logo=amazonaws&logoColor=white" />
+<img src="https://img.shields.io/badge/IntelliJ IDEA-000000?style=flat&logo=intellijidea&logoColor=white" height="28"/>
+<img src="https://img.shields.io/badge/VSCode-007ACC?style=flat&logo=visualstudiocode&logoColor=white" height="28"/>
+<img src="https://img.shields.io/badge/AWS-FF9900?style=flat&logo=amazonaws&logoColor=white" height="28"/>
 </div>
 
 <br>
