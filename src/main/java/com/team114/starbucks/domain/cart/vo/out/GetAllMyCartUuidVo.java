@@ -6,12 +6,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class MyCartUuidVo {
+public class GetAllMyCartUuidVo {
 
     private String cartUuid;
 
     @Builder
-    public MyCartUuidVo(String cartUuid) {
+    public GetAllMyCartUuidVo(String cartUuid) {
         this.cartUuid = cartUuid;
     }
+
 }

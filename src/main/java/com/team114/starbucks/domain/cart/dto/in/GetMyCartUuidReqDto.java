@@ -7,19 +7,19 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CartUuidReqDto {
+public class GetMyCartUuidReqDto {
 
     private String memberUuid;
     private String cartUuid;
 
     @Builder
-    public CartUuidReqDto(String memberUuid, String cartUuid) {
+    public GetMyCartUuidReqDto(String memberUuid, String cartUuid) {
         this.memberUuid = memberUuid;
         this.cartUuid = cartUuid;
     }
 
-    public static CartUuidReqDto of(String memberUuid, String cartUuid) {
-        return CartUuidReqDto.builder()
+    public static GetMyCartUuidReqDto of(String memberUuid, String cartUuid) {
+        return GetMyCartUuidReqDto.builder()
                 .memberUuid(memberUuid)
                 .cartUuid(cartUuid)
                 .build();

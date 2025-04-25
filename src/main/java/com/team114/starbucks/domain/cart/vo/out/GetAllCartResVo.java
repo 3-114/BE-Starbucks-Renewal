@@ -6,14 +6,14 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class GetAllCartItemsResVo {
+public class GetAllCartResVo {
 
     private Long quantity;
     private Boolean selected;
     private Boolean valid;
 
     @Builder
-    public GetAllCartItemsResVo(
+    public GetAllCartResVo(
             Long quantity,
             Boolean selected,
             Boolean valid
@@ -22,4 +22,5 @@ public class GetAllCartItemsResVo {
         this.selected = selected;
         this.valid = valid;
     }
+
 }

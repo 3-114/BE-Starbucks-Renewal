@@ -1,7 +1,7 @@
 package com.team114.starbucks.domain.cart.dto.out;
 
 import com.team114.starbucks.domain.cart.entity.Cart;
-import com.team114.starbucks.domain.cart.vo.out.CartAndProductResVo;
+import com.team114.starbucks.domain.cart.vo.out.GetCartAndProductResVo;
 import com.team114.starbucks.domain.product.dto.out.GetProductPreviewResDto;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CartAndProductResDto {
+public class GetCartAndProductResDto {
 
     private Long quantity;
     private Boolean selected;
@@ -21,7 +21,7 @@ public class CartAndProductResDto {
     private Integer shippingFee;
 
     @Builder
-    public CartAndProductResDto(
+    public GetCartAndProductResDto(
             Long quantity,
             Boolean selected,
             String cartUuid,
@@ -41,11 +41,8 @@ public class CartAndProductResDto {
         this.shippingFee = shippingFee;
     }
 
-    public static CartAndProductResDto of(
-            Cart cart,
-            GetProductPreviewResDto getProductPreviewResDto
-    ) {
-        return CartAndProductResDto.builder()
+    public static GetCartAndProductResDto of(Cart cart, GetProductPreviewResDto getProductPreviewResDto) {
+        return GetCartAndProductResDto.builder()
                 .quantity(cart.getQuantity())
                 .selected(cart.getSelected())
                 .cartUuid(cart.getCartUuid())
@@ -57,8 +54,8 @@ public class CartAndProductResDto {
                 .build();
     }
 
-    public CartAndProductResVo toVo() {
-        return CartAndProductResVo.builder()
+    public GetCartAndProductResVo toVo() {
+        return GetCartAndProductResVo.builder()
                 .quantity(quantity)
                 .selected(selected)
                 .cartUuid(cartUuid)
@@ -69,4 +66,5 @@ public class CartAndProductResDto {
                 .shippingFee(shippingFee)
                 .build();
     }
+
 }

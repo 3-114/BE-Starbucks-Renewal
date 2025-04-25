@@ -1,14 +1,14 @@
 package com.team114.starbucks.domain.cart.dto.in;
 
 import com.team114.starbucks.domain.cart.entity.Cart;
-import com.team114.starbucks.domain.cart.vo.in.UpdateCartItemReqVo;
+import com.team114.starbucks.domain.cart.vo.in.UpdateCartReqVo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class UpdateCartItemReqDto {
+public class UpdateCartReqDto {
 
     private String memberUuid;
     private String cartUuid;
@@ -17,7 +17,7 @@ public class UpdateCartItemReqDto {
     private Boolean valid;
 
     @Builder
-    public UpdateCartItemReqDto(
+    public UpdateCartReqDto(
             String memberUuid,
             String cartUuid,
             Long quantity,
@@ -31,16 +31,13 @@ public class UpdateCartItemReqDto {
         this.valid = valid;
     }
 
-    public static UpdateCartItemReqDto of(
-            String memberUuid,
-            UpdateCartItemReqVo updateCartItemReqVo
-    ) {
-        return UpdateCartItemReqDto.builder()
+    public static UpdateCartReqDto of(String memberUuid, UpdateCartReqVo updateCartReqVo) {
+        return UpdateCartReqDto.builder()
                 .memberUuid(memberUuid)
-                .cartUuid(updateCartItemReqVo.getCartUuid())
-                .quantity(updateCartItemReqVo.getQuantity())
-                .selected(updateCartItemReqVo.getSelected())
-                .valid(updateCartItemReqVo.getValid())
+                .cartUuid(updateCartReqVo.getCartUuid())
+                .quantity(updateCartReqVo.getQuantity())
+                .selected(updateCartReqVo.getSelected())
+                .valid(updateCartReqVo.getValid())
                 .build();
     }
 
@@ -57,4 +54,5 @@ public class UpdateCartItemReqDto {
                 .cartType(cart.getCartType())
                 .build();
     }
+
 }

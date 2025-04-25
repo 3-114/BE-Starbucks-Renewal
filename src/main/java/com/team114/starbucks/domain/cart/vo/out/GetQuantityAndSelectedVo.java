@@ -16,4 +16,5 @@ public class GetQuantityAndSelectedVo {
         this.quantity = quantity;
         this.selected = selected;
     }
+
 }

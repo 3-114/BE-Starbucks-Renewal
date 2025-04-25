@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CartAndProductResVo {
+public class GetCartAndProductResVo {
 
     private Long quantity;
     private Boolean selected;
@@ -18,7 +18,7 @@ public class CartAndProductResVo {
     private Integer shippingFee;
 
     @Builder
-    public CartAndProductResVo(
+    public GetCartAndProductResVo(
             Long quantity,
             Boolean selected,
             String cartUuid,
@@ -37,4 +37,5 @@ public class CartAndProductResVo {
         this.isThumbnail = isThumbnail;
         this.shippingFee = shippingFee;
     }
+
 }

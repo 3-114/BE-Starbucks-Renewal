@@ -1,30 +1,31 @@
 package com.team114.starbucks.domain.cart.dto.out;
 
-import com.team114.starbucks.domain.cart.vo.out.CountTotalCartResVo;
+import com.team114.starbucks.domain.cart.vo.out.GetTotalCartCountResVo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CountTotalCartResDto {
+public class GetTotalCartCountResDto {
 
     private Long totalCount;
 
     @Builder
-    public CountTotalCartResDto(Long totalCount) {
+    public GetTotalCartCountResDto(Long totalCount) {
         this.totalCount = totalCount;
     }
 
-    public static CountTotalCartResDto from(Long totalCount) {
-        return CountTotalCartResDto.builder()
+    public static GetTotalCartCountResDto from(Long totalCount) {
+        return GetTotalCartCountResDto.builder()
                 .totalCount(totalCount)
                 .build();
     }
 
-    public CountTotalCartResVo toVo() {
-        return CountTotalCartResVo.builder()
+    public GetTotalCartCountResVo toVo() {
+        return GetTotalCartCountResVo.builder()
                 .totalCount(totalCount)
                 .build();
     }
+
 }

@@ -26,7 +26,6 @@ public class GetCartItemResDto {
     }
 
     public static GetCartItemResDto from(Cart cart) {
-
         return GetCartItemResDto.builder()
                 .quantity(cart.getQuantity())
                 .selected(cart.getSelected())
@@ -35,11 +34,11 @@ public class GetCartItemResDto {
     }
 
     public GetCartItemResVo toVo() {
-
         return GetCartItemResVo.builder()
                 .quantity(quantity)
                 .selected(selected)
                 .valid(valid)
                 .build();
     }
+
 }

@@ -1,21 +1,21 @@
 package com.team114.starbucks.domain.cart.dto.out;
 
 import com.team114.starbucks.domain.cart.entity.Cart;
-import com.team114.starbucks.domain.cart.vo.out.GetAllCartItemsResVo;
+import com.team114.starbucks.domain.cart.vo.out.GetAllCartResVo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class GetAllCartItemsResDto {
+public class GetAllCartResDto {
 
     private Long quantity;
     private Boolean selected;
     private Boolean valid;
 
     @Builder
-    public GetAllCartItemsResDto(
+    public GetAllCartResDto(
             Long quantity,
             Boolean selected,
             Boolean valid
@@ -25,19 +25,20 @@ public class GetAllCartItemsResDto {
         this.valid = valid;
     }
 
-    public static GetAllCartItemsResDto from(Cart cart) {
-        return GetAllCartItemsResDto.builder()
+    public static GetAllCartResDto from(Cart cart) {
+        return GetAllCartResDto.builder()
                 .quantity(cart.getQuantity())
                 .selected(cart.getSelected())
                 .valid(cart.getValid())
                 .build();
     }
 
-    public static GetAllCartItemsResVo toVo(GetAllCartItemsResDto getAllCartItemsResDto) {
-        return GetAllCartItemsResVo.builder()
-                .quantity(getAllCartItemsResDto.getQuantity())
-                .selected(getAllCartItemsResDto.getSelected())
-                .valid(getAllCartItemsResDto.getValid())
+    public static GetAllCartResVo toVo(GetAllCartResDto getAllCartResDto) {
+        return GetAllCartResVo.builder()
+                .quantity(getAllCartResDto.getQuantity())
+                .selected(getAllCartResDto.getSelected())
+                .valid(getAllCartResDto.getValid())
                 .build();
     }
+
 }

@@ -1,4 +1,4 @@
-package com.team114.starbucks.domain.cart.vo.out;
+package com.team114.starbucks.domain.cart.dto.in;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -6,21 +6,22 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CartTypeReqDto {
+public class GetMyCartTypeReqDto {
 
     private String memberUuid;
     private String cartType;
 
     @Builder
-    public CartTypeReqDto(String memberUuid, String cartType) {
+    public GetMyCartTypeReqDto(String memberUuid, String cartType) {
         this.memberUuid = memberUuid;
         this.cartType = cartType;
     }
 
-    public static CartTypeReqDto of(String memberUuid, String cartType) {
-        return CartTypeReqDto.builder()
+    public static GetMyCartTypeReqDto of(String memberUuid, String cartType) {
+        return GetMyCartTypeReqDto.builder()
                 .memberUuid(memberUuid)
                 .cartType(cartType)
                 .build();
     }
+
 }

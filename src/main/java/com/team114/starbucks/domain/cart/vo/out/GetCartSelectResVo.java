@@ -6,12 +6,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CountTotalCartResVo {
+public class GetCartSelectResVo {
 
-    private Long totalCount;
+    private Boolean selected;
 
     @Builder
-    public CountTotalCartResVo(Long totalCount) {
-        this.totalCount = totalCount;
+    public GetCartSelectResVo(Boolean selected) {
+        this.selected = selected;
     }
+
 }

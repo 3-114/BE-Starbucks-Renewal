@@ -8,22 +8,21 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class MyCartQuantityReqDto {
+public class GetMyCartQuantityReqDto {
 
     private String memberUuid;
     private String cartUuid;
     private Long quantity;
 
     @Builder
-    public MyCartQuantityReqDto(String memberUuid, String cartUuid, Long quantity) {
+    public GetMyCartQuantityReqDto(String memberUuid, String cartUuid, Long quantity) {
         this.memberUuid = memberUuid;
         this.cartUuid = cartUuid;
         this.quantity = quantity;
     }
-    
 
-    public static MyCartQuantityReqDto of(String memberUuid, String cartUuid, CartQuantityReqVo cartQuantityReqVo) {
-        return MyCartQuantityReqDto.builder()
+    public static GetMyCartQuantityReqDto of(String memberUuid, String cartUuid, CartQuantityReqVo cartQuantityReqVo) {
+        return GetMyCartQuantityReqDto.builder()
                 .memberUuid(memberUuid)
                 .cartUuid(cartUuid)
                 .quantity(cartQuantityReqVo.getQuantity())
@@ -43,4 +42,5 @@ public class MyCartQuantityReqDto {
                 .cartType(cart.getCartType())
                 .build();
     }
+
 }
