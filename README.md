@@ -10,11 +10,11 @@
 <br>
 <br>
 
-<div align="center" style="font-size: 32px; font-weight: bold; color: #f4a261;">
+---
+
+<div align="center">
 	
 # 📖 프로젝트 개요
-
----
 
 </div>
 
@@ -31,11 +31,11 @@
 <br>
 <br>
 
+---
+
 <div align="center" style="font-size: 32px; font-weight: bold; color: #f4a261;">
 	
 # 👥 팀원 소개
-
----
 
 </div>
 
@@ -106,30 +106,48 @@
 <br>
 <br>
 
+---
+
 <div align="center">  
 	
 # 📲 Porting Manual
-
----
 
 </div>
 
 <br>
 
-##  🖥️ Front - End
+<div align="center">
+
+###  🖥️ Front - End
+
+</div>
+
 
 <br>
 
+<div align="center">
 
 | 항목            | 내용              |
 |---------------|-----------------|
 | Project Build | Gradle - Groovy |
 
+ 
+</div>
+
+
+
 
 <br>
 <br>  
 
-##  ⚙️ Back - End  
+<div align="center">
+
+###  ⚙️ Back - End  
+ 
+</div>
+
+
+<div align="center">
 
 | 항목            | 내용              |
 |---------------|-----------------|
@@ -137,8 +155,19 @@
 | Language      | Java            |
 | Spring Boot   | 3.4.4           |
 | Packaging     | Jar             |
+ 
+</div>
+
+<br>
+
+<div align="center">
 
 ### Dependencies ↙️
+
+ 
+</div>
+
+
 
 ```bash
 
@@ -170,7 +199,12 @@
 
 <br>
 
-## ☁️ InfraStructure
+<div align="center">
+
+### ☁️ InfraStructure
+ 
+</div>
+
 
 <br>
 
@@ -179,30 +213,41 @@
 <br>
 <br>
 <br>
+
+---
 
 <div align="center">
 	
 
-
 # 🖥️ 프로젝트 설명
 
----
+
 
 </div>
 
 <br>
 <br>
 
-## 🏗️ Architecture
+<div align="center">
+
+### 🏗️ Architecture
+ 
+</div>
+
 
 <br>
 
-![스크린샷 2025-04-21 오후 2 56 38](https://github.com/user-attachments/assets/fd78783d-a19d-471c-8bc2-c7f0f35a3f4f)
+![114-아키텍쳐](https://github.com/user-attachments/assets/58712f9b-50dc-4b0d-ac8d-0e407e7325f4)
 
 <br>
 <br>
 
-## 📝 [ERD 바로가기](https://www.erdcloud.com/d/AfbenbEeNpbLj2dwu)
+<div align="center">
+
+### 📝 [ERD 바로가기](https://www.erdcloud.com/d/AfbenbEeNpbLj2dwu)
+ 
+</div>
+
 
 <br>
 
@@ -211,11 +256,11 @@
 <br>
 <br>
 
+---
+
 <div align="center">
 
 # 🎯 기술 스택
-
----
 
 </div>
 
@@ -223,7 +268,8 @@
 
 <div align="center">
 	
-## 🖥️ Front - End ↙️
+### 🖥️ Front - End ↙️
+
 </div>
 
 
@@ -243,7 +289,7 @@
 
 <div align="center">
 	
-## ⚙️ Back - End ↙️
+### ⚙️ Back - End ↙️
 </div>
 
 
@@ -263,7 +309,7 @@
 
 <div align="center">
 	
-## 🖥️ Collabo ↙️
+### 🖥️ Collabo ↙️
 </div>
 
 
