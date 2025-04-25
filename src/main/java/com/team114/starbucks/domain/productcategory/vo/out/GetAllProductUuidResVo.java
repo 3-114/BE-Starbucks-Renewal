@@ -14,4 +14,5 @@ public class GetAllProductUuidResVo {
     public GetAllProductUuidResVo(String productUuid) {
         this.productUuid = productUuid;
     }
+
 }

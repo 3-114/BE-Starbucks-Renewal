@@ -40,4 +40,5 @@ public class CreateProductCategoryReqDto {
                 .eventUuid(eventUuid)
                 .build();
     }
+
 }
