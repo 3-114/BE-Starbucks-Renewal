@@ -52,7 +52,6 @@
     <td align="center"><a href="https://github.com/chuman0216">추지우</a></td>
   </tr>
 
-  <!-- 역할 라인 (Frontend / Backend) -->
   <tr>
     <td align="center"><div class="role-box frontend">🖥️ Frontend</div></td>
     <td align="center"><div class="role-box backend">⚙️ Backend</div></td>
@@ -61,42 +60,31 @@
     <td align="center"><div class="role-box devops">☁️ DevOps</div></td>
   </tr>
 
-  <!-- 담당 업무 -->
   <tr>
-    <td>
-      <ul>
-        <li align="center">메인 페이지</li>
-        <li align="center">상품 상세페이지</li>
-        <li align="center">장바구니 페이지</li>
-      </ul>
+    <td align="center">
+      메인 페이지<br>
+      상품 상세페이지<br>
+      장바구니 페이지
     </td>
-    <td>
-      <ul>
-        <li align="center">상품 카테고리</li>
-        <li align="center">이벤트(기획전)</li>
-        <li align="center">QueryDSL</li>
-      </ul>
+    <td align="center">
+      상품 카테고리<br>
+      이벤트(기획전)<br>
+      QueryDSL
     </td>
-    <td>
-      <ul>
-        <li align="center">로그인/회원가입</li>
-        <li align="center">JWT, Security</li>
-        <li align="center">장바구니</li>
-      </ul>
+    <td align="center">
+      로그인/회원가입<br>
+      JWT, Security<br>
+      장바구니
     </td>
-    <td>
-      <ul>
-        <li align="center">회원 배송지</li>
-        <li align="center">상품 상세 옵션</li>
-        <li align="center">데이터 전처리/삽입</li>
-      </ul>
+    <td align="center">
+      회원 배송지<br>
+      상품 상세 옵션<br>
+      데이터 전처리/삽입
     </td>
-    <td>
-      <ul>
-        <li align="center">상품 기능</li>
-        <li align="center">상품 이미지 관리</li>
-        <li align="center">CI/CD</li>
-      </ul>
+    <td align="center">
+      상품 기능<br>
+      상품 이미지 관리<br>
+      CI/CD
     </td>
   </tr>
 </table>
@@ -105,6 +93,7 @@
 <br>
 <br>
 <br>
+
 
 ---
 
