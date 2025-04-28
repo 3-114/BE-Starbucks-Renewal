@@ -5,10 +5,12 @@ import com.team114.starbucks.domain.coupon.enums.DiscountType;
 import com.team114.starbucks.domain.coupon.vo.out.UpdateCouponResVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
 public class UpdateCouponResDto {
 
     private String couponName;
@@ -40,9 +42,7 @@ public class UpdateCouponResDto {
         this.validDays = validDays;
     }
 
-    // dto <- entity (정적 팩토리 메서드)
     public static UpdateCouponResDto from(Coupon coupon) {
-
         return UpdateCouponResDto.builder()
                 .couponName(coupon.getName())
                 .couponDescription(coupon.getDescription())
@@ -54,9 +54,7 @@ public class UpdateCouponResDto {
                 .build();
     }
 
-    // dto -> vo
     public UpdateCouponResVo toVo() {
-
         return UpdateCouponResVo.builder()
                 .couponName(couponName)
                 .couponDescription(couponDescription)

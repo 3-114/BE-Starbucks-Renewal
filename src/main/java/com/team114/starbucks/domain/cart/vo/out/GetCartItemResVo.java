@@ -22,4 +22,5 @@ public class GetCartItemResVo {
         this.selected = selected;
         this.valid = valid;
     }
+
 }

@@ -1,7 +1,7 @@
 package com.team114.starbucks.domain.color.dto.out;
 
 import com.team114.starbucks.domain.color.entity.Color;
-import com.team114.starbucks.domain.color.vo.out.ColorResponseVo;
+import com.team114.starbucks.domain.color.vo.out.CreateColorResVo;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -22,8 +22,8 @@ public class ColorResponseDto {
                 .build();
     }
 
-    public ColorResponseVo toVo() {
-        return ColorResponseVo.builder()
+    public CreateColorResVo toVo() {
+        return CreateColorResVo.builder()
                 .colorName(colorName)
                 .build();
     }

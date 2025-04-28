@@ -18,4 +18,5 @@ public class GetAllSubCategoryResVo {
         this.subCategoryUuid = subCategoryUuid;
         this.subCategoryName = subCategoryName;
     }
+
 }

@@ -31,4 +31,5 @@ public enum ProductStatus {
         }
         throw new IllegalArgumentException("Unknown value: " + value);
     }
+
 }

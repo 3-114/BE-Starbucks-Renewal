@@ -89,4 +89,5 @@ public class Delivery extends BaseEntity {
     public void updateIsSelected(boolean isSelected) {
         this.isSelected = isSelected;
     }
+
 }

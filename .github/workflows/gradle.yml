@@ -7,7 +7,7 @@ on:
 #      - develop
   pull_request:
     branches:
-      - develop
+      - main
 
 env:
   AWS_REGION: ap-northeast-2
@@ -122,6 +122,6 @@ jobs:
           docker images "$ECR_REGISTRY/$ECR_REPOSITORY" --format "{{.Repository}}:{{.Tag}}" \
             | grep -v "<none>" \
             | grep -v "$IMAGE_TAG" \
-            | tail -n +4 \
+            | tail -n +3 \
             | xargs -r docker rmi
           echo "🧼 ECR Docker 이미지 정리 완료"

@@ -32,4 +32,5 @@ public class PageParamDto {
     public Pageable toEntity() {
         return PageRequest.of(page - 1, size);
     }
+
 }

@@ -15,5 +15,6 @@ public interface ColorService {
 
     ColorResponseDto updateColor(Long colorId, ColorRequestDto colorRequestDto);
 
-    Void deleteColor(Long colorId);
+    void deleteColor(Long colorId);
+
 }

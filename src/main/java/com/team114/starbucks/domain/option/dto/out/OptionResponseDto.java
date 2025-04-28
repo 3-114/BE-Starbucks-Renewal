@@ -1,9 +1,10 @@
 package com.team114.starbucks.domain.option.dto.out;
 
 import com.team114.starbucks.domain.option.entity.Option;
-import com.team114.starbucks.domain.option.vo.out.OptionResponseVo;
+import com.team114.starbucks.domain.option.vo.out.GetAllOptionResVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
 public class OptionResponseDto {
@@ -35,8 +36,8 @@ public class OptionResponseDto {
         this.discountRate = discountRate;
     }
 
-    public OptionResponseVo toVo() {
-        return OptionResponseVo.builder()
+    public GetAllOptionResVo toVo() {
+        return GetAllOptionResVo.builder()
                 .optionId(optionId)
                 .productUuid(productUuid)
                 .colorId(colorId)
@@ -48,7 +49,6 @@ public class OptionResponseDto {
     }
 
     public static OptionResponseDto from(Option option) {
-
         return OptionResponseDto.builder()
                 .optionId(option.getOptionId())
                 .productUuid(option.getProductUuid())

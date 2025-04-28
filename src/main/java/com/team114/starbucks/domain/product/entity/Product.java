@@ -49,9 +49,6 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private Integer shippingFee;
 
-    // 상품 상세내역 이미지
-
-
     @Builder
     public Product(
             Long id,

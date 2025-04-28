@@ -2,8 +2,10 @@ package com.team114.starbucks.domain.membercoupon.vo.in;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class ConsumeCouponReqVo {
 
     /**
@@ -25,4 +27,5 @@ public class ConsumeCouponReqVo {
     public ConsumeCouponReqVo(String couponUuid) {
         this.couponUuid = couponUuid;
     }
+
 }

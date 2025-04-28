@@ -3,8 +3,10 @@ package com.team114.starbucks.domain.membercoupon.dto.in;
 import com.team114.starbucks.domain.membercoupon.vo.in.ConsumeCouponReqVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class ConsumeCouponReqDto {
 
     private String couponUuid;
@@ -14,7 +16,6 @@ public class ConsumeCouponReqDto {
         this.couponUuid = couponUuid;
     }
 
-    // dto <- vo
     public static ConsumeCouponReqDto from(
             ConsumeCouponReqVo useCouponReqVo
     ) {
@@ -22,4 +23,5 @@ public class ConsumeCouponReqDto {
                 .couponUuid(useCouponReqVo.getCouponUuid())
                 .build();
     }
+
 }

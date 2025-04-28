@@ -6,7 +6,6 @@ import lombok.ToString;
 import java.time.LocalDate;
 
 @Getter
-@ToString
 public class CreateEventReqVo {
 
     private String eventName;

@@ -23,10 +23,16 @@ public class MainCategory {
     @Column(nullable = false, length = 100)
     private String mainCategoryName;
 
+    // 메인 카테고리 이미지 URL
+    @Column(nullable = false)
+    private String mainCategoryImage;
+
     @Builder
-    public MainCategory(Long id, String mainCategoryUuid, String mainCategoryName) {
+    public MainCategory(Long id, String mainCategoryUuid, String mainCategoryName, String mainCategoryImage) {
         this.id = id;
         this.mainCategoryUuid = mainCategoryUuid;
         this.mainCategoryName = mainCategoryName;
+        this.mainCategoryImage = mainCategoryImage;
     }
+
 }

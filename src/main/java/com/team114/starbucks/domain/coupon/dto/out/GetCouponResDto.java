@@ -5,8 +5,10 @@ import com.team114.starbucks.domain.coupon.enums.DiscountType;
 import com.team114.starbucks.domain.coupon.vo.out.GetCouponResVo;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class GetCouponResDto {
 
     private String couponUuid;
@@ -40,7 +42,6 @@ public class GetCouponResDto {
     }
 
     public static GetCouponResDto from(Coupon coupon) {
-
         return GetCouponResDto.builder()
                 .couponUuid(coupon.getCouponUuid())
                 .couponName(coupon.getName())
@@ -54,7 +55,6 @@ public class GetCouponResDto {
     }
 
     public GetCouponResVo toVo() {
-
         return GetCouponResVo.builder()
                 .couponUuid(couponUuid)
                 .couponName(couponName)

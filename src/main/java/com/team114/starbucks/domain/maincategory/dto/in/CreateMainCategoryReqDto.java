@@ -11,15 +11,18 @@ import lombok.NoArgsConstructor;
 public class CreateMainCategoryReqDto {
 
     private String mainCategoryName;
+    private String mainCategoryImage;
 
     @Builder
-    public CreateMainCategoryReqDto(String mainCategoryName) {
+    public CreateMainCategoryReqDto(String mainCategoryName, String mainCategoryImage) {
         this.mainCategoryName = mainCategoryName;
+        this.mainCategoryImage = mainCategoryImage;
     }
 
     public static CreateMainCategoryReqDto from(CreateMainCategoryReqVo createMainCategoryReqVo) {
         return CreateMainCategoryReqDto.builder()
                 .mainCategoryName(createMainCategoryReqVo.getMainCategoryName())
+                .mainCategoryImage(createMainCategoryReqVo.getMainCategoryImage())
                 .build();
     }
 
@@ -27,6 +30,8 @@ public class CreateMainCategoryReqDto {
         return MainCategory.builder()
                 .mainCategoryUuid(mainCategoryUuid)
                 .mainCategoryName(mainCategoryName)
+                .mainCategoryImage(mainCategoryImage)
                 .build();
     }
+
 }

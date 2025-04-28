@@ -28,4 +28,5 @@ public class GetProductUuidResDto {
                 .productUuid(productUuid)
                 .build();
     }
+
 }
