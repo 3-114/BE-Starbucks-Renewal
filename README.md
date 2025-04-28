@@ -1,14 +1,25 @@
-## 목차
-1. [기획](#1-기획)
-2. [개발 환경](#2-개발-환경)
-3. [주요 기능](#3-주요-기능)
-4. [기술 소개](#4-기술-소개)
-5. [설계 문서](#5-설계-문서)
-6. [팀원 소개](#6-팀원-소개)
-7. [프로젝트 규칙](#7-프로젝트-규칙)
-8. [포팅 메뉴얼](#8-포팅-매뉴얼)
 
-## 1. 기획
+<div align="center">
+
+### Index
+
+<br>
+
+
+| 번호 | 제목 |
+|:----:|:-----|
+| 1 | [기획](#1-기획) |
+| 2 | [팀원 소개](#2-팀원-소개) |
+| 3 | [개발 환경](#3-개발-환경) |
+| 4 | [주요 기능](#4-주요-기능) |
+| 5 | [기술 소개](#5-기술-소개) |
+| 6 | [설계 문서](#6-설계-문서) |
+| 7 | [프로젝트 규칙](#7-프로젝트-규칙) |
+| 8 | [포팅 매뉴얼](#8-포팅-매뉴얼) |
+
+</div>
+
+# 1. 기획
 
 <div align="center">
 
@@ -27,7 +38,66 @@
 
 ---
 
-## 2. 개발 환경
+# 2. 팀원 소개
+
+<br>
+<br>
+
+<div align="center">
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/Demopeu">김동현</a></td>
+    <td align="center"><a href="https://github.com/DoNalD-A">👑 송민석</a></td>
+    <td align="center"><a href="https://github.com/Ahn-donghwan">안동환</a></td>
+    <td align="center"><a href="https://github.com/EUNSEO-YA">오은서</a></td>
+    <td align="center"><a href="https://github.com/chuman0216">추지우</a></td>
+  </tr>
+
+  <tr>
+    <td align="center"><div class="role-box frontend">🖥️ Frontend</div></td>
+    <td align="center"><div class="role-box backend">⚙️ Backend</div></td>
+    <td align="center"><div class="role-box backend">⚙️ Backend</div></td>
+    <td align="center"><div class="role-box backend">⚙️ Backend</div></td>
+    <td align="center"><div class="role-box devops">☁️ DevOps</div></td>
+  </tr>
+
+  <tr>
+    <td align="center">
+      메인 페이지<br>
+      상품 상세페이지<br>
+      장바구니 페이지
+    </td>
+    <td align="center">
+      상품 카테고리<br>
+      이벤트(기획전)<br>
+      QueryDSL
+    </td>
+    <td align="center">
+      로그인/회원가입<br>
+      JWT, Security<br>
+      장바구니
+    </td>
+    <td align="center">
+      회원 배송지<br>
+      상품 상세 옵션<br>
+      데이터 전처리/삽입
+    </td>
+    <td align="center">
+      상품 기능<br>
+      상품 이미지 관리<br>
+      CI/CD
+    </td>
+  </tr>
+</table>
+</div>
+
+<br>
+<br>
+<br>
+
+---
+
+# 3. 개발 환경
 
 ### Backend
 
@@ -51,12 +121,11 @@
 | Frontend Url | https://www.starbucks-renewal.shop |
 | Backend Url  | https://web.starbucks-renewal.shop |
 | OS           | Ubuntu 24.04.2 LTS                 |
-| WebServer    | AWS CDN + ALB                      |
 
 
 ---
 
-## 3. 주요 기능
+# 4. 주요 기능
 
 <table>
   <thead>
@@ -133,90 +202,42 @@
 ---
 
 
-## 4. 기술 소개
+# 5. 기술 소개
 
 ---
 
-## 5. 설계 문서
+# 6. 설계 문서
 
-### 시스템 아키텍쳐
-
-> 추가 예정
-
-### ERD
-
-> 추가 예정
-
-### 요구사항 정의서
-
-> 추가 예정
-
-### API명세서
-
-> 추가 예정
-
----
-
-## 6. 팀원 소개
-
-<br>
-<br>
-
-<div align="center">
 <table>
-  <tr>
-    <td align="center"><a href="https://github.com/Demopeu">김동현</a></td>
-    <td align="center"><a href="https://github.com/DoNalD-A">👑 송민석</a></td>
-    <td align="center"><a href="https://github.com/Ahn-donghwan">안동환</a></td>
-    <td align="center"><a href="https://github.com/EUNSEO-YA">오은서</a></td>
-    <td align="center"><a href="https://github.com/chuman0216">추지우</a></td>
-  </tr>
-
-  <tr>
-    <td align="center"><div class="role-box frontend">🖥️ Frontend</div></td>
-    <td align="center"><div class="role-box backend">⚙️ Backend</div></td>
-    <td align="center"><div class="role-box backend">⚙️ Backend</div></td>
-    <td align="center"><div class="role-box backend">⚙️ Backend</div></td>
-    <td align="center"><div class="role-box devops">☁️ DevOps</div></td>
-  </tr>
-
-  <tr>
-    <td align="center">
-      메인 페이지<br>
-      상품 상세페이지<br>
-      장바구니 페이지
-    </td>
-    <td align="center">
-      상품 카테고리<br>
-      이벤트(기획전)<br>
-      QueryDSL
-    </td>
-    <td align="center">
-      로그인/회원가입<br>
-      JWT, Security<br>
-      장바구니
-    </td>
-    <td align="center">
-      회원 배송지<br>
-      상품 상세 옵션<br>
-      데이터 전처리/삽입
-    </td>
-    <td align="center">
-      상품 기능<br>
-      상품 이미지 관리<br>
-      CI/CD
-    </td>
-  </tr>
+  <thead>
+    <tr>
+      <th>문서 종류</th>
+      <th>설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>시스템 아키텍처</td>
+      <td>추가 예정</td>
+    </tr>
+    <tr>
+      <td>ERD</td>
+      <td>추가 예정</td>
+    </tr>
+    <tr>
+      <td>요구사항 정의서</td>
+      <td>추가 예정</td>
+    </tr>
+    <tr>
+      <td>API 명세서</td>
+      <td>추가 예정</td>
+    </tr>
+  </tbody>
 </table>
-</div>
-
-<br>
-<br>
-<br>
 
 ---
 
-## 7. 프로젝트 규칙
+# 7. 프로젝트 규칙
 
 ### 1. 커밋 메시지 구조
 커밋 메시지는 제목, 본문, 그리고 꼬리말로 구성됩니다.
@@ -294,7 +315,7 @@
 
 ---
 
-## 8. 포팅 매뉴얼
+# 8. 포팅 매뉴얼
 
 이 프로젝트는 [Spring](https://spring.io/) 프레임워크 기반 프로젝트입니다.
 
