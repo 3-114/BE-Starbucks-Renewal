@@ -1,23 +1,48 @@
 
-<div align="center">
-
-### Index
 
 <br>
 
+<table style="width:80%;">
+  <thead>
+    <tr>
+      <th style="width:10%;">번호</th>
+      <th style="width:90%;">제목</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><a href="#1-기획">기획</a></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><a href="#2-팀원-소개">팀원 소개</a></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><a href="#3-개발-환경">개발 환경</a></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><a href="#4-주요-기능">주요 기능</a></td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><a href="#5-설계-문서">설계 문서</a></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td><a href="#6-프로젝트-규칙">프로젝트 규칙</a></td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td><a href="#7-포팅-매뉴얼">포팅 매뉴얼</a></td>
+    </tr>
+  </tbody>
+</table>
 
-| 번호 | 제목 |
-|:----:|:-----|
-| 1 | [기획](#1-기획) |
-| 2 | [팀원 소개](#2-팀원-소개) |
-| 3 | [개발 환경](#3-개발-환경) |
-| 4 | [주요 기능](#4-주요-기능) |
-| 5 | [기술 소개](#5-기술-소개) |
-| 6 | [설계 문서](#6-설계-문서) |
-| 7 | [프로젝트 규칙](#7-프로젝트-규칙) |
-| 8 | [포팅 매뉴얼](#8-포팅-매뉴얼) |
-
-</div>
+<br>
+<br>
 
 # 1. 기획
 
@@ -127,117 +152,45 @@
 
 # 4. 주요 기능
 
-<table>
-  <thead>
-    <tr>
-      <th>페이지 구분</th>
-      <th>화면 이미지</th>
-      <th>기능 설명</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>로그인 페이지</td>
-      <td><img src="https://github.com/user-attachments/assets/664469c4-8ed6-4081-8556-5a59c50a7889" alt="로그인" width="300"></td>
-  <td>
-    <ul>
-      <li>이메일 형식의 아이디와 비밀번호를 입력합니다.</li>
-      <li>회원가입 된 회원이면 로그인에 성공한 후 마이페이지로 이동합니다.</li>
-      <li>회원이 아니라면 로그인 페이지로 돌아옵니다.</li>
-    </ul>
-  </td>
-    </tr>
-    <tr>
-      <td>메인 페이지</td>
-      <td>(이미지 추가 예정)</td>
-  <td>
-    <ul>
-      <li>메인 페이지에서는 인피티니 캐러셀 기능과 카테고리별로 나누어진 상품을 통해 진행 중인 기획전을 한 눈에 확인할 수 있습니다.</li>
-    </ul>
-  </td>
-    </tr>
-    <tr>
-      <td>기획전 페이지</td>
-      <td>(이미지 추가 예정)</td>
-  <td>
-    <ul>
-      <li>부드러운 캐러셀 동작으로 기획전 카테고리를 한 눈에 살펴볼 수 있습니다.</li>
-      <li>기획전 이미지와 해당되는 상품을 미리볼 수 있습니다.</li>
-    </ul>
-  </td>
-    </tr>
-    <tr>
-      <td>베스트 페이지</td>
-      <td>(이미지 추가 예정)</td>
-  <td>
-    <ul>
-      <li>부드러운 캐러셀 동작으로 상품 카테고리를 한 눈에 살펴볼 수 있습니다.</li>
-      <li>상품명, 썸네일 이미지, 가격으로 구성된 상품을 미리볼 수 있습니다.</li>
-    </ul>
-  </td>
-    </tr>
-    <tr>
-      <td>카테고리 페이지</td>
-      <td>(이미지 추가 예정)</td>
-  <td>
-    <ul>
-      <li>상품 카테고리별로 구성된 상품들만 모아볼 수 있습니다.</li>
-    </ul>
-  </td>
-    </tr>
-    <tr>
-      <td>장바구니 페이지</td>
-      <td><img src="https://github.com/user-attachments/assets/41ea1c8d-1c37-438b-9d42-e05bc776e6e7" alt="로그인" width="300"></td>
-  <td>
-    <ul>
-      <li>장바구니에서 캐러셀로 동작하는 배송지 목록을 확인하고, 구매 시 배송될 배송지를 선택할 수 있습니다.</li>
-      <li>일반/예약 장바구니를 나누어 관리합니다.</li>
-      <li>상품을 단건/전체 선택 및 해제할 수 있고, 수량 변경, 상품 삭제가 가능합니다.</li>
-    </ul>
-  </td>
-    </tr>
-  </tbody>
-</table>
+| 로그인 | 장바구니 | 기획전 |
+|:------:|:------:|:------:|
+| ![로그인](https://github.com/user-attachments/assets/ce5d47fc-7d8b-4e71-bf9c-309dba8d9419) | ![장바구니](https://github.com/user-attachments/assets/1e01c531-c124-4be3-9669-919cd5b78dc2) | ![기획전](https://github.com/user-attachments/assets/57332611-4430-4934-aacc-71886ad6d116) |
+| 메인 | 베스트 | 카테고리 |
+|:----:|:----:|:----:|
+| ![메인](https://github.com/user-attachments/assets/5f8bd568-e6aa-4e84-8e2e-876cf7c6315d) | ![베스트](https://github.com/user-attachments/assets/9442fd63-6d9a-4194-8c78-dbb9ca9ddb98) | ![카테고리](https://github.com/user-attachments/assets/c34a57e2-2d93-4a28-9d82-c34b40aa4163) |
+
 
 ---
 
+# 5. 설계 문서
 
-# 5. 기술 소개
+| 시스템 아키텍쳐 |
+| --- |
+| ![시스템 아키텍쳐](https://github.com/user-attachments/assets/e816d140-effc-4a74-9e66-04b9444d9da9) |
 
----
 
-# 6. 설계 문서
+| CI/CD 아키텍쳐 |
+| --- |
+| ![cicd 아키텍쳐](https://github.com/user-attachments/assets/12cc8bba-badd-4a5b-8f7d-0c099efee348) |
 
-<table>
-  <thead>
-    <tr>
-      <th>문서 종류</th>
-      <th>설명</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>시스템 아키텍처</td>
-      <td>추가 예정</td>
-    </tr>
-    <tr>
-      <td>ERD</td>
-      <td>추가 예정</td>
-    </tr>
-    <tr>
-      <td>요구사항 정의서</td>
-      <td>추가 예정</td>
-    </tr>
-    <tr>
-      <td>API 명세서</td>
-      <td>추가 예정</td>
-    </tr>
-  </tbody>
-</table>
+
+| [ERD 설계](https://github.com/3-114/.github/blob/main/profile/docs/erd-detail.md) |
+| --- |
+| [![ERD 설계](https://github.com/3-114/.github/raw/main/profile/img/erd.png)](https://github.com/3-114/.github/blob/main/profile/docs/erd-detail.md) |
+
+
+| [요구사항 정의서](https://funky-baron-4b5.notion.site/1bc02141a4b3810fa400e69f078ac5ab?pvs=73) |
+| --- |
+| [![요구사항 정의서](https://github.com/3-114/.github/raw/main/profile/img/requirement.png)](https://funky-baron-4b5.notion.site/1bc02141a4b3810fa400e69f078ac5ab?pvs=73) |
+
+| [API 명세서](https://funky-baron-4b5.notion.site/API-1b502141a4b3804485b7ef524f753b4a) |
+| --- |
+| [![API 명세서](https://github.com/3-114/.github/raw/main/profile/img/apiSpecification.png)](https://funky-baron-4b5.notion.site/API-1b502141a4b3804485b7ef524f753b4a) |
+
 
 ---
 
-# 7. 프로젝트 규칙
+# 6. 프로젝트 규칙
 
 ### 1. 커밋 메시지 구조
 커밋 메시지는 제목, 본문, 그리고 꼬리말로 구성됩니다.
@@ -315,7 +268,7 @@
 
 ---
 
-# 8. 포팅 매뉴얼
+# 7. 포팅 매뉴얼
 
 이 프로젝트는 [Spring](https://spring.io/) 프레임워크 기반 프로젝트입니다.
 
