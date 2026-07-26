@@ -1,11 +1,6 @@
 spring:
-
   profiles:
     active: dev
-
-logging:
-  level:
-    root: INFO
 
   jpa:
     hibernate:
@@ -19,3 +14,7 @@ logging:
   jwt:
     secret:
       key: 00C49vjBEiNEmODEZoDgkuQ/nNl6pNwDVrpNv9TqJJo=
+
+logging:
+  level:
+    root: INFO

@@ -7,14 +7,9 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Getter
@@ -61,7 +56,6 @@ public class Member extends BaseEntity {
     private Boolean deleted;
 
     // 유저 권한
-    @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
     @Builder
@@ -94,5 +88,4 @@ public class Member extends BaseEntity {
         this.deleted = deleted;
         this.userRole = userRole;
     }
-
 }

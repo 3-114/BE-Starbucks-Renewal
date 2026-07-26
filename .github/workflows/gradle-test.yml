@@ -1,0 +1,129 @@
+name: Deploy Spring Boot to ECR and EC2
+
+on:
+  push:
+    branches:
+      - cicd
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+env:
+  AWS_REGION: ap-northeast-2
+  ECR_REGISTRY: 412381782254.dkr.ecr.ap-northeast-2.amazonaws.com
+  ECR_REPOSITORY: 114/starbucks-backend
+
+jobs:
+  deploy:
+    name: Build, Push to ECR & Deploy to EC2
+    runs-on: ubuntu-latest
+    environment: production
+
+    env:
+      IMAGE_TAG: ${{ github.sha }}
+      AWS_DB_URL: ${{ secrets.AWS_DB_URL }}
+      AWS_DB_NAME: ${{ secrets.AWS_DB_NAME }}
+      AWS_DB_USERNAME: ${{ secrets.AWS_DB_USERNAME }}
+      AWS_DB_PASSWORD: ${{ secrets.AWS_DB_PASSWORD }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew clean build -x test
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ env.ECR_REGISTRY }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+      - name: SSH to EC2 and Deploy Docker Container
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          envs: ECR_REGISTRY,ECR_REPOSITORY,IMAGE_TAG,AWS_DB_URL,AWS_DB_NAME,AWS_DB_USERNAME,AWS_DB_PASSWORD
+          script: |
+            echo "▶ ECR에서 이미지 Pull 후 Docker 컨테이너로 실행"
+            echo "AWS_DB_URL: $AWS_DB_URL"
+            printenv AWS_DB_URL
+
+            # AWS CLI 로그인
+            aws ecr get-login-password --region ap-northeast-2 \
+              | docker login --username AWS --password-stdin $ECR_REGISTRY
+
+            # 기존 컨테이너 종료 및 삭제
+            docker stop springboot-app-test || true
+            docker rm springboot-app-test || true
+
+            # 최신 이미지 Pull
+            docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+            echo "AWS_DB_URL=$AWS_DB_URL" > .env-spring-test
+            echo "AWS_DB_NAME=$AWS_DB_NAME" >> .env-spring-test
+            echo "AWS_DB_USERNAME=$AWS_DB_USERNAME" >> .env-spring-test
+            echo "AWS_DB_PASSWORD=$AWS_DB_PASSWORD" >> .env-spring-test
+
+            # 네트워크가 없으면 생성
+            docker network inspect starbucks-network-test >/dev/null 2>&1 || docker network create starbucks-network-test
+
+            # 새 컨테이너 실행
+            docker run -d \
+              --name springboot-app-test \
+              --network starbucks-network-test \
+              --env-file .env-spring-test \
+              -p 8081:8080 \
+              $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+            echo "✅ Spring Boot Docker 컨테이너 실행 완료"
+            
+            echo "🧹 중지된 컨테이너 제거"
+            docker ps -aq --filter "status=exited" | xargs -r docker rm -f
+            
+            echo "🧹 중지된 컨테이너 먼저 정리"
+            docker container prune -f
+            
+            echo "🧹 최신 3개 제외한 이미지 정리"
+            docker images "$ECR_REGISTRY/$ECR_REPOSITORY" --format "{{.Repository}}:{{.Tag}}" \
+            | grep -v "<none>" | sort -r | tail -n +3 | xargs -r docker rmi -f
+            
+            echo "🧹 EC2에 남은 Docker 이미지 중 최신 3개만 남기고 삭제 시작"
+            docker images "$ECR_REGISTRY/$ECR_REPOSITORY" --format "{{.ID}}" \
+            | uniq | tail -n +4 > old_images.txt
+            
+            echo "🧹 삭제 대상 이미지:"
+            cat old_images.txt | xargs -r docker rmi -f
+            rm old_images.txt
+            
+            echo "🧼 EC2 Docker 이미지 정리 완료"            
+
+      - name: Delete old ECR images (keep latest 3)
+        run: |
+          echo "🧹 오래된 ECR Docker 이미지 삭제 시작"
+          docker images "$ECR_REGISTRY/$ECR_REPOSITORY" --format "{{.Repository}}:{{.Tag}}" \
+            | grep -v "<none>" \
+            | grep -v "$IMAGE_TAG" \
+            | tail -n +3 \
+            | xargs -r docker rmi
+          echo "🧼 ECR Docker 이미지 정리 완료"

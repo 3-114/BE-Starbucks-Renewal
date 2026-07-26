@@ -2,6 +2,7 @@ package com.team114.starbucks.common.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Profile;
                 version = "v1.0.0",
                 description = "114-STARBUCKS-Renewal API Test"
         )
+        , security = @SecurityRequirement(name = "Bearer Auth")
 )
 @SecurityScheme(
         name = "Bearer Auth",
@@ -29,7 +31,7 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi publicApi() {
-        String[] paths = { "/api/v1/**" };
+        String[] paths = {"/api/v1/**"};
         return GroupedOpenApi.builder()
                 .group("public-api")
                 .pathsToMatch(paths)
